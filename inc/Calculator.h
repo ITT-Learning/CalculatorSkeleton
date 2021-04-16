@@ -1,15 +1,16 @@
-#ifndef CALCULATOR_SKELETON_H
-#define CALCULATOR_SKELETON_H
-
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @file  CalculatorSkeleton.h
+ * @file  Calculator.h
  * @date  Fri, 16 April 2021
  * @brief 
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
+#ifndef CALCULATOR_H
+#define CALCULATOR_H
 
-#endif  // CALCULATOR_SKELETON_H
+#include <iostream>
+// Add your function declarations here.
+
+#endif  // CALCULATOR_H

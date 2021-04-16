@@ -1,7 +1,15 @@
-#include "CalculatorSkeleton.h"
+////////////////////////////////////////////////////////////////////////////
+/**
+ *  @file   main.cpp
+ *  @date   Fri April 16 2021
+ *  @brief  Entry Point of Calculator
+ */
+////////////////////////////////////////////////////////////////////////////
+
+#include "Calculator.h"
 
 int main() 
 {
-    // Fill in code to make the basic calculator.
+    // Fill in or change code here as necessary.  See also Calculator.cpp
     std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
 }

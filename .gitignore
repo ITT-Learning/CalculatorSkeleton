@@ -55,3 +55,6 @@ bin/
 
 # Anything bin...
 [Bb][Ii][Nn]/
+
+# ignore googletest items
+test/googletest-*/

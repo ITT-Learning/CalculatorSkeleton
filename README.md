@@ -1,9 +1,11 @@
 TBD
 # This file will have every command needed to get everything running.
 
-# Required Extensions
+# Required Extensions installed on local windows VSC
 # CMake Tools
 # C/C++ Extension Pack
+# C++ Intellisense
+# C++ TestMate
 # Remote - WSL
 
 #--- If you get an error on version of CMake use the following to update the CMake version. Reference https://apt.kitware.com/
@@ -22,6 +24,16 @@ sudo apt-get install -y cmake
 
 ----#
 
+# Command Line build
+# at root directory run...
+cmake .
+make
+# navigate to bin and the binary should be there.
+cd bin
+./Calculator
 
+# Run Unit tests.
+cd test
+./calculator_test
 
 

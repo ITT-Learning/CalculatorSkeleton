@@ -1,4 +1,4 @@
-list(APPEND _sources ../inc/CalculatorSkeleton.h)
+list(APPEND _sources ../inc/Calculator.h Calculator.cpp)
 
 # Set the output folder where your program will be created
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
