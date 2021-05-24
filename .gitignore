@@ -58,3 +58,6 @@ bin/
 
 # ignore googletest items
 test/googletest-*/
+
+# VSCode Project files
+.vscode/
