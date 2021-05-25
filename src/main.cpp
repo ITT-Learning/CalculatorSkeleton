@@ -6,18 +6,27 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 #include <iostream>
+#include <string>
+
 
 #include "Calculator.h"
 
-int main() 
+int main()
 {
-    // Fill in or change code here as necessary.  See also Calculator.cpp
-    int a, b;
-    while(true)
+    while (true)
     {
-        std::cout << "Enter two numbers, e.g. '4 10':\n(ctrl-c to exit)" << std::endl;
-        std::cin >> a >> b;
-        printCalculations(a,b);
-        std::cout << std::endl << std::endl;
+        std::cout << "Input a simple math expression e.g., '5 + 5' " << std::endl <<
+                     "Valid operations are [+-/*]" << std::endl <<
+                     "(Enter 'exit' to quit)" << std::endl;
+        
+        std::string input;
+        getline(std::cin, input);
+
+        if(input == "exit")
+            break;
+        
+        Calculator c(input);
+        std::cout << c << std::endl;
     }
+    return 0;
 }

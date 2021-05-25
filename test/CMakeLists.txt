@@ -42,6 +42,7 @@ file(GLOB UNIT_TEST_SOURCES
     "*.cpp"
 )
 
+
 add_executable(${This} ${UNIT_TEST_SOURCES})
 
 target_link_libraries(${This} PUBLIC	
@@ -50,4 +51,5 @@ target_link_libraries(${This} PUBLIC
     gtest
     gmock
     pthread
+    Calculator_lib
 )
