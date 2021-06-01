@@ -1,7 +1,7 @@
 
 ////////////////////////////////////////////////////////////////////////////
 /**
- *  @file   Calculator.cpp
+ *  @file   CalculatorW2.cpp
  *  @date   Fri April 16 2021
  *  @brief  Funtions that support main.cpp
  */
@@ -9,18 +9,18 @@
 
 #include <algorithm>
 
-#include "Calculator.h"
+#include "CalculatorW2.h"
 namespace calculator
 {
-    Calculator::Calculator() = default;
+    CalculatorW2::CalculatorW2() = default;
 
-    Calculator::Calculator(int leftTerm, int rightTerm, Operation operation)
+    CalculatorW2::CalculatorW2(int leftTerm, int rightTerm, Operation operation)
                         : leftTerm_(leftTerm), rightTerm_(rightTerm), operation_(operation)
     {
         calculateResult();
     }
 
-    Calculator::Calculator(const std::string &mathExpression) 
+    CalculatorW2::CalculatorW2(const std::string &mathExpression) 
     {
         std::stringstream expStream(mathExpression);
         int leftTerm, rightTerm;
@@ -94,15 +94,15 @@ namespace calculator
         // }
     }
 
-    Calculator::~Calculator() = default;
+    CalculatorW2::~CalculatorW2() = default;
 
-    int Calculator::getResult()
+    int CalculatorW2::getResult()
     {
         calculateResult();
         return result_;
     }
 
-    void Calculator::calculateResult() 
+    void CalculatorW2::calculateResult() 
     {
         switch (operation_)
         {
@@ -134,17 +134,17 @@ namespace calculator
     }
 
 
-    int Calculator::add(int leftTerm, int rightTerm)
+    int CalculatorW2::add(int leftTerm, int rightTerm)
     {
         return leftTerm + rightTerm;
     }
 
-    int Calculator::subtract(int leftTerm, int rightTerm)
+    int CalculatorW2::subtract(int leftTerm, int rightTerm)
     {
         return add(leftTerm, -rightTerm);
     }
 
-    int Calculator::divide(int leftTerm, int rightTerm)
+    int CalculatorW2::divide(int leftTerm, int rightTerm)
     {
         if (rightTerm == 0)
         {
@@ -155,12 +155,12 @@ namespace calculator
         return leftTerm / rightTerm;
     }
 
-    int Calculator::multiply(int leftTerm, int rightTerm)
+    int CalculatorW2::multiply(int leftTerm, int rightTerm)
     {
         return leftTerm * rightTerm;
     }
 
-    std::string to_string(const Calculator &calculator)
+    std::string to_string(const CalculatorW2 &calculator)
     {
         return calculator.hasError_ ? CalculatorStrings::ERROR_MESSAGE + calculator.errorMessage_ : 
             std::to_string(calculator.leftTerm_) + CalculatorStrings::SPACE + 
@@ -169,7 +169,7 @@ namespace calculator
             std::to_string(calculator.result_);
     }
 
-    std::ostream& operator<<(std::ostream& os, const Calculator &calculator) 
+    std::ostream& operator<<(std::ostream& os, const CalculatorW2 &calculator) 
     {
         os << to_string(calculator);
         return os;

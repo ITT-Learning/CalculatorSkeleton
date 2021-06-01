@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @file  Calculator.h
+ * @file  CalculatorW2.h
  * @date  Fri, 16 April 2021
  * @brief 
  * 
@@ -18,7 +18,7 @@
 #include "CalculatorStrings.h"
 // Add your function declarations here.
 namespace calculator {
-    class Calculator {
+    class CalculatorW2 {
         public:
             /**
              * @brief operations usuable in the calculator
@@ -34,33 +34,33 @@ namespace calculator {
             };
 
             /**
-             * @brief Construct a new Calculator object = default
+             * @brief Construct a new CalculatorW2 object = default
              * 
              */
-            Calculator();
+            CalculatorW2();
 
             /**
-             * @brief Construct a new Calculator object using a math expression
+             * @brief Construct a new CalculatorW2 object using a math expression
              * 
              * @param mathExpression The math expression should be a string that is leftTerm, space, operation, space rightTerm
              *                       e.g., '5 + 5'
              */
-            explicit Calculator(const std::string &mathExpression);
+            explicit CalculatorW2(const std::string &mathExpression);
 
             /**
-             * @brief Construct a new Calculator object using set left and right terms and operation.
+             * @brief Construct a new CalculatorW2 object using set left and right terms and operation.
              * 
              * @param leftTerm first term in math expression
              * @param rightTerm second term in math expression
              * @param operation operation in math expression
              */
-            explicit Calculator(int leftTerm, int rightTerm, Operation operation);
+            explicit CalculatorW2(int leftTerm, int rightTerm, Operation operation);
 
             /**
-             * @brief Destroy the Calculator object = default
+             * @brief Destroy the CalculatorW2 object = default
              * 
              */
-            ~Calculator();
+            ~CalculatorW2();
 
             /**
              * @brief Get the current result
@@ -135,7 +135,7 @@ namespace calculator {
              * @return std::string formatted like "5 + 5 = 10" or
              *                     "leftTerm_ operation_ rightTerm_ = result_"
              */
-            friend std::string to_string(const Calculator& calculator);
+            friend std::string to_string(const CalculatorW2& calculator);
 
             /**
              * @brief simple overloaded << to work with std::ostream's
@@ -144,7 +144,7 @@ namespace calculator {
              * @param calculator [in] calculator to be added using to_string(calculator)
              * @return std::ostream& 
              */
-            friend std::ostream& operator<<(std::ostream& os, const Calculator& calculator);
+            friend std::ostream& operator<<(std::ostream& os, const CalculatorW2& calculator);
     };
 }
 #endif  // CALCULATOR_H

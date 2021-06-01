@@ -2,14 +2,14 @@
 /**
  *  @file   main.cpp
  *  @date   Fri April 16 2021
- *  @brief  Entry Point of Calculator
+ *  @brief  Entry Point of CalculatorW2
  */
 ////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <string>
 
 
-#include "Calculator.h"
+#include "CalculatorW2.h"
 #include "CalculatorStrings.h"
 
 int main()
@@ -24,7 +24,7 @@ int main()
         if(input == calculator::CalculatorStrings::EXIT)
             break;
         
-        calculator::Calculator calculator(input);
+        calculator::CalculatorW2 calculator(input);
         std::cout << calculator << std::endl;
     }
     return 0;
