@@ -5,11 +5,31 @@
  *  @brief  Entry Point of Calculator
  */
 ////////////////////////////////////////////////////////////////////////////
+#include <iostream>
+#include <string>
 
 #include "Calculator.h"
+#include "CalculatorStrings.h"
+
 
 int main() 
 {
-    // Fill in or change code here as necessary.  See also Calculator.cpp
-    std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
+    int a, b;
+    while(true)
+    {
+        std::cout << calculator::CalculatorStrings::MAIN_PROMPT << std::endl;
+        std::cin >> a >> b;
+        if(std::cin)
+        {
+            calculator::printCalculations(a,b);
+        }
+        else
+        {
+            std::cout << std::endl << std::endl << calculator::CalculatorStrings::INVALID_INPUT << std::endl;
+            std::cin.clear();
+            std::cin.ignore();
+        }
+        
+        std::cout << std::endl << std::endl;
+    }
 }
