@@ -10,23 +10,22 @@
 
 
 #include "Calculator.h"
+#include "CalculatorStrings.h"
 
 int main()
 {
     while (true)
     {
-        std::cout << "Input a simple math expression e.g., '5 + 5' " << std::endl <<
-                     "Valid operations are [+-/*]" << std::endl <<
-                     "(Enter 'exit' to quit)" << std::endl;
+        std::cout << calculator::CalculatorStrings::W2_MAIN_PROMPT << std::endl;
         
         std::string input;
         getline(std::cin, input);
 
-        if(input == "exit")
+        if(input == calculator::CalculatorStrings::EXIT)
             break;
         
-        Calculator c(input);
-        std::cout << c << std::endl;
+        calculator::Calculator calculator(input);
+        std::cout << calculator << std::endl;
     }
     return 0;
 }
