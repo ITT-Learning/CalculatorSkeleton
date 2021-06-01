@@ -6,28 +6,28 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 #include <iostream>
+#include <string>
 
 #include "Calculator.h"
+#include "CalculatorStrings.h"
+
 
 int main() 
 {
-    // Fill in or change code here as necessary.  See also Calculator.cpp
     int a, b;
-    std::istream &refcin = std::cin;
     while(true)
     {
-        std::cout << "Enter two numbers, e.g. '4 10':\n(ctrl-c to exit)" << std::endl;
-        refcin >> a >> b;
-        if(refcin)
+        std::cout << calculator::CalculatorStrings::MAIN_PROMPT << std::endl;
+        std::cin >> a >> b;
+        if(std::cin)
         {
-            printCalculations(a,b);
-
+            calculator::printCalculations(a,b);
         }
         else
         {
-            std::cout << std::endl << std::endl << "Invalid format please try again." << std::endl;
-            refcin.clear();
-            refcin.ignore();
+            std::cout << std::endl << std::endl << calculator::CalculatorStrings::INVALID_INPUT << std::endl;
+            std::cin.clear();
+            std::cin.ignore();
         }
         
         std::cout << std::endl << std::endl;
