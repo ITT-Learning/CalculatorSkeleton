@@ -19,63 +19,63 @@ namespace calculator
          * @brief ""
          * 
          */
-        static const char EMPTY_STRING[];
+        static constexpr char EMPTY_STRING[] = "";
 
         /**
          * @brief " = "
          * 
          */
-        static const char EQUAL[];
+        static constexpr char EQUAL[] = " = ";
 
         /**
          * @brief Beginning of error message
          * 
          */
-        static const char ERROR_MESSAGE[];
+        static constexpr char ERROR_MESSAGE[] = "Error:";
 
         /**
          * @brief appended to error message if divide by zero is attempted
          * 
          */
-        static const char ERROR_MESSAGE_DIVIDE_BY_ZERO[];
+        static constexpr char ERROR_MESSAGE_DIVIDE_BY_ZERO[] = " divide by zero";
 
         /**
          * @brief appended to error message if input is invalid
          * 
          */
-        static const char ERROR_MESSAGE_INVALID_INPUT[];
+        static constexpr char ERROR_MESSAGE_INVALID_INPUT[] = " invalid input";
 
         /**
          * @brief word to quit the app
          * 
          */
-        static const char EXIT[];
+        static constexpr char EXIT[] = "exit";
         
         /**
          * @brief response given to user if input is invalid
          * 
          */
-        static const char INVALID_INPUT[];
+        static constexpr char INVALID_INPUT[] = "Invalid format please try again.";
 
         /**
          * @brief " "
          * 
          */
-        static const char SPACE[];
+        static constexpr char SPACE[] = " ";
 
         /**
          * @brief prompt passed to user before retrieving input from them
          *        This prompt was used for the week 1 implementation of Calculator
          * 
          */
-        static const char W1_MAIN_PROMPT[]; 
+        static constexpr char W1_MAIN_PROMPT[] = "Enter two numbers, e.g. '4 10':\n(ctrl-c to exit)"; 
 
         /**
          * @brief prompt passed to user before retrieving input from them
          *        this prompt was used for the week 2 implementation of Calculator
          * 
          */
-        static const char W2_MAIN_PROMPT[];
+        static constexpr char W2_MAIN_PROMPT[] = "Input a simple math expression e.g., '5 + 5'\nValid operations are [+-/*]\n(Enter 'exit' to quit)";
     };
 } // namespace calculator
 
