@@ -2,7 +2,7 @@
 /**
  * @file  DivideCalculatorW3.h
  * @date  Wed, 2 June 2021
- * @brief 
+ * @brief Calculator for division '/', divides the right term from the left term
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,15 +26,27 @@ namespace calculator
             DivideCalculatorW3() = delete;
 
             /**
-             * @brief Construct a new Divide Calculator
-             * @note If the rightTerm is 0 then a message is set to std error and the result will be -1
+             * @brief Construct a new multiplication calculator
+             *        X / Y = Z
+             * @note the order of the terms do matter!
              * 
-             * @param leftTerm 
-             * @param rightTerm 
+             * @param leftTerm - the X term
+             * @param rightTerm - the Y term
              */
             explicit DivideCalculatorW3(int leftTerm, int rightTerm);
+            
+            /**
+             * @brief Get the result or the right side of the equation
+             * 
+             * @return int - leftTerm_ / rightTerm_
+             */
             int getResult() override;
         private:
+            /**
+             * @brief get the operation of the calculator, i.e. operation_
+             * 
+             * @return char operation_
+             */
             char getOperation() override;
     };
 }

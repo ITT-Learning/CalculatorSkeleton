@@ -2,7 +2,7 @@
 /**
  *  @file   main.cpp
  *  @date   Fri April 16 2021
- *  @brief  Entry Point of CalculatorW2
+ *  @brief  Entry Point of CalculatorW3
  */
 ////////////////////////////////////////////////////////////////////////////
 #include <iostream>

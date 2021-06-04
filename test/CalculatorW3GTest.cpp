@@ -19,19 +19,6 @@ using namespace testing;
 using namespace calculator;
 
 /**
- * @brief Fixture for Simple expression calulcators
- * 
- */
-class SimpleExpressionCalculatorW3Test : public ::testing::Test 
-{
-    protected:
-        AddCalculatorW3 addCalculator = AddCalculatorW3(10,10);
-        SubtractCalculatorW3 subtractCalculator = SubtractCalculatorW3(10, 10);
-        MultiplyCalculatorW3 multiplyCalculator = MultiplyCalculatorW3(10, 10);
-        DivideCalculatorW3 divideCalculator = DivideCalculatorW3(10, 10);
-};
-
-/**
  * @brief fixtures for simple expression calculator factory
  * 
  */
@@ -45,7 +32,7 @@ class SimpleExpressionCalculatorW3FactoryTest : public ::testing::Test
  * @brief Test to make sure division by zero is handled correctly
  * 
  */
-TEST(CalculatorW3Tests, WhenDivideByZeroDivideCalculatorIsConstructed_ThenErrorPrintedToStdError)
+TEST(DivideCalculatorW3Tests, WhenDivideByZeroDivideCalculatorIsConstructed_ThenErrorPrintedToStdError)
 {
     testing::internal::CaptureStderr();
     DivideCalculatorW3 divideCalculator = DivideCalculatorW3(10, 0);
@@ -53,49 +40,195 @@ TEST(CalculatorW3Tests, WhenDivideByZeroDivideCalculatorIsConstructed_ThenErrorP
     ASSERT_NE(output, std::string(""));
 }
 
+
 /**
  * @brief Test to make sure a fully formed equation is formed when toString is called
  * 
  */
-TEST_F(SimpleExpressionCalculatorW3Test, WhenToStringIsCalledOnSimpleExpressionCalculators_ThenFullFormattedEquationIsReturned)
+TEST(DivideCalculatorW3Tests, WhenToStringIsCalledOnDivideCalculators_ThenFullFormattedEquationIsReturned)
 {
-    ASSERT_TRUE(addCalculator.toString().find('=') != std::string::npos);
-    ASSERT_TRUE(addCalculator.toString().find('+') != std::string::npos);
-    ASSERT_TRUE(subtractCalculator.toString().find('=') != std::string::npos);
-    ASSERT_TRUE(subtractCalculator.toString().find('-') != std::string::npos);
-    ASSERT_TRUE(multiplyCalculator.toString().find('=') != std::string::npos);
-    ASSERT_TRUE(multiplyCalculator.toString().find('*') != std::string::npos);
-    ASSERT_TRUE(divideCalculator.toString().find('=') != std::string::npos);
-    ASSERT_TRUE(divideCalculator.toString().find('/') != std::string::npos);
+    DivideCalculatorW3 divideCalculator = DivideCalculatorW3(5, 5);
+    std::string actual = divideCalculator.toString();
+    std::string expected = "5 / 5 = 1";
+    ASSERT_EQ(expected, actual);
+}
+
+/**
+ * @brief Test to make sure a fully formed equation is formed when getExpression is called
+ * 
+ */
+TEST(DivideCalculatorW3Tests, WhenGetExpressionIsCalledOnDivideCalculators_ThenExpressionIsReturned)
+{
+    DivideCalculatorW3 divideCalculator = DivideCalculatorW3(5, 5);
+    std::string actual = divideCalculator.getExpression();
+    std::string expected = "5 / 5";
+    ASSERT_EQ(expected, actual);
+}
+
+/**
+ * @brief Test to make sure the math is happening as expected
+ * @note divide by zero has it's own tests
+ * 
+ */
+TEST(DivideCalculatorW3Tests, WhenGetResultIsCalledOnDivideCalculators_ThenAnswerIsReturned)
+{
+    DivideCalculatorW3 divideCalculator = DivideCalculatorW3(5, 5);
+    ASSERT_EQ(1, divideCalculator.getResult());
+    
+    divideCalculator = DivideCalculatorW3(-10, 5);
+    ASSERT_EQ(-2, divideCalculator.getResult());
+
+    divideCalculator = DivideCalculatorW3(10, -5);
+    ASSERT_EQ(-2, divideCalculator.getResult());
+
+    divideCalculator = DivideCalculatorW3(0, 100);
+    ASSERT_EQ(0, divideCalculator.getResult());
+
+    divideCalculator = DivideCalculatorW3(0, -10);
+    ASSERT_EQ(0, divideCalculator.getResult());
+}
+
+
+/**
+ * @brief Test to make sure a fully formed equation is formed when toString is called
+ * 
+ */
+TEST(AddCalculatorW3Tests, WhenToStringIsCalledOnAddCalculators_ThenFullFormattedEquationIsReturned)
+{
+    AddCalculatorW3 addCalculator = AddCalculatorW3(5, 5);
+    std::string actual = addCalculator.toString();
+    std::string expected = "5 + 5 = 10";
+    ASSERT_EQ(expected, actual);
+}
+
+/**
+ * @brief Test to make sure a fully formed equation is formed when getExpression is called
+ * 
+ */
+TEST(AddCalculatorW3Tests, WhenGetExpressionIsCalledOnAddCalculators_ThenExpressionIsReturned)
+{
+    AddCalculatorW3 addCalculator = AddCalculatorW3(5, 5);
+    std::string actual = addCalculator.getExpression();
+    std::string expected = "5 + 5";
+    ASSERT_EQ(expected, actual);
 }
 
 /**
  * @brief Test to make sure the math is happening as expected
  * 
  */
-TEST_F(SimpleExpressionCalculatorW3Test, WhenGetResultIsCalledOnSimpleExpressionCalculators_ThenAnswerIsReturned)
+TEST(AddCalculatorW3Tests, WhenGetResultIsCalledOnAddCalculators_ThenAnswerIsReturned)
 {
-    ASSERT_EQ(20, addCalculator.getResult());
-    ASSERT_EQ(0, subtractCalculator.getResult());
-    ASSERT_EQ(100, multiplyCalculator.getResult());
-    ASSERT_EQ(1, divideCalculator.getResult());
+    AddCalculatorW3 addCalculator = AddCalculatorW3(5, 5);
+    ASSERT_EQ(10, addCalculator.getResult());
+    
+    addCalculator = AddCalculatorW3(-10, 5);
+    ASSERT_EQ(-5, addCalculator.getResult());
+
+    addCalculator = AddCalculatorW3(10, -5);
+    ASSERT_EQ(5, addCalculator.getResult());
+
+    addCalculator = AddCalculatorW3(0, 100);
+    ASSERT_EQ(100, addCalculator.getResult());
+
+    addCalculator = AddCalculatorW3(0, -10);
+    ASSERT_EQ(-10, addCalculator.getResult());
+}
+
+
+/**
+ * @brief Test to make sure a fully formed equation is formed when toString is called
+ * 
+ */
+TEST(SubtractCalculatorW3Tests, WhenToStringIsCalledOnSubtractCalculators_ThenFullFormattedEquationIsReturned)
+{
+    SubtractCalculatorW3 subtractCalculator = SubtractCalculatorW3(5, 5);
+    std::string actual = subtractCalculator.toString();
+    std::string expected = "5 - 5 = 0";
+    ASSERT_EQ(expected, actual);
 }
 
 /**
- * @brief Test to make sure the expression is NOT a fully formed equation, i.e. it should NOT have an '='
+ * @brief Test to make sure a fully formed equation is formed when getExpression is called
  * 
  */
-TEST_F(SimpleExpressionCalculatorW3Test, WhenGetExpressionIsCalledOnSimpleExpessionCalculators_ThenExpressionIsReturned)
+TEST(SubtractCalculatorW3Tests, WhenGetExpressionIsCalledOnSubtractCalculators_ThenExpressionIsReturned)
 {
-    ASSERT_TRUE(addCalculator.getExpression().find('=') == std::string::npos);
-    ASSERT_TRUE(addCalculator.getExpression().find('+') != std::string::npos);
-    ASSERT_TRUE(subtractCalculator.getExpression().find('=') == std::string::npos);
-    ASSERT_TRUE(subtractCalculator.getExpression().find('-') != std::string::npos);
-    ASSERT_TRUE(multiplyCalculator.getExpression().find('=') == std::string::npos);
-    ASSERT_TRUE(multiplyCalculator.getExpression().find('*') != std::string::npos);
-    ASSERT_TRUE(divideCalculator.getExpression().find('=') == std::string::npos);
-    ASSERT_TRUE(divideCalculator.getExpression().find('/') != std::string::npos);
+    SubtractCalculatorW3 subtractCalculator = SubtractCalculatorW3(5, 5);
+    std::string actual = subtractCalculator.getExpression();
+    std::string expected = "5 - 5";
+    ASSERT_EQ(expected, actual);
 }
+
+/**
+ * @brief Test to make sure the math is happening as expected
+ * 
+ */
+TEST(SubtractCalculatorW3Tests, WhenGetResultIsCalledOnSubtractCalculators_ThenAnswerIsReturned)
+{
+    SubtractCalculatorW3 subtractCalculator = SubtractCalculatorW3(5, 5);
+    ASSERT_EQ(0, subtractCalculator.getResult());
+    
+    subtractCalculator = SubtractCalculatorW3(-10, 5);
+    ASSERT_EQ(-15, subtractCalculator.getResult());
+
+    subtractCalculator = SubtractCalculatorW3(10, -5);
+    ASSERT_EQ(15, subtractCalculator.getResult());
+
+    subtractCalculator = SubtractCalculatorW3(100, 0);
+    ASSERT_EQ(100, subtractCalculator.getResult());
+
+    subtractCalculator = SubtractCalculatorW3(0, -10);
+    ASSERT_EQ(10, subtractCalculator.getResult());
+}
+
+
+/**
+ * @brief Test to make sure a fully formed equation is formed when toString is called
+ * 
+ */
+TEST(MultiplyCalculatorW3Tests, WhenToStringIsCalledOnMultiplyCalculators_ThenFullFormattedEquationIsReturned)
+{
+    MultiplyCalculatorW3 multiplyCalculator = MultiplyCalculatorW3(5, 5);
+    std::string actual = multiplyCalculator.toString();
+    std::string expected = "5 * 5 = 25";
+    ASSERT_EQ(expected, actual);
+}
+
+/**
+ * @brief Test to make sure a fully formed equation is formed when getExpression is called
+ * 
+ */
+TEST(MultiplyCalculatorW3Tests, WhenGetExpressionIsCalledOnMultiplyCalculators_ThenExpressionIsReturned)
+{
+    MultiplyCalculatorW3 multiplyCalculator = MultiplyCalculatorW3(5, 5);
+    std::string actual = multiplyCalculator.getExpression();
+    std::string expected = "5 * 5";
+    ASSERT_EQ(expected, actual);
+}
+
+/**
+ * @brief Test to make sure the math is happening as expected
+ * 
+ */
+TEST(MultiplyCalculatorW3Tests, WhenGetResultIsCalledOnMultiplyCalculators_ThenAnswerIsReturned)
+{
+    MultiplyCalculatorW3 multiplyCalculator = MultiplyCalculatorW3(5, 5);
+    ASSERT_EQ(25, multiplyCalculator.getResult());
+    
+    multiplyCalculator = MultiplyCalculatorW3(-10, 5);
+    ASSERT_EQ(-50, multiplyCalculator.getResult());
+
+    multiplyCalculator = MultiplyCalculatorW3(10, -5);
+    ASSERT_EQ(-50, multiplyCalculator.getResult());
+
+    multiplyCalculator = MultiplyCalculatorW3(0, 100);
+    ASSERT_EQ(0, multiplyCalculator.getResult());
+
+    multiplyCalculator = MultiplyCalculatorW3(-10, 0);
+    ASSERT_EQ(0, multiplyCalculator.getResult());
+}
+
 
 /**
  * @brief Test to make sure the calculator factory does not contruct calculator objects if the input is invalid
@@ -105,7 +238,12 @@ TEST_F(SimpleExpressionCalculatorW3FactoryTest, WhenCreateCalculatorIsCalledWith
 {
     ASSERT_FALSE(simpleExpressionFactory.createCalculator(""));
     ASSERT_FALSE(simpleExpressionFactory.createCalculator("Invalid Input"));
+    ASSERT_FALSE(simpleExpressionFactory.createCalculator("100x2 + 34k0"));
+    ASSERT_FALSE(simpleExpressionFactory.createCalculator("\n"));
+    ASSERT_FALSE(simpleExpressionFactory.createCalculator("                                                                                                      "));
     ASSERT_FALSE(simpleExpressionFactory.createCalculator("10 ? 10"));
+    ASSERT_FALSE(simpleExpressionFactory.createCalculator("10 : 10"));
+    ASSERT_FALSE(simpleExpressionFactory.createCalculator("10 & 10"));
 }
 
 /**

@@ -2,7 +2,7 @@
 /**
  * @file  ICalculatorW3.h
  * @date  Wed, 2 June 2021
- * @brief 
+ * @brief Interface for calculator objects
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
@@ -21,23 +21,23 @@ namespace calculator
              * @brief Destroy the ICalculatorW3 object
              * 
              */
-            virtual ~ICalculatorW3() {}
+            virtual ~ICalculatorW3() = default;
             /**
-             * @brief The left side of the equation
+             * @brief The expression or left side of the equation, e.g. "5 + 5"
              * 
              * @return std::string 
              */
             virtual std::string getExpression() = 0;
             /**
-             * @brief the solved, right side, of the equation equation
+             * @brief the solved result or right side, of the equation
              * 
-             * @return int 
+             * @return int - result of operation
              */
             virtual int getResult() = 0;
             /**
-             * @brief The full equation representation
+             * @brief The full equation representation, e.g. "5 + 5 = 10"
              * 
-             * @return std::string 
+             * @return std::string representation of object
              */
             virtual std::string toString() = 0;
     };

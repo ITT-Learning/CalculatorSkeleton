@@ -2,7 +2,7 @@
 /**
  * @file  AddCalculatorW3.h
  * @date  Wed, 2 June 2021
- * @brief 
+ * @brief Calculator for addition '+', adds two terms together
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,23 +26,26 @@ namespace calculator
             AddCalculatorW3() = delete;
 
             /**
-             * @brief Construct a new Add Calculator W 3 object
+             * @brief Construct a new multiplication calculator
+             *        X + Y = Z
+             * @note due to the communitive property the order of the terms do not matter
              * 
-             * @param leftTerm 
-             * @param rightTerm 
+             * @param leftTerm - the X term
+             * @param rightTerm - the Y term
              */
             explicit AddCalculatorW3(int leftTerm, int rightTerm);
+
             /**
-             * @brief Get the result or right side of the equation
+             * @brief Get the result or the right side of the equation
              * 
-             * @return int 
+             * @return int - leftTerm_ + rightTerm_
              */
             int getResult() override;
         private:
             /**
-             * @brief Get the operation
+             * @brief get the operation of the calculator, i.e. operation_
              * 
-             * @return char 
+             * @return char operation_
              */
             char getOperation() override;
     };

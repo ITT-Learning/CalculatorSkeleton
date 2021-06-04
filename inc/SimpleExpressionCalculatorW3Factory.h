@@ -2,7 +2,7 @@
 /**
  * @file  SimpleExpressionCalculatorW3Factory.h
  * @date  Wed, 2 June 2021
- * @brief 
+ * @brief Concrete factory for simple expression calculators
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
@@ -23,10 +23,9 @@ namespace calculator
         public:
             /**
              * @brief Create a Simple Expression Calculator Object
-             * @note Current memory leak... should implement this as a smart pointer
              * 
              * @param mathExpression should be in the form of [leftTerm] [operation] [rightTerm], e.g. '5 + 5'
-             * @return std::unique_ptr<ICalculatorW3>
+             * @return std::unique_ptr<ICalculatorW3> - [Add/Subtract/Divide/Multiply]Calculator
              */
             std::unique_ptr<ICalculatorW3> createCalculator(std::string mathExpression) override;
     };

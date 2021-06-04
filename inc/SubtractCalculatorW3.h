@@ -2,7 +2,7 @@
 /**
  * @file  SubtractCalculatorW3.h
  * @date  Wed, 2 June 2021
- * @brief 
+ * @brief Calculator for subtraction '-', subtracts the right term from the left term
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,25 +26,27 @@ namespace calculator
             SubtractCalculatorW3() = delete;
 
             /**
-             * @brief Construct a new Subtract Calculator W 3 object
+             * @brief Construct a new multiplication calculator
+             *        X - Y = Z
+             * @note the order of the terms do not matter!
              * 
-             * @param leftTerm 
-             * @param rightTerm 
+             * @param leftTerm - the X term
+             * @param rightTerm - the Y term
              */
             explicit SubtractCalculatorW3(int leftTerm, int rightTerm);
 
             /**
-             * @brief Get the Result of the equation
+             * @brief Get the result or the right side of the equation
              * 
-             * @return int 
+             * @return int - leftTerm_ * rightTerm_
              */
             int getResult() override;
             
         private:
             /**
-             * @brief Get the operation
+             * @brief get the operation of the calculator, i.e. operation_
              * 
-             * @return char 
+             * @return char operation_
              */
             char getOperation() override;
     };

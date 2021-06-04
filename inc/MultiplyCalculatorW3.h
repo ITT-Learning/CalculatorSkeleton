@@ -2,7 +2,7 @@
 /**
  * @file  MultiplyCalculatorW3.h
  * @date  Wed, 2 June 2021
- * @brief 
+ * @brief Calculator for multiplication '*', multiplies the terms together
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,23 +26,26 @@ namespace calculator
             MultiplyCalculatorW3() = delete;
 
             /**
-             * @brief Construct a new Subtract Calculator W 3 object
+             * @brief Construct a new multiplication calculator
+             *        X * Y = Z
+             * @note due to the associative property the order of the terms do not matter
              * 
-             * @param leftTerm 
-             * @param rightTerm 
+             * @param leftTerm - the X term
+             * @param rightTerm - the Y term
              */
             explicit MultiplyCalculatorW3(int leftTerm, int rightTerm);
+            
             /**
              * @brief Get the result or the right side of the equation
              * 
-             * @return int 
+             * @return int - leftTerm_ * rightTerm_
              */
             int getResult() override;
         private:
             /**
-             * @brief Get the Operation object
+             * @brief get the operation of the calculator, i.e. operation_
              * 
-             * @return char 
+             * @return char operation_
              */
             char getOperation() override;
     };

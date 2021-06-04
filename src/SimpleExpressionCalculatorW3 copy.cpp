@@ -3,12 +3,12 @@
 /**
  *  @file   SimpleExpressionCalculatorW3.cpp
  *  @date   Fri April 16 2021
- *  @brief  Funtions that support main.cpp
+ *  @brief  Base class for simple arithmitic calculators with exactly two terms.
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include "SimpleExpressionCalculatorW3.h"
 #include "CalculatorStrings.h"
+#include "SimpleExpressionCalculatorW3.h"
 
 namespace calculator
 {

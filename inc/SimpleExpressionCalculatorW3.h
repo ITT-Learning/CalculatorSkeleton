@@ -2,7 +2,7 @@
 /**
  * @file  SimpleExpressionCalculatorW3.h
  * @date  Wed, 2 June 2021
- * @brief 
+ * @brief Concrete factory that produces simple expression calcualtors that are two terms, e.g., '5 + 5'
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
