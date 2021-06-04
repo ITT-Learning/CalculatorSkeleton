@@ -13,7 +13,6 @@
 #include "ICalculatorW3.h"
 #include "CalculatorStrings.h"
 
-
 int main()
 {
     calculator::SimpleExpressionCalculatorW3Factory calculatorFactory;
@@ -25,7 +24,9 @@ int main()
         getline(std::cin, input);
 
         if(input == calculator::CalculatorStrings::EXIT)
+        {
             break;
+        }
 
         auto calculator = calculatorFactory.createCalculator(input);
         if(calculator)
