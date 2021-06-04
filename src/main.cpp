@@ -2,34 +2,30 @@
 /**
  *  @file   main.cpp
  *  @date   Fri April 16 2021
- *  @brief  Entry Point of Calculator
+ *  @brief  Entry Point of CalculatorW2
  */
 ////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <string>
 
-#include "Calculator.h"
+
+#include "CalculatorW2.h"
 #include "CalculatorStrings.h"
 
-
-int main() 
+int main()
 {
-    int a, b;
-    while(true)
+    while (true)
     {
-        std::cout << calculator::CalculatorStrings::MAIN_PROMPT << std::endl;
-        std::cin >> a >> b;
-        if(std::cin)
-        {
-            calculator::printCalculations(a,b);
-        }
-        else
-        {
-            std::cout << std::endl << std::endl << calculator::CalculatorStrings::INVALID_INPUT << std::endl;
-            std::cin.clear();
-            std::cin.ignore();
-        }
+        std::cout << calculator::CalculatorStrings::W2_MAIN_PROMPT << std::endl;
         
-        std::cout << std::endl << std::endl;
+        std::string input;
+        getline(std::cin, input);
+
+        if(input == calculator::CalculatorStrings::EXIT)
+            break;
+        
+        calculator::CalculatorW2 calculator(input);
+        std::cout << calculator << std::endl;
     }
+    return 0;
 }

@@ -8,7 +8,7 @@
 
 #include<gtest/gtest.h>
 #include<gmock/gmock.h>
-#include "../inc/Calculator.h"
+#include "../inc/CalculatorW1.h"
 
 using namespace testing;
 using namespace calculator;
