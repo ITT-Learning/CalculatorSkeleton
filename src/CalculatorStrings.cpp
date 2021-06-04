@@ -11,6 +11,14 @@
 
 namespace calculator
 {
-    const std::string CalculatorStrings::MAIN_PROMPT = "Enter two numbers, e.g. '4 10':\n(ctrl-c to exit)";
-    const std::string CalculatorStrings::INVALID_INPUT = "Invalid format please try again.";
+    constexpr char CalculatorStrings::EMPTY_STRING[];
+    constexpr char CalculatorStrings::EQUAL[];
+    constexpr char CalculatorStrings::ERROR_MESSAGE[];
+    constexpr char CalculatorStrings::ERROR_MESSAGE_DIVIDE_BY_ZERO[];
+    constexpr char CalculatorStrings::ERROR_MESSAGE_INVALID_INPUT[];
+    constexpr char CalculatorStrings::EXIT[];
+    constexpr char CalculatorStrings::INVALID_INPUT[];
+    constexpr char CalculatorStrings::SPACE[];
+    constexpr char CalculatorStrings::W1_MAIN_PROMPT[];
+    constexpr char CalculatorStrings::W2_MAIN_PROMPT[];
 } // namespace calculator

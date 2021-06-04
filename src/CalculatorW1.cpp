@@ -6,7 +6,7 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include "Calculator.h"
+#include "CalculatorW1.h"
 namespace calculator 
 {
     void printCalculations(const int &a, const int &b)
