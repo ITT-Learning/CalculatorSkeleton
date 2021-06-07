@@ -48,50 +48,6 @@ namespace calculator
         }
 
         calculateResult();
-        // leaving this here just so you can see my previous attempt,
-        // The lambda wasn't working how I wanted
-
-        // //make this leftTerm private function instead?
-        // auto trySetInt = [token](int &out)
-        // {   
-        //     std::string::size_type sz; 
-        //     try
-        //     {
-        //         std::stoi(token, &sz);
-        //     }
-        //     catch(const std::invalid_argument &e)
-        //     {
-        //         return false;
-        //     }
-        //     if(token.length() != sz)
-        //         return false;
-        //     return true;
-        // };
-
-        // if (!trySetInt(leftTerm_)) 
-        // {
-        //     hasError_ = true;
-        // }
-
-        // expStream >> token;
-
-        // if (token.length() == 1 &&
-        //     std::find(validOperations_.begin(), validOperations_.end(), token[0]) != validOperations_.end())
-        //     {
-        //         //is casting here safe? Or would something like leftTerm switch statement be better?
-        //         operation_ = (Operation)token[0];
-        //     }
-        // else
-        // {
-        //     hasError_ = true;
-        // }
-
-        // expStream >> token;
-
-        // if(!trySetInt(rightTerm_)) 
-        // {
-        //     hasError_ = true;
-        // }
     }
 
     CalculatorW2::~CalculatorW2() = default;

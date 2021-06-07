@@ -7,8 +7,8 @@
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef CALCULATOR_H
-#define CALCULATOR_H
+#ifndef CALCULATORW2_H
+#define CALCULATORW2_H
 
 #include <iostream>
 #include <string>
@@ -147,4 +147,4 @@ namespace calculator {
             friend std::ostream& operator<<(std::ostream& os, const CalculatorW2& calculator);
     };
 }
-#endif  // CALCULATOR_H
+#endif  // CALCULATORW2_H
