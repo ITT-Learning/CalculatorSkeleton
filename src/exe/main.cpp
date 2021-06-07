@@ -2,20 +2,20 @@
 /**
  *  @file   main.cpp
  *  @date   Fri April 16 2021
- *  @brief  Entry Point of CalculatorW3
+ *  @brief  Entry Point of Calculator
  */
 ////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <string>
 
 
-#include "SimpleExpressionCalculatorW3Factory.h"
-#include "ICalculatorW3.h"
+#include "SimpleExpressionCalculatorFactory.h"
+#include "ICalculator.h"
 #include "CalculatorStrings.h"
 
 int main()
 {
-    calculator::SimpleExpressionCalculatorW3Factory calculatorFactory;
+    calculator::SimpleExpressionCalculatorFactory calculatorFactory;
     while (true)
     {
         std::cout << calculator::CalculatorStrings::W2_MAIN_PROMPT << std::endl;
