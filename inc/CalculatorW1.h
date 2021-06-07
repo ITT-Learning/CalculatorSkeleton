@@ -7,8 +7,8 @@
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef CALCULATOR_H
-#define CALCULATOR_H
+#ifndef CALCULATORW1_H
+#define CALCULATORW1_H
 
 #include <iostream>
 #include <string>
@@ -49,4 +49,4 @@ namespace calculator {
     std::string formatCalculation(const int &a, const int &b, const int &result, char operation);
 
 } // namespace calculator
-#endif  // CALCULATOR_H
+#endif  // CALCULATORW1_H
