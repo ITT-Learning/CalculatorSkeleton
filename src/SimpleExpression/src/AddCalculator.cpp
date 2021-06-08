@@ -18,12 +18,12 @@ namespace calculator
         rightTerm_ = rightTerm;
     }
     
-    int AddCalculator::getResult() 
+    int AddCalculator::getResult()  const
     {
         return leftTerm_ + rightTerm_;
     }
     
-    char AddCalculator::getOperation() 
+    char AddCalculator::getOperation() const
     {
         return operation;
     }

@@ -31,7 +31,7 @@ namespace calculator
              * @param mathExpression [in] the left side of the equation
              * @return std::unique_ptr<ICalculator> concrete calculator as determined by mathExpression
              */
-            virtual std::unique_ptr<ICalculator> createCalculator(std::string mathExpression) = 0;
+            virtual std::unique_ptr<ICalculator> createCalculator(std::string mathExpression) const = 0;
     };
 }
 #endif  // ICALCULATORFACTORY_H

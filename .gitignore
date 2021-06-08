@@ -43,6 +43,7 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+cmake-build-*/
 
 # default build
 build/
@@ -58,6 +59,14 @@ bin/
 
 # ignore googletest items
 test/googletest-*/
+test/googletest-*/*
+
+# ignore third party libraries, they should all be built by CMake
+third-party/*
+!third-party/CMakeLists.txt
 
 # VSCode Project files
 .vscode/
+
+# JetBrains Project files
+.idea/

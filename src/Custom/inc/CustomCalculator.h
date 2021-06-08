@@ -1,0 +1,76 @@
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * @file  CustomCalculator.h
+ * @date  Wed, 2 June 2021
+ * @brief Calculator capable of extreme customization
+ *        Is a template class - check end of CustomCalculator.cpp to see which classes are defined
+ * @note https://stackoverflow.com/questions/8752837/undefined-reference-to-template-class-constructor
+ * 
+ */
+///////////////////////////////////////////////////////////////////////////////
+
+#ifndef CUSTOMTEMPLATECALCULATOR_H
+#define CUSTOMTEMPLATECALCULATOR_H
+
+#include <functional>
+#include <vector>
+#include <sstream>
+
+#include "fmt/core.h"
+
+#include "ICalculatorTemplate.h"
+#include "CalculatorStrings.h"
+
+namespace calculator 
+{
+    template <class T>
+    class CustomCalculator : public ICalculatorTemplate<T>
+    {
+        public:
+            /**
+             * @brief Do not allow default construction
+             */
+            CustomCalculator() = delete;
+
+            /**
+             * @brief Make Custom Calculator Object
+             *
+             * @param terms List of terms to be manipulated, terms will be used in function and in constructing the string
+             * @param func [in] function to solve with your terms example with lambda:
+             *                  [](std::vector<int> n){return (n[0] + n[1]) * n[2];}
+             * @param expressionFormat [in] python like expression format with bracket pairs as place holders
+             *                              e.g. "({} + {}) * {}"
+             */
+            explicit CustomCalculator(std::vector<T> terms, std::function<T(std::vector<T>)> func, std::string expressionFormat);
+
+            /**
+             * @brief The left side of the equation determined by the expressionFormat and the terms
+             *
+             * @return std::string formatted expression
+             */
+            std::string getExpression() const final;
+
+            /**
+             * @brief the results of plugging the terms into the function
+             *
+             * @return T
+             */
+            T getResult() const final;
+
+            /**
+             * @brief The full equation represented as a string i.e., <expression> = <result>
+             *
+             * @return std::string "<expression> = <result>"
+             */
+            std::string toString() const final;
+        private:
+            std::string expression_;
+            int argCount_ = 0;
+            std::vector<T> terms_;
+            std::function<T(std::vector<T>)> function_;
+
+
+            int findArgCount() const;
+    };
+}
+#endif  // CUSTOMTEMPLATECALCULATOR_H

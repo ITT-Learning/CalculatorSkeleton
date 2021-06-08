@@ -27,7 +27,7 @@ namespace calculator
              * @param mathExpression should be in the form of [leftTerm] [operation] [rightTerm], e.g. '5 + 5'
              * @return std::unique_ptr<ICalculator> - [Add/Subtract/Divide/Multiply]Calculator
              */
-            std::unique_ptr<ICalculator> createCalculator(std::string mathExpression) override;
+            std::unique_ptr<ICalculator> createCalculator(std::string mathExpression) const override;
     };
 }
 #endif  // SIMPLEEXPRESSIONCALCULATORFACTORY_H

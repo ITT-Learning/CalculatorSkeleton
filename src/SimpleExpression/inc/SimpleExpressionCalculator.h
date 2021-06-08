@@ -2,7 +2,7 @@
 /**
  * @file  SimpleExpressionCalculator.h
  * @date  Wed, 2 June 2021
- * @brief Concrete factory that produces simple expression calcualtors that are two terms, e.g., '5 + 5'
+ * @brief Concrete factory that produces simple expression calculators that are two terms, e.g., '5 + 5'
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
@@ -24,19 +24,13 @@ namespace calculator
              * 
              * @return std::string 
              */
-            std::string getExpression() override final;
-            /**
-             * @brief The solved right side of the equation
-             * 
-             * @return int 
-             */
-            virtual int getResult() = 0;
+            std::string getExpression() const final;
             /**
              * @brief The full equation represented as a string [leftTerm] [operation] [rightTerm] = [result]
              * 
              * @return std::string 
              */
-            std::string toString() override final;
+            std::string toString() const final;
         protected:
             int leftTerm_;
             int rightTerm_;
@@ -45,7 +39,7 @@ namespace calculator
              * 
              * @return char 
              */
-            virtual char getOperation() = 0;
+            virtual char getOperation() const = 0;
     };
 }
 #endif  // SIMPLEEXPRESSIONCALCULATOR_H

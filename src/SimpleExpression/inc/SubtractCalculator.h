@@ -40,7 +40,7 @@ namespace calculator
              * 
              * @return int - leftTerm_ * rightTerm_
              */
-            int getResult() override;
+            int getResult() const final;
             
         private:
             /**
@@ -48,7 +48,7 @@ namespace calculator
              * 
              * @return char operation_
              */
-            char getOperation() override;
+            char getOperation() const final;
     };
 }
 #endif  // SUBTRACTCALCULATOR_H

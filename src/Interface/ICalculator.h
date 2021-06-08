@@ -27,19 +27,19 @@ namespace calculator
              * 
              * @return std::string 
              */
-            virtual std::string getExpression() = 0;
+            virtual std::string getExpression() const = 0;
             /**
              * @brief the solved result or right side, of the equation
              * 
              * @return int - result of operation
              */
-            virtual int getResult() = 0;
+            virtual int getResult() const = 0;
             /**
              * @brief The full equation representation, e.g. "5 + 5 = 10"
              * 
              * @return std::string representation of object
              */
-            virtual std::string toString() = 0;
+            virtual std::string toString() const = 0;
     };
 }
 #endif  // ICALCULATOR_H

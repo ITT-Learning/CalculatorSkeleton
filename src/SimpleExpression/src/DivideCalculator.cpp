@@ -24,7 +24,7 @@ namespace calculator
         }
     }
     
-    int DivideCalculator::getResult() 
+    int DivideCalculator::getResult() const
     {
         if(rightTerm_ == 0)
         {
@@ -33,7 +33,7 @@ namespace calculator
         return leftTerm_ / rightTerm_;
     }
     
-    char DivideCalculator::getOperation() 
+    char DivideCalculator::getOperation() const
     {
         return operation;
     }

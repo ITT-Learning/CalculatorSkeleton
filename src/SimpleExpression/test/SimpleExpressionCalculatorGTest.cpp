@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////
 /**
- *  @file   CalculatorGtest.cpp
- *  @date   Wed May 26 2021
- *  @brief  Calculator Unit Tests
+ *  @file   SimpleExpressionCalculatorGTest.cpp
+ *  @date   Fri, June 11 2021
+ *  @brief  Tests for Simple Expression Calculators
  */
 ////////////////////////////////////////////////////////////////////////////
 
@@ -266,9 +266,9 @@ using ::testing::Return;
 class MockCalculator : public ICalculator
 {
     public:
-        MOCK_METHOD(std::string, toString, (), (override));
-        MOCK_METHOD(int, getResult, (), (override));
-        MOCK_METHOD(std::string, getExpression, (), (override));
+        MOCK_METHOD(std::string, toString, (), (const final));
+        MOCK_METHOD(int, getResult, (), (const final));
+        MOCK_METHOD(std::string, getExpression, (), (const final));
 };
 
 TEST(CalculatorWeek3Test, ThisIsATestTest)
