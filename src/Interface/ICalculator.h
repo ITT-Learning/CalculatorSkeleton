@@ -1,27 +1,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @file  ICalculatorW3.h
+ * @file  ICalculator.h
  * @date  Wed, 2 June 2021
  * @brief Interface for calculator objects
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef ICALCULATORW3_H
-#define ICALCULATORW3_H
+#ifndef ICALCULATOR_H
+#define ICALCULATOR_H
 
 #include <string>
 
 namespace calculator 
 {
-    class ICalculatorW3
+    class ICalculator
     {
         public:
             /**
-             * @brief Destroy the ICalculatorW3 object
+             * @brief Destroy the ICalculator object
              * 
              */
-            virtual ~ICalculatorW3() = default;
+            virtual ~ICalculator() = default;
             /**
              * @brief The expression or left side of the equation, e.g. "5 + 5"
              * 
@@ -42,4 +42,4 @@ namespace calculator
             virtual std::string toString() = 0;
     };
 }
-#endif  // ICALCULATORW3_H
+#endif  // ICALCULATOR_H

@@ -1,20 +1,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @file  MultiplyCalculatorW3.h
+ * @file  MultiplyCalculator.h
  * @date  Wed, 2 June 2021
  * @brief Calculator for multiplication '*', multiplies the terms together
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef MULTIPLYCALCULATORW3_H
-#define MULTIPLYCALCULATORW3_H
+#ifndef MULTIPLYCALCULATOR_H
+#define MULTIPLYCALCULATOR_H
 
-#include "SimpleExpressionCalculatorW3.h"
+#include "SimpleExpressionCalculator.h"
 
 namespace calculator 
 {
-    class MultiplyCalculatorW3: public SimpleExpressionCalculatorW3
+    class MultiplyCalculator: public SimpleExpressionCalculator
     {
         public:            
             static const char operation = '*';
@@ -23,7 +23,7 @@ namespace calculator
              * @brief disable default constructor, a calculator only makes sense with inputs
              * 
              */
-            MultiplyCalculatorW3() = delete;
+            MultiplyCalculator() = delete;
 
             /**
              * @brief Construct a new multiplication calculator
@@ -33,7 +33,7 @@ namespace calculator
              * @param leftTerm - the X term
              * @param rightTerm - the Y term
              */
-            explicit MultiplyCalculatorW3(int leftTerm, int rightTerm);
+            explicit MultiplyCalculator(int leftTerm, int rightTerm);
             
             /**
              * @brief Get the result or the right side of the equation
@@ -50,4 +50,4 @@ namespace calculator
             char getOperation() override;
     };
 }
-#endif  // MULTIPLYCALCULATORW3_H
+#endif  // MULTIPLYCALCULATOR_H

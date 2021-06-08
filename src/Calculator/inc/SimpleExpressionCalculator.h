@@ -1,22 +1,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @file  SimpleExpressionCalculatorW3.h
+ * @file  SimpleExpressionCalculator.h
  * @date  Wed, 2 June 2021
  * @brief Concrete factory that produces simple expression calcualtors that are two terms, e.g., '5 + 5'
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef SIMPLEEXPRESSIONCALCULATORW3_H
-#define SIMPLEEXPRESSIONCALCULATORW3_H
+#ifndef SIMPLEEXPRESSIONCALCULATOR_H
+#define SIMPLEEXPRESSIONCALCULATOR_H
 
 #include <string>
 
-#include "ICalculatorW3.h"
+#include "ICalculator.h"
 
 namespace calculator 
 {
-    class SimpleExpressionCalculatorW3 : public ICalculatorW3
+    class SimpleExpressionCalculator : public ICalculator
     {
         public:
             /**
@@ -48,4 +48,4 @@ namespace calculator
             virtual char getOperation() = 0;
     };
 }
-#endif  // SIMPLEEXPRESSIONCALCULATORW3_H
+#endif  // SIMPLEEXPRESSIONCALCULATOR_H

@@ -1,20 +1,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @file  AddCalculatorW3.h
+ * @file  AddCalculator.h
  * @date  Wed, 2 June 2021
  * @brief Calculator for addition '+', adds two terms together
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef ADDCALCULATORW3_H
-#define ADDCALCULATORW3_H
+#ifndef ADDCALCULATOR_H
+#define ADDCALCULATOR_H
 
-#include "SimpleExpressionCalculatorW3.h"
+#include "SimpleExpressionCalculator.h"
 
 namespace calculator 
 {
-    class AddCalculatorW3: public SimpleExpressionCalculatorW3
+    class AddCalculator: public SimpleExpressionCalculator
     {
         public:            
             static const char operation = '+';
@@ -23,7 +23,7 @@ namespace calculator
              * @brief disable default constructor, a calculator only makes sense with inputs
              * 
              */
-            AddCalculatorW3() = delete;
+            AddCalculator() = delete;
 
             /**
              * @brief Construct a new multiplication calculator
@@ -33,7 +33,7 @@ namespace calculator
              * @param leftTerm - the X term
              * @param rightTerm - the Y term
              */
-            explicit AddCalculatorW3(int leftTerm, int rightTerm);
+            explicit AddCalculator(int leftTerm, int rightTerm);
 
             /**
              * @brief Get the result or the right side of the equation
@@ -50,4 +50,4 @@ namespace calculator
             char getOperation() override;
     };
 }
-#endif  // ADDCALCULATORW3_H
+#endif  // ADDCALCULATOR_H
