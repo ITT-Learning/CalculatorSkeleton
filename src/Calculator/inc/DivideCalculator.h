@@ -1,47 +1,46 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @file  SubtractCalculatorW3.h
+ * @file  DivideCalculator.h
  * @date  Wed, 2 June 2021
- * @brief Calculator for subtraction '-', subtracts the right term from the left term
+ * @brief Calculator for division '/', divides the right term from the left term
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef SUBTRACTCALCULATORW3_H
-#define SUBTRACTCALCULATORW3_H
+#ifndef DIVIDECALCULATOR_H
+#define DIVIDECALCULATOR_H
 
-#include "SimpleExpressionCalculatorW3.h"
+#include "SimpleExpressionCalculator.h"
 
 namespace calculator 
 {
-    class SubtractCalculatorW3: public SimpleExpressionCalculatorW3
+    class DivideCalculator: public SimpleExpressionCalculator
     {
         public:            
-            static const char operation = '-';
+            static const char operation = '/';
 
             /**
              * @brief disable default constructor, a calculator only makes sense with inputs
              * 
              */
-            SubtractCalculatorW3() = delete;
+            DivideCalculator() = delete;
 
             /**
              * @brief Construct a new multiplication calculator
-             *        X - Y = Z
-             * @note the order of the terms do not matter!
+             *        X / Y = Z
+             * @note the order of the terms do matter!
              * 
              * @param leftTerm - the X term
              * @param rightTerm - the Y term
              */
-            explicit SubtractCalculatorW3(int leftTerm, int rightTerm);
-
+            explicit DivideCalculator(int leftTerm, int rightTerm);
+            
             /**
              * @brief Get the result or the right side of the equation
              * 
-             * @return int - leftTerm_ * rightTerm_
+             * @return int - leftTerm_ / rightTerm_
              */
             int getResult() override;
-            
         private:
             /**
              * @brief get the operation of the calculator, i.e. operation_
@@ -51,4 +50,4 @@ namespace calculator
             char getOperation() override;
     };
 }
-#endif  // SUBTRACTCALCULATORW3_H
+#endif  // DIVIDECALCULATOR_H

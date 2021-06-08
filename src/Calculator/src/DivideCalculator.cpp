@@ -1,7 +1,7 @@
 
 ////////////////////////////////////////////////////////////////////////////
 /**
- *  @file   DivideCalculatorW3.cpp
+ *  @file   DivideCalculator.cpp
  *  @date   Fri April 16 2021
  *  @brief  Funtions that support main.cpp
  */
@@ -9,12 +9,12 @@
 
 #include <iostream>
 
-#include "DivideCalculatorW3.h"
+#include "DivideCalculator.h"
 #include "CalculatorStrings.h"
 
 namespace calculator
 {
-    DivideCalculatorW3::DivideCalculatorW3(int leftTerm, int rightTerm)
+    DivideCalculator::DivideCalculator(int leftTerm, int rightTerm)
     {
         leftTerm_ = leftTerm;
         rightTerm_ = rightTerm;
@@ -24,7 +24,7 @@ namespace calculator
         }
     }
     
-    int DivideCalculatorW3::getResult() 
+    int DivideCalculator::getResult() 
     {
         if(rightTerm_ == 0)
         {
@@ -33,7 +33,7 @@ namespace calculator
         return leftTerm_ / rightTerm_;
     }
     
-    char DivideCalculatorW3::getOperation() 
+    char DivideCalculator::getOperation() 
     {
         return operation;
     }

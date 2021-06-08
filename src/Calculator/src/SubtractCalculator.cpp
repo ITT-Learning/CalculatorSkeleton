@@ -1,29 +1,28 @@
 
 ////////////////////////////////////////////////////////////////////////////
 /**
- *  @file   AddCalculatorW3.cpp
+ *  @file   SubtractCalculator.cpp
  *  @date   Fri April 16 2021
  *  @brief  Funtions that support main.cpp
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include "AddCalculatorW3.h"
-#include "CalculatorStrings.h"
+#include "SubtractCalculator.h"
 
 namespace calculator
 {
-    AddCalculatorW3::AddCalculatorW3(int leftTerm, int rightTerm)
+    SubtractCalculator::SubtractCalculator(int leftTerm, int rightTerm)
     {
         leftTerm_ = leftTerm;
         rightTerm_ = rightTerm;
     }
     
-    int AddCalculatorW3::getResult() 
+    int SubtractCalculator::getResult() 
     {
-        return leftTerm_ + rightTerm_;
+        return leftTerm_ - rightTerm_;
     }
     
-    char AddCalculatorW3::getOperation() 
+    char SubtractCalculator::getOperation() 
     {
         return operation;
     }

@@ -1,28 +1,28 @@
 
 ////////////////////////////////////////////////////////////////////////////
 /**
- *  @file   MultiplyCalculatorW3.cpp
+ *  @file   MultiplyCalculator.cpp
  *  @date   Fri April 16 2021
  *  @brief  Funtions that support main.cpp
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include "MultiplyCalculatorW3.h"
+#include "MultiplyCalculator.h"
 
 namespace calculator
 {
-    MultiplyCalculatorW3::MultiplyCalculatorW3(int leftTerm, int rightTerm)
+    MultiplyCalculator::MultiplyCalculator(int leftTerm, int rightTerm)
     {
         leftTerm_ = leftTerm;
         rightTerm_ = rightTerm;
     }
     
-    int MultiplyCalculatorW3::getResult() 
+    int MultiplyCalculator::getResult() 
     {
         return leftTerm_ * rightTerm_;
     }
     
-    char MultiplyCalculatorW3::getOperation() 
+    char MultiplyCalculator::getOperation() 
     {
         return operation;
     }
