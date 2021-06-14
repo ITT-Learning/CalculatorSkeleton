@@ -17,12 +17,12 @@ namespace calculator
         rightTerm_ = rightTerm;
     }
     
-    int MultiplyCalculator::getResult() 
+    int MultiplyCalculator::getResult() const
     {
         return leftTerm_ * rightTerm_;
     }
     
-    char MultiplyCalculator::getOperation() 
+    char MultiplyCalculator::getOperation() const
     {
         return operation;
     }
