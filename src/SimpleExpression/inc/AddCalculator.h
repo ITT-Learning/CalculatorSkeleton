@@ -40,14 +40,14 @@ namespace calculator
              * 
              * @return int - leftTerm_ + rightTerm_
              */
-            int getResult() override;
+            int getResult() const final;
         private:
             /**
              * @brief get the operation of the calculator, i.e. operation_
              * 
              * @return char operation_
              */
-            char getOperation() override;
+            char getOperation() const final;
     };
 }
 #endif  // ADDCALCULATOR_H

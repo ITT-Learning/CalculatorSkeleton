@@ -18,7 +18,7 @@
 
 namespace calculator
 {
-    std::unique_ptr<ICalculator> SimpleExpressionCalculatorFactory::createCalculator(std::string mathExpression) 
+    std::unique_ptr<ICalculator> SimpleExpressionCalculatorFactory::createCalculator(std::string mathExpression) const
     {
         std::unique_ptr<ICalculator> result = nullptr;
 
@@ -31,26 +31,24 @@ namespace calculator
         {
             switch(operation)
             {
-                // TODO refactor this as result = std::unique_ptr<AddCalculator>(rightterm, leftterm)
-                // see  suggestions from Max
                 case AddCalculator::operation:
                 {
-                    result = std::unique_ptr<ICalculator>(new AddCalculator(leftTerm, rightTerm));
+                    result = std::make_unique<AddCalculator>(leftTerm, rightTerm);
                     break;
                 }
                 case SubtractCalculator::operation:
                 {
-                    result = std::unique_ptr<ICalculator>(new SubtractCalculator(leftTerm, rightTerm));
+                    result = std::make_unique<SubtractCalculator>(leftTerm, rightTerm);
                     break;
                 }
                 case MultiplyCalculator::operation:
                 {
-                    result = std::unique_ptr<ICalculator>(new MultiplyCalculator(leftTerm, rightTerm));
+                    result = std::make_unique<MultiplyCalculator>(leftTerm, rightTerm);
                     break;
                 }
                 case DivideCalculator::operation:
                 {
-                    result = std::unique_ptr<ICalculator>(new DivideCalculator(leftTerm, rightTerm));
+                    result = std::make_unique<DivideCalculator>(leftTerm, rightTerm);
                     break;
                 }
                 default:
@@ -59,7 +57,6 @@ namespace calculator
                 }
             }
         }
-
         return result;
     }
 }

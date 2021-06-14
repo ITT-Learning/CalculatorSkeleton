@@ -17,12 +17,12 @@ namespace calculator
         rightTerm_ = rightTerm;
     }
     
-    int SubtractCalculator::getResult() 
+    int SubtractCalculator::getResult() const
     {
         return leftTerm_ - rightTerm_;
     }
     
-    char SubtractCalculator::getOperation() 
+    char SubtractCalculator::getOperation() const
     {
         return operation;
     }

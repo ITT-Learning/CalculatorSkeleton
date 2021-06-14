@@ -31,7 +31,8 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}
 enable_testing()
 
 include_directories(
-  $<TARGET_PROPERTY:Calculator,INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:SimpleExpressionCalculator,INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:CustomCalculator,INCLUDE_DIRECTORIES>
     )
 
 # Some recommendations on NOT using file globbing to grab all cpp files.  So far, it seems
@@ -39,7 +40,8 @@ include_directories(
 
 #"mocks/*.cpp",
 file(GLOB UNIT_TEST_SOURCES
-    "*.cpp"
+    ${CMAKE_SOURCE_DIR}/test/*.cpp
+    ${CMAKE_SOURCE_DIR}/src/*/test/*.cpp
 )
 
 
@@ -51,5 +53,6 @@ target_link_libraries(${This} PUBLIC
     gtest
     gmock
     pthread
-    Calculator
+    SimpleExpressionCalculator
+    CustomCalculator
 )
