@@ -11,8 +11,8 @@
 #ifndef CUSTOMCALCULATORFACTORY_H
 #define CUSTOMCALCULATORFACTORY_H
 
-#include <string>
 #include <functional>
+#include <string>
 #include <vector>
 
 #include "ICalculatorTemplate.h"
@@ -39,6 +39,7 @@ namespace calculator
              *                              e.g. "({} + {}) * {}"
              */
             CustomCalculatorFactory(std::function<T(std::vector<T>)> func, std::string expressionFormat);
+
             /**
              * @brief Create a Custom Calculator Object
              *
@@ -47,15 +48,16 @@ namespace calculator
              *         will return nullptr if argCount does not match
              */
             std::unique_ptr<ICalculatorTemplate<T>> createCalculator(std::string mathExpression) const final;
+
         private:
-            int argCount_;
+            int                              argCount_;
+            mutable int                      count_ = 0;
+            std::string                      expressionFormat_;
             std::function<T(std::vector<T>)> function_;
-            std::string expressionFormat_;
-            mutable int count_ = 0;
 
             /**
              * @brief finds the number of available slots to put terms in the expressionFormat_ string
-             * @warning needs improvement to protect against
+             * @warning needs improvement to protect against misformed expressions
              * @return number of available slots in expressionFormat_
              */
             int findArgCount() const;

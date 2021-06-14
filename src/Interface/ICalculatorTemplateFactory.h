@@ -10,8 +10,8 @@
 #ifndef ICALCULATORTEMPLATEFACTORY_H
 #define ICALCULATORTEMPLATEFACTORY_H
 
-#include <string>
 #include <memory>
+#include <string>
 
 #include "ICalculatorTemplate.h"
 

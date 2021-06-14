@@ -23,18 +23,21 @@ namespace calculator
              *
              */
             virtual ~ICalculatorTemplate() = default;
+
             /**
              * @brief The expression or left side of the equation
              *
              * @return std::string
              */
             virtual std::string getExpression() const = 0;
+
             /**
              * @brief the solved result or right side, of the equation
              *
              * @return T - result of operation
              */
             virtual T getResult() const = 0;
+
             /**
              * @brief The full equation representation, e.g. "5 + 5 = 10"
              * @warning If implementing this interface you will need to make sure T can be converted to a string

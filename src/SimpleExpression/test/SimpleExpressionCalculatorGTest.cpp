@@ -8,12 +8,13 @@
 
 #include<gtest/gtest.h>
 #include<gmock/gmock.h>
-#include "ICalculator.h"
-#include "SimpleExpressionCalculatorFactory.h"
+
 #include "AddCalculator.h"
-#include "SubtractCalculator.h"
-#include "MultiplyCalculator.h"
 #include "DivideCalculator.h"
+#include "ICalculator.h"
+#include "MultiplyCalculator.h"
+#include "SimpleExpressionCalculatorFactory.h"
+#include "SubtractCalculator.h"
 
 using namespace testing;
 using namespace calculator;

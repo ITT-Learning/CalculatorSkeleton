@@ -26,6 +26,9 @@ static bool isEqual(double a, double b)
 class CustomCalculatorTests: public ::testing::Test
 {
     protected:
+        std::string addThreeFormat = "{} + {} + {}";
+        std::string threeFormat = "{} {} {}";
+        std::string twoFormat = "{} {}";
         std::function<int(std::vector<int>)> sumInts =
                 [](const std::vector<int>& terms)
                 {
@@ -53,9 +56,9 @@ class CustomCalculatorTests: public ::testing::Test
  */
 TEST_F(CustomCalculatorTests, WhenGetResultIsCalledWithCustomCalculator_ThenAnswerReturned)
 {
-    CustomCalculator<int> calculator1{{1, 2, 3}, sumInts, "{} + {} + {}"};
+    CustomCalculator<int> calculator1{{1, 2, 3}, sumInts, addThreeFormat};
     ASSERT_EQ(6, calculator1.getResult());
-    CustomCalculator<double> calculator2{{0.01, 2.5, 3.99}, sumDoubles, "{} + {} + {}"};
+    CustomCalculator<double> calculator2{{0.01, 2.5, 3.99}, sumDoubles, addThreeFormat};
     ASSERT_TRUE(isEqual(6.5, calculator2.getResult()));
 }
 
@@ -65,12 +68,12 @@ TEST_F(CustomCalculatorTests, WhenGetResultIsCalledWithCustomCalculator_ThenAnsw
  */
 TEST_F(CustomCalculatorTests, WhenGetExpressionIsCalledWithCustomCalculator_ThenFormattedExpressionReturned)
 {
-    CustomCalculator<int> calculator1 {{1, 5, 100}, [](auto f){return 0;}, "{} {} {}"};
+    CustomCalculator<int> calculator1 {{1, 5, 100}, [](auto f){return 0;}, threeFormat};
     ASSERT_EQ("1 5 100", calculator1.getExpression());
 
     // this is not ideal. But would need to not use vformat() ... but then I can't use dynamic_argument_store... so it
     // would require a pretty big rework.
-    CustomCalculator<float> calculator2 {{1.1, 5.5, 100.25}, [](auto f){return 0;}, "{} {} {}"};
+    CustomCalculator<float> calculator2 {{1.1, 5.5, 100.25}, [](auto f){return 0;}, threeFormat};
     ASSERT_EQ("1 5 100", calculator2.getExpression());
 }
 
@@ -80,10 +83,10 @@ TEST_F(CustomCalculatorTests, WhenGetExpressionIsCalledWithCustomCalculator_Then
  */
 TEST_F(CustomCalculatorTests, WhenToStringIsCalledWithCustomCalculator_ThenFormattedEquationReturned)
 {
-    CustomCalculator<int> calculator1 {{1, 5, 100}, [](auto f){return 0;}, "{} {} {}"};
+    CustomCalculator<int> calculator1 {{1, 5, 100}, [](auto f){return 0;}, threeFormat};
     ASSERT_EQ("1 5 100 = 0", calculator1.toString());
 
-    CustomCalculator<float> calculator2 {{1.1, 5.5, 100.25}, [](auto f){return 0;}, "{} {} {}"};
+    CustomCalculator<float> calculator2 {{1.1, 5.5, 100.25}, [](auto f){return 0;}, threeFormat};
     ASSERT_EQ("1 5 100 = 0", calculator2.toString());
 }
 
@@ -92,14 +95,14 @@ TEST_F(CustomCalculatorTests, WhenToStringIsCalledWithCustomCalculator_ThenForma
  */
 TEST_F(CustomCalculatorTests, WhenGetExpressionIsCalledWithCustomCalculatorWithMismatchedTermAndFormatArguments_ThenEmptyStringReturnedAndErrorMessageOut)
 {
-    CustomCalculator<int> calculator1 {{1, 5, 100}, [](auto f){return 0;}, "{} {}"};
+    CustomCalculator<int> calculator1 {{1, 5, 100}, [](auto f){return 0;}, twoFormat};
     testing::internal::CaptureStderr();
     std::string expression1 = calculator1.getExpression();
     std::string output1 = testing::internal::GetCapturedStderr();
     ASSERT_NE(output1, std::string(""));
     ASSERT_EQ("", expression1);
 
-    CustomCalculator<int> calculator2 {{1}, [](auto f){return 0;}, "{} {}"};
+    CustomCalculator<int> calculator2 {{1}, [](auto f){return 0;}, twoFormat};
     testing::internal::CaptureStderr();
     std::string expression2 = calculator2.getExpression();
     std::string output2 = testing::internal::GetCapturedStderr();

@@ -22,18 +22,21 @@ namespace calculator
              * 
              */
             virtual ~ICalculator() = default;
+
             /**
              * @brief The expression or left side of the equation, e.g. "5 + 5"
              * 
              * @return std::string 
              */
             virtual std::string getExpression() const = 0;
+
             /**
              * @brief the solved result or right side, of the equation
              * 
              * @return int - result of operation
              */
             virtual int getResult() const = 0;
+
             /**
              * @brief The full equation representation, e.g. "5 + 5 = 10"
              * 

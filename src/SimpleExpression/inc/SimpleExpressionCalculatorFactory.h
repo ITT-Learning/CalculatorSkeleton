@@ -10,8 +10,8 @@
 #ifndef SIMPLEEXPRESSIONCALCULATORFACTORY_H
 #define SIMPLEEXPRESSIONCALCULATORFACTORY_H
 
-#include <string>
 #include <memory>
+#include <string>
 
 #include "ICalculator.h"
 #include "ICalculatorFactory.h"

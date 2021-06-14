@@ -13,13 +13,13 @@
 #define CUSTOMTEMPLATECALCULATOR_H
 
 #include <functional>
-#include <vector>
 #include <sstream>
+#include <vector>
 
 #include "fmt/core.h"
 
-#include "ICalculatorTemplate.h"
 #include "CalculatorStrings.h"
+#include "ICalculatorTemplate.h"
 
 namespace calculator 
 {
@@ -63,13 +63,18 @@ namespace calculator
              * @return std::string "<expression> = <result>"
              */
             std::string toString() const final;
+
         private:
-            std::string expression_;
-            int argCount_ = 0;
-            std::vector<T> terms_;
+            int                              argCount_ = 0;
+            std::string                      expression_;
             std::function<T(std::vector<T>)> function_;
+            std::vector<T>                   terms_;
 
-
+            /**
+             * @brief finds the number of available slots to put terms in the expression_ string
+             * @warning needs improvement to protect against misformed expressions
+             * @return number of available slots in expressionFormat_
+             */
             int findArgCount() const;
     };
 }

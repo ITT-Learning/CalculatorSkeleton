@@ -10,8 +10,8 @@
 #ifndef ICALCULATORFACTORY_H
 #define ICALCULATORFACTORY_H
 
-#include <string>
 #include <memory>
+#include <string>
 
 #include "ICalculator.h"
 
@@ -25,6 +25,7 @@ namespace calculator
              * 
              */
             virtual ~ICalculatorFactory() = default;
+
             /**
              * @brief Create a Calculator object
              * 

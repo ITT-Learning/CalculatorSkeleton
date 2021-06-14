@@ -10,7 +10,6 @@
 
 int main()
 {
-//    calculator::CalculatorApplication::runW3();
     calculator::CalculatorApplication::run();
     return 0;
 }

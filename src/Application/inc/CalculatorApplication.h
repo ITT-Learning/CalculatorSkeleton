@@ -10,7 +10,9 @@
 #ifndef CALCULATORAPPLICATION_H
 #define CALCULATORAPPLICATION_H
 
-namespace calculator 
+#include <functional>
+
+namespace calculator
 {
     class CalculatorApplication
     {
@@ -26,6 +28,11 @@ namespace calculator
              * @brief runs calculator prompt in infinite loop with Week 3 implementation
              */
             static void runW3();
+
+            /**
+             * @brief Infinite loop for user input. Will break loop if user 'exit' 'e' 'quit' 'q'.
+             */
+            static void inputLoop(const std::string& prompt, const std::function<void(const std::string&)>& function);
     };
 }
 #endif  // CALCULATORAPPLICATION_H

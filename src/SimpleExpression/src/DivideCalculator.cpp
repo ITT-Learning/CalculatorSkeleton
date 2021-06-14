@@ -9,8 +9,8 @@
 
 #include <iostream>
 
-#include "DivideCalculator.h"
 #include "CalculatorStrings.h"
+#include "DivideCalculator.h"
 
 namespace calculator
 {

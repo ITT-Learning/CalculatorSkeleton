@@ -10,8 +10,8 @@
 #include <memory>
 #include <sstream>
 
-#include "CustomCalculatorFactory.h"
 #include "CustomCalculator.h"
+#include "CustomCalculatorFactory.h"
 
 
 namespace calculator
@@ -44,6 +44,7 @@ namespace calculator
             calculator = std::make_unique<CustomCalculator<T>>(terms, function_, expressionFormat_);
             count_++;
         }
+
         return calculator;
     }
 
@@ -52,17 +53,18 @@ namespace calculator
     {
         int openBracketCount = 0;
         int closeBracketCount = 0;
-        for (char i : expressionFormat_)
+        for (char c : expressionFormat_)
         {
-            if (i == '{')
+            if (c == CalculatorStrings::BRACKET_OPEN)
             {
                 openBracketCount++;
             }
-            else if (i == '}')
+            else if (c == CalculatorStrings::BRACKET_CLOSE)
             {
                 closeBracketCount++;
             }
         }
+
         return std::min(openBracketCount, closeBracketCount);
     }
 }

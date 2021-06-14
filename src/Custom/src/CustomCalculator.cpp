@@ -3,16 +3,16 @@
 /**
  *  @file   CustomCalculator.cpp
  *  @date   Wed June 9 2021
- *  @brief
+ *  @brief Calculator capable of extreme customization
  */
 ////////////////////////////////////////////////////////////////////////////
 
 
-#include <iostream>
 #include <exception>
+#include <iostream>
 
-#include "CustomCalculator.h"
 #include "CalculatorStrings.h"
+#include "CustomCalculator.h"
 
 namespace calculator
 {
@@ -30,7 +30,7 @@ namespace calculator
     template <class T>
     std::string CustomCalculator<T>::getExpression() const
     {
-        std::string s = "";
+        std::string s = CalculatorStrings::EMPTY_STRING;
         if (findArgCount() == terms_.size())
         {
             fmt::dynamic_format_arg_store<fmt::format_context> store;
@@ -49,8 +49,9 @@ namespace calculator
         }
         else
         {
-            std::cerr << "mismatched arguments" << std::endl;
+            std::cerr << CalculatorStrings::MISMATCHED_ARGS << std::endl;
         }
+
         return s;
     }
 
@@ -65,6 +66,7 @@ namespace calculator
     {
         std::stringstream ss;
         ss << getExpression() << CalculatorStrings::EQUAL << getResult();
+
         return ss.str();
     }
 
@@ -73,17 +75,18 @@ namespace calculator
     {
         int openBracketCount = 0;
         int closeBracketCount = 0;
-        for (char i : expression_)
+        for (char c : expression_)
         {
-            if (i == '{')
+            if (c == CalculatorStrings::BRACKET_OPEN)
             {
                 openBracketCount++;
             }
-            else if (i == '}')
+            else if (c ==  CalculatorStrings::BRACKET_CLOSE)
             {
                 closeBracketCount++;
             }
         }
+
         return std::min(openBracketCount, closeBracketCount);
     }
 }
