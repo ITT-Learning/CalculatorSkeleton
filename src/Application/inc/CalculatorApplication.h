@@ -20,7 +20,12 @@ namespace calculator
             CalculatorApplication() = delete;
 
             /**
-             * @brief runs calculator prompt in infinite loop
+            * @brief For testing and playing around with concepts
+            */
+            static void playground();
+
+            /**
+             * @brief helper function to call a runWx that I want
              */
             static void run();
 
@@ -28,6 +33,16 @@ namespace calculator
              * @brief runs calculator prompt in infinite loop with Week 3 implementation
              */
             static void runW3();
+
+            /**
+             * @brief runs calculator prompt in infinite loop
+             */
+            static void runW4();
+
+            /**
+             * @brief runs calculator prompt in infinite loop
+             */
+            static void runW5();
 
             /**
              * @brief Infinite loop for user input. Will break loop if user 'exit' 'e' 'quit' 'q'.
