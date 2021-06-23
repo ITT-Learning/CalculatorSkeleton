@@ -9,16 +9,14 @@
 
 #include <algorithm>
 #include <cmath>
-#include <iostream>
-#include <regex>
-#include <thread>
 #include <future>
+#include <iostream>
 
 #include "CalculatorApplication.h"
 #include "CalculatorStrings.h"
+#include "CompoundExpressionCalculator.h"
 #include "CustomCalculatorFactory.h"
 #include "SimpleExpressionCalculatorFactory.h"
-#include "CompoundExpressionCalculator.h"
 
 namespace calculator
 {
@@ -64,7 +62,7 @@ namespace calculator
                 //double looping for the equation
                 switch (input[0])
                 {
-                    case '1': //sqrt
+                    case (int)Options::FIRST: //sqrt
                         inputLoop(CalculatorStrings::W4_SQRT_PROMPT, [](const std::string& input)
                         {
                             CustomCalculatorFactory<double> calculatorFactory([](auto terms){ return std::sqrt(terms[0]);}, CalculatorStrings::W4_SQRT_FORMAT);
@@ -72,7 +70,8 @@ namespace calculator
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
-                    case '2': //quadratic formula
+
+                    case (int)Options::SECOND: //quadratic formula
                         inputLoop(CalculatorStrings::W4_QUAD_PROMPT, [](const std::string& input)
                         {
                             CustomCalculatorFactory<double> calculatorFactory([](auto terms)
@@ -83,7 +82,8 @@ namespace calculator
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
-                    case '3': //pythagorean theorem
+
+                    case (int)Options::THIRD: //pythagorean theorem
                         inputLoop(CalculatorStrings::W4_PYTH_PROMPT, [](const std::string& input)
                         {
                             CustomCalculatorFactory<double> calculatorFactory([](auto terms)
@@ -94,7 +94,8 @@ namespace calculator
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
-                    case '4': //add
+
+                    case (int)Options::FOURTH: //add
                         inputLoop(CalculatorStrings::W4_ADD2_PROMPT, [](const std::string& input)
                         {
                             CustomCalculatorFactory<double> calculatorFactory([](auto terms)
@@ -104,6 +105,9 @@ namespace calculator
                             auto calculator = calculatorFactory.createCalculator(input);
                             std::cout << calculator->toString() << std::endl;
                         });
+                        break;
+                    default:
+                        //do nothing, inputLoop will loop if input is invalid
                         break;
                 }
             }
@@ -118,13 +122,13 @@ namespace calculator
                       {
                           switch (input[0])
                           {
-                              case '1':
+                              case (int)Options::FIRST:
                                   inputLoop(CalculatorStrings::W5_COMPOUND_PROMPT, [](auto input){
                                       CompoundExpressionCalculator compoundCalc{input};
                                       std::cout << compoundCalc.toString() << std::endl;
                                   });
                                   break;
-                              case '2':
+                              case (int)Options::SECOND:
                                   inputLoop(CalculatorStrings::W5_VARIABLE_PROMPT, [](auto input){
                                       auto vars = input;
 

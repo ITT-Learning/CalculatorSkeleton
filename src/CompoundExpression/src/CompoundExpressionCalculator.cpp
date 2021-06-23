@@ -6,15 +6,13 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
+#include <iostream>
+#include <mutex>
 #include <regex>
 #include <thread>
-#include <utility>
-#include <mutex>
-#include <iostream>
-#include <sstream>
 
-#include "CompoundExpressionCalculator.h"
 #include "CalculatorStrings.h"
+#include "CompoundExpressionCalculator.h"
 
 namespace calculator
 {
@@ -71,8 +69,8 @@ namespace calculator
             // variable expression look like 'a=1000' or 'b = 1000', find '=' then add 1 to get just the number
             // we then sstream >> it to get rid of whitespace
             auto numberStart = match.rfind('=') + 1;
-            std::stringstream ss(match.substr(numberStart));
-            ss >> value;
+            std::stringstream stream(match.substr(numberStart));
+            stream >> value;
             if (map.find(key) == map.end())
             {
                 map.insert(varPair(key, value));
@@ -138,12 +136,12 @@ namespace calculator
     void CompoundExpressionCalculator::replaceSubexpressionWithResultInResultExpression(const std::string &expression)
     {
         //get the result from the expression
-        auto c = calculatorFactory_.createCalculator(expression);
-        std::string result = std::to_string(c->getResult());
+        auto calculator = calculatorFactory_.createCalculator(expression);
+        std::string result = std::to_string(calculator->getResult());
 
         //create the regex for filtering
-        std::string escaped_expression = expressionWrapOperator(expression);
-        std::regex expressionRegex(escaped_expression, std::regex_constants::ECMAScript | std::regex_constants::icase);
+        std::string escapedExpression = expressionWrapOperator(expression);
+        std::regex expressionRegex(escapedExpression, std::regex_constants::ECMAScript | std::regex_constants::icase);
 
         threadedReplaceResultExpression(result, expressionRegex);
     }

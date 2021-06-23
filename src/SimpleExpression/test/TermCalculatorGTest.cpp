@@ -13,31 +13,33 @@
 #include "TermCalculator.h"
 
 using namespace testing;
-using namespace calculator;
 
+namespace calculator
+{
 /**
  * @brief test for term calculator getResult should return term
  */
-TEST(termCalculatorTests, WhenGetResultIsCalledWithTermCalculator_ThenTermReturnedAsInt)
-{
-    TermCalculator termCalculator{0};
-    ASSERT_EQ(0, termCalculator.getResult());
-}
+    TEST(termCalculatorTests, WhenGetResultIsCalledWithTermCalculator_ThenTermReturnedAsInt)
+    {
+        TermCalculator termCalculator{0};
+        ASSERT_EQ(0, termCalculator.getResult());
+    }
 
 /**
  * @brief test for term calculator for toString, should return the term as a string
  */
-TEST(termCalculatorTests, WhenToStringIsCalledWithTermCalculator_ThenTermReturnedAsString)
-{
-    TermCalculator termCalculator{0};
-    ASSERT_EQ("0", termCalculator.toString());
-}
+    TEST(termCalculatorTests, WhenToStringIsCalledWithTermCalculator_ThenTermReturnedAsString)
+    {
+        TermCalculator termCalculator{0};
+        ASSERT_EQ("0", termCalculator.toString());
+    }
 
 /**
  * @brief test for term calculator for getResult, should return the term as a string
  */
-TEST(termCalculatorTests, WhenGetExpressionIsCalledWithTermCalculator_ThenTermReturnedAsString)
-{
-    TermCalculator termCalculator{0};
-    ASSERT_EQ("0", termCalculator.getExpression());
+    TEST(termCalculatorTests, WhenGetExpressionIsCalledWithTermCalculator_ThenTermReturnedAsString)
+    {
+        TermCalculator termCalculator{0};
+        ASSERT_EQ("0", termCalculator.getExpression());
+    }
 }

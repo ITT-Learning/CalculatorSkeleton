@@ -14,6 +14,14 @@
 
 namespace calculator
 {
+    enum class Options : char
+    {
+        FIRST = '1',
+        SECOND = '2',
+        THIRD = '3',
+        FOURTH = '4',
+    };
+
     class CalculatorApplication
     {
         public:

@@ -10,9 +10,9 @@
 #define CALCULATOR_CALCULATOROPERATORS_H
 
 
-#include "ICalculator.h"
 #include "AddCalculator.h"
 #include "DivideCalculator.h"
+#include "ICalculator.h"
 #include "MultiplyCalculator.h"
 #include "SubtractCalculator.h"
 

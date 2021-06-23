@@ -37,7 +37,6 @@ class CompoundExpressionCalculatorTests : public ::testing::Test
         CompoundExpressionCalculator calculatorVariable{map, testVarExpression};
         CompoundExpressionCalculator calculatorExpressionEmpty {""};
         CompoundExpressionCalculator calculatorVariableEmpty {std::unordered_map<char, int>(), ""};
-
 };
 
 /**
@@ -47,8 +46,8 @@ TEST_F(CompoundExpressionCalculatorTests, WhenToVariableMapIsCalledWithValidStri
 {
     auto result = CompoundExpressionCalculator::toVariableMap("a = 10, b = 100");
 
-    ASSERT_TRUE(result['a'] == 10);
-    ASSERT_TRUE(result['b'] == 100);
+    EXPECT_TRUE(result['a'] == 10);
+    EXPECT_TRUE(result['b'] == 100);
 }
 
 /**
@@ -58,7 +57,7 @@ TEST_F(CompoundExpressionCalculatorTests, WhenToVariableMapIsCalledWithInvalidSt
 {
     auto result = CompoundExpressionCalculator::toVariableMap("a 234, 823 457b 00");
 
-    ASSERT_TRUE(result.empty());
+    EXPECT_TRUE(result.empty());
 }
 
 /**
@@ -66,8 +65,8 @@ TEST_F(CompoundExpressionCalculatorTests, WhenToVariableMapIsCalledWithInvalidSt
  */
 TEST_F(CompoundExpressionCalculatorTests, WhenGetResultIsCalledWithCompoundCalculator_ThenAnswerReturned)
 {
-    ASSERT_EQ(2, calculatorExpression.getResult());
-    ASSERT_EQ(2, calculatorVariable.getResult());
+    EXPECT_EQ(2, calculatorExpression.getResult());
+    EXPECT_EQ(2, calculatorVariable.getResult());
 }
 
 /**
@@ -75,8 +74,9 @@ TEST_F(CompoundExpressionCalculatorTests, WhenGetResultIsCalledWithCompoundCalcu
  */
 TEST_F(CompoundExpressionCalculatorTests, WhenGetExpressionIsCalledWithCompoundCalculator_ThenFormattedExpressionReturned)
 {
-    ASSERT_EQ("-1 + 2 * -3 / 3 - -5", calculatorExpression.getExpression());
-    ASSERT_EQ("-1 + 2 * -3 / 3 - -5", calculatorVariable.getExpression());
+    std::string expected = "-1 + 2 * -3 / 3 - -5";
+    EXPECT_EQ(expected, calculatorExpression.getExpression());
+    EXPECT_EQ(expected, calculatorVariable.getExpression());
 }
 
 /**
@@ -84,8 +84,9 @@ TEST_F(CompoundExpressionCalculatorTests, WhenGetExpressionIsCalledWithCompoundC
  */
 TEST_F(CompoundExpressionCalculatorTests, WhenToStringIsCalledWithCompoundCalculator_ThenFullEquationReturned)
 {
-    ASSERT_EQ("-1 + 2 * -3 / 3 - -5 = 2", calculatorExpression.toString());
-    ASSERT_EQ("-1 + 2 * -3 / 3 - -5 = 2", calculatorVariable.toString());
+    std::string expected = "-1 + 2 * -3 / 3 - -5 = 2";
+    EXPECT_EQ(expected, calculatorExpression.toString());
+    EXPECT_EQ(expected, calculatorVariable.toString());
 }
 
 /**
@@ -93,8 +94,9 @@ TEST_F(CompoundExpressionCalculatorTests, WhenToStringIsCalledWithCompoundCalcul
  */
 TEST_F(CompoundExpressionCalculatorTests, WhenGetResultIsCalledWithEmptyCompoundCalculator_ThenZeroReturned)
 {
-    ASSERT_EQ(0, calculatorExpressionEmpty.getResult());
-    ASSERT_EQ(0, calculatorVariableEmpty.getResult());
+    int expected = 0;
+    EXPECT_EQ(expected, calculatorExpressionEmpty.getResult());
+    EXPECT_EQ(expected, calculatorVariableEmpty.getResult());
 }
 
 /**
@@ -102,8 +104,9 @@ TEST_F(CompoundExpressionCalculatorTests, WhenGetResultIsCalledWithEmptyCompound
  */
 TEST_F(CompoundExpressionCalculatorTests, WhenGetExpressionIsCalledWithEmptyCompoundCalculator_ThenEmptyStringReturned)
 {
-    ASSERT_EQ("", calculatorExpressionEmpty.getExpression());
-    ASSERT_EQ("", calculatorVariableEmpty.getExpression());
+    std::string expected = "";
+    EXPECT_EQ(expected, calculatorExpressionEmpty.getExpression());
+    EXPECT_EQ(expected, calculatorVariableEmpty.getExpression());
 }
 
 /**
@@ -112,6 +115,7 @@ TEST_F(CompoundExpressionCalculatorTests, WhenGetExpressionIsCalledWithEmptyComp
  */
 TEST_F(CompoundExpressionCalculatorTests, WhenToStringIsCalledWithEmptyCompoundCalculator_ThenEqualZeroReturned)
 {
-    ASSERT_EQ(" = 0", calculatorExpressionEmpty.toString());
-    ASSERT_EQ(" = 0", calculatorVariableEmpty.toString());
+    std::string expected = " = 0";
+    EXPECT_EQ(expected, calculatorExpressionEmpty.toString());
+    EXPECT_EQ(expected, calculatorVariableEmpty.toString());
 }

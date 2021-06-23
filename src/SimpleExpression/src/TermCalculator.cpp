@@ -2,7 +2,7 @@
 /**
  *  @file   TermCalculator.cpp
  *  @date   Fri, June 18 2021
- *  @brief  Calcualtor that represents a single term
+ *  @brief  Calculator that represents a single term
  */
 ////////////////////////////////////////////////////////////////////////////
 
