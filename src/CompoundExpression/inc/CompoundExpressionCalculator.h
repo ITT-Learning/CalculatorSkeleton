@@ -74,33 +74,37 @@ namespace calculator
         private:
             SimpleExpressionCalculatorFactory calculatorFactory_;
             std::string                       compoundExpression_;
-            std::string                       resultExpression_;
-            int                               result_                = 0;
             std::unordered_map<char, int>     variableMap_           = std::unordered_map<char, int>();
 
             /**
              * @brief Calculates the result using threads and order of operations
              *        we'll capture the result in result_ since this can be a costly operation
+             * @param resultExpression [in/out] passed to calculator result concurrently
              * @return the finished result
              */
-            int computeResult();
+            int computeResult(std::string &resultExpression) const;
 
             /**
              * @brief Replace function which can be used with formatResultExpression to take a simple expression with the result
              *        e.g. expecting "10 + 10", will solve it to 20, and then search resultExpression_ for "10 + 10 and replace it with 20
+             * @param resultExpression [in/out] passed to calculator result concurrently
              * @param expression [in] - subexpression that needs solved and replaced
              */
-            void replaceSubexpressionWithResultInResultExpression(const std::string &expression);
+            void replaceSubexpressionWithResultInResultExpression(std::string &resultExpression,
+                                                                  const std::string &expression) const;
 
             /**
              * @brief Replace function which can be used with formatResultExpression to take a variable and replace with the value
              *        e.g. expecting "a" look it up in variableMap_ and then replace all "a"s with the value
+             * @param resultExpression [in/out] passed to calculator result concurrently
              * @param variable [in] - variable to replace
              */
-            void replaceVariableWithNumberInResultExpression(const std::string &variable);
+            void replaceVariableWithNumberInResultExpression(std::string &resultExpression,
+                                                             const std::string &variable) const;
 
             /**
              * @brief Uses the regex to find matches in the resultExpression_ and will spin up threads to replace the matches
+             * @param resultExpression [in/out] passed to calculator result concurrently
              * @param regex [in] regex to find that needs replaced
              * @param classReplaceFunction [in] A [private] CompoundExpressionFunction function pointer that takes a string of the match
              *                             the function is responsible for updating the string using threadedReplaceResultExpression
@@ -112,14 +116,18 @@ namespace calculator
              *       and I can use it for solving sub-expressions and replacing that, but in this case I think it actually hinders
              *       readability.
              */
-            void formatResultExpression(const std::regex &regex, void (CompoundExpressionCalculator::*classReplaceFunction)(const std::string &));
+            void formatResultExpression(std::string &resultExpression, const std::regex &regex,
+                                        void (CompoundExpressionCalculator::*classReplaceFunction)(std::string &, const std::string &string) const) const;
 
             /**
              * @brief Safely handles updating resultExpression_ by threads using a mutex to lock reading and updating resultExpression_
+             * @param resultExpression [in/out] passed to calculator result concurrently
              * @param replacement [in] what to replace matched substring
              * @param match [in] regex containing the substring that needs to be replaced
              */
-            void threadedReplaceResultExpression(const std::string &replacement, const std::regex &match);
+            void threadedReplaceResultExpression(std::string &resultExpression,
+                                                 const std::string &replacement,
+                                                 const std::regex &match) const;
 
             /**
              * @brief Helper function to make the regex work. Since '+' and '*' are special characters we need to wrap
