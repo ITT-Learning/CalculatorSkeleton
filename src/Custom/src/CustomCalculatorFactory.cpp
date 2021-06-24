@@ -45,7 +45,7 @@ namespace calculator
             count_++;
         }
 
-        return calculator;
+        return std::move(calculator);
     }
 
     template<class T>

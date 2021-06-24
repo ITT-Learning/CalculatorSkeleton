@@ -2,7 +2,7 @@
 /**
  * @file  CalculatorStrings.cpp
  * @date  Tue, 1 June 2021
- * @brief 
+ * @brief Definitions for constexpr strings
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,6 +25,11 @@ namespace calculator
     constexpr char CalculatorStrings::EXIT_PROMPT[];
     constexpr char CalculatorStrings::INVALID_INPUT[];
     constexpr char CalculatorStrings::MISMATCHED_ARGS[];
+    constexpr char CalculatorStrings::REGEX_PATTERN_ADD_SUBTRACT_EXPRESSION[];
+    constexpr char CalculatorStrings::REGEX_PATTERN_MULTIPLY_DIVIDE_EXPRESSION[];
+    constexpr char CalculatorStrings::REGEX_PATTERN_OPERATOR_FROM_SIMPLE_EXPRESSION[];
+    constexpr char CalculatorStrings::REGEX_PATTERN_VARIABLE_VALUE_PAIR[];
+    constexpr char CalculatorStrings::REGEX_PATTERN_REPLACE_SURROUND_WITH_BRACKET[];
     constexpr char CalculatorStrings::SPACE[];
     constexpr char CalculatorStrings::W1_MAIN_PROMPT[];
     constexpr char CalculatorStrings::W2_MAIN_PROMPT[];
@@ -37,5 +42,9 @@ namespace calculator
     constexpr char CalculatorStrings::W4_PYTH_PROMPT[];
     constexpr char CalculatorStrings::W4_QUAD_FORMAT[];
     constexpr char CalculatorStrings::W4_QUAD_PROMPT[];
+    constexpr char CalculatorStrings::W5_MAIN_PROMPT[];
+    constexpr char CalculatorStrings::W5_COMPOUND_PROMPT[];
+    constexpr char CalculatorStrings::W5_VARIABLE_PROMPT[];
+    constexpr char CalculatorStrings::W5_VARCOMP_PROMPT[];
 
 } // namespace calculator
