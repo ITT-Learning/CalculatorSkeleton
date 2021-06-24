@@ -26,7 +26,7 @@ namespace calculator
             AddCalculator() = delete;
 
             /**
-             * @brief Construct a new multiplication calculator
+             * @brief Construct a new addition calculator
              *        X + Y = Z
              * @note due to the communitive property the order of the terms do not matter
              * 

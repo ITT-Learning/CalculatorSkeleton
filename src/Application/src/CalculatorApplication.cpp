@@ -1,23 +1,30 @@
 
 ////////////////////////////////////////////////////////////////////////////
 /**
- *  @file   CalculatorApp.cpp
+ *  @file   CalculatorApplication.cpp
  *  @date   Fri April 16 2021
- *  @brief
+ *  @brief  Definitions for Calculator Application
  */
 ////////////////////////////////////////////////////////////////////////////
 
 #include <algorithm>
 #include <cmath>
+#include <future>
 #include <iostream>
 
 #include "CalculatorApplication.h"
 #include "CalculatorStrings.h"
+#include "CompoundExpressionCalculator.h"
 #include "CustomCalculatorFactory.h"
 #include "SimpleExpressionCalculatorFactory.h"
 
 namespace calculator
 {
+    void CalculatorApplication::run()
+    {
+        runW5();
+    }
+
     void CalculatorApplication::runW3()
     {
         calculator::SimpleExpressionCalculatorFactory calculatorFactory;
@@ -45,17 +52,17 @@ namespace calculator
         }
     }
 
-    void CalculatorApplication::run()
+    void CalculatorApplication::runW4()
     {
         //loop through to check which equation
         inputLoop(CalculatorStrings::W4_MAIN_PROMPT, [](const std::string& input)
         {
             if (input.size() == 1)
             {
-                //double looping for the equation324
+                //double looping for the equation
                 switch (input[0])
                 {
-                    case '1': //sqrt
+                    case (int)Options::FIRST: //sqrt
                         inputLoop(CalculatorStrings::W4_SQRT_PROMPT, [](const std::string& input)
                         {
                             CustomCalculatorFactory<double> calculatorFactory([](auto terms){ return std::sqrt(terms[0]);}, CalculatorStrings::W4_SQRT_FORMAT);
@@ -63,7 +70,8 @@ namespace calculator
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
-                    case '2': //quadratic formula
+
+                    case (int)Options::SECOND: //quadratic formula
                         inputLoop(CalculatorStrings::W4_QUAD_PROMPT, [](const std::string& input)
                         {
                             CustomCalculatorFactory<double> calculatorFactory([](auto terms)
@@ -74,7 +82,8 @@ namespace calculator
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
-                    case '3': //pythagorean theorem
+
+                    case (int)Options::THIRD: //pythagorean theorem
                         inputLoop(CalculatorStrings::W4_PYTH_PROMPT, [](const std::string& input)
                         {
                             CustomCalculatorFactory<double> calculatorFactory([](auto terms)
@@ -85,7 +94,8 @@ namespace calculator
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
-                    case '4': //add
+
+                    case (int)Options::FOURTH: //add
                         inputLoop(CalculatorStrings::W4_ADD2_PROMPT, [](const std::string& input)
                         {
                             CustomCalculatorFactory<double> calculatorFactory([](auto terms)
@@ -96,9 +106,58 @@ namespace calculator
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
+                    default:
+                        //do nothing, inputLoop will loop if input is invalid
+                        break;
                 }
             }
         });
+    }
+
+    void CalculatorApplication::runW5()
+    {
+        inputLoop(CalculatorStrings::W5_MAIN_PROMPT,
+                  [](auto input){
+                      if (input.size() == 1)
+                      {
+                          switch (input[0])
+                          {
+                              case (int)Options::FIRST:
+                                  inputLoop(CalculatorStrings::W5_COMPOUND_PROMPT, [](auto input){
+                                      CompoundExpressionCalculator compoundCalc{input};
+                                      std::cout << compoundCalc.toString() << std::endl;
+                                  });
+                                  break;
+                              case (int)Options::SECOND:
+                                  inputLoop(CalculatorStrings::W5_VARIABLE_PROMPT, [](auto input){
+                                      auto vars = input;
+
+                                      std::string prompt = std::string(CalculatorStrings::W5_VARCOMP_PROMPT) + input;
+
+                                      inputLoop(prompt, [&](auto input){
+                                          auto variables = CompoundExpressionCalculator::toVariableMap(vars);
+                                          CompoundExpressionCalculator compoundCalc{variables, input};
+                                          std::cout << compoundCalc.toString() << std::endl;
+                                      });
+                                  });
+                                  break;
+                          }
+                      }
+        });
+    }
+
+    //place to test stuff please ignore
+    void CalculatorApplication::playground()
+    {
+
+        auto map = CompoundExpressionCalculator::toVariableMap("a = 10, b = 100, c = 1000, f = 8394");
+        std::cout << map.at('a') << std::endl;
+
+        CompoundExpressionCalculator cec{map, "abc"};
+
+        CompoundExpressionCalculator c{"10 + 10 - 100 839 djfkla"};
+
+        std::cout << cec.toString() << std::endl;
     }
 
     void CalculatorApplication::inputLoop(const std::string& prompt, const std::function<void(const std::string&)>& function)
@@ -121,5 +180,4 @@ namespace calculator
             function(input);
         }
     }
-
 }
