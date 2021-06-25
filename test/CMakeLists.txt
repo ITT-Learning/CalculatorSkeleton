@@ -34,7 +34,8 @@ include_directories(
     $<TARGET_PROPERTY:SimpleExpressionCalculator,INCLUDE_DIRECTORIES>
     $<TARGET_PROPERTY:CompoundExpressionCalculator,INCLUDE_DIRECTORIES>
     $<TARGET_PROPERTY:CustomCalculator,INCLUDE_DIRECTORIES>
-
+    $<TARGET_PROPERTY:CalculatorHistory,INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:CalculatorStrings,INCLUDE_DIRECTORIES>
     )
 
 # Some recommendations on NOT using file globbing to grab all cpp files.  So far, it seems
@@ -58,4 +59,6 @@ target_link_libraries(${This} PUBLIC
     SimpleExpressionCalculator
     CompoundExpressionCalculator
     CustomCalculator
+    CalculatorHistory
+    CalculatorStrings
 )

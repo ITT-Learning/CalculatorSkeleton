@@ -25,6 +25,7 @@ namespace calculator
              * @return std::string 
              */
             std::string getExpression() const final;
+
             /**
              * @brief The full equation represented as a string [leftTerm] [operation] [rightTerm] = [result]
              * 

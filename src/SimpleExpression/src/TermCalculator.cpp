@@ -8,21 +8,23 @@
 
 #include "TermCalculator.h"
 
-calculator::TermCalculator::TermCalculator(int term)
-        :term_(term)
-{}
+namespace calculator {
+    TermCalculator::TermCalculator(int term)
+            :term_(term)
+    {}
 
-std::string calculator::TermCalculator::getExpression() const
-{
-    return std::to_string(term_);
-}
+    std::string TermCalculator::getExpression() const
+    {
+        return std::to_string(term_);
+    }
 
-int calculator::TermCalculator::getResult() const
-{
-    return term_;
-}
+    int TermCalculator::getResult() const
+    {
+        return term_;
+    }
 
-std::string calculator::TermCalculator::toString() const
-{
-    return std::to_string(term_);
+    std::string TermCalculator::toString() const
+    {
+        return std::to_string(term_);
+    }
 }

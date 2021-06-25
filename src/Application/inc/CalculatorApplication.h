@@ -16,10 +16,12 @@ namespace calculator
 {
     enum class Options : char
     {
-        FIRST = '1',
+        FIRST  = '1',
         SECOND = '2',
-        THIRD = '3',
+        THIRD  = '3',
         FOURTH = '4',
+        UP     = 'w',
+        DOWN   = 's'
     };
 
     class CalculatorApplication
@@ -43,19 +45,37 @@ namespace calculator
             static void runW3();
 
             /**
-             * @brief runs calculator prompt in infinite loop
+             * @brief runs calculator prompt in infinite loop for week 4
              */
             static void runW4();
 
             /**
-             * @brief runs calculator prompt in infinite loop
+             * @brief runs calculator prompt in infinite loop for week 5
              */
             static void runW5();
+
+            /**
+             * @brief runs calculator prompt in infinite loop for week 6
+             */
+            static void runW6();
+
+        private:
+            /**
+             * @brief Move up and down history
+             */
+            static void history();
 
             /**
              * @brief Infinite loop for user input. Will break loop if user 'exit' 'e' 'quit' 'q'.
              */
             static void inputLoop(const std::string& prompt, const std::function<void(const std::string&)>& function);
+
+            /**
+             * @brief does a string match one of the exit strings?
+             * @param input [in] user input
+             * @return bool - true if match exit, false otherwise
+             */
+            static bool isExitString(const std::string& input);
     };
 }
 #endif  // CALCULATORAPPLICATION_H
