@@ -9,6 +9,7 @@
 #ifndef CALCULATOR_HISTORY_H
 #define CALCULATOR_HISTORY_H
 
+#include <memory>
 #include <vector>
 
 #include "calculator_generated.h"
@@ -48,8 +49,8 @@ namespace calculator {
             schema::HistoryT *getBuiltHistory();
 
             /**
-             * @brief Get the flatbuffer calculator object from calculators_, in
-             * @param index [in]
+             * @brief Get the flatbuffer calculator object from calculators_
+             * @param index [in] index of calculator from container
              * @return calculatorT if index is valid, otherwise returns nullptr
              */
             const schema::CalculatorT *getCalculator(int index);
@@ -58,16 +59,17 @@ namespace calculator {
              * @brief returns the Singleton instance, will construct History if needed
              * @return History singleton instance
              */
-            static History *getInstance();
+            static std::shared_ptr<History> getInstance();
 
             /**
              * @brief exposes calculators_.size()
              * @return int - size of calculators_
              */
             int getSize();
+
         private:
-            static History *instance_;
             std::vector<const schema::CalculatorT*> calculators_;
+            static std::shared_ptr<History>         instance_;
 
             /**
              * @brief Hide default constructor

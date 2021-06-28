@@ -67,6 +67,8 @@ namespace calculator
 
             /**
              * @brief Infinite loop for user input. Will break loop if user 'exit' 'e' 'quit' 'q'.
+             * @param prompt [in] Message to display to the user every loop
+             * @param function [in] (lambda) of what to do with the user input
              */
             static void inputLoop(const std::string& prompt, const std::function<void(const std::string&)>& function);
 

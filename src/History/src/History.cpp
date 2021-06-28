@@ -15,7 +15,7 @@
 
 namespace calculator
 {
-    History *History::instance_ = nullptr;
+    std::shared_ptr<History> History::instance_ = nullptr;
 
     void History::appendCalculator(const ICalculator& calculator)
     {
@@ -93,11 +93,11 @@ namespace calculator
         return calculator;
     }
 
-    History *History::getInstance()
+    std::shared_ptr<History> History::getInstance()
     {
         if (!instance_)
         {
-            instance_ = new History();
+            instance_ = std::shared_ptr<History>(new History());
         }
         return instance_;
     }

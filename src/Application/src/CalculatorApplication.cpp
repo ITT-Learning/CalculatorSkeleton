@@ -29,14 +29,6 @@ namespace calculator
     //place to test stuff please ignore
     void CalculatorApplication::playground()
     {
-        int i = 10;
-        std::cout << i << std::endl;
-
-        std::stringstream stream("");
-
-        stream >> i;
-
-        std::cout << i << std::endl;
     }
 
     void CalculatorApplication::run()
@@ -87,53 +79,59 @@ namespace calculator
                 //double looping for the equation
                 switch (input[0])
                 {
-                    case (int)Options::FIRST: //sqrt
-                        inputLoop(CalculatorStrings::W4_SQRT_PROMPT, [](const std::string& input)
-                        {
-                            CustomCalculatorFactory<double> calculatorFactory([](auto terms){ return std::sqrt(terms[0]);}, CalculatorStrings::W4_SQRT_FORMAT);
+                    case (int)Options::FIRST:
+                    {
+                        //sqrt
+                        inputLoop(CalculatorStrings::W4_SQRT_PROMPT, [](const std::string &input) {
+                            CustomCalculatorFactory<double> calculatorFactory(
+                                    [](auto terms) { return std::sqrt(terms[0]); }, CalculatorStrings::W4_SQRT_FORMAT);
                             auto calculator = calculatorFactory.createCalculator(input);
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
-
-                    case (int)Options::SECOND: //quadratic formula
-                        inputLoop(CalculatorStrings::W4_QUAD_PROMPT, [](const std::string& input)
-                        {
-                            CustomCalculatorFactory<double> calculatorFactory([](auto terms)
-                            {
-                                return -terms[1] + std::sqrt(terms[1] * terms[1] - 4 * terms[0] * terms[2]) / 2 * terms[0];
+                    }
+                    case (int)Options::SECOND:
+                    {
+                        //quadratic formula
+                        inputLoop(CalculatorStrings::W4_QUAD_PROMPT, [](const std::string &input) {
+                            CustomCalculatorFactory<double> calculatorFactory([](auto terms) {
+                                return -terms[1] +
+                                       std::sqrt(terms[1] * terms[1] - 4 * terms[0] * terms[2]) / 2 * terms[0];
                             }, CalculatorStrings::W4_QUAD_FORMAT);
                             auto calculator = calculatorFactory.createCalculator(input);
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
-
-                    case (int)Options::THIRD: //pythagorean theorem
-                        inputLoop(CalculatorStrings::W4_PYTH_PROMPT, [](const std::string& input)
-                        {
-                            CustomCalculatorFactory<double> calculatorFactory([](auto terms)
-                                                                              {
-                                                                                  return std::sqrt(terms[0] * terms[0] + terms[1] * terms[1]);
-                                                                              }, CalculatorStrings::W4_PYTH_FORMAT);
+                    }
+                    case (int)Options::THIRD:
+                    {
+                        //pythagorean theorem
+                        inputLoop(CalculatorStrings::W4_PYTH_PROMPT, [](const std::string &input) {
+                            CustomCalculatorFactory<double> calculatorFactory([](auto terms) {
+                                return std::sqrt(terms[0] * terms[0] + terms[1] * terms[1]);
+                            }, CalculatorStrings::W4_PYTH_FORMAT);
                             auto calculator = calculatorFactory.createCalculator(input);
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
-
-                    case (int)Options::FOURTH: //add
-                        inputLoop(CalculatorStrings::W4_ADD2_PROMPT, [](const std::string& input)
-                        {
-                            CustomCalculatorFactory<double> calculatorFactory([](auto terms)
-                                                                              {
-                                                                                  return terms[0] + terms[1];
-                                                                              }, CalculatorStrings::W4_ADD2_FORMAT);
+                    }
+                    case (int)Options::FOURTH:
+                    {
+                        //add
+                        inputLoop(CalculatorStrings::W4_ADD2_PROMPT, [](const std::string &input) {
+                            CustomCalculatorFactory<double> calculatorFactory([](auto terms) {
+                                return terms[0] + terms[1];
+                            }, CalculatorStrings::W4_ADD2_FORMAT);
                             auto calculator = calculatorFactory.createCalculator(input);
                             std::cout << calculator->toString() << std::endl;
                         });
                         break;
+                    }
                     default:
+                    {
                         //do nothing, inputLoop will loop if input is invalid
                         break;
+                    }
                 }
             }
         });
@@ -148,20 +146,24 @@ namespace calculator
                           switch (input[0])
                           {
                               case (int)Options::FIRST:
-                                  inputLoop(CalculatorStrings::W5_COMPOUND_PROMPT, [](auto input){
+                              {
+                                  inputLoop(CalculatorStrings::W5_COMPOUND_PROMPT, [](auto input) {
                                       CompoundExpressionCalculator compoundCalc{input};
                                       std::string calcOutput = compoundCalc.toString();
                                       std::cout << Color::message(calcOutput) << std::endl;
                                       History::getInstance()->appendCalculator(compoundCalc);
                                   });
                                   break;
+                              }
                               case (int)Options::SECOND:
-                                  inputLoop(CalculatorStrings::W5_VARIABLE_PROMPT, [](auto input){
+                              {
+                                  inputLoop(CalculatorStrings::W5_VARIABLE_PROMPT, [](auto input) {
                                       auto vars = input;
 
-                                      std::string prompt = std::string(CalculatorStrings::W5_VARCOMP_PROMPT) + Color::info(input);
+                                      std::string prompt =
+                                              std::string(CalculatorStrings::W5_VARCOMP_PROMPT) + Color::info(input);
 
-                                      inputLoop(prompt, [&](auto input){
+                                      inputLoop(prompt, [&](auto input) {
                                           auto variables = CompoundExpressionCalculator::toVariableMap(vars);
                                           CompoundExpressionCalculator compoundCalc{variables, input};
                                           std::string calcOutput = compoundCalc.toString();
@@ -170,6 +172,7 @@ namespace calculator
                                       });
                                   });
                                   break;
+                              }
                           }
                       }
         });
@@ -185,14 +188,20 @@ namespace calculator
                         switch (input[0])
                         {
                             case (int)Options::FIRST:
+                            {
                                 runW3();
                                 break;
+                            }
                             case (int)Options::SECOND:
+                            {
                                 runW5();
                                 break;
+                            }
                             case (int)Options::THIRD:
+                            {
                                 history();
                                 break;
+                            }
                         }
                     }
         });
@@ -211,6 +220,7 @@ namespace calculator
             {
                 break;
             }
+
             function(input);
         }
     }
@@ -234,16 +244,22 @@ namespace calculator
                     switch (tolower(input[0]))
                     {
                         case (int)Options::UP:
+                        {
                             //move negatively through the history, clamped at 0
                             location = std::max(0, location - 1);
                             break;
+                        }
                         case (int)Options::DOWN:
+                        {
                             //move positively through the history, clamped at last history index
                             location = std::min(static_cast<int>(history.size() - 1), location + 1);
                             break;
+                        }
                         default:
+                        {
                             //do nothing else
                             break;
+                        }
                     }
                 }
                 else
@@ -255,6 +271,7 @@ namespace calculator
                     //clamp between 0 and top index
                     location = std::max(std::min(index, static_cast<int>(history.size()) - 1), 0);
                 }
+
                 std::string locationString = CalculatorStrings::BRACKET_OPEN + std::to_string(location) + CalculatorStrings::BRACKET_CLOSE + CalculatorStrings::SPACE;
                 std::cout << Color::info(locationString) << Color::message(history.at(location)->full_equation) << std::endl;
             });

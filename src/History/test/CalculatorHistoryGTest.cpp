@@ -6,6 +6,7 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
+#include <memory>
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
@@ -24,7 +25,7 @@ using namespace calculator;
 class CalculatorHistoryTests : public ::testing::Test
 {
     protected:
-        History* history = History::getInstance();
+        std::shared_ptr<History> history = History::getInstance();
         TermCalculator termCalculator {10};
         AddCalculator simpleCalculator{10,10};
         CompoundExpressionCalculator compoundCalculator{{{'a', 1}, {'b', 2}, {'c', 3}}, "a + b + c"};
