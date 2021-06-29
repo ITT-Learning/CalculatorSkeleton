@@ -11,12 +11,13 @@
 #define CALCULATORSTRINGS_H
 
 #include <string>
+
 namespace calculator
 {
     struct CalculatorStrings
     {
         static constexpr char BRACKET_CLOSE = '}';
-        static constexpr char BRACKET_OPEN = '{';
+        static constexpr char BRACKET_OPEN  = '{';
         /**
          * @brief ""
          * 
@@ -59,7 +60,7 @@ namespace calculator
         /**
          * @brief Exit prompt
          */
-        static constexpr char EXIT_PROMPT[] = "(Enter 'exit' to quit)";
+        static constexpr char EXIT_PROMPT[] = "([e]xit or [q]uit to go back)";
         
         /**
          * @brief response given to user if input is invalid
@@ -71,6 +72,11 @@ namespace calculator
          * @brief error message if args are mismateched in custom calculator
          */
         static constexpr char MISMATCHED_ARGS[] = "mismatched arguments";
+
+        /**
+         * @brief Message given if no history is found
+         */
+        static constexpr char NO_HISTORY[] = "No history found.";
 
         /**
          * @brief Matches an add or subtract subexpression in a compound expression
@@ -135,14 +141,14 @@ namespace calculator
          *        This prompt was used for the week 1 implementation of Calculator
          * 
          */
-        static constexpr char W1_MAIN_PROMPT[] = "Enter two numbers, e.g. '4 10':\n(ctrl-c to exit)"; 
+        static constexpr char W1_MAIN_PROMPT[] = "Enter two numbers, e.g. '4 10':\n(ctrl-c to exit)";
 
         /**
          * @brief prompt passed to user before retrieving input from them
          *        this prompt was used for the week 2 implementation of Calculator
          * 
          */
-        static constexpr char W2_MAIN_PROMPT[] = "Input a simple math expression e.g., '5 + 5'\nValid operations are [+-/*]\n(Enter 'exit' to quit)";
+        static constexpr char W2_MAIN_PROMPT[] = "Input a simple math expression e.g., '5 + 5'\nValid operations are [+-/*]";
 
         /**
          * @brief prompt passed to user before retrieving input from them
@@ -166,10 +172,16 @@ namespace calculator
         /**
          * @brief Prompts for Week 5 Application Run
          */
-        static constexpr char W5_MAIN_PROMPT[] =     "[1] Compound Expression\te.g.,'10 - 3 + 5 * -8'\n[2] Variable Expression\te.g.,'a = 10, b = 3' > 'a + b / a'";
+        static constexpr char W5_MAIN_PROMPT[]     = "[1] Compound Expression\te.g.,'10 - 3 + 5 * -8'\n[2] Variable Expression\te.g.,'a = 10, b = 3' > 'a + b / a'";
         static constexpr char W5_COMPOUND_PROMPT[] = "Enter a compound expression \ne.g., '10 + 10 - 3 * 100'";
         static constexpr char W5_VARIABLE_PROMPT[] = "Enter your variable with values\ne.g., 'a = 10, b = 3, x = 9'";
-        static constexpr char W5_VARCOMP_PROMPT[] =  "Enter the compound expression with variables\ne.g., 'a + b / a + 100 * x'\nYours variables are: ";
+        static constexpr char W5_VARCOMP_PROMPT[]  = "Enter the compound expression with variables\ne.g., 'a + b / a + 100 * x'\nYours variables are: ";
+
+        /**
+         * @brief Prompts for Week 6 Application Run
+         */
+        static constexpr char W6_HISTORY_PROMPT[] = "[w] to move up, [s] to move down, or number [0+] to get by index";
+        static constexpr char W6_MAIN_PROMPT[]    = "[1] Simple Calculators\n[2] Compound Calculators\n[3] History";
 
     };
 } // namespace calculator

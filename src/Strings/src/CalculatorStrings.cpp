@@ -25,6 +25,7 @@ namespace calculator
     constexpr char CalculatorStrings::EXIT_PROMPT[];
     constexpr char CalculatorStrings::INVALID_INPUT[];
     constexpr char CalculatorStrings::MISMATCHED_ARGS[];
+    constexpr char CalculatorStrings::NO_HISTORY[];
     constexpr char CalculatorStrings::REGEX_PATTERN_ADD_SUBTRACT_EXPRESSION[];
     constexpr char CalculatorStrings::REGEX_PATTERN_MULTIPLY_DIVIDE_EXPRESSION[];
     constexpr char CalculatorStrings::REGEX_PATTERN_OPERATOR_FROM_SIMPLE_EXPRESSION[];
@@ -46,5 +47,7 @@ namespace calculator
     constexpr char CalculatorStrings::W5_COMPOUND_PROMPT[];
     constexpr char CalculatorStrings::W5_VARIABLE_PROMPT[];
     constexpr char CalculatorStrings::W5_VARCOMP_PROMPT[];
+    constexpr char CalculatorStrings::W6_HISTORY_PROMPT[];
+    constexpr char CalculatorStrings::W6_MAIN_PROMPT[];
 
 } // namespace calculator

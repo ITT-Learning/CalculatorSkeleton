@@ -1,0 +1,39 @@
+namespace calculator.schema;
+
+///corresponds to ascii representation
+enum Operation : byte
+{
+    None = -1,
+    Add = 43,
+    Subtract = 45,
+    Multiply = 42,
+    Divide = 47
+}
+
+enum CalculatorType : byte
+{
+    Simple,
+    Compound,
+    Custom,
+    Term
+}
+
+struct VariableValuePair
+{
+    variable:byte; //needs to be cast to char
+    value:int;
+}
+
+table Calculator
+{
+    type:CalculatorType = Term;
+    operation:Operation = None;
+    result:int;
+    expression:string;
+    full_equation:string;
+    left_term:int;
+    right_term:int;
+    variables:[VariableValuePair];
+}
+
+root_type Calculator;

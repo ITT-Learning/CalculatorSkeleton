@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(src/SimpleExpression)
 add_subdirectory(src/CompoundExpression)
+add_subdirectory(src/History)
 add_subdirectory(src/Application)
 add_subdirectory(src/Custom)
 add_subdirectory(src/exe)

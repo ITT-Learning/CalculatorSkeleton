@@ -1,0 +1,9 @@
+include "calculator.fbs";
+namespace calculator.schema;
+
+table History
+{
+    list:[Calculator];
+}
+
+root_type History;
