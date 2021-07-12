@@ -8,8 +8,6 @@
 
 #include "Calculator.h"
 
-// Add Function definitions here.
-
 void RunCalculator()
 {
     std::cout << "Gary's Calculator C++ learning project...." << std::endl;
@@ -21,11 +19,6 @@ void RunCalculator()
         state = RenderCalculator();
     }
 }
-
-//double Add();
-//double Subtract();
-//double Multiply();
-//double Divide();
 
 int RenderCalculator()
 {
@@ -61,32 +54,6 @@ int RenderCalculator()
     {
         std::cout << "Unkown Operation (" << operation << ")!" << std::endl;
     }
-
-    // if ('+' == operation) 
-    // {
-    //     std::cout << " = " << a + b << std::endl;
-    // }
-    // else if ('-' == operation)
-    // {
-    //     std::cout << " = " << a - b << std::endl;
-    // }
-    // else if ('*' == operation)
-    // {
-    //     std::cout << " = " << a * b << std::endl;
-    // }
-    // else if ('/' == operation)
-    // {
-    //     std::cout << " = " << a / b << std::endl;
-    // }
-    // else if ('q' == operation)
-    // {
-    //     std::cout << "Quitting Calculator..." << std::endl;
-    //     state = 1;
-    // }
-    // else
-    // {
-    //     std::cout << "Unkown Operation (" << operation << ")!" << std::endl;
-    // }
 
     return state;
 }
