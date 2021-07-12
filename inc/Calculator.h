@@ -11,6 +11,11 @@
 #define CALCULATOR_H
 
 #include <iostream>
-// Add your function declarations here.
+
+//Method to call from main. Loops until error/state > 0
+void RunCalculator(); 
+
+//Parses input and outputs computed value
+int RenderCalculator(); 
 
 #endif  // CALCULATOR_H
