@@ -7,7 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "Calculator.h"
-#include <iostream>
+
+// Add Function definitions here.
 
 void RunCalculator()
 {
@@ -29,43 +30,63 @@ void RunCalculator()
 int RenderCalculator()
 {
     int state = 0;
-    double a, b;
+    double a, b, result;
     char operation;
 
     std::cin >> a >> operation >> b;
 
-    if (std::cin.fail())
+    switch (operation)
     {
-        std::cin >> operation;
+        case '+':
+            result = a + b;
+            break;
+        case '-':
+            result = a - b;
+            break;
+        case '*':
+            result = a * b;
+            break;
+        case '/':
+            result = a / b;
+            break;
+        default:
+            state = 1;
     }
 
-    if ('+' == operation) 
+    if (0 == state) 
     {
-        std::cout << " = " << a + b << std::endl;
-    }
-    else if ('-' == operation)
-    {
-        std::cout << " = " << a - b << std::endl;
-    }
-    else if ('*' == operation)
-    {
-        std::cout << " = " << a * b << std::endl;
-    }
-    else if ('/' == operation)
-    {
-        std::cout << " = " << a / b << std::endl;
-    }
-    else if ('q' == operation)
-    {
-        std::cout << "Quitting Calculator..." << std::endl;
-        state = 1;
+        std::cout << " = " << result << std::endl;
     }
     else
     {
         std::cout << "Unkown Operation (" << operation << ")!" << std::endl;
     }
 
+    // if ('+' == operation) 
+    // {
+    //     std::cout << " = " << a + b << std::endl;
+    // }
+    // else if ('-' == operation)
+    // {
+    //     std::cout << " = " << a - b << std::endl;
+    // }
+    // else if ('*' == operation)
+    // {
+    //     std::cout << " = " << a * b << std::endl;
+    // }
+    // else if ('/' == operation)
+    // {
+    //     std::cout << " = " << a / b << std::endl;
+    // }
+    // else if ('q' == operation)
+    // {
+    //     std::cout << "Quitting Calculator..." << std::endl;
+    //     state = 1;
+    // }
+    // else
+    // {
+    //     std::cout << "Unkown Operation (" << operation << ")!" << std::endl;
+    // }
+
     return state;
 }
-
-// Add Function definitions here.
