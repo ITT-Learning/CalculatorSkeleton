@@ -10,7 +10,8 @@
 
 void RunCalculator()
 {
-    std::cout << "Gary's Calculator C++ learning project...." << std::endl;
+    std::cout << "Gary's Calculator C++ learning project." << std::endl;
+    std::cout << "Enter an expression, like 1 + 2 and ENTER. Valid operations are +-*/" << std::endl;
     int state = 0;
     double a = 0.0, b = 0.0;
 

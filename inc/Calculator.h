@@ -15,7 +15,7 @@
 //Method to call from main. Loops until error/state > 0
 void RunCalculator(); 
 
-//Method that parses input and outputs computed value
+//Parses input and outputs computed value
 int RenderCalculator(); 
 
 #endif  // CALCULATOR_H
