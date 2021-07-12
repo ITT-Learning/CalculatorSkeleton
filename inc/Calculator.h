@@ -13,4 +13,11 @@
 #include <iostream>
 // Add your function declarations here.
 
+void RunCalculator();
+int RenderCalculator();
+double Add();
+double Subtract();
+double Multiply();
+double Divide();
+
 #endif  // CALCULATOR_H
