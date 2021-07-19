@@ -7,7 +7,9 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "Calculator.h"
+#include <sstream>
 
+const char quit = 'q';
 const char quitMessage[] = "Quitting!";
 const char unknownOperationError[] = "Error: Unknown operation";
 const char divideByZeroError[] = "Error: Division by zero";
@@ -18,61 +20,74 @@ void RunCalculator()
     std::cout << "Enter an expression, like 1 + 2 and ENTER. Valid operations are +-*/" << std::endl;
 
     double a, b, result;
-    char operation = ' ';
+    char operation;
 
-    while (operation != 'q')
+    while (operation != quit)
     {
         try
         {
             GetInput(operation, a, b);
             result = Calculate(operation, a, b);
-            std::cout << "= " << result << std::endl;
+            OutputResult(result);
         }
         catch(const std::exception& e)
         {
-            std::cout << e.what() << '\n';
+            OutputError(e);
         }
     }
+};
+
+void OutputResult(double& result, std::ostream& out)
+{
+    out << " = " << result << std::endl;
+}
+
+void OutputError(const std::exception& e, std::ostream& out)
+{
+    out << e.what() << std::endl;
 }
 
 void GetInput(char& operation, double& a, double& b) 
 {
-    std::cin >> a >> operation >> b;
+    std::string inputString;
+    std::getline(std::cin, inputString);
+    std::istringstream inputStream(inputString);
 
-    if (operation == 'q')
+    //if contains q quit
+    if (inputString.find(quit) != std::string::npos)
     {
-        throw std::invalid_argument( quitMessage ); //std::exception(quitMessage);
+        operation = quit;
+        throw std::invalid_argument( quitMessage );
     }
+    else
+    {
+        inputStream >> a >> operation >> b;
+    };
 };
 
-double Calculate(char operation, double a, double b)
+double Calculate(char& operation, double a, double b)
 {
     double result;
 
-    switch (operation)
+    if (operation == '+') 
     {
-        case '+':
-        {
-            result = Addition(a, b);
-            break;
-        }
-        case '-':
-        {
-            result = Subtraction(a, b);
-            break;
-        }
-        case '*':
-        {
-            result = Multiplication(a, b);
-            break;
-        }
-        case '/':
-        {
-            result = Division(a, b);
-            break;
-        }
-        default:
-            throw std::invalid_argument( unknownOperationError ); //std::exception(unknownOperationError);;
+        result = Addition(a, b);
+    }
+    else if (operation == '-')
+    {
+        result = Subtraction(a, b);
+    }
+    else if (operation == '*')
+    {
+        result = Multiplication(a, b);
+    }
+    else if (operation == '/')
+    {
+        result = Division(a, b);
+    }
+    else
+    {
+        throw std::invalid_argument( unknownOperationError );
     };
 
     return result;
@@ -88,17 +103,17 @@ double Subtraction(double a, double b)
     return a - b;
 };
 
+double Multiplication(double a, double b)
+{
+    return a * b;
+};
+
 double Division(double a, double b)
 {
     if (b == 0)
     {
-        throw std::invalid_argument( divideByZeroError ); //std::exception(quitMessage);
+        throw std::invalid_argument( divideByZeroError );
     }
 
     return a / b;
-};
-
-double Multiplication(double a, double b)
-{
-    return a * b;
 };
