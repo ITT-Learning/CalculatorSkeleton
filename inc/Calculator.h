@@ -13,8 +13,12 @@
 #include <iostream>
 
 //Method to call from main. Loops until error/state > 0
-void RunCalculator(); 
-const char* GetInput(char& operation, double& a, double& b);
-const char* Calculate(char operation, double a, double b, double& result);
+void RunCalculator();
+void GetInput(char& operation, double& a, double& b) ;
+double Calculate(char operation, double a, double b);
+double Addition(double a, double b);
+double Subtraction(double a, double b);
+double Division(double a, double b);
+double Multiplication(double a, double b);
 
 #endif  // CALCULATOR_H
