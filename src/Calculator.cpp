@@ -71,52 +71,40 @@ namespace calculator
     {
         double result;
 
-        if (operation == '+') 
+        switch (operation)
         {
-            result = Addition(a, b);
-        }
-        else if (operation == '-')
-        {
-            result = Subtraction(a, b);
-        }
-        else if (operation == '*')
-        {
-            result = Multiplication(a, b);
-        }
-        else if (operation == '/')
-        {
-            result = Division(a, b);
-        }
-        else
-        {
-            throw std::invalid_argument( unknownOperationError );
-        };
+            case '+':
+            {
+                result = a + b;
+                break;
+            }
+            case '-':
+            {
+                result = a - b;
+                break;
+            }
+            case '*':
+            {
+                result = a * b;
+                break;
+            }
+            case '/':
+            {
+                if (b == 0)
+                {
+                    throw std::invalid_argument( divideByZeroError );
+                }
 
+                result = a / b;
+                break;
+            }
+            default:
+            {
+                throw std::invalid_argument( unknownOperationError );
+                break;
+            }
+        }
+        
         return result;
-    };
-
-    double Addition(double a, double b)
-    {
-        return a + b;
-    };
-
-    double Subtraction(double a, double b)
-    {
-        return a - b;
-    };
-
-    double Multiplication(double a, double b)
-    {
-        return a * b;
-    };
-
-    double Division(double a, double b)
-    {
-        if (b == 0)
-        {
-            throw std::invalid_argument( divideByZeroError );
-        }
-
-        return a / b;
     };
 }
