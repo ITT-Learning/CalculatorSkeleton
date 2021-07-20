@@ -55,7 +55,7 @@ namespace calculator
 
     /**
      * @brief Used to print an error condition instead of calculated value.
-     * @note uses e.Why() to get error string
+     * @note uses e.what() to get error string
      * @param e [in] standard exception
      * @param output [out] output stream to write to. default is cout for users. provided for testing.
      */
