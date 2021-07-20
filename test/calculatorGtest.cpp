@@ -15,34 +15,30 @@ using namespace calculator;
 
 TEST(WeekOneCalculatorTests, CalculateMethodTests)
 {
-    EXPECT_EQ( 2, Calculate('+', 1, 1));
-    EXPECT_EQ( 0, Calculate('+', 1, -1));
-    EXPECT_EQ(-1, Calculate('+', 1, -2));
+    const char* errorString;
+    double result;
 
-    EXPECT_EQ( 2, Calculate('-', 3, 1));
-    EXPECT_EQ( 0, Calculate('-', 1, 1));
-    EXPECT_EQ(-1, Calculate('-', 0, 1));
+    EXPECT_TRUE( Calculate('+', 1, 1, result) == nullptr && result == 2);
+    EXPECT_TRUE( Calculate('+', 1, -1, result) == nullptr && result == 0);
+    EXPECT_TRUE( Calculate('+', 1, -2, result) == nullptr && result == -1);
 
-    EXPECT_EQ( 2, Calculate('*', 1, 2));
-    EXPECT_EQ( 0, Calculate('*', 0, 1));
-    EXPECT_EQ(-1, Calculate('*', 1, -1));
+    EXPECT_TRUE( Calculate('-', 3, 1, result) == nullptr && result == 2);
+    EXPECT_TRUE( Calculate('-', 1, 1, result) == nullptr && result == 0);
+    EXPECT_TRUE( Calculate('-', 0, 1, result) == nullptr && result == -1);
 
-    EXPECT_EQ( 2, Calculate('/', 4, 2));
-    EXPECT_EQ( 0, Calculate('/', 0, 1));
-    EXPECT_EQ(-1, Calculate('/', 1, -1));
-    EXPECT_EQ(.5, Calculate('/', 1, 2));
+    EXPECT_TRUE( Calculate('*', 1, 2, result) == nullptr && result == 2);
+    EXPECT_TRUE( Calculate('*', 0, 1, result) == nullptr && result == 0);
+    EXPECT_TRUE( Calculate('*', 1, -1, result) == nullptr && result == -1);
+
+    EXPECT_TRUE( Calculate('/', 4, 2, result) == nullptr && result == 2);
+    EXPECT_TRUE( Calculate('/', 0, 1, result) == nullptr && result == 0);
+    EXPECT_TRUE( Calculate('/', 1, -1, result) == nullptr && result == -1);
+    EXPECT_TRUE( Calculate('/', 1, 2, result) == nullptr && result == .5);
 }
 
 TEST(WeekOneCalculatorTests, CalculateMethodErrors)
 {
-    try
-    {
-        double result = Calculate('/', 1, 0);
-    }
-    catch (std::exception& e)
-    {
-        std::string expected("Error: Division by zero");
-        std::string actual(e.what());
-        EXPECT_EQ(expected, actual);
-    }
+    double result;
+
+    ASSERT_STREQ(Calculate('/', 1, 0, result), "Error: Division by zero");
 }

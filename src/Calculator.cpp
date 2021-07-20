@@ -23,18 +23,23 @@ namespace calculator
 
         double a, b, result;
         char operation;
+        const char* errorResult;
 
         while (operation != quit)
         {
-            try
+            errorResult = GetInput(operation, a, b);
+            if (errorResult == nullptr)
             {
-                GetInput(operation, a, b);
-                result = Calculate(operation, a, b);
+                errorResult = Calculate(operation, a, b, result);
+            }
+
+            if (errorResult == nullptr)
+            {
                 OutputResult(result);
             }
-            catch(const std::exception& e)
+            else
             {
-                OutputError(e);
+                OutputError(errorResult);
             }
         }
     };
@@ -44,13 +49,14 @@ namespace calculator
         out << " = " << result << std::endl;
     }
 
-    void OutputError(const std::exception& e, std::ostream& out)
+    void OutputError(const char* errorString, std::ostream& out)
     {
-        out << e.what() << std::endl;
+        out << errorString << std::endl;
     }
 
-    void GetInput(char& operation, double& a, double& b, std::istream& input) 
+    const char* GetInput(char& operation, double& a, double& b, std::istream& input) 
     {
+        const char* errorString = nullptr;
         std::string inputString;
         std::getline(input, inputString);
         std::istringstream inputStream(inputString);
@@ -59,18 +65,19 @@ namespace calculator
         if (inputString.find(quit) != std::string::npos)
         {
             operation = quit;
-            throw std::invalid_argument( quitMessage );
+            errorString = quitMessage;
         }
         else
         {
             inputStream >> a >> operation >> b;
         };
+
+        return errorString;
     };
 
-    double Calculate(const char& operation, const double a, const double b)
+    const char* Calculate(const char& operation, const double a, const double b, double& result)
     {
-        double result;
-
+        const char* errorString = nullptr; 
         switch (operation)
         {
             case '+':
@@ -92,19 +99,22 @@ namespace calculator
             {
                 if (b == 0)
                 {
-                    throw std::invalid_argument( divideByZeroError );
+                    errorString = divideByZeroError;
                 }
-
-                result = a / b;
+                else
+                {
+                    result = a / b;
+                }
+     
                 break;
             }
             default:
             {
-                throw std::invalid_argument( unknownOperationError );
+                errorString = unknownOperationError;
                 break;
             }
         }
         
-        return result;
+        return errorString;
     };
 }
