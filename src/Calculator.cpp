@@ -39,7 +39,7 @@ namespace calculator
         }
     };
 
-    void OutputResult(double& result, std::ostream& out)
+    void OutputResult(const double& result, std::ostream& out)
     {
         out << " = " << result << std::endl;
     }
@@ -49,10 +49,10 @@ namespace calculator
         out << e.what() << std::endl;
     }
 
-    void GetInput(char& operation, double& a, double& b) 
+    void GetInput(char& operation, double& a, double& b, std::istream& input) 
     {
         std::string inputString;
-        std::getline(std::cin, inputString);
+        std::getline(input, inputString);
         std::istringstream inputStream(inputString);
 
         //if contains q quit
@@ -67,7 +67,7 @@ namespace calculator
         };
     };
 
-    double Calculate(char& operation, double a, double b)
+    double Calculate(const char& operation, const double a, const double b)
     {
         double result;
 
