@@ -11,5 +11,5 @@
 int main() 
 {
     // Fill in or change code here as necessary.  See also Calculator.cpp
-    RunCalculator();
+    calculator::RunCalculator();
 }
