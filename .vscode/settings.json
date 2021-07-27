@@ -1,6 +1,5 @@
 {
     "files.associations": {
-        "istream": "cpp",
         "array": "cpp",
         "atomic": "cpp",
         "*.tcc": "cpp",
@@ -41,6 +40,7 @@
         "iomanip": "cpp",
         "iosfwd": "cpp",
         "iostream": "cpp",
+        "istream": "cpp",
         "limits": "cpp",
         "new": "cpp",
         "ostream": "cpp",
