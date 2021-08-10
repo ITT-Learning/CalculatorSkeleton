@@ -16,7 +16,8 @@
 
 namespace calculatorw2
 {
-    TokenizerW2::TokenizerW2(std::string input): input_(input)
+    TokenizerW2::TokenizerW2(std::string input) : 
+        input_(input)
     {
 
     }

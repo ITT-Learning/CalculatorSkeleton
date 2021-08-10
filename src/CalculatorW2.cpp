@@ -15,7 +15,8 @@
 
 namespace calculatorw2
 {
-    CalculatorW2::CalculatorW2(): error_(nullptr)
+    CalculatorW2::CalculatorW2() : 
+        error_(nullptr)
     {
 
     }

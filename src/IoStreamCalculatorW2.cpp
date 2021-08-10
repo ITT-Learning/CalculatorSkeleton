@@ -14,7 +14,9 @@
 
 namespace calculatorw2
 {
-    IoStreamCalculatorW2::IoStreamCalculatorW2(std::istream& inputStream, std::ostream& outputStream) : error_(nullptr), inputStream_(inputStream), outputStream_(outputStream)
+    IoStreamCalculatorW2::IoStreamCalculatorW2(std::istream& inputStream, std::ostream& outputStream) : 
+        error_(nullptr), 
+        inputStream_(inputStream), outputStream_(outputStream)
     {
 
     }
