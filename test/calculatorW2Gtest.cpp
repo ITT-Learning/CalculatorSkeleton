@@ -103,7 +103,7 @@ TEST(WeekTwoCalculatorW2Tests, WhenTwoNumbersAreDividedTheResultMustBeCorrect)
  * @brief Do valid calculations correctly return a nullptr indicating no errors?
  * 
  */
-TEST(WeekTwoCalculatorW2Tests, WhenValidMathOperationArePErformedThenTheErrorMustBeNull)
+TEST(WeekTwoCalculatorW2Tests, WhenValidMathOperationArePerformedThenTheErrorMustBeNull)
 {
     CalculatorW2 calculatorw2;
 
