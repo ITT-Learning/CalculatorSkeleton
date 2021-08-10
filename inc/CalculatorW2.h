@@ -13,6 +13,7 @@
 #define CALCULATORW2_H
 
 #include <iostream>
+
 #include "CalculatorStrings.h"
 
 namespace calculatorw2
@@ -34,17 +35,6 @@ namespace calculatorw2
             ~CalculatorW2();
 
             /**
-             * @brief Given left term, right term, and a char representationof the operation,
-             *          calculate routes to, and returns value of, the correct calculation mwethod. 
-             * @note A private error_ value is provided to communicate errors from the calculation methods. 
-             * @param IN left 
-             * @param IN right 
-             * @param IN op 
-             * @return double 
-             */
-            double calculate(double left, double right, char op);
-
-            /**
              * @brief Calculates and returns the sum of the left and right terms.
              * 
              * @param IN left 
@@ -54,22 +44,15 @@ namespace calculatorw2
             double add(double left, double right);
 
             /**
-             * @brief Calculates and returns the subtraction of the right term from the left term.
-             * 
+             * @brief Given left term, right term, and a char representationof the operation,
+             *          calculate routes to, and returns value of, the correct calculation mwethod. 
+             * @note A private error_ value is provided to communicate errors from the calculation methods. 
              * @param IN left 
              * @param IN right 
+             * @param IN op 
              * @return double 
              */
-            double subtract(double left, double right);
-
-            /**
-             * @brief Calculates and returns the product of the left and right terms.
-             * 
-             * @param IN left 
-             * @param IN right 
-             * @return double 
-             */
-            double multiply(double left, double right);
+            double calculate(double left, double right, char op);
 
             /**
              * @brief Calculates and returns the division of the left term by the right term.
@@ -88,12 +71,26 @@ namespace calculatorw2
              */
             const char* getError();
 
-        private:
+            /**
+             * @brief Calculates and returns the product of the left and right terms.
+             * 
+             * @param IN left 
+             * @param IN right 
+             * @return double 
+             */
+            double multiply(double left, double right);
 
             /**
-             * @brief pointer to simple string containing an error description.
+             * @brief Calculates and returns the subtraction of the right term from the left term.
              * 
+             * @param IN left 
+             * @param IN right 
+             * @return double 
              */
+            double subtract(double left, double right);
+
+        private:
+
             const char* error_;
     };
 }

@@ -9,8 +9,8 @@
  * 
  */
 
-#include "../inc/IoStreamCalculatorW2.h"
 #include "../inc/CalculatorStrings.h"
+#include "../inc/IoStreamCalculatorW2.h"
 
 namespace calculatorw2
 {

@@ -17,6 +17,7 @@
 #define IOSTREAMCALCULATORW2_H
 
 #include <iostream>
+
 #include "CalculatorW2.h"
 #include "TokenizerW2.h"
 
@@ -32,7 +33,7 @@ namespace calculatorw2
              * @param IN,OUT inputStream 
              * @param IN,OUT outputStream 
              */
-            IoStreamCalculatorW2(std::istream& inputStream = std::cin, std::ostream& outputStream = std::cout);
+            IoStreamCalculatorW2(std::istream &inputStream = std::cin, std::ostream &outputStream = std::cout);
 
             /**
              * @brief Destroy the Io Stream Calculator W 2 object
@@ -41,43 +42,28 @@ namespace calculatorw2
             ~IoStreamCalculatorW2();
             
             /**
+             * @brief Print Hello and Help information to the commandline
+             * 
+             */
+            void OutputHelloAndHelp();
+
+            /**
              * @brief Callable by main, and implements the logic to parse input, display output, and
              *          perform control commands (QUIT).
              * 
              */
             void Run();
 
-            /**
-             * @brief Print Hello and Help information to the commandline
-             * 
-             */
-            void OutputHelloAndHelp();
-
         private:
 
-            /**
-             * @brief Simple string pointer to keep track of error conditions. If equal to nullptr, then
-             *          there is no error condition.
-             */
+            CalculatorW2 calculatorW2_;
+
             const char* error_;
 
-            /**
-             * @brief The input stream (default to std::cin)
-             * 
-             */
             std::istream& inputStream_;
 
-            /**
-             * @brief The output stream (default to std::cout)
-             * 
-             */
             std::ostream& outputStream_;
 
-            /**
-             * @brief Calculator engine for performing arithmatic.
-             * 
-             */
-            CalculatorW2 calculatorW2_;
     };
 }
 

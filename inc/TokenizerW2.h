@@ -56,7 +56,14 @@ namespace calculatorw2
              * @param OUT extendedInformation 
              * @return const char* error_ value if set
              */
-            const char* getControlExpression(char& operation, std::string& extendedInformation);
+            const char* getControlExpression(char &operation, std::string &extendedInformation);
+
+            /**
+             * @brief Get the Error object, allows calling methods to determine if there are errors.
+             * 
+             * @return const char* 
+             */
+            const char* getError();
 
             /**
              * @brief Get the Math Expression from the input stream. 
@@ -67,28 +74,13 @@ namespace calculatorw2
              * @param OUT operation 
              * @return const char* error_ value if set
              */
-            const char* getMathExpression(double& left, double& right, char& operation);
-
-            /**
-             * @brief Get the Error object, allows calling methods to determine if there are errors.
-             * 
-             * @return const char* 
-             */
-            const char* getError();
+            const char* getMathExpression(double &left, double &right, char &operation);
 
         private:
 
-            /**
-             * @brief string for storing the input line and allowing multiple passes at parsing the input
-             * 
-             */
-            std::string input_;
-
-            /**
-             * @brief simple string pointer for track and communicating errors
-             * 
-             */
             const char* error_;
+
+            std::string input_;
     };
 }
 

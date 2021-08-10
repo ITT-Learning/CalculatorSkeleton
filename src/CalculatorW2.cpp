@@ -10,6 +10,7 @@
  */
 
 #include <float.h>
+
 #include "CalculatorW2.h"
 
 namespace calculatorw2
@@ -21,9 +22,10 @@ namespace calculatorw2
     
     CalculatorW2::~CalculatorW2() {}
     
-    const char* CalculatorW2::getError()
+    double CalculatorW2::add(double left, double right)
     {
-        return error_;
+        error_ = nullptr;
+        return left + right;
     }
 
     double CalculatorW2::calculate(double left, double right, char operation)
@@ -62,24 +64,6 @@ namespace calculatorw2
         return result;
     }
 
-    double CalculatorW2::add(double left, double right)
-    {
-        error_ = nullptr;
-        return left + right;
-    }
-
-    double CalculatorW2::subtract(double left, double right)
-    {
-        error_ = nullptr;
-        return left - right;
-    }
-
-    double CalculatorW2::multiply(double left, double right)
-    {
-        error_ = nullptr;
-        return left * right;
-    }
-
     double CalculatorW2::divide(double left, double right)
     {
         error_ = nullptr;
@@ -96,6 +80,23 @@ namespace calculatorw2
         }
 
         return result;
+    }
+
+    const char* CalculatorW2::getError()
+    {
+        return error_;
+    }
+
+    double CalculatorW2::multiply(double left, double right)
+    {
+        error_ = nullptr;
+        return left * right;
+    }
+
+    double CalculatorW2::subtract(double left, double right)
+    {
+        error_ = nullptr;
+        return left - right;
     }
 
 } // namespace calculatorw2

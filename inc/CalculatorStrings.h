@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2021-07-22
  * 
- * @copyright Cop.yright (c) 2021
+ * @copyright Copyright (c) 2021
  * 
  */
 
@@ -26,11 +26,11 @@ namespace calculatorw2
         DIVIDE   = '/'
     };
 
+    const char divideByZeroError[] = "Error: Division by zero";
     const char helloMessage[] = "Gary's Calculator C++ learning project.";
     const char helpMessage[] = "Enter an expression, like 1 + 2 and ENTER. Valid operations are +-*/";
     const char quitMessage[] = "Quitting!";
     const char unknownOperationError[] = "Error: Unknown operation";
-    const char divideByZeroError[] = "Error: Division by zero";
 };
 
 #endif  // CALCULATORSTRINGS_H

@@ -9,21 +9,13 @@
  * 
  */
 
-#include "TokenizerW2.h"
-#include "CalculatorStrings.h"
 #include <sstream>
+
+#include "CalculatorStrings.h"
+#include "TokenizerW2.h"
 
 namespace calculatorw2
 {
-    TokenizerW2* TokenizerW2::createTokenizer(std::istream& input)
-    {
-        std::string inputString;
-        std::getline(input, inputString);
-        
-        TokenizerW2* tokenizerW2Ptr = new TokenizerW2(inputString);
-        return tokenizerW2Ptr;
-    }
-
     TokenizerW2::TokenizerW2(std::string input): input_(input)
     {
 
@@ -32,6 +24,15 @@ namespace calculatorw2
     TokenizerW2::~TokenizerW2()
     {
         
+    }
+
+    TokenizerW2* TokenizerW2::createTokenizer(std::istream& input)
+    {
+        std::string inputString;
+        std::getline(input, inputString);
+        
+        TokenizerW2* tokenizerW2Ptr = new TokenizerW2(inputString);
+        return tokenizerW2Ptr;
     }
 
     const char* TokenizerW2::getControlExpression(char& controlOperator, std::string& extendedInformation)
