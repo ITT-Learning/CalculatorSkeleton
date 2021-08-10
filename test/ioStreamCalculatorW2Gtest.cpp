@@ -17,6 +17,10 @@
 
 using namespace calculatorw2;
 
+/**
+ * @brief Does the Calculator correctly read the input stream and print the correct results for all of the math functions and the quit function?
+ * 
+ */
 TEST(WeekTwoIoStreamCalculatorW2Tests, WhenMathAndControlFunctionsAreEnteredThenTheExpectedOutputIsCorrect)
 {
     std::string inputString("2 + 5\n5 - 3\n1.1 * 6\n3.33 / 1.11\n1 / 0\nq");

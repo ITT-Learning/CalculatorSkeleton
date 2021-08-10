@@ -16,6 +16,10 @@
 
 using namespace calculatorw2;
 
+/**
+ * @brief Does the tokenizer correctly read the supported math functions and set the math paramaters (left argument, right argument, and operator) correctly? 
+ * 
+ */
 TEST(WeekTwoTokenizerW2Tests, WhenValidMathExpressionStringsAreProvidedThenTheTokenizerReturnsValidLeftRightAndOperatorValues)
 {
     double a, b;
@@ -50,6 +54,10 @@ TEST(WeekTwoTokenizerW2Tests, WhenValidMathExpressionStringsAreProvidedThenTheTo
     EXPECT_EQ((Operators)op, Operators::DIVIDE);
 }
 
+/**
+ * @brief Does the tokenizer correctly read the supported control funtion strings and set the control paramaters (operator and extended information) correctly?
+ * 
+ */
 TEST(WeekTwoTokenizerW2Tests, WhenValidOperationStringsAreGivenThenTheTokenizerSetsCorrectOperatorAndExtendedInformation)
 {
     char op;
@@ -68,14 +76,18 @@ TEST(WeekTwoTokenizerW2Tests, WhenValidOperationStringsAreGivenThenTheTokenizerS
     EXPECT_EQ((Operators)op, Operators::HELP);
 }
 
+/**
+ * @brief Does the tokenizer correctly identify a quit commend no matter the rest of the string?
+ * 
+ */
 TEST(WeekTwoTokenizerW2Tests, WhenGivenACorrectQuitSTringTheTokenizerSetsTheCorrectOperationAndExtendedValue)
 {
     char op;
     std::string extendedInformation;
     
-    TokenizerW2 tokenizer1("q do we get a quit?");
+    TokenizerW2 tokenizer1("q do we get a 1 + 2 ?");
     tokenizer1.getControlExpression(op, extendedInformation);
     EXPECT_EQ(op, 'q');
-    EXPECT_EQ(extendedInformation, "do we get a quit?");
+    EXPECT_EQ(extendedInformation, "do we get a 1 + 2 ?");
     EXPECT_EQ((Operators)op, Operators::QUIT);
 }

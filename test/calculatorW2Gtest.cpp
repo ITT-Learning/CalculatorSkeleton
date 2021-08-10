@@ -16,6 +16,10 @@
 
 using namespace calculatorw2;
 
+/**
+ * @brief Do the support MAth and Control operators exist with the expected characters?
+ * 
+ */
 TEST(WeekTwoCalculatorW2Tests, TheRequiredMathAndControlOperatorsMustBeSupported)
 {
     EXPECT_EQ((char)Operators::UNKNOWN, 'u');
@@ -28,7 +32,10 @@ TEST(WeekTwoCalculatorW2Tests, TheRequiredMathAndControlOperatorsMustBeSupported
     EXPECT_EQ((char)Operators::DIVIDE, '/');
 }
 
-
+/**
+ * @brief Is the default state of the calculator clean/without error?
+ * 
+ */
 TEST(WeekTwoCalculatorW2Tests, WhenACalculatorW2IsCreatedThenTheErrorMustBeNull)
 {
     CalculatorW2 calculatorW2;
@@ -36,6 +43,10 @@ TEST(WeekTwoCalculatorW2Tests, WhenACalculatorW2IsCreatedThenTheErrorMustBeNull)
     EXPECT_EQ(calculatorW2.getError(), nullptr);
 }
 
+/**
+ * @brief Does the add method correctly calculate the valid range of results?
+ * 
+ */
 TEST(WeekTwoCalculatorW2Tests, WhenTwoNumbersAreAddedTheResultMustBeCorrect)
 {
     CalculatorW2 calculatorw2;
@@ -46,6 +57,10 @@ TEST(WeekTwoCalculatorW2Tests, WhenTwoNumbersAreAddedTheResultMustBeCorrect)
     EXPECT_DOUBLE_EQ(calculatorw2.add(1.001, 1.11), 2.111);
 }
 
+/**
+ * @brief Does the subtract method correctly calculate the valid range of results?
+ * 
+ */
 TEST(WeekTwoCalculatorW2Tests, WhenTwoNumbersAreSubtractedTheResultMustBeCorrect)
 {
     CalculatorW2 calculatorw2;
@@ -56,6 +71,10 @@ TEST(WeekTwoCalculatorW2Tests, WhenTwoNumbersAreSubtractedTheResultMustBeCorrect
     EXPECT_DOUBLE_EQ(calculatorw2.subtract(2.111, 1.11), 1.001);
 }
 
+/**
+ * @brief Does the multiply method correctly calculate the valid range of results?
+ * 
+ */
 TEST(WeekTwoCalculatorW2Tests, WhenTwoNumbersAreMultipliedTheResultMustBeCorrect)
 {
     CalculatorW2 calculatorw2;
@@ -66,6 +85,10 @@ TEST(WeekTwoCalculatorW2Tests, WhenTwoNumbersAreMultipliedTheResultMustBeCorrect
     EXPECT_DOUBLE_EQ(calculatorw2.multiply(2, 1.111), 2.222);
 }
 
+/**
+ * @brief Does the divide method correctly calculate the valid range of results?
+ * 
+ */
 TEST(WeekTwoCalculatorW2Tests, WhenTwoNumbersAreDividedTheResultMustBeCorrect)
 {
     CalculatorW2 calculatorw2;
@@ -76,6 +99,10 @@ TEST(WeekTwoCalculatorW2Tests, WhenTwoNumbersAreDividedTheResultMustBeCorrect)
     EXPECT_DOUBLE_EQ(calculatorw2.divide(2.222, 2), 1.111);
 }
 
+/**
+ * @brief Do valid calculations correctly return a nullptr indicating no errors?
+ * 
+ */
 TEST(WeekTwoCalculatorW2Tests, WhenValidMathOperationArePErformedThenTheErrorMustBeNull)
 {
     CalculatorW2 calculatorw2;
@@ -90,6 +117,10 @@ TEST(WeekTwoCalculatorW2Tests, WhenValidMathOperationArePErformedThenTheErrorMus
     EXPECT_EQ(calculatorw2.getError(), nullptr);
 }
 
+/**
+ * @brief Does a divide by zero correctly return a divide by zero error string?
+ * 
+ */
 TEST(WeekTwoCalculatorW2Tests, WhenInvalidCalculationsArePerformedThenTheAppropriateErrorMustBeSet)
 {
     CalculatorW2 calculatorW2;
