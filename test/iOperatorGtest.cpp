@@ -13,7 +13,6 @@
 #include <gmock/gmock.h>
 
 #include "../inc/IOperator.h"
-//#include "../inc/TestOperator.h"
 
 using namespace Calculator;
 
