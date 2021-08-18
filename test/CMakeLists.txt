@@ -42,6 +42,7 @@ file(GLOB UNIT_TEST_SOURCES
     "*.cpp"
     "../src/IOperator.cpp"
     "../src/IBinaryOperator.cpp"
+    "../src/IUnaryOperator.cpp"
 )
 
 add_executable(${This} ${UNIT_TEST_SOURCES})
