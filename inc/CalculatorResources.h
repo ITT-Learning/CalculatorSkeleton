@@ -12,6 +12,7 @@
 #ifndef CALCULATORRESOURCES_H
 #define CALCULATORRESOURCES_H
 
+#include <map>
 #include <vector>
 
 namespace Calculator
@@ -26,6 +27,24 @@ namespace Calculator
         OPORDER::FOUR,
         OPORDER::FIVE,
         OPORDER::SIX
+    };
+
+    struct OpSymbol {
+            std::string Id;
+            std::string Regex;
+            OPORDER Order;
+    };
+
+    const std::map<std::string, OpSymbol> OpSymbols = {
+        {"(",   OpSymbol {"("   , "\\(",    OPORDER::ZERO}},
+        {"abs", OpSymbol {"abs" , "abs",    OPORDER::ONE}},
+        {"^",   OpSymbol {"^"   , "^",      OPORDER::TWO}},
+        {"*",   OpSymbol {"*"   , "\\*",    OPORDER::THREE}},
+        {"/",   OpSymbol {"/"   , "/",      OPORDER::THREE}},
+        {"+-",  OpSymbol {"+-"  , "\\+ *-", OPORDER::FOUR}}}
+        {"--",  OpSymbol {"--"  , "- *-",   OPORDER::FOUR}}}
+        {"+",   OpSymbol {"+"   , "\\+",    OPORDER::FIVE }},
+        {"-",   OpSymbol {"-"   , "-",      OPORDER::FIVE}}
     };
 }
 

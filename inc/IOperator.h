@@ -20,17 +20,16 @@ namespace Calculator
     class IOperator
     {
         public:
-            IOperator(OPORDER oporder, std::string opregex);
+            IOperator(const OpSymbol opsymbol);
             ~IOperator();
 
-            OPORDER OpOrder();
-            std::string OpRegex();
+            OpSymbol GetOpSymbol();
 
             virtual bool eval(std::string &input) = 0;
-
+            virtual std::string findString() = 0;
+            
         private:
-            OPORDER oporder_;
-            std::string opregex_;
+            const OpSymbol opsymbol_;
     };
 }
 

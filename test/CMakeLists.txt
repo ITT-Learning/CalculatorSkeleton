@@ -41,6 +41,7 @@ include_directories(
 file(GLOB UNIT_TEST_SOURCES
     "*.cpp"
     "../src/IOperator.cpp"
+    "../src/CalculatorResources.cpp"
     "../src/IBinaryOperator.cpp"
     "../src/IUnaryOperator.cpp"
 )

@@ -21,20 +21,20 @@ TEST(Week3IBinaryOperatorTests, IBinaryOperatorIsImplementableAsABaseClass)
     class TestOp: public IBinaryOperator
     {
         public:
-            TestOp() : IBinaryOperator(OPORDER::ZERO, "MAX") {}
-            virtual double calculate(double left, double right) { return left > right ? left : right; } 
+            TestOp() : IBinaryOperator(OpSymbols.at("+")) {}
+            virtual double calculate(double left, double right) { return left + right; } 
     };
 
     TestOp to;
 
-    EXPECT_EQ(to.OpOrder(), OPORDER::ZERO);
-    EXPECT_EQ(to.OpRegex(), "[^& ]+ MAX [^ ]+");
+    EXPECT_EQ(to.GetOpSymbol().Id, "+");
+    EXPECT_EQ(to.findString(), "[^ ]+ (\\+) [^ ]+");
 
-    std::string test = "1.0 MAX -2.0";
+    std::string test = "1.0 + -2.0";
     EXPECT_EQ(to.eval(test), true);
-    EXPECT_EQ(test, "1.000000");
+    EXPECT_EQ(test, "-1.000000");
 
-    test = "1.0 MAX 2.0";
+    test = "1.0 + 2.0";
     EXPECT_EQ(to.eval(test), true);
-    EXPECT_EQ(test, "2.000000");
+    EXPECT_EQ(test, "3.000000");
 }

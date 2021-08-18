@@ -18,24 +18,23 @@ using namespace Calculator;
 
 TEST(Week3IOperatorTests, IOperatorIsImplementableAsABaseClass)
 {
-    std::string OPREGEX = "Unevaluated\\(.+\\)";
-
     class TestOp: public IOperator
     {
         public:
-            TestOp(): IOperator(OPORDER::ZERO, "Unevaluated\\(.+\\)") {}
+            TestOp() : IOperator(OpSymbols.at("+")) {}
             bool eval(std::string &input){
-                unsigned loc = input.find("Une");
-                input.replace(loc, 3, "E");
+                unsigned loc = input.find(findString());
+                input = "1";
                 return true;
             }
+            std::string findString() {return "1 " + GetOpSymbol().Regex + " 1";}
     };
 
-    std::string test = "Unevaluated(stuff)";
+    std::string test = "1 + 1";
     TestOp to;
 
-    EXPECT_EQ(to.OpOrder(), OPORDER::ZERO);
-    EXPECT_EQ(to.OpRegex(), OPREGEX);
+    EXPECT_EQ(to.GetOpSymbol().Id, OpSymbols.at("+").Id);
+    EXPECT_EQ(to.findString(), "1 \\+ 1");
     EXPECT_EQ(to.eval(test), true);
-    EXPECT_EQ(test, "Evaluated(stuff)");
+    EXPECT_EQ(test, "1");
 }

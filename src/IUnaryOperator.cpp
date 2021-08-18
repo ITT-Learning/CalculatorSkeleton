@@ -15,8 +15,8 @@
 
 namespace Calculator
 {
-    IUnaryOperator::IUnaryOperator(OPORDER oporder, std::string opstring) :
-        opstring_(opstring), IOperator(oporder, opstring + " [^ ]+") {}
+    IUnaryOperator::IUnaryOperator(OpSymbol opsymbol) :
+        IOperator(opsymbol) {}
 
     IUnaryOperator::~IUnaryOperator() {}
 
@@ -24,7 +24,7 @@ namespace Calculator
     {
         bool retv = false;
 
-        std::string rgx_string = opstring_ + " ([^ ]+)";
+        std::string rgx_string = GetOpSymbol().Regex + " ([^ ]+)";
         std::regex rgx(rgx_string);
         std::smatch sm;
 
@@ -37,5 +37,10 @@ namespace Calculator
         }
 
         return retv;
+    }
+
+    std::string IUnaryOperator::findString()
+    {
+        return "(" + GetOpSymbol().Regex + ") [^ ]+";
     }
 }

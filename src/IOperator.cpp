@@ -13,18 +13,13 @@
 
 namespace Calculator
 {
-    IOperator::IOperator(OPORDER oporder, std::string opregex) :
-        oporder_(oporder), opregex_(opregex) {}
+    IOperator::IOperator(const OpSymbol opsymbol) :
+        opsymbol_(opsymbol) {}
 
     IOperator::~IOperator() {}
 
-    OPORDER IOperator::OpOrder()
+    OpSymbol IOperator::GetOpSymbol()
     {
-        return oporder_;
-    }
-
-    std::string IOperator::OpRegex()
-    {
-        return opregex_;
+        return opsymbol_;
     }
 }

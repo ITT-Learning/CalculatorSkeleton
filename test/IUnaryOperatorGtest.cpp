@@ -21,20 +21,20 @@ TEST(Week3IUnaryOperatorTests, IUnaryOperatorIsImplementableAsABaseClass)
     class TestOp: public IUnaryOperator
     {
         public:
-            TestOp() : IUnaryOperator(OPORDER::ZERO, "PLUS1") {}
-            virtual double calculate(double input) { return input + 1.0; } 
+            TestOp() : IUnaryOperator(OpSymbols.at("abs")) {}
+            virtual double calculate(double input) { return (input < 0) ? (-1 * input) : input; } 
     };
 
     TestOp to;
 
-    EXPECT_EQ(to.OpOrder(), OPORDER::ZERO);
-    EXPECT_EQ(to.OpRegex(), "PLUS1 [^ ]+");
+    EXPECT_EQ(to.GetOpSymbol().Id, "abs");
+    EXPECT_EQ(to.findString(), "(abs) [^ ]+");
 
-    std::string test = "PLUS1 -2.0";
+    std::string test = "abs -2.0";
     EXPECT_EQ(to.eval(test), true);
-    EXPECT_EQ(test, "-1.000000");
+    EXPECT_EQ(test, "2.000000");
 
-    test = "PLUS1 2.0";
+    test = "abs 2.0";
     EXPECT_EQ(to.eval(test), true);
-    EXPECT_EQ(test, "3.000000");
+    EXPECT_EQ(test, "2.000000");
 }

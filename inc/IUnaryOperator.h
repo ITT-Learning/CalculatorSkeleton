@@ -19,12 +19,11 @@ namespace Calculator
     class IUnaryOperator : public IOperator
     {
         public:
-            IUnaryOperator(OPORDER oporder, std::string opstring);
+            IUnaryOperator(OpSymbol opsymbol);
             ~IUnaryOperator();
             virtual bool eval(std::string &input);
+            virtual std::string findString();
             virtual double calculate(double right) = 0;
-        private:
-            std::string opstring_;
     };
 }
 

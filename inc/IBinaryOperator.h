@@ -19,12 +19,11 @@ namespace Calculator
     class IBinaryOperator : public IOperator
     {
         public:
-            IBinaryOperator(OPORDER oporder, std::string opstring);
+            IBinaryOperator(OpSymbol opsymbol);
             ~IBinaryOperator();
             virtual bool eval(std::string &input);
+            virtual std::string findString();
             virtual double calculate(double left, double right) = 0;
-        private:
-            std::string opstring_;
     };
 }
 

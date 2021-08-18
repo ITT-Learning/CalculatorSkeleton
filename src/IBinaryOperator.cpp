@@ -15,8 +15,8 @@
 
 namespace Calculator
 {
-    IBinaryOperator::IBinaryOperator(OPORDER oporder, std::string opstring) :
-        opstring_(opstring), IOperator(oporder, "[^& ]+ " + opstring + " [^ ]+") {}
+    IBinaryOperator::IBinaryOperator(OpSymbol opsymbol) :
+        IOperator(opsymbol) {}
 
     IBinaryOperator::~IBinaryOperator() {}
 
@@ -24,11 +24,9 @@ namespace Calculator
     {
         bool retv = false;
 
-        std::string rgx_string = "([^& ]+) " + opstring_ + " ([^ ]+)";
+        std::string rgx_string = "([^& ]+) " + GetOpSymbol().Regex + " ([^ ]+)";
         std::regex rgx(rgx_string);
         std::smatch sm;
-
-        //std::cout << "sub|" << input << "|" << rgx_string <<std::endl;
 
         if (regex_search(input, sm, rgx)) 
         {
@@ -40,5 +38,10 @@ namespace Calculator
         }
 
         return retv;
+    }
+
+    std::string IBinaryOperator::findString()
+    {
+        return "[^ ]+ (" + GetOpSymbol().Regex + ") [^ ]+";
     }
 }
