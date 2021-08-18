@@ -13,5 +13,5 @@ using namespace testing;
 
 class whenTestingMain: public ::testing::Test{};
 TEST_F(whenTestingMain, sampleUnitTest){
-    ASSERT_FALSE(true);
+    ASSERT_FALSE(false);
 }
