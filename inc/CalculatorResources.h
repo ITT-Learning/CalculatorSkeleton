@@ -36,13 +36,11 @@ namespace Calculator
     };
 
     const std::map<std::string, OpSymbol> OpSymbols = {
-        {"(",   OpSymbol {"("   , "\\(",    OPORDER::ZERO}},
-        {"abs", OpSymbol {"abs" , "abs",    OPORDER::ONE}},
-        {"^",   OpSymbol {"^"   , "\\^",    OPORDER::TWO}},
-        {"*",   OpSymbol {"*"   , "\\*",    OPORDER::THREE}},
-        {"/",   OpSymbol {"/"   , "/",      OPORDER::THREE}},
-        {"+-",  OpSymbol {"+-"  , "\\+ *-", OPORDER::FOUR}}}
-        {"--",  OpSymbol {"--"  , "- *-",   OPORDER::FOUR}}}
+        {"(",   OpSymbol {"("   , "\\(",    OPORDER::ONE}},
+        {"abs", OpSymbol {"abs" , "abs",    OPORDER::TWO}},
+        {"^",   OpSymbol {"^"   , "\\^",    OPORDER::THREE}},
+        {"*",   OpSymbol {"*"   , "\\*",    OPORDER::FOUR}},
+        {"/",   OpSymbol {"/"   , "/",      OPORDER::FOUR}},
         {"+",   OpSymbol {"+"   , "\\+",    OPORDER::FIVE }},
         {"-",   OpSymbol {"-"   , "-",      OPORDER::FIVE}}
     };

@@ -21,7 +21,7 @@ TEST(Week3IUnaryOperatorTests, IUnaryOperatorIsImplementableAsABaseClass)
     class TestOp: public IUnaryOperator
     {
         public:
-            TestOp() : IUnaryOperator(OpSymbols.at("abs")) {}
+            TestOp() : IUnaryOperator(OpSymbol {"abs", "abs", OPORDER::TWO}) {} //OpSymbols.at("abs")) {}
             virtual double calculate(double input) { return (input < 0) ? (-1 * input) : input; } 
     };
 
