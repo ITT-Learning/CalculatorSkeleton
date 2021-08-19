@@ -1,9 +1,10 @@
 list(APPEND _sources ../inc/Calculator.h Calculator.cpp)
-#list(APPEND _sources ../inc/CalculatorResources.h)
 list(APPEND _sources ../inc/OpSymbol.h OpSymbol.cpp)
 list(APPEND _sources ../inc/IOperator.h IOperator.cpp)
 list(APPEND _sources ../inc/IBinaryOperator.h IBinaryOperator.cpp)
 list(APPEND _sources ../inc/IUnaryOperator.h IUnaryOperator.cpp)
+list(APPEND _sources ../inc/AdditionOperator.h AdditionOperator.cpp)
+list(APPEND _sources ../inc/SubtractionOperator.h SubtractionOperator.cpp)
 
 # Set the output folder where your program will be created
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
