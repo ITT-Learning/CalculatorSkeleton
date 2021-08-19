@@ -32,4 +32,8 @@ TEST(Week3DivisionOperatorTests, DivisionOperatorIsImplementableAndHappyPathFunc
     test = "-1.0 / -2.0";
     EXPECT_EQ(divop.eval(test), true);
     EXPECT_EQ(test, "0.500000");
+
+    test = "-1.0 / 0";
+    EXPECT_EQ(divop.eval(test), true);
+    EXPECT_EQ(test, "-inf");
 }

@@ -49,6 +49,7 @@ file(GLOB UNIT_TEST_SOURCES
     "../src/MultiplicationOperator.cpp"
     "../src/DivisionOperator.cpp"
     "../src/ExponentOperator.cpp"
+    "../src/SquareRootOperator.cpp"
 )
 
 add_executable(${This} ${UNIT_TEST_SOURCES})
