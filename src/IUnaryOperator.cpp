@@ -9,6 +9,7 @@
  * 
  */
 
+#include <iostream>
 #include <regex>
 
 #include "IUnaryOperator.h"
@@ -30,7 +31,7 @@ namespace Calculator
 
         if (regex_search(input, sm, rgx)) 
         {
-            double right = std::stod(sm[1]);
+            double right = std::stod(sm[1].str());
             double result = calculate(right);
             input = regex_replace(input, rgx, std::to_string(result));
             retv = true;
