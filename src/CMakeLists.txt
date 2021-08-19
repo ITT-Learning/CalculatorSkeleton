@@ -9,6 +9,7 @@ list(APPEND _sources ../inc/MultiplicationOperator.h MultiplicationOperator.cpp)
 list(APPEND _sources ../inc/DivisionOperator.h DivisionOperator.cpp)
 list(APPEND _sources ../inc/ExponentOperator.h ExponentOperator.cpp)
 list(APPEND _sources ../inc/SquareRootOperator.h SquareRootOperator.cpp)
+list(APPEND _sources ../inc/InverseOperator.h InverseOperator.cpp)
 
 # Set the output folder where your program will be created
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
