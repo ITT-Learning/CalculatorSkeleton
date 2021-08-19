@@ -42,12 +42,12 @@ file(GLOB UNIT_TEST_SOURCES
     "*.cpp"
     "../src/OpSymbol.cpp"
     "../src/IOperator.cpp"
-#    "../src/CalculatorResources.cpp"
     "../src/IBinaryOperator.cpp"
     "../src/IUnaryOperator.cpp"
     "../src/AdditionOperator.cpp"
     "../src/SubtractionOperator.cpp"
     "../src/MultiplicationOperator.cpp"
+    "../src/DivisionOperator.cpp"
 )
 
 add_executable(${This} ${UNIT_TEST_SOURCES})
