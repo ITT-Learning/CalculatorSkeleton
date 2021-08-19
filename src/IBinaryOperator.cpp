@@ -24,7 +24,7 @@ namespace Calculator
     {
         bool retv = false;
 
-        std::string rgx_string = "([^& ]+) " + GetOpSymbol().Regex + " ([^ ]+)";
+        std::string rgx_string = "([^& ]+) " + GetOpSymbol().Regex() + " ([^ ]+)";
         std::regex rgx(rgx_string);
         std::smatch sm;
 
@@ -42,6 +42,6 @@ namespace Calculator
 
     std::string IBinaryOperator::findString()
     {
-        return "[^ ]+ (" + GetOpSymbol().Regex + ") [^ ]+";
+        return "[^ ]+ (" + GetOpSymbol().Regex() + ") [^ ]+";
     }
 }

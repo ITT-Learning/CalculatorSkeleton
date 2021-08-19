@@ -21,13 +21,13 @@ TEST(Week3IUnaryOperatorTests, IUnaryOperatorIsImplementableAsABaseClass)
     class TestOp: public IUnaryOperator
     {
         public:
-            TestOp() : IUnaryOperator(OpSymbol {"abs", "abs", OPORDER::TWO}) {} //OpSymbols.at("abs")) {}
+            TestOp() : IUnaryOperator(OpSymbol("abs", OPORDER::TWO)) {}
             virtual double calculate(double input) { return (input < 0) ? (-1 * input) : input; } 
     };
 
     TestOp to;
 
-    EXPECT_EQ(to.GetOpSymbol().Id, "abs");
+    EXPECT_EQ(to.GetOpSymbol().Id(), "abs");
     EXPECT_EQ(to.findString(), "(abs) [^ ]+");
 
     std::string test = "abs -2.0";

@@ -13,6 +13,7 @@
 #include <gmock/gmock.h>
 
 #include "../inc/IOperator.h"
+#include "../inc/OpSymbol.h"
 
 using namespace Calculator;
 
@@ -21,19 +22,19 @@ TEST(Week3IOperatorTests, IOperatorIsImplementableAsABaseClass)
     class TestOp: public IOperator
     {
         public:
-            TestOp() : IOperator(OpSymbols.at("+")) {}
+            TestOp() : IOperator(OpSymbol("+", OPORDER::FOUR, true)) {}
             bool eval(std::string &input){
                 unsigned loc = input.find(findString());
                 input = "1";
                 return true;
             }
-            std::string findString() {return "1 " + GetOpSymbol().Regex + " 1";}
+            std::string findString() {return "1 " + GetOpSymbol().Regex() + " 1";}
     };
 
     std::string test = "1 + 1";
     TestOp to;
 
-    EXPECT_EQ(to.GetOpSymbol().Id, OpSymbols.at("+").Id);
+    EXPECT_EQ(to.GetOpSymbol().Id(), "+");
     EXPECT_EQ(to.findString(), "1 \\+ 1");
     EXPECT_EQ(to.eval(test), true);
     EXPECT_EQ(test, "1");

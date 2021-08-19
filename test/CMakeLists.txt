@@ -40,8 +40,9 @@ include_directories(
 #"mocks/*.cpp",
 file(GLOB UNIT_TEST_SOURCES
     "*.cpp"
+    "../src/OpSymbol.cpp"
     "../src/IOperator.cpp"
-    "../src/CalculatorResources.cpp"
+#    "../src/CalculatorResources.cpp"
     "../src/IBinaryOperator.cpp"
     "../src/IUnaryOperator.cpp"
 )

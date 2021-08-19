@@ -13,7 +13,7 @@
 #define IOPERATOR_H
 
 #include <string>
-#include "CalculatorResources.h"
+#include "OpSymbol.h"
 
 namespace Calculator
 {

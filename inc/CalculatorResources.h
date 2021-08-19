@@ -28,22 +28,6 @@ namespace Calculator
         OPORDER::FIVE,
         OPORDER::SIX
     };
-
-    struct OpSymbol {
-            std::string Id;
-            std::string Regex;
-            OPORDER Order;
-    };
-
-    const std::map<std::string, OpSymbol> OpSymbols = {
-        {"(",   OpSymbol {"("   , "\\(",    OPORDER::ONE}},
-        {"abs", OpSymbol {"abs" , "abs",    OPORDER::TWO}},
-        {"^",   OpSymbol {"^"   , "\\^",    OPORDER::THREE}},
-        {"*",   OpSymbol {"*"   , "\\*",    OPORDER::FOUR}},
-        {"/",   OpSymbol {"/"   , "/",      OPORDER::FOUR}},
-        {"+",   OpSymbol {"+"   , "\\+",    OPORDER::FIVE }},
-        {"-",   OpSymbol {"-"   , "-",      OPORDER::FIVE}}
-    };
 }
 
 #endif //CALCULATORRESOURCES_H
