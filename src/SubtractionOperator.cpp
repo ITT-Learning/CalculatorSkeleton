@@ -10,9 +10,12 @@
  */
 
 #include "SubtractionOperator.h"
+#include "OperatorFactory.h"
 
 namespace Calculator
 {
+    bool SubtractionOperator::REGISTERED = OperatorFactory::RegisterOperator(new SubtractionOperator);
+
     SubtractionOperator::SubtractionOperator() : 
         IBinaryOperator(OpSymbol("-", OPORDER::FIVE)) {}
 

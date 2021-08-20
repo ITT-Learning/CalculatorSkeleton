@@ -19,6 +19,7 @@ namespace Calculator
     class AbsoluteOperator : public IUnaryOperator
     {
         public:
+            static bool REGISTERED;
             AbsoluteOperator();
             ~AbsoluteOperator();
             virtual double calculate(double input);

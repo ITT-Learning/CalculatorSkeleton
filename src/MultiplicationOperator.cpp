@@ -10,9 +10,12 @@
  */
 
 #include "MultiplicationOperator.h"
+#include "OperatorFactory.h"
 
 namespace Calculator
 {
+    bool MultiplicationOperator::REGISTERED = OperatorFactory::RegisterOperator(new MultiplicationOperator);
+
     MultiplicationOperator::MultiplicationOperator() : 
         IBinaryOperator(OpSymbol("*", OPORDER::FOUR, true)) {}
 

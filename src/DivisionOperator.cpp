@@ -10,9 +10,12 @@
  */
 
 #include "DivisionOperator.h"
+#include "OperatorFactory.h"
 
 namespace Calculator
 {
+    bool DivisionOperator::REGISTERED = OperatorFactory::RegisterOperator(new DivisionOperator);
+
     DivisionOperator::DivisionOperator() : 
         IBinaryOperator(OpSymbol("/", OPORDER::FOUR)) {}
 

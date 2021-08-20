@@ -12,9 +12,12 @@
 #include <tgmath.h> 
 
 #include "ExponentOperator.h"
+#include "OperatorFactory.h"
 
 namespace Calculator
 {
+    bool ExponentOperator::REGISTERED = OperatorFactory::RegisterOperator(new ExponentOperator);
+
     ExponentOperator::ExponentOperator() : 
         IBinaryOperator(OpSymbol("^", OPORDER::THREE, true)) {}
 

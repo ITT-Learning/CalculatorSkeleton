@@ -17,6 +17,7 @@
 
 namespace Calculator
 {
+    bool AbsoluteOperator::REGISTERED = OperatorFactory::RegisterOperator(new AbsoluteOperator);
 
     AbsoluteOperator::AbsoluteOperator() :
         IUnaryOperator(OpSymbol("abs", OPORDER::THREE)) {}

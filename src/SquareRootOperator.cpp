@@ -12,9 +12,12 @@
 #include  <tgmath.h>
 
 #include "SquareRootOperator.h"
+#include "OperatorFactory.h"
 
 namespace Calculator
 {
+    bool SquareRootOperator::REGISTERED = OperatorFactory::RegisterOperator(new SquareRootOperator);
+
     SquareRootOperator::SquareRootOperator() :
         IUnaryOperator(OpSymbol("sqrt", OPORDER::THREE)) {}
 

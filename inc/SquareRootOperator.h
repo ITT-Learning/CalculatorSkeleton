@@ -19,6 +19,7 @@ namespace Calculator
     class SquareRootOperator : public IUnaryOperator
     {
         public:
+            static bool REGISTERED;
             SquareRootOperator();
             ~SquareRootOperator();
             virtual double calculate(double input);

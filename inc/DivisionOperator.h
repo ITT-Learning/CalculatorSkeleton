@@ -19,6 +19,7 @@ namespace Calculator
     class DivisionOperator : public IBinaryOperator
     {
         public:
+            static bool REGISTERED;
             DivisionOperator();
             ~DivisionOperator();
             virtual double calculate(double left, double right); 

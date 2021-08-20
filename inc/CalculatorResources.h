@@ -19,7 +19,7 @@ namespace Calculator
 {
     enum OPORDER { ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX };
 
-    const std::vector<OPORDER> OPORDERS{
+    const std::vector<OPORDER> OPORDERS = {
         OPORDER::ZERO,
         OPORDER::ONE,
         OPORDER::TWO,
@@ -27,7 +27,7 @@ namespace Calculator
         OPORDER::FOUR,
         OPORDER::FIVE,
         OPORDER::SIX
-    };
+    }; //Can not access in some places not sure why
 }
 
 #endif //CALCULATORRESOURCES_H

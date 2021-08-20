@@ -19,6 +19,7 @@ namespace Calculator
     class SubtractionOperator : public IBinaryOperator
     {
         public:
+            static bool REGISTERED;
             SubtractionOperator();
             ~SubtractionOperator();
             virtual double calculate(double left, double right); 

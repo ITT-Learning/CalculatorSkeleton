@@ -19,6 +19,7 @@ namespace Calculator
     class ExponentOperator : public IBinaryOperator
     {
         public:
+            static bool REGISTERED;
             ExponentOperator();
             ~ExponentOperator();
             virtual double calculate(double left, double right); 

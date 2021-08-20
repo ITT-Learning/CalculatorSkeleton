@@ -26,7 +26,8 @@ namespace Calculator
             ~OperatorFactory();
             IOperator* GetOperator(std::string opId);
             std::vector<std::string>* GetOperatorListByOporder(OPORDER oporder);
-            void RegisterOperator(IOperator *op);
+
+            static bool RegisterOperator(IOperator* op);
 
         private:
             OperatorFactory();

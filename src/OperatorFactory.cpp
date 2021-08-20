@@ -9,16 +9,8 @@
  * 
  */
 
-#include "AbsoluteOperator.h"
-#include "AdditionOperator.h"
 #include "CalculatorResources.h"
-#include "DivisionOperator.h"
-#include "ExponentOperator.h"
-#include "InverseOperator.h"
-#include "MultiplicationOperator.h"
 #include "OperatorFactory.h"
-#include "SquareRootOperator.h"
-#include "SubtractionOperator.h"
 
 namespace Calculator
 {
@@ -36,19 +28,20 @@ namespace Calculator
 
     OperatorFactory::OperatorFactory()
     {
-        for (OPORDER order : OPORDERS)
+        std::vector<OPORDER> OP_ORDERS = {
+            OPORDER::ZERO,
+            OPORDER::ONE,
+            OPORDER::TWO,
+            OPORDER::THREE,
+            OPORDER::FOUR,
+            OPORDER::FIVE,
+            OPORDER::SIX
+        };
+
+        for (OPORDER order : OP_ORDERS)
         {
             oporders_[order] = new std::vector<std::string>;
         }
-
-        RegisterOperator(new AbsoluteOperator);
-        RegisterOperator(new AdditionOperator);
-        RegisterOperator(new DivisionOperator);
-        RegisterOperator(new ExponentOperator);
-        RegisterOperator(new InverseOperator);
-        RegisterOperator(new MultiplicationOperator);
-        RegisterOperator(new SquareRootOperator);
-        RegisterOperator(new SubtractionOperator);
     }
 
     OperatorFactory::~OperatorFactory()
@@ -64,7 +57,7 @@ namespace Calculator
     }
 
     IOperator* OperatorFactory::GetOperator(std::string opId)
-    {   
+    {
         return operators_[opId];
     }
 
@@ -73,12 +66,14 @@ namespace Calculator
         return oporders_[opOrder];
     }
 
-    void OperatorFactory::RegisterOperator(IOperator *op)
+    bool OperatorFactory::RegisterOperator(IOperator *op)
     {
         std::string id = op->GetOpSymbol().Id();
         OPORDER order = op->GetOpSymbol().Order();
 
-        operators_[id] = op;
-        oporders_[order]->push_back(id);
+        GetInstance()->operators_[id] = op;
+        GetInstance()->oporders_[order]->push_back(id);
+
+        return true;
     }
 }

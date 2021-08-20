@@ -10,9 +10,12 @@
  */
 
 #include "AdditionOperator.h"
+#include "OperatorFactory.h"
 
 namespace Calculator
 {
+    bool AdditionOperator::REGISTERED = OperatorFactory::RegisterOperator(new AdditionOperator);
+
     AdditionOperator::AdditionOperator() : 
         IBinaryOperator(OpSymbol("+", OPORDER::FIVE, true)) {}
 

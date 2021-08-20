@@ -19,6 +19,7 @@ namespace Calculator
     class InverseOperator : public IUnaryOperator
     {
         public:
+            static bool REGISTERED;
             InverseOperator();
             ~InverseOperator();
             virtual double calculate(double input);

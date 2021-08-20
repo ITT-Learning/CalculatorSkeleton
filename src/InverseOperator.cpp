@@ -12,9 +12,12 @@
 #include  <tgmath.h>
 
 #include "InverseOperator.h"
+#include "OperatorFactory.h"
 
 namespace Calculator
 {
+    bool InverseOperator::REGISTERED = OperatorFactory::RegisterOperator(new InverseOperator);
+
     InverseOperator::InverseOperator() :
         IUnaryOperator(OpSymbol("inv", OPORDER::THREE)) {}
 
