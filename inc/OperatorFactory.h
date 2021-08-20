@@ -25,6 +25,7 @@ namespace Calculator
             static OperatorFactory* GetInstance();
             ~OperatorFactory();
             IOperator* GetOperator(std::string opId);
+            std::vector<OPORDER> GetOpOrders();
             std::vector<std::string>* GetOperatorListByOporder(OPORDER oporder);
 
             static bool RegisterOperator(IOperator* op);

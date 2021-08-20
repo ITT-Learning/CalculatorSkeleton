@@ -33,7 +33,7 @@ TEST(Week3OperatorFactoryTests, OperatorFactorIsProperlyInstanciated)
     EXPECT_EQ(opfact->GetOperator("sqrt")->GetOpSymbol().Id(), "sqrt");
 
     std::string s = "";
-    for (OPORDER order : OPORDERS)
+    for (OPORDER order : opfact->GetOpOrders())
     {
         std::vector<std::string> *v = opfact->GetOperatorListByOporder(order);
         std::for_each(v->begin(), v->end(), [&](const std::string &piece){ s += piece; });

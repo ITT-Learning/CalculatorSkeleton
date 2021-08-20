@@ -28,17 +28,7 @@ namespace Calculator
 
     OperatorFactory::OperatorFactory()
     {
-        std::vector<OPORDER> OP_ORDERS = {
-            OPORDER::ZERO,
-            OPORDER::ONE,
-            OPORDER::TWO,
-            OPORDER::THREE,
-            OPORDER::FOUR,
-            OPORDER::FIVE,
-            OPORDER::SIX
-        };
-
-        for (OPORDER order : OP_ORDERS)
+        for (OPORDER order : GetOpOrders())
         {
             oporders_[order] = new std::vector<std::string>;
         }
@@ -46,7 +36,7 @@ namespace Calculator
 
     OperatorFactory::~OperatorFactory()
     {
-        for (OPORDER order : OPORDERS)
+        for (OPORDER order : GetOpOrders())
         {
             delete oporders_[order];
         }
@@ -75,5 +65,18 @@ namespace Calculator
         GetInstance()->oporders_[order]->push_back(id);
 
         return true;
+    }
+
+    std::vector<OPORDER> OperatorFactory::GetOpOrders()
+    {
+        return std::vector<OPORDER> {
+            OPORDER::ZERO,
+            OPORDER::ONE,
+            OPORDER::TWO,
+            OPORDER::THREE,
+            OPORDER::FOUR,
+            OPORDER::FIVE,
+            OPORDER::SIX
+        };
     }
 }
