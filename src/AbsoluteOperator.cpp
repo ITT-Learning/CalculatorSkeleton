@@ -13,9 +13,11 @@
 #include <cmath>
 
 #include "AbsoluteOperator.h"
+#include "OperatorFactory.h"
 
 namespace Calculator
 {
+
     AbsoluteOperator::AbsoluteOperator() :
         IUnaryOperator(OpSymbol("abs", OPORDER::THREE)) {}
 

@@ -20,6 +20,8 @@ namespace Calculator
     class IOperator
     {
         public:
+            using CreateMethod = IOperator*(*)();
+            
             IOperator(const OpSymbol opsymbol);
             ~IOperator();
 
