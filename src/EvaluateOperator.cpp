@@ -33,7 +33,7 @@ namespace Calculator
 
     bool EvaluateOperator::evalOpOrder(OPORDER opOrder, std::string&input) 
     {
-        std::string rgxString = GetRegStringForOpOrder(opOrder);
+        std::string rgxString = GetRegStringFromOpOrder(opOrder);
         if (!rgxString.empty())
         {
             EvaluateWithRegex(rgxString, input);
@@ -47,7 +47,7 @@ namespace Calculator
         return "(" + GetOpSymbol().Regex() + ") ";
     }
 
-    std::string EvaluateOperator::GetRegStringForOpOrder(OPORDER opOrder)
+    std::string EvaluateOperator::GetRegStringFromOpOrder(OPORDER opOrder)
     {
         std::string rgxString = "";
         std::vector<std::string>* opIds = opfactory_->GetOperatorListByOpOrder(opOrder);

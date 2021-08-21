@@ -26,7 +26,7 @@ namespace Calculator
 
         private:
             bool evalOpOrder(OPORDER opOrder, std::string&input);
-            std::string GetRegStringForOpOrder(OPORDER opOrder);
+            std::string GetRegStringFromOpOrder(OPORDER opOrder);
             bool EvaluateWithRegex(const std::string &rgxString, std::string &input);
             virtual std::string findString();
             OperatorFactory* opfactory_;
