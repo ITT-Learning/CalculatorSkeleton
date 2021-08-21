@@ -13,6 +13,7 @@ list(APPEND _sources ../inc/InverseOperator.h InverseOperator.cpp)
 list(APPEND _sources ../inc/AbsoluteOperator.h AbsoluteOperator.cpp)
 list(APPEND _sources ../inc/OperatorFactory.h OperatorFactory.cpp)
 list(APPEND _sources ../inc/EvaluateOperator.h EvaluateOperator.cpp)
+list(APPEND _sources ../inc/ParenthesisOperator.h ParenthesisOperator.cpp)
 
 # Set the output folder where your program will be created
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)

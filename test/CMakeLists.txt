@@ -54,6 +54,7 @@ file(GLOB UNIT_TEST_SOURCES
     "../src/AbsoluteOperator.cpp"
     "../src/OperatorFactory.cpp"
     "../src/EvaluateOperator.cpp"
+    "../src/ParenthesisOperator.cpp"
 )
 
 add_executable(${This} ${UNIT_TEST_SOURCES})

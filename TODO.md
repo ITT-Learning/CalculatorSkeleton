@@ -2,7 +2,8 @@
 >> Refactor using OpSymbol
 > +,-,*,/,^,sqrt,inv,abs
 > OperatorFactory
-5. Evaluator
-6. Calculator
-7. Errors
-8. help
+> Evaluator
+6. (
+7. Calculator
+8. Errors
+9. help
