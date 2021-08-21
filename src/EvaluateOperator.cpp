@@ -13,72 +13,71 @@
 #include <regex>
 
 #include "EvaluateOperator.h"
-#include "OperatorFactory.h"
 
 namespace Calculator
 {
     EvaluateOperator::EvaluateOperator() :
-        IOperator(OpSymbol("eval",OPORDER::ZERO)) {}
+        IOperator(OpSymbol("eval",OPORDER::ZERO)), opfactory_(OperatorFactory::GetInstance()) {}
 
     EvaluateOperator::~EvaluateOperator() {}
 
     bool EvaluateOperator::eval(std::string &input)
     {
-        //std::cout << "EvaluateOperator::eval(" << input << ")" << std::endl;
-        OperatorFactory *opFactory = OperatorFactory::GetInstance();
-        for (OPORDER order : opFactory->GetOpOrders())
+        for (OPORDER opOrder : opfactory_->GetOpOrders())
         {
-            std::vector<std::string>* opIds = opFactory->GetOperatorListByOpOrder(order);
-            //std::cout << "operators(" << opIds << ")" << std::endl;
-
-            if (!opIds->empty())
-            {
-                //std::cout << "  size:" << opIds->size() << std::endl;
-
-                std::string rgxString, sep;
-                std::for_each(opIds->begin(), opIds->end(), [&](const std::string &opId)
-                { 
-                    rgxString += (sep + opFactory->GetOperator(opId)->findString());
-                    sep = "|";
-                });
-
-                //std::cout << "  rgxString:\"" << rgxString << "\"" << std::endl;
-
-                std::smatch sm;
-                std::regex rgx(rgxString);
-                while (regex_search(input, sm, rgx)) 
-                {
-                    //std::cout << "  eval(" << input << "|" << sm[0].str()  << "|" << sm[1].str() << ")" << std::endl;
-                    std::string fndop;
-                    for (unsigned i = 1; i<sm.size(); i++) fndop += sm[i].str();
-                    opFactory->GetOperator(fndop)->eval(input);
-                    //std::cout << "  result:\"" << fndop << "|" << input << "\"\n";
-                }
-            }
-
-            // std::cout << "rgx_operators(" << order << ")size:" << rgx_operators->size() << std::endl;
-            // if (!rgx_operators->empty())
-            // {
-            //     std::string s;
-            //     std::for_each(rgx_operators->begin(), rgx_operators->end(), [&](const std::string &piece){ s += piece; });
-            //     std::cout << "rgx_operators(" << s << ")" << std::endl;
-
-            //     std::smatch sm;
-            //     std::regex rgx(s);
-
-            //     while (regex_search(input, sm, rgx)) 
-            //     {
-            //         std::cout << "eval(" << input << "|" << sm[1] << ")" << std::endl;
-            //         opFactory->GetOperator(sm[1])->eval(input);
-            //     }
-            // }
+            evalOpOrder(opOrder, input);
         }
         
         return true;
+    }
+
+    bool EvaluateOperator::evalOpOrder(OPORDER opOrder, std::string&input) 
+    {
+        std::string rgxString = GetRegStringForOpOrder(opOrder);
+        if (!rgxString.empty())
+        {
+            EvaluateWithRegex(rgxString, input);
+        }
+
+        return true;    
     }
 
     std::string EvaluateOperator::findString()
     {
         return "(" + GetOpSymbol().Regex() + ") ";
     }
+
+    std::string EvaluateOperator::GetRegStringForOpOrder(OPORDER opOrder)
+    {
+        std::string rgxString = "";
+        std::vector<std::string>* opIds = opfactory_->GetOperatorListByOpOrder(opOrder);
+
+        if (!opIds->empty())
+        {
+            std::string sep = "";
+            std::for_each(opIds->begin(), opIds->end(), [&](const std::string &opId)
+            { 
+                rgxString += (sep + opfactory_->GetOperator(opId)->findString());
+                sep = "|";
+            });
+        }
+
+        return rgxString;
+    }
+
+    bool EvaluateOperator::EvaluateWithRegex(const std::string &rgxString, std::string &input)
+    {
+        std::smatch sm;
+        std::regex rgx(rgxString);
+        
+        while (regex_search(input, sm, rgx)) 
+        {
+            std::string fndop;
+            for (unsigned i = 1; i<sm.size(); i++) fndop += sm[i].str();
+            opfactory_->GetOperator(fndop)->eval(input);
+        }
+
+        return true;
+    }
+
 }
