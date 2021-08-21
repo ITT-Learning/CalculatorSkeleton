@@ -20,6 +20,7 @@ namespace Calculator
     class EvaluateOperator : public IOperator
     {
         public:
+            static bool REGISTERED;
             EvaluateOperator();
             ~EvaluateOperator();
             virtual bool eval(std::string &input);

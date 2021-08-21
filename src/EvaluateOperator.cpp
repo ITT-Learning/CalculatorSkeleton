@@ -16,6 +16,8 @@
 
 namespace Calculator
 {
+    bool EvaluateOperator::REGISTERED = OperatorFactory::GetInstance()->RegisterOperator(new EvaluateOperator);
+
     EvaluateOperator::EvaluateOperator() :
         IOperator(OpSymbol("eval",OPORDER::ZERO)), opfactory_(OperatorFactory::GetInstance()) {}
 

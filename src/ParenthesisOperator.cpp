@@ -9,6 +9,7 @@
  * 
  */
 #include <regex>
+#include <iostream>
 
 #include "ParenthesisOperator.h"
 #include "OperatorFactory.h"

@@ -39,5 +39,5 @@ TEST(Week3ParenthesisOperatorTests, ParenthesisoOperatorIsImplementableAndHappyP
 
     test = "2 + 3 * (1 + (2 * 5)) / 2";
     EXPECT_EQ(po.eval(test), true);
-    EXPECT_EQ(test, "2 + 3 * 11.000000 / 2");
+    EXPECT_EQ(test, "2 + 3 * (1 + 10.000000) / 2");
 }
