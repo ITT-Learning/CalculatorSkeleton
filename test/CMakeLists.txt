@@ -53,6 +53,7 @@ file(GLOB UNIT_TEST_SOURCES
     "../src/InverseOperator.cpp"
     "../src/AbsoluteOperator.cpp"
     "../src/OperatorFactory.cpp"
+    "../src/EvaluateOperator.cpp"
 )
 
 add_executable(${This} ${UNIT_TEST_SOURCES})

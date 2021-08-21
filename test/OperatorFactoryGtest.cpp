@@ -35,7 +35,7 @@ TEST(Week3OperatorFactoryTests, OperatorFactorIsProperlyInstanciated)
     std::string s = "";
     for (OPORDER order : opfact->GetOpOrders())
     {
-        std::vector<std::string> *v = opfact->GetOperatorListByOporder(order);
+        std::vector<std::string> *v = opfact->GetOperatorListByOpOrder(order);
         std::for_each(v->begin(), v->end(), [&](const std::string &piece){ s += piece; });
     }
     

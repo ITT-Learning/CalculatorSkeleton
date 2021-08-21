@@ -51,7 +51,7 @@ namespace Calculator
         return operators_[opId];
     }
 
-    std::vector<std::string>* OperatorFactory::GetOperatorListByOporder(OPORDER opOrder)
+    std::vector<std::string>* OperatorFactory::GetOperatorListByOpOrder(OPORDER opOrder)
     {
         return oporders_[opOrder];
     }
