@@ -31,9 +31,9 @@ namespace Calculator
 
         if (regex_search(input, sm, rgx)) 
         {
-            Trace(GetOpSymbol().Id() + " -> " + sm[0].str());
             double right = std::stod(sm[1].str());
             double result = calculate(right);
+            Trace(GetOpSymbol().Id() + " -> " + sm[0].str() + " = " + std::to_string(result));
             input = regex_replace(input, rgx, std::to_string(result));
             retv = true;
         }

@@ -14,15 +14,15 @@ int main()
     // Fill in or change code here as necessary.  See also Calculator.cpp
     std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
 
-    std::string input = "abs(1 - 3)";
+    std::string input = "tron abs(1 - 3) troff";
     Calculator::OperatorFactory::GetInstance()->GetOperator("eval")->eval(input);
     std::cout << "= " << input << std::endl;
 
-    input = "tron abs (1 - 3) troff"; //"((1 + 2) * 4) - 8";
+    input = "abs (1 - 3)"; //"((1 + 2) * 4) - 8";
     Calculator::OperatorFactory::GetInstance()->GetOperator("eval")->eval(input);
     std::cout << "= " << input << std::endl;
 
-    input = "((1 + 2) * 4) - 8";
+    input = "tron ((1 + 2) * 4) - 8 troff";
     Calculator::OperatorFactory::GetInstance()->GetOperator("eval")->eval(input);
     std::cout << "= " << input << std::endl;
 

@@ -30,10 +30,10 @@ namespace Calculator
 
         if (regex_search(input, sm, rgx)) 
         {
-            Trace(GetOpSymbol().Id() + " -> " + sm[0].str());
             double left = std::stod(sm[1]);
             double right = std::stod(sm[2]);
             double result = calculate(left, right);
+            Trace(GetOpSymbol().Id() + " -> " + sm[0].str() + " = " + std::to_string(result));
             input = regex_replace(input, rgx, std::to_string(result));
             retv = true;
         }
