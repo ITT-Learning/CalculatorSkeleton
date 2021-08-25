@@ -18,6 +18,8 @@
 namespace Calculator
 {
     enum OPORDER { ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX };
+
+    const std::string HELP_ABS = "abs - absolute value - Ex. \"abs -2\" = 2\\n";
 }
 
 #endif //CALCULATORRESOURCES_H

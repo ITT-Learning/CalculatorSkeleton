@@ -28,4 +28,9 @@ namespace Calculator
     {
         return  std::fabs(input);
     }
+
+    const std::string AbsoluteOperator::help()
+    {
+        return HELP_ABS;
+    }
 }

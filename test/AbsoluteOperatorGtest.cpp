@@ -41,3 +41,9 @@ TEST(Week3AbsoluteOperatorTests, AbsoluteoOperatorIsImplementableAndHappyPathFun
     EXPECT_EQ(abso.eval(test), true);
     EXPECT_EQ(test, "0.000000");
 }
+
+TEST(Week3AbsoluteOperatorTests, AbsoluteoOperatorHelpIsFunctional)
+{
+    AbsoluteOperator abso;
+    EXPECT_EQ(abso.help(), HELP_ABS);
+}

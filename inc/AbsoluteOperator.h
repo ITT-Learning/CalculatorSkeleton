@@ -13,16 +13,18 @@
 #define ABSOLUTEOPERATOR_H
 
 #include "IUnaryOperator.h"
+#include "IHelper.h"
 
 namespace Calculator
 {
-    class AbsoluteOperator : public IUnaryOperator
+    class AbsoluteOperator : public IUnaryOperator, public IHelper
     {
         public:
             static bool REGISTERED;
             AbsoluteOperator();
             ~AbsoluteOperator();
             virtual double calculate(double input);
+            virtual const std::string help();
     };
 }
 
