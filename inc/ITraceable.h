@@ -12,6 +12,7 @@
 #ifndef ITRACEABLE_H
 #define ITRACEABLE_H
 
+#include <iostream>
 #include <string>
 
 namespace Calculator
@@ -19,11 +20,12 @@ namespace Calculator
     class ITraceable
     {
         protected:
-            ITraceable();
+            ITraceable(std::ostream &oStream = std::cout);
             ~ITraceable();
             void SetTrace(bool trace);
             void Trace(std::string message);
         private:
+            std::ostream &ostream_;
             static bool trace_;
     };
 }

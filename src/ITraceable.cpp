@@ -15,7 +15,8 @@
 
 namespace Calculator
 {
-    ITraceable::ITraceable() {}
+    ITraceable::ITraceable(std::ostream &oStream) :
+        ostream_(oStream) {}
 
     ITraceable::~ITraceable() {}
 
@@ -28,7 +29,7 @@ namespace Calculator
     {
         if(trace_)
         {
-            std::cout << "   " << message << std::endl;
+            ostream_ << "   " << message << std::endl;
         }
     }
 

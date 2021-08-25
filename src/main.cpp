@@ -25,8 +25,4 @@ int main()
     input = "tron ((1 + 2) * 4) - 8 troff";
     Calculator::OperatorFactory::GetInstance()->GetOperator("eval")->eval(input);
     std::cout << "= " << input << std::endl;
-
-    // input = "trace+ 1 + 2";
-    // Calculator::OperatorFactory::GetInstance()->GetOperator("eval")->eval(input);
-    // std::cout << "= " << input << std::endl;
 }

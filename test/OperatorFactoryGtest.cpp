@@ -39,5 +39,5 @@ TEST(Week3OperatorFactoryTests, OperatorFactorIsProperlyInstanciated)
         std::for_each(v->begin(), v->end(), [&](const std::string &piece){ s += piece; });
     }
     
-    EXPECT_EQ(s, "evaltron(abs^invsqrt/*+-troff");
+    EXPECT_EQ(s, "eval(tronabs^invsqrt/*+-troff");
 }
