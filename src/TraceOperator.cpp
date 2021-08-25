@@ -47,4 +47,9 @@ namespace Calculator
     {
         return  " *(" + GetOpSymbol().Regex() + ") *";
     }
+
+    const std::string TraceOperator::help()
+    {
+        return HELP_TRACE_OPERATOR;
+    }
 }

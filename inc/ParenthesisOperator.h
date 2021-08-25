@@ -24,6 +24,7 @@ namespace Calculator
             ~ParenthesisOperator();
             virtual bool eval(std::string &input);
             virtual std::string findString();
+            virtual const std::string help();
     };
 }
 

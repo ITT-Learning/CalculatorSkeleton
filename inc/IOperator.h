@@ -14,12 +14,13 @@
 
 #include <string>
 
+#include "IHelper.h"
 #include "ITraceable.h"
 #include "OpSymbol.h"
 
 namespace Calculator
 {
-    class IOperator : protected ITraceable
+    class IOperator : protected ITraceable, public IHelper
     {
         public:
             using CreateMethod = IOperator*(*)();

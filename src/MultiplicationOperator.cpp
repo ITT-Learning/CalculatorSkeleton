@@ -24,5 +24,10 @@ namespace Calculator
     double MultiplicationOperator::calculate(double left, double right)
     { 
         return left * right; 
-    } 
+    }
+
+    const std::string MultiplicationOperator::help()
+    {
+        return HELP_MULTIPLICATION_OPERATOR;
+    }
 }

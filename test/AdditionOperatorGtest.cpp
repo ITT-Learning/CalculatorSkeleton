@@ -32,3 +32,9 @@ TEST(Week3AdditionOperatorTests, AdditionoOperatorIsImplementableAndHappyPathFun
     EXPECT_EQ(ao.eval(test), true);
     EXPECT_EQ(test, "3.000000");
 }
+
+TEST(Week3AdditionOperatorTests, AdditionoOperatorHelpIsFunctional)
+{
+    AdditionOperator addo;
+    EXPECT_EQ(addo.help(), HELP_ADDITION_OPERATOR);
+}

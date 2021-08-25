@@ -23,6 +23,7 @@ TEST(Week3IUnaryOperatorTests, IUnaryOperatorIsImplementableAsABaseClass)
         public:
             TestOp() : IUnaryOperator(OpSymbol("abs", OPORDER::TWO)) {}
             virtual double calculate(double input) { return (input < 0) ? (-1 * input) : input; } 
+            virtual const std::string help() { return "";}
     };
 
     TestOp to;

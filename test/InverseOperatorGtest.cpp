@@ -41,3 +41,9 @@ TEST(Week3InverseOperatorTests, InverseoOperatorIsImplementableAndHappyPathFunct
     EXPECT_EQ(invo.eval(test), true);
     EXPECT_EQ(test, "-inf");
 }
+
+TEST(Week3InverseOperatorTests, InverseoOperatorHelpIsFunctional)
+{
+    InverseOperator abso;
+    EXPECT_EQ(abso.help(), HELP_INVERSE_OPERATOR);
+}

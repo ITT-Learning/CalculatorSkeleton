@@ -32,3 +32,9 @@ TEST(Week3ExponentOperatorTests, ExponentoOperatorIsImplementableAndHappyPathFun
     EXPECT_EQ(expo.eval(test), true);
     EXPECT_EQ(test, "-8.000000");
 }
+
+TEST(Week3ExponentOperatorTests, ExponentoOperatorHelpIsFunctional)
+{
+    ExponentOperator abso;
+    EXPECT_EQ(abso.help(), HELP_EXPONENT_OPERATOR);
+}

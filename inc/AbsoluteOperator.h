@@ -13,11 +13,10 @@
 #define ABSOLUTEOPERATOR_H
 
 #include "IUnaryOperator.h"
-#include "IHelper.h"
 
 namespace Calculator
 {
-    class AbsoluteOperator : public IUnaryOperator, public IHelper
+    class AbsoluteOperator : public IUnaryOperator
     {
         public:
             static bool REGISTERED;

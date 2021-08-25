@@ -33,3 +33,9 @@ TEST(Week3SquareRootOperatorTests, SquareRootoOperatorIsImplementableAndHappyPat
     EXPECT_EQ(sqrto.eval(test), true);
     EXPECT_EQ(test, "-nan");
 }
+
+TEST(Week3SquareRootOperatorTests, SquareRootoOperatorHelpIsFunctional)
+{
+    SquareRootOperator abso;
+    EXPECT_EQ(abso.help(), HELP_SQUARE_ROOT_OPERATOR);
+}

@@ -47,4 +47,9 @@ namespace Calculator
     {
         return "(" + GetOpSymbol().Regex() + ")[^\\(\\)]+\\)";
     }
+
+    const std::string ParenthesisOperator::help()
+    {
+        return HELP_PARENTHESIS_OPERATOR;
+    }
 }

@@ -23,6 +23,7 @@ namespace Calculator
             DivisionOperator();
             ~DivisionOperator();
             virtual double calculate(double left, double right); 
+            virtual const std::string help();
     };
 }
 

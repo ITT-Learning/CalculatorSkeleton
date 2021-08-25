@@ -27,4 +27,9 @@ namespace Calculator
     { 
         return  sqrt(input);
     }
+
+    const std::string SquareRootOperator::help()
+    {
+        return HELP_SQUARE_ROOT_OPERATOR;
+    }
 }

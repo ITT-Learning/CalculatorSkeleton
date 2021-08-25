@@ -29,6 +29,7 @@ TEST(Week3IOperatorTests, IOperatorIsImplementableAsABaseClass)
                 return true;
             }
             std::string findString() {return "1 " + GetOpSymbol().Regex() + " 1";}
+            virtual const std::string help() {return "";}
     };
 
     std::string test = "1 + 1";

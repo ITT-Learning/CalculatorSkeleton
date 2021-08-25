@@ -26,5 +26,10 @@ namespace Calculator
     double ExponentOperator::calculate(double left, double right)
     { 
         return pow(left, right); 
-    } 
+    }
+
+    const std::string ExponentOperator::help()
+    {
+        return HELP_EXPONENT_OPERATOR;
+    }
 }

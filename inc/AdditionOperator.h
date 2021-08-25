@@ -22,7 +22,8 @@ namespace Calculator
             static bool REGISTERED;
             AdditionOperator();
             ~AdditionOperator();
-            virtual double calculate(double left, double right); 
+            virtual double calculate(double left, double right);
+            virtual const std::string help();
     };
 }
 

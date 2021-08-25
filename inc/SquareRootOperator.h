@@ -23,6 +23,7 @@ namespace Calculator
             SquareRootOperator();
             ~SquareRootOperator();
             virtual double calculate(double input);
+            virtual const std::string help();
     };
 }
 

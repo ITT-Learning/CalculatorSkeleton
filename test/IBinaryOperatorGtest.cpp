@@ -24,7 +24,8 @@ TEST(Week3IBinaryOperatorTests, IBinaryOperatorIsImplementableAsABaseClass)
     {
         public:
             TestOp() : IBinaryOperator(OpSymbol("+", OPORDER::FIVE, true)) {}
-            virtual double calculate(double left, double right) { return left + right; } 
+            virtual double calculate(double left, double right) { return left + right; }
+            virtual const std::string help() { return "";}
     };
 
     TestOp to;

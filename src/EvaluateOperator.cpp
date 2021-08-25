@@ -84,4 +84,9 @@ namespace Calculator
 
         return true;
     }
+
+    const std::string EvaluateOperator::help()
+    {
+        return HELP_EVALUATE_OPERATOR;
+    }
 }

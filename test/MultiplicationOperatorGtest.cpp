@@ -32,3 +32,9 @@ TEST(Week3MultiplicationOperatorTests, MultiplicationoOperatorIsImplementableAnd
     EXPECT_EQ(mo.eval(test), true);
     EXPECT_EQ(test, "2.000000");
 }
+
+TEST(Week3MultiplicationOperatorTests, MultiplicationoOperatorHelpIsFunctional)
+{
+    MultiplicationOperator abso;
+    EXPECT_EQ(abso.help(), HELP_MULTIPLICATION_OPERATOR);
+}

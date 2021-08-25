@@ -25,4 +25,9 @@ namespace Calculator
     { 
         return left + right; 
     } 
+
+    const std::string AdditionOperator::help()
+    {
+        return HELP_ADDITION_OPERATOR;
+    }
 }

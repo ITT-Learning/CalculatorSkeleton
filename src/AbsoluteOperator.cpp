@@ -31,6 +31,6 @@ namespace Calculator
 
     const std::string AbsoluteOperator::help()
     {
-        return HELP_ABS;
+        return HELP_ABSOLUTE_OPERATOR;
     }
 }

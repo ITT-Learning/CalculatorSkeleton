@@ -32,3 +32,9 @@ TEST(Week3SubtractionOperatorTests, SubtractionoOperatorIsImplementableAndHappyP
     EXPECT_EQ(so.eval(test), true);
     EXPECT_EQ(test, "-1.000000");
 }
+
+TEST(Week3SubtractionOperatorTests, SubtractionoOperatorHelpIsFunctional)
+{
+    SubtractionOperator so;
+    EXPECT_EQ(so.help(), HELP_SUBTRACTION_OPERATOR);
+}

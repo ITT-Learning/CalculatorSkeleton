@@ -24,5 +24,10 @@ namespace Calculator
     double DivisionOperator::calculate(double left, double right)
     { 
         return left / right; 
-    } 
+    }
+
+    const std::string DivisionOperator::help()
+    {
+        return HELP_DIVISION_OPERATOR;
+    }
 }

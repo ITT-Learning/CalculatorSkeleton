@@ -23,6 +23,7 @@ namespace Calculator
             MultiplicationOperator();
             ~MultiplicationOperator();
             virtual double calculate(double left, double right); 
+            virtual const std::string help();
     };
 }
 

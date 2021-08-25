@@ -40,3 +40,9 @@ TEST(Week3DivisionOperatorTests, DivisionOperatorIsImplementableAndHappyPathFunc
     EXPECT_EQ(divop.eval(test), true);
     EXPECT_EQ(test, "-inf");
 }
+
+TEST(Week3DivisionOperatorTests, DivisionoOperatorHelpIsFunctional)
+{
+    DivisionOperator abso;
+    EXPECT_EQ(abso.help(), HELP_DIVISION_OPERATOR);
+}

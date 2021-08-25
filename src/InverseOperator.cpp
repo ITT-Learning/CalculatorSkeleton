@@ -27,4 +27,9 @@ namespace Calculator
     { 
         return  1 / input;
     }
+
+   const std::string InverseOperator::help()
+    {
+        return HELP_INVERSE_OPERATOR;
+    }
 }

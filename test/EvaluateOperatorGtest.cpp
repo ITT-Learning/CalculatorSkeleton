@@ -75,3 +75,9 @@ TEST(Week3EvaluateOperatorTests, EvaluateOperatorCorrectlyEvalsBasicOperators)
         EXPECT_EQ(result, expected)  << "    Equation: " + iAr.first << std::endl;
     }
 }
+
+TEST(Week3EvaluateOperatorTests, EvaluateoOperatorHelpIsFunctional)
+{
+    EvaluateOperator abso;
+    EXPECT_EQ(abso.help(), HELP_EVALUATE_OPERATOR);
+}

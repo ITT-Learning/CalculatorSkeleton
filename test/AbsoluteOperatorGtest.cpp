@@ -45,5 +45,5 @@ TEST(Week3AbsoluteOperatorTests, AbsoluteoOperatorIsImplementableAndHappyPathFun
 TEST(Week3AbsoluteOperatorTests, AbsoluteoOperatorHelpIsFunctional)
 {
     AbsoluteOperator abso;
-    EXPECT_EQ(abso.help(), HELP_ABS);
+    EXPECT_EQ(abso.help(), HELP_ABSOLUTE_OPERATOR);
 }

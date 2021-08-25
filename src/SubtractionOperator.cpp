@@ -24,5 +24,10 @@ namespace Calculator
     double SubtractionOperator::calculate(double left, double right)
     { 
         return left - right; 
-    } 
+    }
+
+    const std::string SubtractionOperator::help()
+    {
+        return HELP_SUBTRACTION_OPERATOR;
+    }
 }

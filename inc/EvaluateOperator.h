@@ -24,6 +24,7 @@ namespace Calculator
             EvaluateOperator();
             ~EvaluateOperator();
             virtual bool eval(std::string &input);
+            virtual const std::string help();
 
         private:
             bool evalOpOrder(OPORDER opOrder, std::string&input);

@@ -23,6 +23,7 @@ namespace Calculator
             InverseOperator();
             ~InverseOperator();
             virtual double calculate(double input);
+            virtual const std::string help();
     };
 }
 
