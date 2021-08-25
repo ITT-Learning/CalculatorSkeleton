@@ -23,7 +23,6 @@ TEST(Week3ExponentOperatorTests, ExponentoOperatorIsImplementableAndHappyPathFun
     ExponentOperator expo;
 
     EXPECT_EQ(expo.GetOpSymbol().Id(), "^");
-    EXPECT_EQ(expo.findString(), "[^ ]+ (\\^) [^ ]+");
 
     std::string test = "-3.0 ^ 2.0";
     EXPECT_EQ(expo.eval(test), true);

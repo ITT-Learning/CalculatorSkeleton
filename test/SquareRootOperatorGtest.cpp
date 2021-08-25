@@ -24,7 +24,6 @@ TEST(Week3SquareRootOperatorTests, SquareRootoOperatorIsImplementableAndHappyPat
     SquareRootOperator sqrto;
 
     EXPECT_EQ(sqrto.GetOpSymbol().Id(), "sqrt");
-    EXPECT_EQ(sqrto.findString(), "(sqrt) [^ ]+");
 
     std::string test = "sqrt 9.0";
     EXPECT_EQ(sqrto.eval(test), true);

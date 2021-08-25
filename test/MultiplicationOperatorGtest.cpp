@@ -23,7 +23,6 @@ TEST(Week3MultiplicationOperatorTests, MultiplicationoOperatorIsImplementableAnd
     MultiplicationOperator mo;
 
     EXPECT_EQ(mo.GetOpSymbol().Id(), "*");
-    EXPECT_EQ(mo.findString(), "[^ ]+ (\\*) [^ ]+");
 
     std::string test = "3.0 * -2.0";
     EXPECT_EQ(mo.eval(test), true);

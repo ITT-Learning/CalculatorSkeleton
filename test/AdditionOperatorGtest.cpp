@@ -23,7 +23,6 @@ TEST(Week3AdditionOperatorTests, AdditionoOperatorIsImplementableAndHappyPathFun
     AdditionOperator ao;
 
     EXPECT_EQ(ao.GetOpSymbol().Id(), "+");
-    EXPECT_EQ(ao.findString(), "[^ ]+ (\\+) [^ ]+");
 
     std::string test = "1.0 + -2.0";
     EXPECT_EQ(ao.eval(test), true);

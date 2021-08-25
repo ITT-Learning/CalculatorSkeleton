@@ -24,12 +24,13 @@ namespace Calculator
     {
         bool retv = false;
 
-        std::string rgx_string = "([^& ]+) " + GetOpSymbol().Regex() + " ([^ ]+)";
+        std::string rgx_string = "([^& ]+) *" + GetOpSymbol().Regex() + " *([^ ]+)";
         std::regex rgx(rgx_string);
         std::smatch sm;
 
         if (regex_search(input, sm, rgx)) 
         {
+            Trace(GetOpSymbol().Id() + " -> " + sm[0].str());
             double left = std::stod(sm[1]);
             double right = std::stod(sm[2]);
             double result = calculate(left, right);
@@ -42,6 +43,6 @@ namespace Calculator
 
     std::string IBinaryOperator::findString()
     {
-        return "[^ ]+ (" + GetOpSymbol().Regex() + ") [^ ]+";
+        return "[^ ]+ *(" + GetOpSymbol().Regex() + ") *[^ ]+";
     }
 }

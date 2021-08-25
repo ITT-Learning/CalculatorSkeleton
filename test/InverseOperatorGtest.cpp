@@ -24,7 +24,6 @@ TEST(Week3InverseOperatorTests, InverseoOperatorIsImplementableAndHappyPathFunct
     InverseOperator invo;
 
     EXPECT_EQ(invo.GetOpSymbol().Id(), "inv");
-    EXPECT_EQ(invo.findString(), "(inv) [^ ]+");
 
     std::string test = "inv 2.0";
     EXPECT_EQ(invo.eval(test), true);

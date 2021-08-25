@@ -30,7 +30,7 @@ TEST(Week3IBinaryOperatorTests, IBinaryOperatorIsImplementableAsABaseClass)
     TestOp to;
 
     EXPECT_EQ(to.GetOpSymbol().Id(), "+");
-    EXPECT_EQ(to.findString(), "[^ ]+ (\\+) [^ ]+");
+    EXPECT_EQ(to.findString(), "[^ ]+ *(\\+) *[^ ]+");
 
     std::string test = "1.0 + -2.0";
     EXPECT_EQ(to.eval(test), true);

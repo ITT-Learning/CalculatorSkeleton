@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <regex>
+#include <string>
 
 #include "EvaluateOperator.h"
 
@@ -25,11 +26,13 @@ namespace Calculator
 
     bool EvaluateOperator::eval(std::string &input)
     {
+        //Trace("eval -> " + input);
+
         for (OPORDER opOrder : opfactory_->GetOpOrders())
         {
             evalOpOrder(opOrder, input);
         }
-        
+
         return true;
     }
 
@@ -81,5 +84,4 @@ namespace Calculator
 
         return true;
     }
-
 }

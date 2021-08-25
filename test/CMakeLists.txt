@@ -44,6 +44,7 @@ file(GLOB UNIT_TEST_SOURCES
     "../src/IOperator.cpp"
     "../src/IBinaryOperator.cpp"
     "../src/IUnaryOperator.cpp"
+    "../src/ITraceable.cpp"
     "../src/AdditionOperator.cpp"
     "../src/SubtractionOperator.cpp"
     "../src/MultiplicationOperator.cpp"
@@ -55,6 +56,7 @@ file(GLOB UNIT_TEST_SOURCES
     "../src/OperatorFactory.cpp"
     "../src/EvaluateOperator.cpp"
     "../src/ParenthesisOperator.cpp"
+    "../src/TraceOperator.cpp"
 )
 
 add_executable(${This} ${UNIT_TEST_SOURCES})

@@ -23,7 +23,6 @@ TEST(Week3DivisionOperatorTests, DivisionOperatorIsImplementableAndHappyPathFunc
     DivisionOperator divop;
 
     EXPECT_EQ(divop.GetOpSymbol().Id(), "/");
-    EXPECT_EQ(divop.findString(), "[^ ]+ (/) [^ ]+");
 
     std::string test = "3.0 / -2.0";
     EXPECT_EQ(divop.eval(test), true);

@@ -24,7 +24,6 @@ TEST(Week3AbsoluteOperatorTests, AbsoluteoOperatorIsImplementableAndHappyPathFun
     AbsoluteOperator abso;
 
     EXPECT_EQ(abso.GetOpSymbol().Id(), "abs");
-    EXPECT_EQ(abso.findString(), "(abs) [^ ]+");
 
     std::string test = "abs 2.0";
     EXPECT_EQ(abso.eval(test), true);

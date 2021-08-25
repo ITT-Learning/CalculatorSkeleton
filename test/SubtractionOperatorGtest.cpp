@@ -23,7 +23,6 @@ TEST(Week3SubtractionOperatorTests, SubtractionoOperatorIsImplementableAndHappyP
     SubtractionOperator so;
 
     EXPECT_EQ(so.GetOpSymbol().Id(), "-");
-    EXPECT_EQ(so.findString(), "[^ ]+ (-) [^ ]+");
 
     std::string test = "1.0 - -2.0";
     EXPECT_EQ(so.eval(test), true);

@@ -28,7 +28,7 @@ TEST(Week3IUnaryOperatorTests, IUnaryOperatorIsImplementableAsABaseClass)
     TestOp to;
 
     EXPECT_EQ(to.GetOpSymbol().Id(), "abs");
-    EXPECT_EQ(to.findString(), "(abs) [^ ]+");
+    EXPECT_EQ(to.findString(), "(abs) *[^ ]+");
 
     std::string test = "abs -2.0";
     EXPECT_EQ(to.eval(test), true);

@@ -9,6 +9,8 @@
  * 
  */
 
+#include <iostream>
+
 #include "IOperator.h"
 
 namespace Calculator

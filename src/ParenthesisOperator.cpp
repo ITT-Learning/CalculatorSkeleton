@@ -33,6 +33,7 @@ namespace Calculator
 
         if (regex_search(input, sm, rgx)) 
         {
+            Trace("( -> " + sm[0].str());
             auto evaluator = OperatorFactory::GetInstance()->GetOperator("eval");
             std::string expression = sm[1];
             retv = evaluator->eval(expression);

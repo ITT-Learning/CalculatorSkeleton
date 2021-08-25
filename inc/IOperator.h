@@ -13,11 +13,13 @@
 #define IOPERATOR_H
 
 #include <string>
+
+#include "ITraceable.h"
 #include "OpSymbol.h"
 
 namespace Calculator
 {
-    class IOperator
+    class IOperator : protected ITraceable
     {
         public:
             using CreateMethod = IOperator*(*)();
@@ -29,7 +31,7 @@ namespace Calculator
 
             virtual bool eval(std::string &input) = 0;
             virtual std::string findString() = 0;
-            
+
         private:
             const OpSymbol opsymbol_;
     };

@@ -32,6 +32,8 @@ namespace Calculator
         {
             oporders_[order] = new std::vector<std::string>;
         }
+
+
     }
 
     OperatorFactory::~OperatorFactory()
@@ -54,6 +56,16 @@ namespace Calculator
     std::vector<std::string>* OperatorFactory::GetOperatorListByOpOrder(OPORDER opOrder)
     {
         return oporders_[opOrder];
+    }
+
+    std::string OperatorFactory::GetOperatorOrRegex()
+    {
+        std::string regexString = "";
+        for (auto op : operators_) {
+            regexString += (op.second->GetOpSymbol().Regex() + "|");
+        }
+
+        return regexString + "\\)";
     }
 
     bool OperatorFactory::RegisterOperator(IOperator *op)
