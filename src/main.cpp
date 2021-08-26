@@ -11,5 +11,5 @@
 int main() 
 {
     // Fill in or change code here as necessary.  See also Calculator.cpp
-    std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
+    runCalc();
 }
