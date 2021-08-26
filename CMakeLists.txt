@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.11)
-project(Calculator VERSION 0.1.0)
+project(Calculator)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(src inc)
-
-add_subdirectory(src)
+add_subdirectory(src/Messages)
+add_subdirectory(src/Application)
+add_subdirectory(src/exe)
 add_subdirectory(test)
