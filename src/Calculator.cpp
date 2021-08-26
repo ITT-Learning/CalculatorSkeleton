@@ -8,4 +8,9 @@
 
 #include "Calculator.h"
 
+std::string Calculator::hello()
+{
+    return "Hello world!";
+}
+
 // Add Function definitions here.

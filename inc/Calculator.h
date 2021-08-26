@@ -13,4 +13,9 @@
 #include <iostream>
 // Add your function declarations here.
 
+class Calculator {
+    public:
+    std::string hello();
+};
+
 #endif  // CALCULATOR_H
