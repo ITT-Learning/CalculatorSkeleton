@@ -11,6 +11,22 @@
 #define CALCULATOR_H
 
 #include <iostream>
-// Add your function declarations here.
+
+#include "OperatorFactory.h"
+
+namespace Calculator
+{
+    class Calculator
+    {
+        public:
+            Calculator(std::istream &ccin = std::cin, std::ostream &ccout = std::cout);
+            ~Calculator();
+            void run();
+        private:
+            std::istream &ccin_;
+            std::ostream &ccout_;
+            OperatorFactory *factory_;
+    };
+}
 
 #endif  // CALCULATOR_H

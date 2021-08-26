@@ -35,7 +35,7 @@ namespace Calculator
         if (regex_search(input, sm, rgx)) 
         {
             SetTrace(sm[1].str() == "tron");
-            Trace(input);
+            //Trace(input);
             input = regex_replace(input, rgx, "");
             retv = true;
         }

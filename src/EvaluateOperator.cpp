@@ -26,25 +26,28 @@ namespace Calculator
 
     bool EvaluateOperator::eval(std::string &input)
     {
-        //Trace("eval -> " + input);
+        bool retv = true;
 
         for (OPORDER opOrder : opfactory_->GetOpOrders())
         {
-            evalOpOrder(opOrder, input);
+            retv = evalOpOrder(opOrder, input);
+            if ( !retv) break;          
         }
 
-        return true;
+        return retv;
     }
 
     bool EvaluateOperator::evalOpOrder(OPORDER opOrder, std::string&input) 
     {
+        bool retv = true;
+
         std::string rgxString = GetRegStringFromOpOrder(opOrder);
         if (!rgxString.empty())
         {
-            EvaluateWithRegex(rgxString, input);
+            retv = EvaluateWithRegex(rgxString, input);
         }
 
-        return true;    
+        return retv;    
     }
 
     std::string EvaluateOperator::findString()
@@ -72,17 +75,19 @@ namespace Calculator
 
     bool EvaluateOperator::EvaluateWithRegex(const std::string &rgxString, std::string &input)
     {
+        bool retv = true;
+
         std::smatch sm;
         std::regex rgx(rgxString);
         
-        while (regex_search(input, sm, rgx)) 
+        while (retv && regex_search(input, sm, rgx)) 
         {
             std::string fndop;
             for (unsigned i = 1; i<sm.size(); i++) fndop += sm[i].str();
-            opfactory_->GetOperator(fndop)->eval(input);
+            retv = opfactory_->GetOperator(fndop)->eval(input);
         }
 
-        return true;
+        return retv;
     }
 
     const std::string EvaluateOperator::help()

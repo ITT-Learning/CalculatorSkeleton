@@ -6,4 +6,4 @@
 > (
 7. Calculator
 8. Errors
-9. help
+* help

@@ -7,22 +7,15 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "../inc/Calculator.h"
-#include "../inc/OperatorFactory.h"
+
+using namespace Calculator;
 
 int main() 
 {
-    // Fill in or change code here as necessary.  See also Calculator.cpp
-    std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
+    std::cout << "Welcome to the Calculator C++ learning project.\n";
+    std::cout << "- Enter \"help\" for help.\n";
+    std::cout << "- Enter \"quit\" to quit.\n" << std::endl;
 
-    std::string input = "tron abs(1 - 3) troff";
-    Calculator::OperatorFactory::GetInstance()->GetOperator("eval")->eval(input);
-    std::cout << "= " << input << std::endl;
-
-    input = "abs (1 - 3)"; //"((1 + 2) * 4) - 8";
-    Calculator::OperatorFactory::GetInstance()->GetOperator("eval")->eval(input);
-    std::cout << "= " << input << std::endl;
-
-    input = "tron ((1 + 2) * 4) - 8 troff";
-    Calculator::OperatorFactory::GetInstance()->GetOperator("eval")->eval(input);
-    std::cout << "= " << input << std::endl;
+    Calculator::Calculator calculator;
+    calculator.run();
 }

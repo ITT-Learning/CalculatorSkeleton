@@ -8,4 +8,26 @@
 
 #include "Calculator.h"
 
-// Add Function definitions here.
+namespace Calculator
+{
+    Calculator::Calculator(std::istream &ccin, std::ostream &ccout) :
+        ccin_(ccin), ccout_(ccout), factory_(OperatorFactory::GetInstance()) {}
+
+    Calculator::~Calculator() {}
+
+    void Calculator::run()
+    {
+        bool run = true;
+        std::string input = "";
+
+        while (input != "quit")
+        {
+            ccout_ << "calculator> " << std::flush;
+            std::getline(ccin_, input);
+
+            factory_->GetOperator("eval")->eval(input);
+            
+            ccout_ << "calculator= " << input << std::endl;
+        }
+    }
+}

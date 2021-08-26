@@ -57,6 +57,7 @@ file(GLOB UNIT_TEST_SOURCES
     "../src/EvaluateOperator.cpp"
     "../src/ParenthesisOperator.cpp"
     "../src/TraceOperator.cpp"
+    "../src/HelpOperator.cpp"
 )
 
 add_executable(${This} ${UNIT_TEST_SOURCES})
