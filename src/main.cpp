@@ -13,6 +13,12 @@ int main()
 {
     //This calculator can do super basic and simple math. 
 
+<<<<<<< HEAD
+=======
+    Calculator calc;
+
+    std::cout << calc.hello() << std::endl;
+>>>>>>> ef987d43c131cce18f53162efa2b96e782a97cf8
 
     
     float number1, number2;
@@ -32,5 +38,9 @@ int main()
 
     //here is the end of the program 
 
+<<<<<<< HEAD
 
+=======
+    //testing
+>>>>>>> ef987d43c131cce18f53162efa2b96e782a97cf8
 }
