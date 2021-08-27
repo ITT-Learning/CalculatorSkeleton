@@ -10,6 +10,8 @@
  */
 
 #include <iostream>
+#include <regex>
+#include <string>
 
 #include "IOperator.h"
 

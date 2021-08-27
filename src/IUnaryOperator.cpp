@@ -25,24 +25,32 @@ namespace Calculator
     {
         bool retv = false;
 
-        std::string rgx_string = GetOpSymbol().Regex() + " *([^ ]+ *)";
+        std::string rgx_string = GetOpSymbol().Regex() + " *" + REGEX_DOUBLE_CAPTURE + " *";
         std::regex rgx(rgx_string);
         std::smatch sm;
 
+        std::string result;
+
         if (regex_search(input, sm, rgx)) 
         {
-            double right = std::stod(sm[1].str());
-            double result = calculate(right);
-            Trace(GetOpSymbol().Id() + " -> " + sm[0].str() + " = " + std::to_string(result));
-            input = regex_replace(input, rgx, std::to_string(result));
+            std::string rightStr = sm[1].str();
+            double right = stod(rightStr);
+            result = std::to_string(calculate(right));
             retv = true;
         }
+        else
+        {
+            result = "UNKNOWN_ERROR[" + input + "]";
+        }
+
+        Trace(GetOpSymbol().Id() + " -> " + sm[0].str() + " = " + result);
+        input = regex_replace(input, rgx, result);
 
         return retv;
     }
 
     std::string IUnaryOperator::findString()
     {
-        return "(" + GetOpSymbol().Regex() + ") *[^ ]+";
+        return "(" + GetOpSymbol().Regex() + ") *" + REGEX_DOUBLE;
     }
 }

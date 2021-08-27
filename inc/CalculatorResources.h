@@ -19,6 +19,10 @@ namespace Calculator
 {
     enum OPORDER { ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX };
 
+    const std::string REGEX_DOUBLE = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
+    const std::string REGEX_DOUBLE_CAPTURE = "([-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?)";
+    const std::string REGEX_DOUBLE_ANCHORED = "^[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?$";
+
     const std::string HELP_ABSOLUTE_OPERATOR = "Absolute value: \"abs -2\" = 2";
     const std::string HELP_ADDITION_OPERATOR = "Addition: \"1 + 2\" = 3";
     const std::string HELP_SUBTRACTION_OPERATOR = "Subtraction: \"1 - 2\" = -1";

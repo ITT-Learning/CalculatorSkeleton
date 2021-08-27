@@ -24,25 +24,36 @@ namespace Calculator
     {
         bool retv = false;
 
-        std::string rgx_string = "([^& ]+) *" + GetOpSymbol().Regex() + " *([^ ]+)";
+        std::string rgx_string = REGEX_DOUBLE_CAPTURE + " *" + GetOpSymbol().Regex() + " *" + REGEX_DOUBLE_CAPTURE;
         std::regex rgx(rgx_string);
         std::smatch sm;
 
+        std::string result;
+
         if (regex_search(input, sm, rgx)) 
         {
-            double left = std::stod(sm[1]);
-            double right = std::stod(sm[2]);
-            double result = calculate(left, right);
-            Trace(GetOpSymbol().Id() + " -> " + sm[0].str() + " = " + std::to_string(result));
-            input = regex_replace(input, rgx, std::to_string(result));
-            retv = true;
+            std::string leftStr = sm[1].str();
+            std::string rightStr = sm[3].str();
+
+                double left = std::stod(leftStr);
+                double right = std::stod(rightStr);
+                result = std::to_string(calculate(left, right));
+
+                retv = true;
         }
+        else
+        {
+            result = "UNKNOWN_ERROR[" + input + "]";
+        }
+
+        Trace(GetOpSymbol().Id() + " -> " + sm[0].str() + " = " + result);
+        input = regex_replace(input, rgx, result);
 
         return retv;
     }
 
     std::string IBinaryOperator::findString()
     {
-        return "[^ ]+ *(" + GetOpSymbol().Regex() + ") *[^ ]+";
+        return REGEX_DOUBLE + " *(" + GetOpSymbol().Regex() + ") *" + REGEX_DOUBLE;
     }
 }
