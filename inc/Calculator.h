@@ -11,8 +11,10 @@
 #define CALCULATOR_H
 
 #include <iostream>
-// Add your function declarations here test.
-    void runCalc();
 
-    void calc(char calcType, double num1, double num2);
+namespace calculator{
+    void runCalculator();
+    void calculate(char calcType, double num1, double num2);
+}//namespace calculator
+
 #endif  // CALCULATOR_H
