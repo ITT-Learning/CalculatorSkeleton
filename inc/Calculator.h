@@ -13,9 +13,6 @@
 #include <iostream>
 // Add your function declarations here.
 
-class Calculator {
-    public:
-    std::string hello();
-};
+void calculator();
 
 #endif  // CALCULATOR_H
