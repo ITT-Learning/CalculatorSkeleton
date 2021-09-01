@@ -1,15 +1,27 @@
 ////////////////////////////////////////////////////////////////////////////
 /**
  *  @file   main.cpp
- *  @date   Fri April 16 2021
- *  @brief  Entry Point of Calculator
+ *  @date   Fri August 25 2021
+ *  @brief  This is a basic calculator program which asks for two numbers and it returns the a couple equations using those numbers. 
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include "Calculator.h"
+#include "../inc/Calculator.h"
+
 
 int main() 
 {
-    // Fill in or change code here as necessary.  See also Calculator.cpp
-    std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
+    //This calculator can do super basic and simple math. 
+    while(true)
+    {
+        char repeat; 
+        Calculator::Week1 week1;
+        week1.calculator();
+        std::cout << "Would you like to run the program again? y/n" << std::endl;
+        std::cin >> repeat;
+        if(repeat != 'y')
+        {
+            return 0;
+        }
+    }
 }
