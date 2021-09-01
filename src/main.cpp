@@ -15,8 +15,6 @@ int main()
     while(true)
     {
         char repeat; 
-        std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
-        std::cout << "Please enter in two numbers separated by a space" << std::endl;
         Calculator::calculator();
         std::cout << "Would you like to run the program again? y/n" << std::endl;
         std::cin >> repeat;

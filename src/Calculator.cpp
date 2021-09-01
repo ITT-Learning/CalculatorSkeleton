@@ -16,6 +16,8 @@
 ////////////////////////////////////////////////////////////////////////////
 void Calculator::calculator(){
         float number1, number2;
+        std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
+        std::cout << "Please enter in two numbers separated by a space" << std::endl;
         std::cin >> number1 >> number2;
         int addResult = number1 + number2;
         int multiplyResult = number1 * number2;

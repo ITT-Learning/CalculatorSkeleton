@@ -14,7 +14,13 @@
 namespace Calculator
 {
 // Add your function declarations here.
+//*************/
+// Calculator private methods /
+///
 
+//*************/
+// Calculator public methods /
+///
 void calculator();
 }
 #endif  // CALCULATOR_H
