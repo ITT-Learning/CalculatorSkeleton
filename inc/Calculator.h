@@ -13,14 +13,19 @@
 #include <iostream>
 namespace Calculator
 {
-// Add your function declarations here.
-//*************/
-// Calculator private methods /
-///
+    /**
+     * @brief This is the Class containing the functions and variables used in week 1
+     */
+    class Week1
+    {
+        public:
+            /**
+             * @brief This is the main function run for week 1 containing the functionality to compute the math correctly
+             * 
+             */
+            void calculator();
+    };
 
-//*************/
-// Calculator public methods /
-///
-void calculator();
+
 }
 #endif  // CALCULATOR_H

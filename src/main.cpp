@@ -15,7 +15,8 @@ int main()
     while(true)
     {
         char repeat; 
-        Calculator::calculator();
+        Calculator::Week1 week1;
+        week1.calculator();
         std::cout << "Would you like to run the program again? y/n" << std::endl;
         std::cin >> repeat;
         if(repeat != 'y')
