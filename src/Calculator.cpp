@@ -6,25 +6,61 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include "Calculator.h"
+#include "../inc/Calculator.h"
 
-namespace Calculator
+namespace calculator
 {
         //*************/
         // Calculator public methods /
         ///
-        void Week1::calculator(){
+        void Calculator::calculator()
+        {
                 float number1, number2;
+                char op;
                 std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
-                std::cout << "Please enter in two numbers separated by a space" << std::endl;
-                std::cin >> number1 >> number2;
-                int addResult = number1 + number2;
-                int multiplyResult = number1 * number2;
-                float divideResult = number1 / number2;
-                int subtractResult = number1 - number2;
-                std::cout << number1 << " + " << number2 << " = " << addResult << std::endl; 
-                std::cout << number1 << " X " << number2 << " = " << multiplyResult << std::endl;
-                std::cout << number1 << " % " << number2 << " = " << divideResult << std::endl;
-                std::cout << number1 << " - " << number2 << " = " << subtractResult << std::endl;
+                std::cout << "Please enter math problem" << std::endl;
+                std::cin >> number1 >> op >>  number2;
+                Calculator calc;
+                switch(op)
+                {
+                        case '+':
+                                calc.add(number1, number2, op);
+                        break;
+                        case '*':
+                                calc.multiply(number1, number2, op);
+                                break;
+                        case '/':
+                                calc.divide(number1, number2,op);
+                                break;
+                        case '-':
+                                calc.subtract(number1, number2,op);
+                                break;
+                        case '%':
+                                calc.modulus(number1, number2, op);
+                                break;    
+                        default:
+                                throw std::runtime_error("unknown operator");
+                }
+        }
+
+        void Calculator::add (float number1, float number2, char op)
+        {
+                std::cout << number1 << op << number2 << " = " << number1+number2 << std::endl; 
+        }
+        void Calculator::multiply (float number1, float number2, char op)
+        {
+                std::cout << number1 << op << number2 << " = " << number1*number2 << std::endl; 
+        }
+        void Calculator::divide (float number1, float number2, char op)
+        {
+                std::cout << number1 << op << number2 << " = " << number1/number2 << std::endl; 
+        }
+        void Calculator::subtract (float number1, float number2, char op)
+        {
+                std::cout << number1 << op << number2 << " = " << number1-number2 << std::endl; 
+        }
+        void Calculator::modulus(float number1, float number2, char op)
+        {
+                std::cout << number1 << op << number2 << " = " << (int)number1%(int)number2 << std:: endl;
         }
 }
