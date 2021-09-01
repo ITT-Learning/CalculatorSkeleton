@@ -2,7 +2,7 @@
 /**
  *  @file   main.cpp
  *  @date   Fri August 25 2021
- *  @brief  Entry Point of Calculator
+ *  @brief  This is a basic calculator program which asks for two numbers and it returns the a couple equations using those numbers. 
  */
 ////////////////////////////////////////////////////////////////////////////
 

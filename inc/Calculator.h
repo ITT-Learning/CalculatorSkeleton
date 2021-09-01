@@ -2,7 +2,7 @@
 /**
  * @file  Calculator.h
  * @date  Fri, 16 April 2021
- * @brief 
+ * @brief These are the included header files as well as the programs function titles
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////

@@ -2,7 +2,7 @@
 /**
  *  @file   Calculator.cpp
  *  @date   Fri April 16 2021
- *  @brief  Funtions that support main.cpp
+ *  @brief  These are the functions that are used by main.cpp
  */
 ////////////////////////////////////////////////////////////////////////////
 
