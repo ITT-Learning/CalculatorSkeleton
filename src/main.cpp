@@ -17,7 +17,7 @@ int main()
         char repeat; 
         std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
         std::cout << "Please enter in two numbers separated by a space" << std::endl;
-        calculator();
+        Calculator::calculator();
         std::cout << "Would you like to run the program again? y/n" << std::endl;
         std::cin >> repeat;
         if(repeat != 'y')

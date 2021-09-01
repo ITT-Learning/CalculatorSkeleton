@@ -14,7 +14,7 @@
  *  @return returns output to console of user values into equations with the math completed
  */
 ////////////////////////////////////////////////////////////////////////////
-void calculator(){
+void Calculator::calculator(){
         float number1, number2;
         std::cin >> number1 >> number2;
         int addResult = number1 + number2;
