@@ -80,19 +80,24 @@ namespace calculator
             std::cerr << "Math error: Attempted to divide by Zero\n";
         }
         else
-            std::cout << number1 << op << number2 << " = " << number1 / number2 << std::endl; 
+        {
+            float result = number1 / number2;
+            std::cout << number1 << op << number2 << " = " << result << std::endl;
+        } 
     }
     void Calculator::modulus(float number1, float number2, char op)
     {
-            std::cout << number1 << op << number2 << " = " << (int)number1 % (int)number2 << std:: endl;
+        float result = (int)number1 % (int)number2;
+        std::cout << number1 << op << number2 << " = " << result << std:: endl;
     }
     void Calculator::multiply (float number1, float number2, char op)
     {
-            std::cout << number1 << op << number2 << " = " << number1 * number2 << std::endl; 
+        float result = number1 * number2;
+        std::cout << number1 << op << number2 << " = " << result << std::endl; 
     }
     void Calculator::subtract (float number1, float number2, char op)
     {
-            std::cout << number1 << op << number2 << " = " << number1 - number2 << std::endl; 
+        float result = number1 - number2;
+        std::cout << number1 << op << number2 << " = " << result << std::endl; 
     }
-
 }
