@@ -53,8 +53,14 @@ namespace calculator
     }
     void Calculator::divide (float number1, float number2, char op)
     {
+        if(number2 == 0)
+        {
+            throw std::runtime_error("Math error: Attempted to divide by Zero\n");
+        }
+        else
             std::cout << number1 << op << number2 << " = " << number1/number2 << std::endl; 
     }
+    
     void Calculator::subtract (float number1, float number2, char op)
     {
             std::cout << number1 << op << number2 << " = " << number1-number2 << std::endl; 
