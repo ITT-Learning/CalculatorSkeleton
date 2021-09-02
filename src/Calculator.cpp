@@ -20,23 +20,23 @@ namespace calculator
         std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
         std::cout << "Please enter math problem" << std::endl;
         std::cin >> number1 >> op >>  number2;
-        Calculator calc;
+        Calculator calculator;
         switch(op)
         {
             case '+':
-                    calc.add(number1, number2, op);
+                    calculator.add(number1, number2, op);
             break;
             case '*':
-                    calc.multiply(number1, number2, op);
+                    calculator.multiply(number1, number2, op);
                     break;
             case '/':
-                    calc.divide(number1, number2,op);
+                    calculator.divide(number1, number2,op);
                     break;
             case '-':
-                    calc.subtract(number1, number2,op);
+                    calculator.subtract(number1, number2,op);
                     break;
             case '%':
-                    calc.modulus(number1, number2, op);
+                    calculator.modulus(number1, number2, op);
                     break;    
             default:
                     throw std::runtime_error("unknown operator");
