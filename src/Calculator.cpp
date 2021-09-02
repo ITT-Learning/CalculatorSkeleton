@@ -24,22 +24,34 @@ namespace calculator
         switch(op)
         {
             case '+':
-                    calculator.add(number1, number2, op);
-            break;
+            {
+                calculator.add(number1, number2, op);
+                break;
+            }
             case '*':
-                    calculator.multiply(number1, number2, op);
-                    break;
+            {
+                calculator.multiply(number1, number2, op);
+                break;
+            }
             case '/':
-                    calculator.divide(number1, number2,op);
-                    break;
+            {
+                calculator.divide(number1, number2,op);
+                break;
+            }
             case '-':
-                    calculator.subtract(number1, number2,op);
-                    break;
+            {
+                calculator.subtract(number1, number2,op);
+                break;
+            }
             case '%':
-                    calculator.modulus(number1, number2, op);
-                    break;    
+            {
+                calculator.modulus(number1, number2, op);
+                break;
+            }
             default:
-                    throw std::runtime_error("unknown operator");
+            {
+                throw std::runtime_error("unknown operator");
+            }
         }
     }
 
