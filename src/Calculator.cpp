@@ -13,6 +13,10 @@ namespace calculator
     //*************/
     // Calculator public methods /
     ///
+    void Calculator::add (float number1, float number2, char op)
+    {
+            std::cout << number1 << op << number2 << " = " << number1+number2 << std::endl; 
+    }
     void Calculator::calculate()
     {
         float number1, number2;
@@ -54,15 +58,6 @@ namespace calculator
             }
         }
     }
-
-    void Calculator::add (float number1, float number2, char op)
-    {
-            std::cout << number1 << op << number2 << " = " << number1+number2 << std::endl; 
-    }
-    void Calculator::multiply (float number1, float number2, char op)
-    {
-            std::cout << number1 << op << number2 << " = " << number1*number2 << std::endl; 
-    }
     void Calculator::divide (float number1, float number2, char op)
     {
         if(number2 == 0)
@@ -72,13 +67,17 @@ namespace calculator
         else
             std::cout << number1 << op << number2 << " = " << number1/number2 << std::endl; 
     }
-    
-    void Calculator::subtract (float number1, float number2, char op)
-    {
-            std::cout << number1 << op << number2 << " = " << number1-number2 << std::endl; 
-    }
     void Calculator::modulus(float number1, float number2, char op)
     {
             std::cout << number1 << op << number2 << " = " << (int)number1%(int)number2 << std:: endl;
     }
+    void Calculator::multiply (float number1, float number2, char op)
+    {
+            std::cout << number1 << op << number2 << " = " << number1*number2 << std::endl; 
+    }
+    void Calculator::subtract (float number1, float number2, char op)
+    {
+            std::cout << number1 << op << number2 << " = " << number1-number2 << std::endl; 
+    }
+
 }
