@@ -69,7 +69,7 @@ namespace calculator
             }
             default:
             {
-                throw std::runtime_error("unknown operator");
+                std::cerr << "unknown operator" << std::endl;
             }
         }
     }
@@ -77,7 +77,7 @@ namespace calculator
     {
         if(number2 == 0)
         {
-            throw std::runtime_error("Math error: Attempted to divide by Zero\n");
+            std::cerr << "Math error: Attempted to divide by Zero\n";
         }
         else
             std::cout << number1 << op << number2 << " = " << number1/number2 << std::endl; 
