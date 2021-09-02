@@ -11,6 +11,7 @@
 #define CALCULATOR_H
 
 #include <iostream>
+#include <limits>
 namespace calculator
 {
     /**

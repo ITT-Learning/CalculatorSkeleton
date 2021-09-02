@@ -24,6 +24,21 @@ namespace calculator
         std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
         std::cout << "Please enter math problem" << std::endl;
         std::cin >> number1 >> op >>  number2;
+        while(1)
+        {
+            if(std::cin.fail())
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "You have entered wrong input" << std::endl;
+                std::cout << "Please enter the math problem again" << std::endl;
+                std::cin >> number1 >> op >> number2;
+            }
+            if(!std::cin.fail())
+            {
+                break;
+            }
+        }
         Calculator calculator;
         switch(op)
         {
