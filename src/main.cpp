@@ -16,7 +16,7 @@ int main()
     {
         char repeat; 
         Calculator calc;
-        calc.calculator();
+        calc.calculate();
         std::cout << "Would you like to run the program again? y/n" << std::endl;
         std::cin >> repeat;
         if(repeat != 'y')

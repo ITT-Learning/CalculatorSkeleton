@@ -13,7 +13,7 @@ namespace calculator
     //*************/
     // Calculator public methods /
     ///
-    void Calculator::calculator()
+    void Calculator::calculate()
     {
         float number1, number2;
         char op;

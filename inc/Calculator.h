@@ -23,7 +23,7 @@ namespace calculator
              * @brief This is the main function run in main.cpp
              * 
              */
-            void calculator();
+            void calculate();
             /**
              * @brief This is the function adding two floats using the '+' character
              * @param number1 This is the first float passed into
