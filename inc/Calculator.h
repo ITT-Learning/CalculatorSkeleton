@@ -21,6 +21,16 @@ namespace calculator
     {
         public:
             /**
+             * @brief Construct a new Calculator object
+             * 
+             */
+            Calculator() = default;
+            /**
+             * @brief Destroy the Calculator object
+             * 
+             */
+            ~Calculator() = default;
+            /**
              * @brief This is the main function run in main.cpp
              * 
              */
@@ -31,35 +41,35 @@ namespace calculator
              * @param number2 This is the second float passed into 
              * @param op This is the operator character and will add both floats
              */
-            void add(float number1, float number2, char op);
+            float add(float number1, float number2, char op);
             /**
              * @brief This is the function multiplying two floats using the '*' character
              * @param number1 This is the first float passed into
              * @param number2 This is the second float passed into
              * @param op This is the operator character and will multiply both floats
              */
-            void multiply(float number1, float number2, char op);
+            float multiply(float number1, float number2, char op);
             /**
              * @brief This is the function dividing two floats using the '/' character
              * @param number1 This is the first float passed into
              * @param number2 This is the second float passed into
              * @param op This is the operator character and will divide both floats
              */
-            void divide(float number1, float number2, char op);
+            float divide(float number1, float number2, char op);
             /**
              * @brief This is the function subtract two floats using the '-' character
              * @param number1 This is the first float passed into
              * @param number2 This is the second float passed into
              * @param op This is the operator character and will subtract both floats
              */
-            void subtract(float number1, float number2, char op);
+            float subtract(float number1, float number2, char op);
             /**
              * @brief This is the function taking the modulus two floats using the '%' character
              * @param number1 This is the first float passed into
              * @param number2 This is the second float passed into
              * @param op This is the operator character and will return the modulus of both floats
              */
-            void modulus(float number1, float number2, char op);
+            int modulus(float number1, float number2, char op);
     };
 }
 #endif  // CALCULATOR_H

@@ -42,12 +42,11 @@ file(GLOB UNIT_TEST_SOURCES
     "*.cpp"
 )
 
-add_executable(${This} ${UNIT_TEST_SOURCES})
+add_executable(${This} ${UNIT_TEST_SOURCES} ../src/Calculator.cpp)
 
 target_link_libraries(${This} PUBLIC	
     gtest_main
     gmock_main
     gtest
     gmock
-    pthread
 )

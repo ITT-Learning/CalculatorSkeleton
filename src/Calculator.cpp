@@ -13,9 +13,10 @@ namespace calculator
     //*************/
     // Calculator public methods /
     ///
-    void Calculator::add (float number1, float number2, char op)
+    float Calculator::add (float number1, float number2, char op)
     {
-            std::cout << number1 << op << number2 << " = " << number1 + number2 << std::endl; 
+        float result = number1 + number2;
+        return result;    
     }
     void Calculator::calculate()
     {
@@ -44,27 +45,26 @@ namespace calculator
         {
             case '+':
             {
-                calculator.add(number1, number2, op);
+                std::cout << number1 << op << number2 << " = " << calculator.add(number1, number2,op) << std::endl;
                 break;
             }
             case '*':
             {
-                calculator.multiply(number1, number2, op);
+                std::cout << number1 << op << number2 << " = " << calculator.multiply(number1, number2,op) << std::endl;
                 break;
             }
             case '/':
             {
-                calculator.divide(number1, number2,op);
+                std::cout << number1 << op << number2 << " = " << calculator.divide(number1, number2,op) << std::endl;
                 break;
             }
             case '-':
             {
-                calculator.subtract(number1, number2,op);
-                break;
+                std::cout << number1 << op << number2 << " = " << calculator.subtract(number1, number2,op) << std::endl;                break;
             }
             case '%':
             {
-                calculator.modulus(number1, number2, op);
+                std::cout << number1 << op << number2 << " = " << calculator.modulus(number1, number2,op) << std::endl;
                 break;
             }
             default:
@@ -73,7 +73,7 @@ namespace calculator
             }
         }
     }
-    void Calculator::divide (float number1, float number2, char op)
+    float Calculator::divide (float number1, float number2, char op)
     {
         if(number2 == 0)
         {
@@ -82,22 +82,22 @@ namespace calculator
         else
         {
             float result = number1 / number2;
-            std::cout << number1 << op << number2 << " = " << result << std::endl;
+            return result;
         } 
     }
-    void Calculator::modulus(float number1, float number2, char op)
+    int Calculator::modulus(float number1, float number2, char op)
     {
-        float result = (int)number1 % (int)number2;
-        std::cout << number1 << op << number2 << " = " << result << std:: endl;
+        int result = (int)number1 % (int)number2;
+        return result;
     }
-    void Calculator::multiply (float number1, float number2, char op)
+    float Calculator::multiply (float number1, float number2, char op)
     {
         float result = number1 * number2;
-        std::cout << number1 << op << number2 << " = " << result << std::endl; 
+        return result;
     }
-    void Calculator::subtract (float number1, float number2, char op)
+    float Calculator::subtract (float number1, float number2, char op)
     {
         float result = number1 - number2;
-        std::cout << number1 << op << number2 << " = " << result << std::endl; 
+        return result;
     }
 }
