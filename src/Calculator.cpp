@@ -78,6 +78,7 @@ namespace calculator
         if(number2 == 0)
         {
             std::cerr << "Math error: Attempted to divide by Zero\n";
+            exit(-1);
         }
         else
         {

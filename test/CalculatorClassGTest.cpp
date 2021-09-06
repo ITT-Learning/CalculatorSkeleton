@@ -12,6 +12,12 @@ TEST_F(whenTestingCalculator, divideTest){
     ASSERT_FLOAT_EQ(calculator.divide(10.0f, 5.0f, '/'), 2.0f);
 }
 
+TEST_F(whenTestingCalculator, divideByZeroTest){
+    Calculator calculator;
+    ASSERT_EQ(0.0, calculator.divide(10.0f, 0.0f, '/'));
+    ASSERT_EXIT(calculator.divide(10.0f, 0.0f, '/'), testing::ExitedWithCode(-1), "Error, Can't divide by zero");
+}
+
 TEST_F(whenTestingCalculator, addTest){
     Calculator calculator;
     ASSERT_FLOAT_EQ(calculator.add(10.0f, 5.0f, '+'), 15.0f);
