@@ -27,8 +27,7 @@ TEST_F(whenTestingCalculator, WhenCallingDivideWithPositiveFloatingPoints_ThenCo
 }
 
 TEST_F(whenTestingCalculator, WhenCallingDivideByZeroTest_ReturnDivideByZeroError){
-    ASSERT_EQ(0.0, calculator->divide(10.0f, 0.0f));
-    ASSERT_EXIT(calculator->divide(10.0f, 0.0f), testing::ExitedWithCode(-1), Messages::DIVIDE_BY_ZERO);
+    ASSERT_FLOAT_EQ(-1.0, calculator->divide(10.0f, 0.0f));
 }
 TEST_F(whenTestingCalculator, WhenCallingDividewithNegativeFloatingPoints_ThenCorrectPositiveValueReturn){
     ASSERT_FLOAT_EQ(calculator->divide(-10.0f, -10.0f),1.0f);
@@ -39,19 +38,19 @@ TEST_F(whenTestingCalculator, WhenCallingAddWithPositiveFloatingPoints_ThenCorre
 }
 
 TEST_F(whenTestingCalculator, WhenCallingAddWithNegativeFloatingPoints_ThenCorrectNegativeValueReturn){
-    ASSERT_FLOAT_EQ(calculator->add(-10.0f, -5.0f), 15.0f);
-}
-
-TEST_F(whenTestingCalculator, WhenCallingAddWithNegativeIntegersPoints_ThenCorrectNegativeValueReturn){
-    ASSERT_FLOAT_EQ(calculator->add(-10, -5), -15);
+    ASSERT_FLOAT_EQ(calculator->add(-10.0f, -5.0f), -15.0f);
 }
 
 TEST_F(whenTestingCalculator, WhenCallingMultiplyWithPositiveFloatingPoints_ThenCorrectPositiveValueReturn){
     ASSERT_FLOAT_EQ(calculator->multiply(10.0f, 5.0f), 50.0f);
 }
 
-TEST_F(whenTestingCalculator, subtractTest){
+TEST_F(whenTestingCalculator, WhenCallingSubtractWithPositiveFloatingPoints_ThenCorrectPositiveValueReturn){
     ASSERT_FLOAT_EQ(calculator->subtract(10.0f, 5.0f), 5.0f);
+}
+
+TEST_F(whenTestingCalculator, WhenCallingSubtractWithNegativeFloatingPoints_ThenCorrectPositiveValueReturn){
+    ASSERT_FLOAT_EQ(calculator->subtract(-10.0f, -15.0f), 5.0f);
 }
 
 TEST_F(whenTestingCalculator, modulusTest){

@@ -80,7 +80,7 @@ namespace calculator
         if(number2 == 0)
         {
             std::cerr << Messages::DIVIDE_BY_ZERO;
-            exit(-1);
+            return(-1);
         }
         else
         {
