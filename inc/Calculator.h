@@ -1,14 +1,16 @@
-#ifndef CALCULATOR_H
-#define CALCULATOR_H
-
-#include <iostream>
-
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file Calculator.h
 * @brief calculator function declarations.
 */
 ////////////////////////////////////////////////////////////////////////////////
+
+#ifndef CALCULATOR_H
+#define CALCULATOR_H
+
+#include <iostream>
+#include <string>
+
 namespace calculator{
     class Calculator{
         public:
@@ -20,6 +22,7 @@ namespace calculator{
             */
             void runCalculator();
 
+
             /**
              * @brief Runs a switch statement with entered operator, and then chooses the correct 
              * function to return the calculated float then writes answer to the console
@@ -29,6 +32,10 @@ namespace calculator{
             void calculate(const char &calcType, const double &num1, const double &num2);
 
         private:
+
+            void validateInput(const std::stringstream &operation, const std::stringstream &num1, const std::stringstream &num2);
+
+
             /**
              * @brief adds num1 and num2 together
              * @returns a float of the result

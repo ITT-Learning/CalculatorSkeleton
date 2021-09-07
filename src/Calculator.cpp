@@ -1,12 +1,17 @@
-#include "Calculator.h"
-#include <stdlib.h>
-
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file Calculator.cpp
 * @brief Function definitions and class for calculator
 */
 ////////////////////////////////////////////////////////////////////////////////
+
+#include "Calculator.h"
+#include <stdlib.h>
+#include <iomanip>
+#include <string>
+#include <iostream>
+#include <typeinfo>
+
 namespace calculator{
 
 //*************/
@@ -14,24 +19,85 @@ namespace calculator{
 ///
 
     void Calculator::runCalculator(){
-        double num1;
-        double num2;
-        char operation;
+        // read input
+        std::string input;
+        getline(std::cin, input); //get input
 
-        std::cout << "Enter A number, an operator, and a number... (q to quit)\n";
-        std::cin >> num1;
-        std::cin >> operation;
-        std::cin >> num2;
 
-        Calculator::calculate(operation, num1, num2);
+        std::string num1;
+        std::string num2;
+        char op;
+
+        std::string fullEquation;
+        bool findingOperator=false;
+        bool operatorFound=false;
         
+        for (size_t i = 0; i < input.length(); i++)
+        {
+
+            if(input.at(i) == ' ')
+            {
+                continue;
+            }
+
+            if(std::isdigit(input.at(i)))
+            {
+                if (!operatorFound)
+                {
+                    num1 += input.at(i);
+                    findingOperator = true;
+                }
+                if (operatorFound)
+                {
+                    num2 += input.at(i);
+                }
+                fullEquation += input.at(i);
+                
+            }
+
+            else if(input.at(i) == '-') 
+            {
+                if (!findingOperator) //find negative num
+                {
+                    num1 += "-";
+                    fullEquation += "-";
+                    findingOperator=true;
+                }
+                else if (findingOperator) //find - operator
+                {
+                    fullEquation+='-';
+                    op='-';
+                    operatorFound= true;
+                    findingOperator=false;
+                }
+            }
+            else if(input.at(i) == '+') 
+            {
+                if (!findingOperator) //if num1 is positive
+                {
+                    continue;
+                }
+                if (findingOperator) //find operator
+                {
+                    if (!operatorFound){
+                        op='+';
+                        fullEquation+='+';
+                        operatorFound=true;
+                    }
+                }
+            }
+        }
+
+        std::cout <<"num1 is:" << num1 << std::endl;
+        std::cout <<"num2 is:" << num2 << std::endl;
+        std::cout <<"op is:" << op << std::endl;
+        std::cout <<"full is:" << fullEquation << std::endl;
+    
     }
 
-    void Calculator::calculate(const char &operation, const double &num1, const double &num2){
-        double answer;
-        bool running = true;
-        
 
+    void Calculator::calculate(const char &operation, const double &num1, const double &num2){
+        double answer;    
             switch (operation)
             {
             case '+':
