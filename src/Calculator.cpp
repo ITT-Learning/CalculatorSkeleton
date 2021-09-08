@@ -23,8 +23,8 @@ namespace calculator
     {
         float number1, number2;
         char op;
-        std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
-        std::cout << "Please enter math problem" << std::endl;
+        std::cout << Messages::WELCOME_MESSAGE << std::endl;
+        std::cout << Messages::ENTER_EQUATION << std::endl;
         std::cin >> number1 >> op >>  number2;
         while(1)
         {
