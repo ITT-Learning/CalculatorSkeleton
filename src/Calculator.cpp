@@ -38,18 +38,6 @@ namespace calculator
             }
             if(!std::cin.fail())
             {
-                // if(number1 >= std::numeric_limits<float>::max() || number2 >= std::numeric_limits<float>::max())
-                // {
-                //     std::cout << Messages::INPUT_TO_LARGE << std::endl;
-                //     std::cout << Messages::RE_ENTER_EQUATION << std::endl;
-                //     std::cin >> number1 >> op >> number2;
-                // }
-                // else if(number1 <= std::numeric_limits<float>::min() || number2 <= std::numeric_limits<float>::min())
-                // {
-                //     std::cout << Messages::INPUT_TO_SMALL << std::endl;
-                //     std::cout << Messages::RE_ENTER_EQUATION << std::endl;
-                //     std::cin >> number1 >> op >> number2;
-                // }
                 break;
             }
         }
@@ -83,7 +71,7 @@ namespace calculator
             }
             default:
             {
-                std::cerr << "unknown operator" << std::endl;
+                std::cerr << Messages::UNKNOWN_OPERATOR << std::endl;
             }
         }
     }
