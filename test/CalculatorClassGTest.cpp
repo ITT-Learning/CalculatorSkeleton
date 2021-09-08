@@ -45,6 +45,14 @@ TEST_F(whenTestingCalculator, WhenCallingMultiplyWithPositiveFloatingPoints_Then
     ASSERT_FLOAT_EQ(calculator->multiply(10.0f, 5.0f), 50.0f);
 }
 
+TEST_F(whenTestingCalculator, WhenCallingMultiplyWithPositiveAndNegativeFloatingPoints_ThenCorrectNegativeValueReturn){
+    ASSERT_FLOAT_EQ(calculator->multiply(10.0f, -5.0f), -50.0f);
+}
+
+TEST_F(whenTestingCalculator, WhenCallingMultiplyWithNegativeFloatingPoints_ThenCorrectPositiveValueReturn){
+    ASSERT_FLOAT_EQ(calculator->multiply(-10.0f, -5.0f), 50.0f);
+}
+
 TEST_F(whenTestingCalculator, WhenCallingSubtractWithPositiveFloatingPoints_ThenCorrectPositiveValueReturn){
     ASSERT_FLOAT_EQ(calculator->subtract(10.0f, 5.0f), 5.0f);
 }
