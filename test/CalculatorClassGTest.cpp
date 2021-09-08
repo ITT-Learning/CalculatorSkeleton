@@ -26,10 +26,6 @@ TEST_F(whenTestingCalculator, WhenCallingDivideWithPositiveFloatingPoints_ThenCo
     ASSERT_FLOAT_EQ(calculator->divide(10.0f, 5.0f), 2.0f);
 }
 
-// TEST_F(whenTestingCalculator, WhenCallingDivideWithMaxAndMinFloatingPoints_ThenCorrectValueReturn){
-//     ASSERT_FLOAT_EQ(calculator->divide(3.40282e+38f, 1.17549e-38f), );
-// }
-
 TEST_F(whenTestingCalculator, WhenCallingDivideWithPositiveIntegers_ThenCorrectValueReturn){
     ASSERT_EQ(calculator->divide(10.0, 5.0), 2.0);
 }
@@ -72,8 +68,3 @@ TEST_F(whenTestingCalculator, WhenCallingSubtractWithNegativeFloatingPoints_Then
 TEST_F(whenTestingCalculator, modulusTest){
     ASSERT_FLOAT_EQ(calculator->modulus(10.0f, 5.0f), 0.0f);
 }
-
-//test for overflow (max and min)
-//test for negative/ negative and positive/ 
-//test for conversion between integer and floats
-//
