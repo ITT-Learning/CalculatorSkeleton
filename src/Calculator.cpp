@@ -32,12 +32,24 @@ namespace calculator
             {
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "You have entered wrong input" << std::endl;
-                std::cout << "Please enter the math problem again" << std::endl;
+                std::cout << Messages::INVALID_INPUT << std::endl;
+                std::cout << Messages::RE_ENTER_EQUATION << std::endl;
                 std::cin >> number1 >> op >> number2;
             }
             if(!std::cin.fail())
             {
+                // if(number1 >= std::numeric_limits<float>::max() || number2 >= std::numeric_limits<float>::max())
+                // {
+                //     std::cout << Messages::INPUT_TO_LARGE << std::endl;
+                //     std::cout << Messages::RE_ENTER_EQUATION << std::endl;
+                //     std::cin >> number1 >> op >> number2;
+                // }
+                // else if(number1 <= std::numeric_limits<float>::min() || number2 <= std::numeric_limits<float>::min())
+                // {
+                //     std::cout << Messages::INPUT_TO_SMALL << std::endl;
+                //     std::cout << Messages::RE_ENTER_EQUATION << std::endl;
+                //     std::cin >> number1 >> op >> number2;
+                // }
                 break;
             }
         }
@@ -104,6 +116,4 @@ namespace calculator
         float result = number1 - number2;
         return result;
     }
-
-
 }

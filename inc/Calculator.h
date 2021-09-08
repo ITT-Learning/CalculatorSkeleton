@@ -62,6 +62,7 @@ namespace calculator
              * @param number2 This is the second float passed into
              * @param op This is the operator character and will subtract both floats
              */
+            
             float subtract(float number1, float number2);
             /**
              * @brief This is the function taking the modulus two floats using the '%' character

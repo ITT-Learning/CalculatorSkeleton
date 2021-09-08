@@ -26,6 +26,14 @@ TEST_F(whenTestingCalculator, WhenCallingDivideWithPositiveFloatingPoints_ThenCo
     ASSERT_FLOAT_EQ(calculator->divide(10.0f, 5.0f), 2.0f);
 }
 
+// TEST_F(whenTestingCalculator, WhenCallingDivideWithMaxAndMinFloatingPoints_ThenCorrectValueReturn){
+//     ASSERT_FLOAT_EQ(calculator->divide(3.40282e+38f, 1.17549e-38f), );
+// }
+
+TEST_F(whenTestingCalculator, WhenCallingDivideWithPositiveIntegers_ThenCorrectValueReturn){
+    ASSERT_EQ(calculator->divide(10.0, 5.0), 2.0);
+}
+
 TEST_F(whenTestingCalculator, WhenCallingDivideByZeroTest_ReturnDivideByZeroError){
     ASSERT_FLOAT_EQ(-1.0, calculator->divide(10.0f, 0.0f));
 }
