@@ -6,10 +6,11 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include "CalculatorStrings.h"
-#include "CalculatorApplication.h"
 #include <iostream>
 #include <limits>
+
+#include "CalculatorApplication.h"
+#include "CalculatorStrings.h"
 
 namespace calculator
 {

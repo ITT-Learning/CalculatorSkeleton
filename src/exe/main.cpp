@@ -6,8 +6,9 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include "CalculatorApplication.h"
 #include <iostream>
+
+#include "CalculatorApplication.h"
 
 using namespace calculator;
 
