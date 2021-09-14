@@ -1,5 +1,5 @@
-#include "Calculator.h"
-#include "Messages.h"
+#include "CalculatorApplcation.h"
+#include "CalculatorStrings.h"
 #include<gtest/gtest.h>
 #include<gmock/gmock.h>
 
