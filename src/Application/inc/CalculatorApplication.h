@@ -7,29 +7,28 @@
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef CALCULATOR_H
-#define CALCULATOR_H
+#ifndef CALCULATORAPPLICATION_H
+#define CALCULATORAPPLICATION_H
 
-#include <iostream>
-#include <limits>
+
 namespace calculator
 {
     /**
      * @brief This is the Class containing the functions and variables used in week 1
      */
-    class Calculator 
+    class CalculatorApplication
     {
         public:
             /**
              * @brief Construct a new Calculator object
              * 
              */
-            Calculator() = default;
+            CalculatorApplication() = default;
             /**
              * @brief Destroy the Calculator object
              * 
              */
-            ~Calculator() = default;
+            ~CalculatorApplication() = default;
             /**
              * @brief This is the main function run in main.cpp
              * 

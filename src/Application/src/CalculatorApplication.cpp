@@ -1,30 +1,32 @@
 ////////////////////////////////////////////////////////////////////////////
 /**
- *  @file   Calculator.cpp
+ *  @file   CalculatorApplication.cpp
  *  @date   Fri April 16 2021
  *  @brief  These are the functions that are used by main.cpp
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include "../inc/Calculator.h"
-#include "../inc/Messages.h"
+#include "CalculatorStrings.h"
+#include "CalculatorApplication.h"
+#include <iostream>
+#include <limits>
 
 namespace calculator
 {
     //*************/
     // Calculator public methods /
     ///
-    float Calculator::add (float number1, float number2)
+    float CalculatorApplication::add (float number1, float number2)
     {
         float result = number1 + number2;
         return result;    
     }
-    void Calculator::calculate()
+    void CalculatorApplication::calculate()
     {
         float number1, number2;
         char op;
-        std::cout << Messages::WELCOME_MESSAGE << std::endl;
-        std::cout << Messages::ENTER_EQUATION << std::endl;
+        std::cout << CalculatorStrings::WELCOME_MESSAGE << std::endl;
+        std::cout << CalculatorStrings::ENTER_EQUATION << std::endl;
         std::cin >> number1 >> op >>  number2;
         while(1)
         {
@@ -32,8 +34,8 @@ namespace calculator
             {
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << Messages::INVALID_INPUT << std::endl;
-                std::cout << Messages::RE_ENTER_EQUATION << std::endl;
+                std::cout << CalculatorStrings::ERROR_MESSAGE_INVALID_INPUT << std::endl;
+                std::cout << CalculatorStrings::RE_ENTER_EQUATION << std::endl;
                 std::cin >> number1 >> op >> number2;
             }
             if(!std::cin.fail())
@@ -41,7 +43,7 @@ namespace calculator
                 break;
             }
         }
-        Calculator calculator;
+        CalculatorApplication calculator;
         switch(op)
         {
             case '+':
@@ -71,15 +73,15 @@ namespace calculator
             }
             default:
             {
-                std::cerr << Messages::UNKNOWN_OPERATOR << std::endl;
+                std::cerr << CalculatorStrings::ERROR_MESSAGE_UNKNOWN_OPERATOR << std::endl;
             }
         }
     }
-    float Calculator::divide (float number1, float number2)
+    float CalculatorApplication::divide (float number1, float number2)
     {
         if(number2 == 0)
         {
-            std::cerr << Messages::DIVIDE_BY_ZERO;
+            std::cerr << CalculatorStrings::ERROR_MESSAGE_DIVIDE_BY_ZERO;
             return(-1);
         }
         else
@@ -89,17 +91,17 @@ namespace calculator
         } 
     }
 
-    int Calculator::modulus(float number1, float number2)
+    int CalculatorApplication::modulus(float number1, float number2)
     {
         int result = (int)number1 % (int)number2;
         return result;
     }
-    float Calculator::multiply (float number1, float number2)
+    float CalculatorApplication::multiply (float number1, float number2)
     {
         float result = number1 * number2;
         return result;
     }
-    float Calculator::subtract (float number1, float number2)
+    float CalculatorApplication::subtract (float number1, float number2)
     {
         float result = number1 - number2;
         return result;
