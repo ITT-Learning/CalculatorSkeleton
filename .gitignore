@@ -61,3 +61,6 @@ test/googletest-*/
 
 # ignore .vscode
 .vscode/
+
+# ignore test folder
+test/*
