@@ -39,7 +39,7 @@ namespace calculator
         }
     }
 
-    bool Calculator::validateInput(std::string input)
+    bool Calculator::validateInput(const std::string &input)
     {
         enum class CalculateStates 
         {
@@ -173,7 +173,7 @@ namespace calculator
         return isValid;
     }
 
-    float Calculator::calculate(const char &operation, const float &number1, const float &number2)
+    float Calculator::calculate(char operation, float number1, float number2)
     {
         
         double answer;    
@@ -219,7 +219,7 @@ namespace calculator
 //*************/
 // Calculator private methods /
 ///
-        std::string Calculator::getUserInput()
+    std::string Calculator::getUserInput()
     {
         std::cout << CalculatorMessages::INTRODUCTION_MESSAGE << std::endl;
         std::cout << CalculatorMessages::INSTRUCTIONS_MESSAGE << std::endl;
@@ -238,15 +238,16 @@ namespace calculator
         }
     }
 
-
     float Calculator::add(double number1, double number2)
     {
         return number1 + number2;
     }
+
     float Calculator::subtract(double number1, double number2)
     {
         return number1 - number2;
     }
+
     float Calculator::divide(double number1, double number2)
     {
         float ans = number1 / number2;
@@ -254,8 +255,10 @@ namespace calculator
         {
             std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_DIVIDE_BY_ZERO << std::endl;
         }
+
         return ans;
     }
+
     float Calculator::multiply(double number1, double number2)
     {
         return number1 * number2;

@@ -26,7 +26,7 @@ namespace calculator
              * @brief takes in a string for calculator and validates input
              * @param operation is the operator entered (+, - , / or % , * or x)
             */
-            bool validateInput(std::string input);
+            bool validateInput(const std::string &input);
 
             /**
              * @brief Runs a switch statement with entered operator, and then chooses the correct 
@@ -34,7 +34,7 @@ namespace calculator
              * @param answer is what is returned from the different math functions, 
              * and used to write to the console.
             */
-            float calculate(const char &operation, const float &number1, const float &number2);
+            float calculate(char operation, float number1, float number2);
 
         private:
 
