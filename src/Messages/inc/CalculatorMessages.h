@@ -48,7 +48,7 @@ namespace calculator
             /**
              * @brief message on program exit
              */
-            static constexpr const char *ERROR_INVALID_OPERATOR = "Input parsed, but invalid values detected.";
+            static constexpr const char *ERROR_INVALID_OPERATOR = " Invalid Operator detected";
 
             /**
              * @brief Beginning of error message
@@ -63,7 +63,7 @@ namespace calculator
             /**
              * @brief appended to error message if input entered incorrectly
              */
-            static constexpr const char *ERROR_MESSAGE_INVALID_INPUT = " invalid input, try 1 + 1 or 0.5 + -0.5";
+            static constexpr const char *ERROR_MESSAGE_INVALID_INPUT = " invalid input";
     };
 }//namespace calculator
    

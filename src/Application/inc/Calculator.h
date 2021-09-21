@@ -38,10 +38,11 @@ namespace calculator
 
         private:
 
-             /**
-             * @brief This variable is used to keep track of the entire equation built out so far
+            /**
+             * @brief removes all spaces from user input
+             * @returns string of input entered, without spaces
             */
-            std::string fullEquation;
+            std::string removeSpaces(std::string &expression);
 
             /**
              * @brief takes in input

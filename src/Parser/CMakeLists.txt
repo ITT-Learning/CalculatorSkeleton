@@ -9,7 +9,6 @@ file(GLOB LIBRARY_SOURCES
 include_directories(
     inc
     $<TARGET_PROPERTY:CalculatorMessages,INCLUDE_DIRECTORIES>
-    $<TARGET_PROPERTY:CalculatorParser,INCLUDE_DIRECTORIES>
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIBRARY_NAME}/build)
@@ -24,5 +23,4 @@ target_include_directories(${LIBRARY_NAME} PUBLIC
 
 target_link_libraries(${LIBRARY_NAME}
     INTERFACE CalculatorMessages
-    CalculatorParser
 )
