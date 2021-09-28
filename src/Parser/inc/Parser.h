@@ -30,14 +30,13 @@ namespace calculator
             */
             bool validateFloat(const std::string &expression);
 
-
             /**
              * @brief the main parsing function that puts all the peices together and returns an expression
              * @return an Expression object, along with whether it is valid or not
             */
             Expression parseExpression(std::string expression);
-        private:
 
+        private:
             /**
              * @brief checks if inputed char is inside of Operations array
              * @returns isValid if it is valid operator
