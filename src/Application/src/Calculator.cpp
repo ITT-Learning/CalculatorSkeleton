@@ -24,7 +24,7 @@ namespace calculator
     void Calculator::runCalculator()
     {
         Parser p;
-        Expression input = p.parseExpression(getUserInput());
+        Expression input = p.parseExpression(p.getUserInput());
         float answer;
 
         if (input.valid)
@@ -87,39 +87,6 @@ namespace calculator
     //*************/
     // Calculator private methods /
     ///
-    std::string Calculator::getUserInput()
-    {
-        std::cout << CalculatorMessages::INTRODUCTION_MESSAGE << std::endl;
-        std::cout << CalculatorMessages::INSTRUCTIONS_MESSAGE << std::endl;
-
-        std::string input;
-
-        getline(std::cin, input);
-
-        if (input == "")
-        {
-            getline(std::cin, input);
-        }
-        
-        return removeSpaces(input); 
-    }
-
-    std::string Calculator::removeSpaces(std::string &input)
-    {
-        std::string fullEquation;
-            for (auto currentChar : input)
-            {
-                if(currentChar == CalculatorMessages::EMPTY_SPACE) // always skip a space
-                {
-                    continue;
-                }
-                else
-                {
-                    fullEquation+=currentChar;
-                }
-            }
-            return fullEquation;
-    }
 
     float Calculator::add(double number1, double number2)
     {

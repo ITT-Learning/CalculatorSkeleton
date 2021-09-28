@@ -60,4 +60,4 @@ bin/
 test/googletest-*/
 
 #vscode defaults
-.vscode
+.vscode/

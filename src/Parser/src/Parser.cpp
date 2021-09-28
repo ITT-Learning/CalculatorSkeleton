@@ -40,10 +40,44 @@ namespace calculator
         return parsedExpression;
     }
 
+    std::string Parser::getUserInput()
+    {
+        std::cout << CalculatorMessages::INTRODUCTION_MESSAGE << std::endl;
+        std::cout << CalculatorMessages::INSTRUCTIONS_MESSAGE << std::endl;
+
+        std::string input;
+
+        getline(std::cin, input);
+
+        if (input == "")
+        {
+            getline(std::cin, input);
+        }
+        
+        return removeSpaces(input); 
+    }
+
     //*************/
     // Parser private methods /
     ///
 
+    std::string Parser::removeSpaces(std::string &input)
+    {
+        std::string fullEquation;
+            for (auto currentChar : input)
+            {
+                if(currentChar == CalculatorMessages::EMPTY_SPACE) // always skip a space
+                {
+                    continue;
+                }
+                else
+                {
+                    fullEquation+=currentChar;
+                }
+            }
+            return fullEquation;
+    }
+    
     bool Parser::validateOperator(const char &expression)
     {
         bool isValid = false;

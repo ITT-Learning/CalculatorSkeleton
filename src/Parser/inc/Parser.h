@@ -36,13 +36,26 @@ namespace calculator
             */
             Expression parseExpression(std::string expression);
 
+            /**
+             * @brief takes in input
+             * @returns string of input entered
+            */
+            std::string getUserInput();
+
         private:
+            char Operations[4] = {'+', '-', '/', '*'};
+
+            /**
+             * @brief removes all spaces from user input
+             * @returns string of input entered, without spaces
+            */
+            std::string removeSpaces(std::string &expression);
+
             /**
              * @brief checks if inputed char is inside of Operations array
              * @returns isValid if it is valid operator
             */
             bool validateOperator(const char &expression);
-            char Operations[4] = {'+', '-', '/', '*'};
 
             /**
              * @brief iterates through given expression and gives back the found number

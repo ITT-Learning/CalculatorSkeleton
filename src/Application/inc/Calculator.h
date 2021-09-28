@@ -39,18 +39,6 @@ namespace calculator
         private:
 
             /**
-             * @brief removes all spaces from user input
-             * @returns string of input entered, without spaces
-            */
-            std::string removeSpaces(std::string &expression);
-
-            /**
-             * @brief takes in input
-             * @returns string of input entered
-            */
-            std::string getUserInput();
-
-            /**
              * @brief adds num1 and num2 together
              * @returns a float of the result
             */
