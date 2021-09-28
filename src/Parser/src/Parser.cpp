@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file Parser.cpp
-* @brief Function definitions and class for Parser
+* @brief Function definitions for Parser
 */
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -14,27 +14,27 @@
 
 namespace calculator
 {
-    Expression Parser::parseExpression(std::string expression)
+    Expression Parser::parseFullEquation(const std::string &fullEquation)
     {
         Expression parsedExpression;
-        std::string edittedStr = findNumber(expression);
+        std::string expressionPiece = findNumber(fullEquation);
 
-        parsedExpression.valid = validateFloat(edittedStr);
+        parsedExpression.valid = validateFloat(expressionPiece);
 
         if (parsedExpression.valid)
         {
-            parsedExpression.a = std::stof(edittedStr);
-            parsedExpression.operation = expression.substr(edittedStr.length(), 1)[0];
+            parsedExpression.a = std::stof(expressionPiece);
+            parsedExpression.operation = fullEquation.substr(expressionPiece.length(), 1)[0];
             parsedExpression.valid = validateOperator(parsedExpression.operation);
         }
         if (parsedExpression.valid)
         {
-            edittedStr = expression.substr(edittedStr.length() + 1);
-            parsedExpression.valid = validateFloat(edittedStr);
+            expressionPiece = fullEquation.substr(expressionPiece.length() + 1);
+            parsedExpression.valid = validateFloat(expressionPiece);
         }
         if (parsedExpression.valid)
         {
-            parsedExpression.b = std::stof(findNumber(edittedStr));
+            parsedExpression.b = std::stof(findNumber(expressionPiece));
         } 
 
         return parsedExpression;
@@ -45,26 +45,26 @@ namespace calculator
         std::cout << CalculatorMessages::INTRODUCTION_MESSAGE << std::endl;
         std::cout << CalculatorMessages::INSTRUCTIONS_MESSAGE << std::endl;
 
-        std::string input;
+        std::string userInput;
 
-        getline(std::cin, input);
+        getline(std::cin, userInput);
 
-        if (input == "")
+        if (userInput == "")
         {
-            getline(std::cin, input);
+            getline(std::cin, userInput);
         }
         
-        return removeSpaces(input); 
+        return removeSpaces(userInput); 
     }
 
     //*************/
     // Parser private methods /
     ///
 
-    std::string Parser::removeSpaces(std::string &input)
+    std::string Parser::removeSpaces(const std::string &userInput)
     {
         std::string fullEquation;
-            for (auto currentChar : input)
+            for (auto currentChar : userInput)
             {
                 if(currentChar == CalculatorMessages::EMPTY_SPACE) // always skip a space
                 {
@@ -78,13 +78,13 @@ namespace calculator
             return fullEquation;
     }
     
-    bool Parser::validateOperator(const char &expression)
+    bool Parser::validateOperator(const char &parsedOperation)
     {
         bool isValid = false;
 
         for (auto currentOperator : Operations)
         {
-            if (expression == currentOperator)
+            if (parsedOperation == currentOperator)
             {
                 isValid = true;
             }
@@ -97,12 +97,12 @@ namespace calculator
         return isValid;
     }
 
-    bool Parser::validateFloat(const std::string &expression)
+    bool Parser::validateFloat(const std::string &expressionPiece)
     {
         bool isValid = true;
         static const std::regex floatRegex{ R"([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))"};
 
-        if (std::regex_match(expression, floatRegex))
+        if (std::regex_match(expressionPiece, floatRegex))
         {
             isValid = true;
         }
@@ -115,11 +115,11 @@ namespace calculator
         return isValid;
     }
 
-    std::string Parser::findNumber(const std::string &expression)
+    std::string Parser::findNumber(const std::string &expressionPiece)
     {
         std::string numberString = "";
 
-        for (auto currentChar : expression)
+        for (auto currentChar : expressionPiece)
         {
             if (currentChar == '-' && numberString.length() == 0)
             {

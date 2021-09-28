@@ -62,5 +62,6 @@ namespace calculator
             */
             float multiply(double num1, double num2);
     };
+
 }//namespace calculator
 #endif  // CALCULATOR_H

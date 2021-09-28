@@ -33,7 +33,7 @@ enable_testing()
 include_directories(
   $<TARGET_PROPERTY:CalculatorApplication,INCLUDE_DIRECTORIES>
   $<TARGET_PROPERTY:CalculatorParser,INCLUDE_DIRECTORIES>
-    )
+)
 
 # Some recommendations on NOT using file globbing to grab all cpp files.  So far, it seems
 # ok, so rolling with it until we get more experience.

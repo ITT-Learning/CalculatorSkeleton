@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file Calculator.cpp
-* @brief Function definitions and class for calculator
+* @brief Function definitions for calculator
 */
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -12,7 +12,8 @@
 #include <typeinfo>
 #include "CalculatorMessages.h"
 #include <sstream>
-#include<math.h>
+#include <math.h>
+#include "ResultFactory.h"
 
 namespace calculator
 {
@@ -24,12 +25,13 @@ namespace calculator
     void Calculator::runCalculator()
     {
         Parser p;
-        Expression input = p.parseExpression(p.getUserInput());
-        float answer;
-
-        if (input.valid)
+        Expression parsedExpression = p.parseFullEquation(p.getUserInput());
+        
+        if (parsedExpression.valid)
         {
-            answer = calculate(input.operation, input.a, input.b);
+            ResultFactory resultFactory;
+            float answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);
+            Result result = resultFactory.CreateResult(parsedExpression, answer);
 
             if (isinf(answer)) //if you divided by zero
             {
@@ -37,7 +39,7 @@ namespace calculator
             }
             else
             {
-                std::cout << input.a << CalculatorMessages::EMPTY_SPACE << input.operation << CalculatorMessages::EMPTY_SPACE << input.b << CalculatorMessages::EQUALS << answer << std::endl;
+                result.returnResult();
             }
         }
     }
