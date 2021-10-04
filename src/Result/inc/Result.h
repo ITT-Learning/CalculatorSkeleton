@@ -15,10 +15,16 @@ namespace calculator
     class Result
     {
         public:
-            Expression expression;
-            float answer;
-            std::string fullResult;
-            void returnResult();
+            Result(Expression expression, float answer, std::string fullResult) : expression_(expression), answer_(answer), fullResult_(fullResult){}
+
+            /**
+             * @returns the full result string
+            */
+            std::string getFullResult();
+        private:
+            Expression expression_;
+            float answer_;
+            std::string fullResult_;
     };
 }
 #endif  // RESULT_H

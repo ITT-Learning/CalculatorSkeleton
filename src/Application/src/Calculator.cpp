@@ -5,14 +5,14 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Calculator.h"
-#include "Parser.h"
-#include <stdlib.h>
+#include <cmath>
 #include <iostream>
-#include <typeinfo>
-#include "CalculatorMessages.h"
 #include <sstream>
-#include <math.h>
+#include <typeinfo>
+
+#include "Calculator.h"
+#include "CalculatorMessages.h"
+#include "Parser.h"
 #include "ResultFactory.h"
 
 namespace calculator
@@ -31,15 +31,15 @@ namespace calculator
         {
             ResultFactory resultFactory;
             float answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);
-            Result result = resultFactory.CreateResult(parsedExpression, answer);
+            Result result = resultFactory.createResult(parsedExpression, answer);
 
-            if (isinf(answer)) //if you divided by zero
+            if (std::isinf(answer)) //if you divided by zero
             {
                 std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_DIVIDE_BY_ZERO << std::endl;
             }
             else
             {
-                result.returnResult();
+                std::cout << result.getFullResult() << std::endl;
             }
         }
     }

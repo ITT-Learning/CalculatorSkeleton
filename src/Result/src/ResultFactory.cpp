@@ -19,15 +19,15 @@ namespace calculator
 // ResultFactory public methods /
 ///
    
-    Result ResultFactory::CreateResult(const Expression &parsedExpression, const float &answer)
+    Result ResultFactory::createResult(const Expression &parsedExpression, const float answer)
     {
-        Result result;
-        result.expression = parsedExpression;
-        result.answer = answer;
-        std::stringstream ss;
-        ss << parsedExpression.a << CalculatorMessages::EMPTY_SPACE << parsedExpression.operation << CalculatorMessages::EMPTY_SPACE << parsedExpression.b << CalculatorMessages::EQUALS << answer << std::endl;
-        result.fullResult = ss.str();
-        return result;
+        std::stringstream stringStream;
+
+        stringStream << parsedExpression.a << CalculatorMessages::EMPTY_SPACE 
+        << parsedExpression.operation << CalculatorMessages::EMPTY_SPACE 
+        << parsedExpression.b << CalculatorMessages::EQUALS << answer << std::endl;
+        
+        return Result(parsedExpression, answer, stringStream.str());
     }
     
 }

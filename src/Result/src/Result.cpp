@@ -14,9 +14,9 @@ namespace calculator
 // ResultFactory public methods /
 ///
    
-    void Result::returnResult()
+    std::string Result::getFullResult()
     {
-        std::cout << fullResult << std::endl;
+        return fullResult_;
     }
 
 }

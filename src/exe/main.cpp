@@ -13,10 +13,12 @@ int main()
 {
     while(true)
     {
-        calculator::Calculator c;
+        calculator::Calculator calculator;
         std::string response;
 
-        c.runCalculator();
+        calculator.runCalculator();
+
+        
 
         std::cout << calculator::CalculatorMessages::RETRY_MESSAGE << std::endl;
         std::cin >> response;
