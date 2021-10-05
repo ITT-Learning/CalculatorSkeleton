@@ -16,11 +16,7 @@ int main()
     {
         calculator::Calculator calculator;
         std::string response;
-
         calculator.runCalculator();
-
-        
-
         std::cout << calculator::CalculatorMessages::RETRY_MESSAGE << std::endl;
         std::cin >> response;
         {

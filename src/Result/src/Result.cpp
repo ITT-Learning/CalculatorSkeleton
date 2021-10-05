@@ -12,7 +12,7 @@ namespace calculator
 {
 
 //*************/
-// ResultFactory public methods /
+// Result public methods /
 ///
    
     std::string Result::getFullResult()

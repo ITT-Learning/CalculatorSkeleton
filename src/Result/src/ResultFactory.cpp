@@ -23,7 +23,7 @@ namespace calculator
     Result ResultFactory::createResult(const Expression &parsedExpression, float answer)
     {
         std::stringstream stringStream;
-
+        
         stringStream << parsedExpression.a << CalculatorMessages::EMPTY_SPACE 
         << parsedExpression.operation << CalculatorMessages::EMPTY_SPACE 
         << parsedExpression.b << CalculatorMessages::EQUALS << answer << std::endl;

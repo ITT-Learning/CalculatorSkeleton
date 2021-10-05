@@ -18,13 +18,17 @@ namespace calculator
         public:
             Result(Expression expression, float answer, std::string fullResult) : expression_(expression), answer_(answer), fullResult_(fullResult){}
 
-            /**
-             * @returns the full result string
-            */
+        /***
+         * @brief get the full result string
+         *
+         * @return std::string the fullResult
+         */
+
             std::string getFullResult();
+
         private:
-            Expression expression_;
-            float answer_;
+            float       answer_;
+            Expression  expression_;
             std::string fullResult_;
     };
 }
