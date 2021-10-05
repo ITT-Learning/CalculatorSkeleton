@@ -5,11 +5,12 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Parser.h"
-#include "CalculatorMessages.h"
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include <cmath>
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
+#include "CalculatorMessages.h"
+#include "Parser.h"
 
 using namespace calculator;
 using namespace testing;
@@ -32,31 +33,31 @@ void whenTestingParser::TearDown()
 
 TEST_F(whenTestingParser, WhenValidatingTwoPositiveIntegers_ThenTrueReturned)
 {
-    ASSERT_TRUE(parserInst->parseExpression("1+1").valid);
+    ASSERT_TRUE(parserInst->parseFullEquation("1+1").valid);
 }
 TEST_F(whenTestingParser, WhenValidatingIncorrectOperation_ThenFalseReturned)
 {
-    ASSERT_FALSE(parserInst->parseExpression("1?1").valid);
+    ASSERT_FALSE(parserInst->parseFullEquation("1?1").valid);
 }
 TEST_F(whenTestingParser, WhenValidatingTwoNegativeIntegers_ThenTrueReturned)
 {
-    ASSERT_TRUE(parserInst->parseExpression("-1+-1").valid);
+    ASSERT_TRUE(parserInst->parseFullEquation("-1+-1").valid);
 }
 TEST_F(whenTestingParser, WhenValidatingTwoPositiveFloats_ThenTrueReturned)
 {
-    ASSERT_TRUE(parserInst->parseExpression("1.55*30.43").valid);
+    ASSERT_TRUE(parserInst->parseFullEquation("1.55*30.43").valid);
 }
 TEST_F(whenTestingParser, WhenValidatingTwoNegativeFloats_ThenTrueReturned)
 {
-    ASSERT_TRUE(parserInst->parseExpression("-44.34--0.43").valid);
+    ASSERT_TRUE(parserInst->parseFullEquation("-44.34--0.43").valid);
 }
 TEST_F(whenTestingParser, WhenValidatingANonNumber_ThenFalseReturned)
 {
-    ASSERT_FALSE(parserInst->parseExpression("-b/15").valid);
+    ASSERT_FALSE(parserInst->parseFullEquation("-b/15").valid);
 }
 TEST_F(whenTestingParser, WhenValidatingNonNumbersInFrontOfNumbers_ThenFalseReturned)
 {
-    ASSERT_FALSE(parserInst->parseExpression("abc123*xyz123").valid);
+    ASSERT_FALSE(parserInst->parseFullEquation("abc123*xyz123").valid);
 }
 
 
