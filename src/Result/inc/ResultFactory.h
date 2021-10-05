@@ -23,7 +23,7 @@ namespace calculator
              * @param answer is the answer to the expression, created by the calculate
              * @param fullResult is a string stream that combines all other variables and some calculatorMessages
             */
-            Result createResult(const Expression &parsedExpression, const float answer);
+            Result createResult(const Expression &parsedExpression, float answer);
     };
 }
 #endif  // RESULTFACTORY_H

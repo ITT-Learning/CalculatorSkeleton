@@ -34,7 +34,7 @@ void whenTestingResultFactory::TearDown()
     delete resultFactoryInst;
 }
 
-TEST_F(whenTestingResultFactory, WhenCreatingResult_CorrectResultReturned)
+TEST_F(whenTestingResultFactory, WhenCreatingResult_CorrectFullResultReturned)
 {
     Expression sampleExpression;
     sampleExpression.a=1;
@@ -42,7 +42,7 @@ TEST_F(whenTestingResultFactory, WhenCreatingResult_CorrectResultReturned)
     sampleExpression.operation='+';
     sampleExpression.valid=true;
 
-    Result sampleResult{sampleExpression, 3, "1 + 2 = 3"};
+    Result sampleResult{sampleExpression, 3, "1 + 2 = 3\n"};
     Result r = resultFactoryInst->createResult(sampleExpression, 3);
 
     ASSERT_EQ(r.getFullResult(), sampleResult.getFullResult());

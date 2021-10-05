@@ -5,9 +5,10 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
+#include <string>
+
 #include "Calculator.h"
 #include "CalculatorMessages.h"
-#include <string>
 
 int main() 
 {

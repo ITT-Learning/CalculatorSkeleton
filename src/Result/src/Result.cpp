@@ -4,8 +4,9 @@
 * @brief Function definitions for Result object
 */
 ////////////////////////////////////////////////////////////////////////////////
-#include "Result.h"
 #include <iostream>
+
+#include "Result.h"
 
 namespace calculator
 {

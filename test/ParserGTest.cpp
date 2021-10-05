@@ -5,11 +5,12 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Parser.h"
-#include "CalculatorMessages.h"
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include <cmath>
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
+#include "CalculatorMessages.h"
+#include "Parser.h"
 
 using namespace calculator;
 using namespace testing;

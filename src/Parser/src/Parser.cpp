@@ -5,11 +5,12 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Parser.h"
-#include "CalculatorMessages.h"
 #include <iostream>
-#include <string>
 #include <regex>
+#include <string>
+
+#include "CalculatorMessages.h"
+#include "Parser.h"
 
 
 namespace calculator

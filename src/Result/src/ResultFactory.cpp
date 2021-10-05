@@ -5,11 +5,12 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <iostream>
+#include <sstream>
+
+#include "CalculatorMessages.h"
 #include "Result.h"
 #include "ResultFactory.h"
-#include <sstream>
-#include <iostream>
-#include "CalculatorMessages.h"
 
 
 namespace calculator
@@ -19,7 +20,7 @@ namespace calculator
 // ResultFactory public methods /
 ///
    
-    Result ResultFactory::createResult(const Expression &parsedExpression, const float answer)
+    Result ResultFactory::createResult(const Expression &parsedExpression, float answer)
     {
         std::stringstream stringStream;
 

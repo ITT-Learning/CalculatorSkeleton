@@ -4,8 +4,9 @@
 * @brief Result Object function declarations.
 */
 ////////////////////////////////////////////////////////////////////////////////
-#include "Parser.h"
 #include <string>
+
+#include "Parser.h"
 
 #ifndef RESULT_H
 #define RESULT_H
