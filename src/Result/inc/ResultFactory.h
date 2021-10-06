@@ -1,3 +1,6 @@
+#ifndef RESULTFACTORY_H
+#define RESULTFACTORY_H
+
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file ResultFactory.h
@@ -5,13 +8,11 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-//this is going to create and return the result object
-#ifndef RESULTFACTORY_H
-#define RESULTFACTORY_H
+#include <memory>
 
 #include "Result.h"
+#include "IResult.h"
 #include "ResultFactory.h"
-
 namespace calculator
 {
     class ResultFactory
@@ -23,7 +24,7 @@ namespace calculator
              * @param answer is the answer to the expression, created by the calculate
              * @param fullResult is a string stream that combines all other variables and some calculatorMessages
             */
-            Result createResult(const Expression &parsedExpression, float answer);
+            std::shared_ptr<IResult> createResult(const Expression &parsedExpression, float answer);
     };
 }
 #endif  // RESULTFACTORY_H

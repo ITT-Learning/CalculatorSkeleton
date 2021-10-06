@@ -1,3 +1,6 @@
+#ifndef CALCULATORMESSAGES_H
+#define CALCULATORMESSAGES_H
+
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file CalculatorMessages.h
@@ -5,11 +8,7 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef CALCULATORMESSAGES_H
-#define CALCULATORMESSAGES_H
-
 #include <string>
-
 namespace calculator
 {
     class CalculatorMessages

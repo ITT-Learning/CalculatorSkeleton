@@ -15,7 +15,7 @@ namespace calculator
 // Result public methods /
 ///
    
-    std::string Result::getFullResult()
+    std::string Result::getFullResult() const
     {
         return fullResult_;
     }

@@ -5,10 +5,12 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <memory>
 #include <iostream>
 #include <sstream>
 
 #include "CalculatorMessages.h"
+#include "IResult.h"
 #include "Result.h"
 #include "ResultFactory.h"
 
@@ -20,7 +22,7 @@ namespace calculator
 // ResultFactory public methods /
 ///
    
-    Result ResultFactory::createResult(const Expression &parsedExpression, float answer)
+    std::shared_ptr<IResult> ResultFactory::createResult(const Expression &parsedExpression, float answer)
     {
         std::stringstream stringStream;
         
@@ -28,7 +30,7 @@ namespace calculator
         << parsedExpression.operation << CalculatorMessages::EMPTY_SPACE 
         << parsedExpression.b << CalculatorMessages::EQUALS << answer << std::endl;
         
-        return Result(parsedExpression, answer, stringStream.str());
+        return std::shared_ptr<IResult> (new Result(parsedExpression, answer, stringStream.str()));
     }
     
 }
