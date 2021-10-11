@@ -65,5 +65,4 @@ namespace calculator
             static constexpr const char *ERROR_MESSAGE_INVALID_INPUT = " invalid input";
     };
 }//namespace calculator
-   
 #endif  // CALCULATOR_H

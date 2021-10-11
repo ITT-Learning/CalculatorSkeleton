@@ -43,7 +43,7 @@ TEST_F(whenTestingResultFactory, WhenCreatingResult_CorrectFullResultReturned)
     sampleExpression.valid=true;
 
     Result sampleResult{sampleExpression, 3, "1 + 2 = 3\n"};
-    std::shared_ptr<IResult> r = resultFactoryInst->createResult(sampleExpression, 3);
+    std::shared_ptr<IResult> sampleIResult = resultFactoryInst->createResult(sampleExpression, 3);
 
-    ASSERT_EQ(r->getFullResult(), sampleResult.getFullResult());
+    ASSERT_EQ(sampleIResult->getFullResult(), sampleResult.getFullResult());
 }

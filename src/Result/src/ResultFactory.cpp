@@ -30,7 +30,6 @@ namespace calculator
         << parsedExpression.operation << CalculatorMessages::EMPTY_SPACE 
         << parsedExpression.b << CalculatorMessages::EQUALS << answer << std::endl;
         
-        return std::shared_ptr<IResult> (new Result(parsedExpression, answer, stringStream.str()));
+        return std::make_shared<Result>(parsedExpression, answer, stringStream.str());
     }
-    
 }

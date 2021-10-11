@@ -10,7 +10,6 @@
 
 namespace calculator
 {
-
 //*************/
 // Result public methods /
 ///
@@ -19,5 +18,4 @@ namespace calculator
     {
         return fullResult_;
     }
-
 }
