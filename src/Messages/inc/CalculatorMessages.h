@@ -1,3 +1,6 @@
+#ifndef CALCULATORMESSAGES_H
+#define CALCULATORMESSAGES_H
+
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file CalculatorMessages.h
@@ -5,11 +8,7 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef CALCULATORMESSAGES_H
-#define CALCULATORMESSAGES_H
-
 #include <string>
-
 namespace calculator
 {
     class CalculatorMessages
@@ -66,5 +65,4 @@ namespace calculator
             static constexpr const char *ERROR_MESSAGE_INVALID_INPUT = " invalid input";
     };
 }//namespace calculator
-   
 #endif  // CALCULATOR_H

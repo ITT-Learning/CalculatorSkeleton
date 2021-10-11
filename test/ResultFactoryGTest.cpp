@@ -12,7 +12,7 @@
 
 #include "CalculatorMessages.h"
 #include "Parser.h"
-#include "Result.h"
+#include "IResult.h"
 #include "ResultFactory.h"
 
 using namespace calculator;
@@ -43,7 +43,7 @@ TEST_F(whenTestingResultFactory, WhenCreatingResult_CorrectFullResultReturned)
     sampleExpression.valid=true;
 
     Result sampleResult{sampleExpression, 3, "1 + 2 = 3\n"};
-    Result r = resultFactoryInst->createResult(sampleExpression, 3);
+    std::shared_ptr<IResult> sampleIResult = resultFactoryInst->createResult(sampleExpression, 3);
 
-    ASSERT_EQ(r.getFullResult(), sampleResult.getFullResult());
+    ASSERT_EQ(sampleIResult->getFullResult(), sampleResult.getFullResult());
 }

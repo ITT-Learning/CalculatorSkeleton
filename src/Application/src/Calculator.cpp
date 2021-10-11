@@ -31,7 +31,7 @@ namespace calculator
         {
             ResultFactory resultFactory;
             float answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);
-            Result result = resultFactory.createResult(parsedExpression, answer);
+            std::shared_ptr<IResult> result = resultFactory.createResult(parsedExpression, answer);
 
             if (std::isinf(answer)) //if you divided by zero
             {
@@ -39,44 +39,40 @@ namespace calculator
             }
             else
             {
-                std::cout << result.getFullResult() << std::endl;
+                std::cout << result->getFullResult() << std::endl;
             }
         }
     }
     
     float Calculator::calculate(char operation, float number1, float number2)
     {
-        double answer;
+        float answer;
 
             switch (operation)
             {
             case '+':
             {
+                auto add = [](auto a, auto b){ return a + b;}; 
                 answer = add(number1, number2);
                 break;
             }
             case '-':
             {
+                auto subtract = [](auto a, auto b){ return a - b;}; 
                 answer = subtract(number1, number2);
                 break;
             }
             case 'x':
-            {
-                answer = multiply(number1, number2);
-                break;
-            }
             case '*':
             {
+                auto multiply = [](auto a, auto b){ return a * b;}; 
                 answer = multiply(number1, number2);
                 break;
             }
             case '/':
-            {   
-                answer = divide(number1, number2);
-                break;
-            }
             case '%':
-            {
+            {   
+                auto divide = [](auto a, auto b){ return a / b;}; 
                 answer = divide(number1, number2);
                 break;
             }
@@ -85,30 +81,5 @@ namespace calculator
             }
         return answer;
     }
-
-    //*************/
-    // Calculator private methods /
-    ///
-
-    float Calculator::add(double number1, double number2)
-    {
-        return number1 + number2;
-    }
-
-    float Calculator::subtract(double number1, double number2)
-    {
-        return number1 - number2;
-    }
-
-    float Calculator::divide(double number1, double number2)
-    {
-        float ans = number1 / number2;
-        return ans;
-    }
-
-    float Calculator::multiply(double number1, double number2)
-    {
-        return number1 * number2;
-    }
-
 }//namespace calculator
+

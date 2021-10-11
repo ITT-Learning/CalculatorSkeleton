@@ -1,12 +1,12 @@
+#ifndef PARSER_H
+#define PARSER_H
+
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file Parser.h
 * @brief calculator function declarations.
 */
 ////////////////////////////////////////////////////////////////////////////////
-
-#ifndef PARSER_H
-#define PARSER_H
 
 #include <iostream>
 #include <string>
@@ -43,7 +43,7 @@ namespace calculator
             std::string getUserInput();
 
         private:
-            char Operations[4] = {'+', '-', '/', '*'};
+            char Operations[6] = {'+', '-', '/', '%', '*', 'x'};
 
             /**
              * @brief removes all spaces from user input

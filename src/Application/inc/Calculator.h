@@ -1,12 +1,12 @@
+#ifndef CALCULATOR_H
+#define CALCULATOR_H
+
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file Calculator.h
 * @brief calculator function declarations.
 */
 ////////////////////////////////////////////////////////////////////////////////
-
-#ifndef CALCULATOR_H
-#define CALCULATOR_H
 
 #include <iostream>
 namespace calculator
@@ -35,32 +35,6 @@ namespace calculator
              * and used to write to the console.
             */
             float calculate(char operation, float number1, float number2);
-
-        private:
-
-            /**
-             * @brief adds num1 and num2 together
-             * @returns a float of the result
-            */
-            float add(double num1, double num2);
-
-            /**
-             * @brief subtracts num2 from num1
-             * @returns a float of the result
-            */
-            float subtract(double num1, double num2);
-
-            /**
-             * @brief divides num1 over num2
-             * @returns a float of the result
-            */
-            float divide(double num1, double num2);
-
-            /**
-             * @brief multiples num1 and num2
-             * @returns a float of the result
-            */
-            float multiply(double num1, double num2);
     };
 
 }//namespace calculator
