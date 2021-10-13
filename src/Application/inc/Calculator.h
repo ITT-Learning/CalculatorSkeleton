@@ -15,10 +15,9 @@ namespace calculator
     {
         public:
             /**
-             * @brief initiates calculator and asks for inputs, then runs the validate function
-             * @param number1 is first number entered
-             * @param number2 is second number entered
-             * @param operation is the operator entered (+, - , / or % , * or x)
+             * @brief initiates calculator and works with the parser to return a result object
+             * @param futureVector is the thread for a created vector object
+             * @param futureParsedExpression is the thread for a created expression object 
             */
             void runCalculator();
 

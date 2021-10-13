@@ -24,7 +24,7 @@ namespace calculator
              * @param answer is the answer to the expression, created by the calculate
              * @param fullResult is a string stream that combines all other variables and some calculatorMessages
             */
-            std::shared_ptr<IResult> createResult(const Expression &parsedExpression, float answer);
+            std::shared_ptr<IResult> createResult(const std::string &originalEquation, float answer);
     };
 }
 #endif  // RESULTFACTORY_H
