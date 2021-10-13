@@ -26,20 +26,20 @@ class whenTestingResult:public ::testing::Test
 };
 void whenTestingResult::SetUp()
 {
-    Expression sampleExpression;
-    sampleExpression.a=1;
-    sampleExpression.b=2;
-    sampleExpression.operation='+';
-    sampleExpression.valid=true;
+    // Expression sampleExpression;
+    // sampleExpression.a=1;
+    // sampleExpression.b=2;
+    // sampleExpression.operation='+';
+    // // sampleExpression.valid=true;
 
-    resultInst = new Result(sampleExpression, 3, "1 + 2 = 3\n");
+    // resultInst = new Result(sampleExpression, 3, "1 + 2 = 3\n");
 }
 void whenTestingResult::TearDown()
 {
     delete resultInst;
 }
 
-TEST_F(whenTestingResult, WhenCreatingResult_CorrectFullResultReturned)
-{
-    ASSERT_EQ(resultInst->getFullResult(), "1 + 2 = 3\n");
-}
+// TEST_F(whenTestingResult, WhenCreatingResult_CorrectFullResultReturned)
+// {
+//     ASSERT_EQ(resultInst->getFullResult(), "1 + 2 = 3\n");
+// }
