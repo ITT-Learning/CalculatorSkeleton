@@ -6,16 +6,19 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include "../inc/Calculator.h"
+#include <iostream>
+
+#include "CalculatorApplication.h"
 
 using namespace calculator;
+
 int main() 
 {
     //This calculator can do super basic and simple math. 
     while(true)
     {
         char repeat; 
-        Calculator calculator;
+        CalculatorApplication calculator;
         calculator.calculate();
         std::cout << "Would you like to run the program again? y/n" << std::endl;
         std::cin >> repeat;

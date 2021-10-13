@@ -1,7 +1,22 @@
-#include "../inc/Calculator.h"
-#include "../inc/Messages.h"
+/**
+ * @file CalculatorClassGTest.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-09-14
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #include<gtest/gtest.h>
 #include<gmock/gmock.h>
+
+/**
+ * @brief header files included 
+ * 
+ */
+#include "CalculatorApplcation.h"
+#include "CalculatorStrings.h"
 
 using namespace calculator;
 using namespace testing;
