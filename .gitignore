@@ -57,7 +57,10 @@ bin/
 [Bb][Ii][Nn]/
 
 # ignore googletest items
-test/googletest-*/
+*/test/googletest-*/
+*/test/googletest-*
+*/test/calculator_test
+
 
 # ignore .vscode
 .vscode/
