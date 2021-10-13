@@ -5,10 +5,12 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <sstream>
 #include <typeinfo>
+#include <vector>
 
 #include "Calculator.h"
 #include "CalculatorMessages.h"
@@ -24,26 +26,34 @@ namespace calculator
    
     void Calculator::runCalculator()
     {
-        Parser p;
-        Expression parsedExpression = p.parseFullEquation(p.getUserInput());
-        
-        if (parsedExpression.valid)
-        {
-            ResultFactory resultFactory;
-            float answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);
-            std::shared_ptr<IResult> result = resultFactory.createResult(parsedExpression, answer);
+        Parser parser;
 
+        std::vector<ExpressionUnit> equationVector = parser.createVector(parser.getUserInput());
+        float answer;
+
+        while (equationVector.size() > 1)
+        {
+           Expression parsedExpression = parser.parseFullEquation(equationVector);
+           answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);
+           
             if (std::isinf(answer)) //if you divided by zero
             {
                 std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_DIVIDE_BY_ZERO << std::endl;
+                break;
             }
-            else
-            {
-                std::cout << result->getFullResult() << std::endl;
-            }
+
+           else
+           {
+               ExpressionUnit lastAnswer;
+               lastAnswer.number = answer;
+               equationVector.insert(equationVector.begin() + parsedExpression.placementIndex, lastAnswer);
+           }
         }
+            ResultFactory resultFactory;
+            std::shared_ptr<IResult> result = resultFactory.createResult(parser.originalEquation, answer);
+            std::cout << result->getFullResult() << std::endl;
     }
-    
+     
     float Calculator::calculate(char operation, float number1, float number2)
     {
         float answer;
