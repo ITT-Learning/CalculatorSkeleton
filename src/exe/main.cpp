@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "CalculatorApplication.h"
+#include "../Application/inc/CalculatorApplication.h"
 
 using namespace calculator;
 
@@ -18,8 +18,16 @@ int main()
     while(true)
     {
         char repeat; 
-        CalculatorApplication calculator;
-        calculator.calculate();
+
+        std::cout << CalculatorStrings::WELCOME_MESSAGE << std::endl;
+        std::cout << CalculatorStrings::ENTER_EQUATION << std::endl;
+        
+        float firstNumber, secondNumber; 
+        char op;
+
+        std::cin >> firstNumber >> op >> secondNumber; // user inputs first number, operator, and second number
+        
+        CalculatorApplication::calculate(firstNumber, secondNumber, op);
         std::cout << "Would you like to run the program again? y/n" << std::endl;
         std::cin >> repeat;
         if(repeat != 'y')

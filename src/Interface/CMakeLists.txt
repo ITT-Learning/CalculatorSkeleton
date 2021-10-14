@@ -5,14 +5,12 @@ set(LIBRARY_NAME ${PROJECT_NAME}${lib_dir})
 
 file(GLOB LIBRARY_SOURCES
     "src/*.cpp"
-) 
-
-add_subdirectory(test/)
+)
 
 include_directories(
     inc
     $<TARGET_PROPERTY:CalculatorStrings,INCLUDE_DIRECTORIES>
-    $<TARGET_PROPERTY:CalculatorInterface,INCLUDE_DIRECTORIES>
+
     )
 
 # Set the output folder where your program will be created
@@ -20,13 +18,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIBRARY_NAME}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIBRARY_NAME}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIBRARY_NAME}/bin)
 
-add_library(${LIBRARY_NAME} SHARED ${LIBRARY_SOURCES})
+add_library(${LIBRARY_NAME} INTERFACE ${LIBRARY_SOURCES})
 
-target_include_directories(${LIBRARY_NAME} PUBLIC
+target_include_directories(${LIBRARY_NAME} INTERFACE
     ${CMAKE_CURRENT_BINARY_DIR}/inc
 ) 
 
-target_link_libraries(${LIBRARY_NAME}
-    CalculatorStrings
-    CalculatorInterface
-)

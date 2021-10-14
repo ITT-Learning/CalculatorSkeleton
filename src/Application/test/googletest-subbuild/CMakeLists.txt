@@ -21,8 +21,8 @@ set_property(GLOBAL PROPERTY _CMAKE_FindGit_GIT_EXECUTABLE_VERSION
 include(ExternalProject)
 ExternalProject_Add(googletest-populate
                      "UPDATE_DISCONNECTED" "False" "GIT_REPOSITORY" "https://github.com/google/googletest.git" "GIT_TAG" "release-1.10.0"
-                    SOURCE_DIR          "/mnt/c/users/marcus.antimie/documents/LearningPlan/CalculatorSkeleton/src/Application/test/googletest-src"
-                    BINARY_DIR          "/mnt/c/users/marcus.antimie/documents/LearningPlan/CalculatorSkeleton/src/Application/test/googletest-build"
+                    SOURCE_DIR          "/mnt/c/Users/marcus.antimie/Documents/LearningPlan/CalculatorSkeleton/src/Application/test/googletest-src"
+                    BINARY_DIR          "/mnt/c/Users/marcus.antimie/Documents/LearningPlan/CalculatorSkeleton/src/Application/test/googletest-build"
                     CONFIGURE_COMMAND   ""
                     BUILD_COMMAND       ""
                     INSTALL_COMMAND     ""

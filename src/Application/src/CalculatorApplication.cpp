@@ -8,103 +8,65 @@
 
 #include <iostream>
 #include <limits>
+#include <string>
+#include <sstream>
 
 #include "CalculatorApplication.h"
 #include "CalculatorStrings.h"
+#include "CalculatorApplicationFactory.h"
 
 namespace calculator
 {
-    //*************/
-    // Calculator public methods /
-    ///
-    float CalculatorApplication::add (float number1, float number2)
+
+    //function run from main
+    int CalculatorApplication::calculate(float a, float b, char op)
     {
-        float result = number1 + number2;
-        return result;    
-    }
-    void CalculatorApplication::calculate()
-    {
-        float number1, number2;
-        char op;
-        std::cout << CalculatorStrings::WELCOME_MESSAGE << std::endl;
-        std::cout << CalculatorStrings::ENTER_EQUATION << std::endl;
-        std::cin >> number1 >> op >>  number2;
-        while(1)
+        calculator::CalculatorApplicationFactory calculatorAppFactory;  
+        
+        if(limitCheck(a) && limitCheck(b))
         {
-            if(std::cin.fail())
+            auto calculator = calculatorAppFactory.createCalculator(a, b, op); //variables placed into createCalc function and placed into calculator variable
+            if(calculator)
             {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << calculator->toString() << std::endl; //if calculator returned from function is valid, point to string function and output expression and result
+            }
+            else
+            {
                 std::cout << CalculatorStrings::ERROR_MESSAGE_INVALID_INPUT << std::endl;
-                std::cout << CalculatorStrings::RE_ENTER_EQUATION << std::endl;
-                std::cin >> number1 >> op >> number2;
             }
-            if(!std::cin.fail())
-            {
-                break;
-            }
-        }
-        CalculatorApplication calculator;
-        switch(op)
-        {
-            case '+':
-            {
-                std::cout << number1 << op << number2 << " = " << calculator.add(number1, number2) << std::endl;
-                break;
-            }
-            case '*':
-            {
-                std::cout << number1 << op << number2 << " = " << calculator.multiply(number1, number2) << std::endl;
-                break;
-            }
-            case '/':
-            {
-                std::cout << number1 << op << number2 << " = " << calculator.divide(number1, number2) << std::endl;
-                break;
-            }
-            case '-':
-            {
-                std::cout << number1 << op << number2 << " = " << calculator.subtract(number1, number2) << std::endl;                
-                break;
-            }
-            case '%':
-            {
-                std::cout << number1 << op << number2 << " = " << calculator.modulus(number1, number2) << std::endl;
-                break;
-            }
-            default:
-            {
-                std::cerr << CalculatorStrings::ERROR_MESSAGE_UNKNOWN_OPERATOR << std::endl;
-            }
-        }
-    }
-    float CalculatorApplication::divide (float number1, float number2)
-    {
-        if(number2 == 0)
-        {
-            std::cerr << CalculatorStrings::ERROR_MESSAGE_DIVIDE_BY_ZERO;
-            return(-1);
         }
         else
         {
-            float result = number1 / number2;
-            return result;
-        } 
+            return -1;
+        }
+        return 0;
     }
 
-    int CalculatorApplication::modulus(float number1, float number2)
+    //toString function
+    std::string CalculatorApplication::toString()
     {
-        int result = (int)number1 % (int)number2;
-        return result;
+        return std::to_string(first_Number) + " " + op + " " + std::to_string(second_Number) + " = " + std::to_string(getResult());
     }
-    float CalculatorApplication::multiply (float number1, float number2)
+
+    bool CalculatorApplication::limitCheck(float a)
     {
-        float result = number1 * number2;
-        return result;
+        if(a > std::numeric_limits<float>::max())
+        {
+            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TO_LARGE << std::endl;
+            return false;
+        }
+        else if(a < std::numeric_limits<float>::min())
+        {
+            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TO_SMALL << std::endl;
+            return false;
+        }
+        else if(a == std::numeric_limits<float>::infinity())
+        {
+            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TO_LARGE << std::endl;
+            return false;
+        }
+        return true;
     }
-    float CalculatorApplication::subtract (float number1, float number2)
-    {
-        float result = number1 - number2;
-        return result;
-    }
+    
+
 }

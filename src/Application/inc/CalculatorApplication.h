@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @file  Calculator.h
+ * @file  CalculatorApplication.h
  * @date  Fri, 16 April 2021
  * @brief These are the included header files as well as the programs function declarations
  * 
@@ -10,13 +10,18 @@
 #ifndef CALCULATORAPPLICATION_H
 #define CALCULATORAPPLICATION_H
 
+#include <string>
+#include "../../Interface/inc/ICalculator.h"
+#include "CalculatorStrings.h"
+#include <limits>
+
 
 namespace calculator
 {
     /**
      * @brief This is the Class containing the functions and variables used in week 1
      */
-    class CalculatorApplication
+    class CalculatorApplication : public ICalculator 
     {
         public:
             /**
@@ -29,47 +34,37 @@ namespace calculator
              * 
              */
             ~CalculatorApplication() = default;
+            
             /**
              * @brief This is the main function run in main.cpp
              * 
              */
-            void calculate();
-            /**
-             * @brief This is the function adding two floats using the '+' character
-             * @param number1 This is the first float passed into
-             * @param number2 This is the second float passed into 
-             * @param op This is the operator character and will add both floats
-             */
-            float add(float number1, float number2);
-            /**
-             * @brief This is the function multiplying two floats using the '*' character
-             * @param number1 This is the first float passed into
-             * @param number2 This is the second float passed into
-             * @param op This is the operator character and will multiply both floats
-             */
-            float multiply(float number1, float number2);
-            /**
-             * @brief This is the function dividing two floats using the '/' character
-             * @param number1 This is the first float passed into
-             * @param number2 This is the second float passed into
-             * @param op This is the operator character and will divide both floats
-             */
-            float divide(float number1, float number2);
-            /**
-             * @brief This is the function subtract two floats using the '-' character
-             * @param number1 This is the first float passed into
-             * @param number2 This is the second float passed into
-             * @param op This is the operator character and will subtract both floats
-             */
+            static int calculate(float a, float b, char op);
             
-            float subtract(float number1, float number2);
             /**
-             * @brief This is the function taking the modulus two floats using the '%' character
-             * @param number1 This is the first float passed into
-             * @param number2 This is the second float passed into
-             * @param op This is the operator character and will return the modulus of both floats
+             * @brief Get the Result object. Pure virtual function defined in child classes
+             * 
+             * @return float 
              */
-            int modulus(float number1, float number2);
+            virtual float getResult() = 0;
+            
+            /**
+             * @brief Convert to string function
+             * 
+             * @return std::string 
+             */
+            std::string toString() override;
+
+            static bool limitCheck(float a);
+
+
+
+        protected:
+            float first_Number;
+            float second_Number;
+            char op; 
+
+
     };
 }
-#endif  // CALCULATOR_H
+#endif  // CALCULATORAPPLICATION_H

@@ -10,7 +10,7 @@
  */
 
 #ifndef CALCULATORSTRINGS_H
-#define CALCUALTORSTRING_H
+#define CALCULATORSTRINGS_H
 
 #include <string>
 
@@ -24,7 +24,7 @@ namespace calculator
             static constexpr char ERROR_MESSAGE_INPUT_TO_LARGE[] = "Error: One or more inputted values are too large";
             static constexpr char ERROR_MESSAGE_INPUT_TO_SMALL[] = "Error: One or more inputted values are too small";
             static constexpr char RE_ENTER_EQUATION[] = "Re-enter the math equation";
-            static constexpr char ENTER_EQUATION[] = "Enter the math equation";
+            static constexpr char ENTER_EQUATION[] = "Enter the math equation in the form x + y, x - y, x * y, x / y (only these operations will ensure the program to run smoothly)";
             static constexpr char ERROR_MESSAGE_UNKNOWN_OPERATOR[] = "Error: Unknown Operator";
             static constexpr char WELCOME_MESSAGE[] = "Welcome to the Calculator C++ learning project.";
     };
