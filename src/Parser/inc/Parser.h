@@ -21,14 +21,14 @@ namespace calculator
         char operation;
         std::string fullExpression;
         int placementIndex = 0;
+        bool validExpression = false;
     };
 
     struct ExpressionUnit
     {
         float number;
-        char operation;
-        bool valid = false;
-        
+        char  operation;
+        bool  valid = false;
     };
 
     class Parser
@@ -42,14 +42,19 @@ namespace calculator
              * @brief the main parsing function that puts all the peices together and returns an expression
              * @return an Expression object, along with whether it is valid or not
             */
-            Expression parseFullEquation(std::vector<ExpressionUnit> &equationVector);
+            Expression breakDownEquation(std::vector<ExpressionUnit> &equationVector);
 
             /**
              * @brief takes in input
              * @returns string of input entered
             */
             std::string getUserInput();
-            std::vector<ExpressionUnit> createVector(const std::string &fullEquation);
+
+            /**
+             * @brief creates a vector out of a string
+             * @returns vector split into each unit of expression
+            */
+            std::pair <std::vector<ExpressionUnit>,bool> createVector(const std::string &fullEquation);
 
         private:
             char Operations[6] = {'+', '-', '/', '%', '*', 'x'};

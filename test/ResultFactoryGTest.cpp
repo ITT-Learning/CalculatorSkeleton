@@ -12,6 +12,7 @@
 
 #include "CalculatorMessages.h"
 #include "Parser.h"
+#include "Result.h"
 #include "IResult.h"
 #include "ResultFactory.h"
 
@@ -34,16 +35,10 @@ void whenTestingResultFactory::TearDown()
     delete resultFactoryInst;
 }
 
-// TEST_F(whenTestingResultFactory, WhenCreatingResult_CorrectFullResultReturned)
-// {
-//     Expression sampleExpression;
-//     sampleExpression.a=1;
-//     sampleExpression.b=2;
-//     sampleExpression.operation='+';
-//     sampleExpression.valid=true;
+TEST_F(whenTestingResultFactory, WhenCreatingResult_CorrectFullResultReturned)
+{
+    Result sampleResult{"1 + 2", 3, "1 + 2 = 3"};
+    std::shared_ptr<IResult> sampleIResult = resultFactoryInst->createResult("1 + 2", 3);
 
-//     Result sampleResult{sampleExpression, 3, "1 + 2 = 3\n"};
-//     std::shared_ptr<IResult> sampleIResult = resultFactoryInst->createResult(sampleExpression, 3);
-
-//     ASSERT_EQ(sampleIResult->getFullResult(), sampleResult.getFullResult());
-// }
+    ASSERT_EQ(sampleIResult->getFullResult(), sampleResult.getFullResult());
+}

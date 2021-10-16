@@ -8,6 +8,7 @@
 #include <cmath>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <utility>
 
 #include "CalculatorMessages.h"
 #include "Parser.h"
@@ -31,33 +32,135 @@ void whenTestingParser::TearDown()
     delete parserInst;
 }
 
-// TEST_F(whenTestingParser, WhenValidatingTwoPositiveIntegers_ThenTrueReturned)
-// {
-//     ASSERT_TRUE(parserInst->parseFullEquation("1+1").valid);
-// }
-// TEST_F(whenTestingParser, WhenValidatingIncorrectOperation_ThenFalseReturned)
-// {
-//     ASSERT_FALSE(parserInst->parseFullEquation("1?1").valid);
-// }
-// TEST_F(whenTestingParser, WhenValidatingTwoNegativeIntegers_ThenTrueReturned)
-// {
-//     ASSERT_TRUE(parserInst->parseFullEquation("-1+-1").valid);
-// }
-// TEST_F(whenTestingParser, WhenValidatingTwoPositiveFloats_ThenTrueReturned)
-// {
-//     ASSERT_TRUE(parserInst->parseFullEquation("1.55*30.43").valid);
-// }
-// TEST_F(whenTestingParser, WhenValidatingTwoNegativeFloats_ThenTrueReturned)
-// {
-//     ASSERT_TRUE(parserInst->parseFullEquation("-44.34--0.43").valid);
-// }
-// TEST_F(whenTestingParser, WhenValidatingANonNumber_ThenFalseReturned)
-// {
-//     ASSERT_FALSE(parserInst->parseFullEquation("-b/15").valid);
-// }
-// TEST_F(whenTestingParser, WhenValidatingNonNumbersInFrontOfNumbers_ThenFalseReturned)
-// {
-//     ASSERT_FALSE(parserInst->parseFullEquation("abc123*xyz123").valid);
-// }
+TEST_F(whenTestingParser, WhenBreakingDownEquationWithValidExpressionUnits_ThenTrueReturned)
+{
+    ExpressionUnit a;
+    ExpressionUnit b;
+    ExpressionUnit c;
+    a.number = 1;
+    a.valid = true;
+    b.operation = '+';
+    b.valid = true;
+    c.number = 1;
+    c.valid = true;
+
+    std::vector<ExpressionUnit> sampleVector = {a, b, c};
+    Expression sampleExpression = parserInst->breakDownEquation(sampleVector);
+    
+    ASSERT_TRUE(sampleExpression.validExpression); //1+1
+}
+TEST_F(whenTestingParser, WhenBreakingDownEquationWithNotValidExpressionUnits_ThenFalseReturned)
+{
+    ExpressionUnit a;
+    ExpressionUnit b;
+    ExpressionUnit c;
+    a.number = 1;
+    a.valid = true;
+    b.operation = '?';
+    b.valid = false;
+    c.number = 1;
+    c.valid = true;
+
+    std::vector<ExpressionUnit> sampleVector = {a, b, c};
+    Expression sampleExpression = parserInst->breakDownEquation(sampleVector);
+    
+    ASSERT_FALSE(sampleExpression.validExpression); //1?1
+}
+TEST_F(whenTestingParser, WhenBreakingDownEquationWithDivision_ThenDivisionExpressionReturnedFirst)
+{
+    ExpressionUnit a;
+    ExpressionUnit b;
+    ExpressionUnit c;
+    ExpressionUnit d;
+    ExpressionUnit e;
+    a.number = 1;
+    a.valid = true;
+    b.operation = '+';
+    b.valid = true;
+    c.number = 1;
+    c.valid = true;
+    d.operation = '/';
+    d.valid = true;
+    e.operation = '5';
+    e.valid = true;
+
+    std::vector<ExpressionUnit> sampleVector = {a, b, c, d, e};
+    Expression createdExpression = parserInst->breakDownEquation(sampleVector);
+    char returnedExpressionOperator = '/';
+    
+    ASSERT_EQ(createdExpression.operation, returnedExpressionOperator); //1+1/5
+}
+TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplication_ThenDivisionExpressionReturnedFirst)
+{
+    ExpressionUnit a;
+    ExpressionUnit b;
+    ExpressionUnit c;
+    ExpressionUnit d;
+    ExpressionUnit e;
+    a.number = 1;
+    a.valid = true;
+    b.operation = '+';
+    b.valid = true;
+    c.number = 1;
+    c.valid = true;
+    d.operation = '*';
+    d.valid = true;
+    e.operation = '5';
+    e.valid = true;
+
+    std::vector<ExpressionUnit> sampleVector = {a, b, c, d, e};
+    Expression createdExpression = parserInst->breakDownEquation(sampleVector);
+    char returnedExpressionOperator = '*';
+    
+    ASSERT_EQ(createdExpression.operation, returnedExpressionOperator); //1+1*5
+}
+TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplicationAndDivision_ThenFirstExpressionReturnedFirst)
+{
+    ExpressionUnit a;
+    ExpressionUnit b;
+    ExpressionUnit c;
+    ExpressionUnit d;
+    ExpressionUnit e;
+    a.number = 1;
+    a.valid = true;
+    b.operation = '/';
+    b.valid = true;
+    c.number = 1;
+    c.valid = true;
+    d.operation = '*';
+    d.valid = true;
+    e.operation = '5';
+    e.valid = true;
+
+    std::vector<ExpressionUnit> sampleVector = {a, b, c, d, e};
+    Expression createdExpression = parserInst->breakDownEquation(sampleVector);
+    char returnedExpressionOperator = '/';
+    
+    ASSERT_EQ(createdExpression.operation, returnedExpressionOperator); //1/1*5
+}
+
+TEST_F(whenTestingParser, WhenCreatingVector_CorrectVectorReturned)
+{
+    ExpressionUnit a;
+    ExpressionUnit b;
+    ExpressionUnit c;
+    ExpressionUnit d;
+    ExpressionUnit e;
+    
+    a.number = 1;
+    b.operation = '+';
+    c.number = -2;
+    d.operation = '/';
+    e.number = 3.2;
+    std::vector<ExpressionUnit> sampleVector = {a, b, c, d, e};
+
+    std::pair <std::vector<ExpressionUnit>,bool> createdVector = parserInst->createVector("1+-2/3.2");
+
+    ASSERT_EQ(sampleVector.at(0).number, createdVector.first.at(0).number);
+    ASSERT_EQ(sampleVector.at(1).operation, createdVector.first.at(1).operation);
+    ASSERT_EQ(sampleVector.at(2).number, createdVector.first.at(2).number);
+    ASSERT_EQ(sampleVector.at(3).operation, createdVector.first.at(3).operation);
+    ASSERT_EQ(sampleVector.at(4).number, createdVector.first.at(4).number);
+}
 
 

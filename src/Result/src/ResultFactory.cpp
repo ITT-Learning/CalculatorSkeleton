@@ -26,7 +26,7 @@ namespace calculator
     {
         std::stringstream stringStream;
         
-        stringStream << originalEquation << CalculatorMessages::EQUALS << answer << std::endl;
+        stringStream << originalEquation << CalculatorMessages::EQUALS << answer;
         
         return std::make_shared<Result>(originalEquation, answer, stringStream.str());
     }

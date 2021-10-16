@@ -47,7 +47,7 @@ namespace calculator
             /**
              * @brief message on program exit
              */
-            static constexpr const char *ERROR_INVALID_OPERATOR = " Invalid Operator detected";
+            static constexpr const char *ERROR_INVALID_OPERATOR = " Invalid operator detected";
 
             /**
              * @brief Beginning of error message
@@ -60,9 +60,14 @@ namespace calculator
             static constexpr const char *ERROR_MESSAGE_DIVIDE_BY_ZERO = " divide by zero";
         
             /**
-             * @brief appended to error message if input entered incorrectly
+             * @brief appended to error message if number entered incorrectly
              */
-            static constexpr const char *ERROR_MESSAGE_INVALID_INPUT = " invalid input";
+            static constexpr const char *ERROR_MESSAGE_INVALID_NUMBER = " Invalid number detected";
+
+            /**
+             * @brief appended to error message if input entered is at least three calculation units
+             */
+            static constexpr const char *ERROR_MESSAGE_INVALID_INPUT_LENGTH = " Invalid input length";
     };
 }//namespace calculator
 #endif  // CALCULATOR_H

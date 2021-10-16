@@ -28,30 +28,46 @@ namespace calculator
     {
         Parser parser;
 
-        std::vector<ExpressionUnit> equationVector = parser.createVector(parser.getUserInput());
+        std::pair <std::vector<ExpressionUnit>,bool> completedVector = parser.createVector(parser.getUserInput());
         float answer;
 
-        while (equationVector.size() > 1)
-        {
-           Expression parsedExpression = parser.parseFullEquation(equationVector);
-           answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);
-           
-            if (std::isinf(answer)) //if you divided by zero
-            {
-                std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_DIVIDE_BY_ZERO << std::endl;
-                break;
-            }
+        Expression parsedExpression;
 
-           else
-           {
-               ExpressionUnit lastAnswer;
-               lastAnswer.number = answer;
-               equationVector.insert(equationVector.begin() + parsedExpression.placementIndex, lastAnswer);
-           }
+        while (completedVector.second)
+        {
+            parsedExpression = parser.breakDownEquation(completedVector.first);
+            if(parsedExpression.validExpression)
+                {
+                answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);
+                if (std::isinf(answer)) //if you divided by zero
+                {
+                    std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_DIVIDE_BY_ZERO << std::endl;
+                    parsedExpression.validExpression = false;
+                    break;
+                }
+                else
+                {
+                    ExpressionUnit lastAnswer;
+                    lastAnswer.number = answer;
+                    lastAnswer.valid = true;
+                    if (completedVector.first.size()>0)
+                    {
+                        completedVector.first.insert(completedVector.first.begin() + parsedExpression.placementIndex, lastAnswer);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
         }
+
+        if (parsedExpression.validExpression)
+        {
             ResultFactory resultFactory;
             std::shared_ptr<IResult> result = resultFactory.createResult(parser.originalEquation, answer);
             std::cout << result->getFullResult() << std::endl;
+        }
     }
      
     float Calculator::calculate(char operation, float number1, float number2)
