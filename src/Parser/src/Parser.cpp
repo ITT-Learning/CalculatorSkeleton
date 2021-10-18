@@ -26,14 +26,32 @@ namespace calculator
         bool checkingNumber = true;
         bool validVector = true;
 
+
         while (editedEquation.length() > 0)
         {
-            checkingNumber ? currentUnit = findNumber(editedEquation) : currentUnit = findOperator(editedEquation);
+            if (editedEquation.at(0) == '(' || editedEquation.at(0) == ')')
+            {
+                if (editedEquation.at(0) == '(')
+                {
+                    checkingNumber = false;
+                }
+                if (editedEquation.at(0) == ')')
+                {
+                    checkingNumber = true;
+                }
+                currentUnit.operation = editedEquation.at(0);
+                currentUnit.valid = true;
+                editedEquation = editedEquation.erase(0, 1);
+            }
+            else
+            {
+                checkingNumber ? currentUnit = findNumber(editedEquation) : currentUnit = findOperator(editedEquation);
+            }
 
             if(currentUnit.valid)
             {
-                equationVector.push_back(currentUnit);
                 checkingNumber = !checkingNumber;
+                equationVector.push_back(currentUnit);
             }
             else
             {
@@ -48,48 +66,89 @@ namespace calculator
             validVector = false;
         }
 
+        validVector = validateParenthesis(equationVector);
+
         std::pair <std::vector<ExpressionUnit>,bool> completedVector (equationVector, validVector);
         return completedVector;
     }
+
+
+   
+
+
 
     Expression Parser::breakDownEquation(std::vector<ExpressionUnit> &equationVector)
     {
         Expression parsedExpression;
         char importantOperator;
-    
-        for (size_t i = 0; i < equationVector.size(); i++) //find operator in order
+        int parenthesisIndex;
+        char lastParenthesis = '(';
+        size_t startingPoint = 0;
+        size_t endingPoint = equationVector.size();
+        
+        for (size_t i = 0; i < equationVector.size(); i++) //find parenthes is that open then close
         {
-            if (equationVector.at(i).valid)
+            if (equationVector.at(i).operation == '(')
             {
-                parsedExpression.validExpression = true;
-                if (equationVector.at(i).operation == '/' || equationVector.at(i).operation == '%' || equationVector.at(i).operation == 'x' || equationVector.at(i).operation == '*')
-                {
-                    importantOperator = equationVector.at(i).operation;
-                    parsedExpression.placementIndex = i - 1;
-                    break;
-                }
-                if (equationVector.at(i).operation == '-' || equationVector.at(i).operation == '+')
-                {
-                    if(importantOperator != '-' && importantOperator != '+')
-                    {
-                        importantOperator = equationVector.at(i).operation;
-                        parsedExpression.placementIndex = i - 1;
-                    }
-                        continue;
-                }
+                startingPoint = i;
             }
-            else
+            if (equationVector.at(i).operation == ')' && lastParenthesis == '(')
             {
-                parsedExpression.validExpression = false;
+                endingPoint = i;
+                equationVector.erase(equationVector.begin() + startingPoint); //erase parenthesis
+                equationVector.erase(equationVector.begin() + (endingPoint - 1));
+                endingPoint = endingPoint - 2;
                 break;
+            }           
+            if (equationVector.at(i).operation == '(' || equationVector.at(i).operation == ')')
+            {
+                lastParenthesis = equationVector.at(i).operation;
             }
         }
 
-        parsedExpression.operation = importantOperator; //set up expression Object
-        parsedExpression.a = equationVector.at(parsedExpression.placementIndex).number;
-        parsedExpression.b = equationVector.at(parsedExpression.placementIndex + 2).number;
+        if ((startingPoint + 2) <= endingPoint) // if you enter something like (1+)
+        {
+            for (size_t i = startingPoint; i < endingPoint; i++) //find operator in order
+            {
+                if (equationVector.at(i).valid)
+                {
+                    parsedExpression.validExpression = true;
+                    if (equationVector.at(i).operation == '/' || equationVector.at(i).operation == '%' || equationVector.at(i).operation == 'x' || equationVector.at(i).operation == '*')
+                    {
+                        importantOperator = equationVector.at(i).operation;
+                        parsedExpression.placementIndex = i - 1;
+                        break;
+                    }
+                    if (equationVector.at(i).operation == '-' || equationVector.at(i).operation == '+')
+                    {
+                        if(importantOperator != '-' && importantOperator != '+')
+                        {
+                            importantOperator = equationVector.at(i).operation;
+                            parsedExpression.placementIndex = i - 1;
+                        }
+                            continue;
+                    }
+                }
+                else
+                {
+                    parsedExpression.validExpression = false;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            parsedExpression.validExpression = false;
+            equationVector.erase(equationVector.begin() + startingPoint, equationVector.begin() + endingPoint);
+        }
 
-        equationVector.erase(equationVector.begin() + parsedExpression.placementIndex, equationVector.begin() + parsedExpression.placementIndex + 3);
+        if (parsedExpression.validExpression)
+        {
+            parsedExpression.operation = importantOperator; //set up expression Object
+            parsedExpression.a = equationVector.at(parsedExpression.placementIndex).number;
+            parsedExpression.b = equationVector.at(parsedExpression.placementIndex + 2).number;
+            equationVector.erase(equationVector.begin() + parsedExpression.placementIndex, equationVector.begin() + parsedExpression.placementIndex + 3);
+        }
 
         return parsedExpression;
     }
@@ -114,6 +173,33 @@ namespace calculator
     //*************/
     // Parser private methods /
     ///
+
+    bool Parser::validateParenthesis(std::vector<ExpressionUnit> &equationVector)
+    {
+        int openParenthesisCount = 0;
+        int closeParenthesisCount = 0;
+        
+        for (size_t i = 0; i < equationVector.size(); i++) //find parenthesis
+        {
+            if (equationVector.at(i).valid)
+            {
+                if (equationVector.at(i).operation == '(')
+                {
+                    openParenthesisCount ++;
+                }
+                if (equationVector.at(i).operation == ')')
+                {
+                    closeParenthesisCount ++;
+                }
+            }
+        }
+
+        if (openParenthesisCount != closeParenthesisCount)
+        {
+            std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_INVALID_OPERATOR << std::endl;
+        }
+        return openParenthesisCount == closeParenthesisCount;
+    }
 
     ExpressionUnit Parser::findOperator(std::string &editedEquation)
     {

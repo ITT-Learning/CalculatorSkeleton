@@ -22,6 +22,7 @@ namespace calculator
         std::string fullExpression;
         int placementIndex = 0;
         bool validExpression = false;
+        bool hasParenthesis = false;
     };
 
     struct ExpressionUnit
@@ -58,6 +59,12 @@ namespace calculator
 
         private:
             char Operations[6] = {'+', '-', '/', '%', '*', 'x'};
+
+            /**
+             * @brief counts parenthesis and ensures there are equal opening and closing
+             * @return isValid if there is correct number of parenthesis
+            */
+            bool validateParenthesis(std::vector<ExpressionUnit> &equationVector);
 
             /**
              * @brief uses regex to ensure value is a float

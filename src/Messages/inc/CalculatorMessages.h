@@ -55,6 +55,11 @@ namespace calculator
             static constexpr const char *ERROR_MESSAGE = "Error:";
 
             /**
+             * @brief appended to error message if expression gets through vector but ends up as an invalid expression after 
+             */
+            static constexpr const char *ERROR_MESSAGE_INVALID_EXPRESSION = "Invalid expression detected";
+
+            /**
              * @brief appended to error message if divide by zero is attempted
              */
             static constexpr const char *ERROR_MESSAGE_DIVIDE_BY_ZERO = " divide by zero";

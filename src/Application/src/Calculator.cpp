@@ -60,6 +60,11 @@ namespace calculator
                     }
                 }
             }
+            else
+            {
+               std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_INVALID_EXPRESSION << std::endl;
+               break;
+            }
         }
 
         if (parsedExpression.validExpression)

@@ -163,4 +163,41 @@ TEST_F(whenTestingParser, WhenCreatingVector_CorrectVectorReturned)
     ASSERT_EQ(sampleVector.at(4).number, createdVector.first.at(4).number);
 }
 
+TEST_F(whenTestingParser, WhenCreatingVectorWithParenthesis_CorrectVectorReturned)
+{
+    ExpressionUnit a;
+    ExpressionUnit b;
+    ExpressionUnit c;
+    ExpressionUnit d;
+    ExpressionUnit e;
+    ExpressionUnit f;
+    ExpressionUnit g;
+    
+    a.number = 1;
+    b.operation = '+';
+    c.operation = '(';
+    d.number = -2;
+    e.operation = '/';
+    f.number = 3.2;
+    g.operation = ')';
+    std::vector<ExpressionUnit> sampleVector = {a, b, c, d, e, f, g};
+
+    std::pair <std::vector<ExpressionUnit>,bool> createdVector = parserInst->createVector("1+(-2/3.2)");
+
+    ASSERT_EQ(sampleVector.at(0).number, createdVector.first.at(0).number);
+    ASSERT_EQ(sampleVector.at(1).operation, createdVector.first.at(1).operation);
+    ASSERT_EQ(sampleVector.at(2).operation, createdVector.first.at(2).operation);
+    ASSERT_EQ(sampleVector.at(3).number, createdVector.first.at(3).number);
+    ASSERT_EQ(sampleVector.at(4).operation, createdVector.first.at(4).operation);
+    ASSERT_EQ(sampleVector.at(5).number, createdVector.first.at(5).number);
+    ASSERT_EQ(sampleVector.at(6).operation, createdVector.first.at(6).operation);
+}
+
+TEST_F(whenTestingParser, WhenCreatingVectorWithIncorrectParenthesis_InvalidVectorReturned)
+{
+    std::pair <std::vector<ExpressionUnit>,bool> createdVector = parserInst->createVector("(1)");
+
+    ASSERT_FALSE(createdVector.second);
+}
+
 
