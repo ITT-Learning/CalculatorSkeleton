@@ -1,12 +1,11 @@
-TBD
-# This file will have every command needed to get everything running.
+# This file should have every command needed to get everything running.
 
 # Required Extensions installed on local windows VSC
-# CMake Tools
-# C/C++ Extension Pack
-# C++ Intellisense
-# C++ TestMate
-# Remote - WSL
+* CMake Tools
+* C/C++ Extension Pack
+* C++ Intellisense
+* C++ TestMate
+* Remote - WSL
 
 # Install required packages on WSL to compile C++ code
 ```
@@ -14,9 +13,9 @@ sudo apt-get -y update
 sudo apt-get install -y build-essential gdb cmake
 ```
 
-#--- If you get an error on version of CMake use the following to update the CMake version. Reference https://apt.kitware.com/
+If you get an error on version of CMake use the following to update the CMake version. Reference https://apt.kitware.com/
 
-Version 18.04 Ubuntu WSL run the following commands...
+# Version 18.04 Ubuntu WSL run the following commands...
 ```
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
@@ -28,10 +27,10 @@ sudo apt-get install kitware-archive-keyring
 sudo rm /etc/apt/trusted.gpg.d/kitware.gpg
 sudo apt-get install -y cmake
 ```
-----#
+----
 
 # Command Line build
-# at root directory run...
+run at root directory run...
 ```
 cmake .
 make
