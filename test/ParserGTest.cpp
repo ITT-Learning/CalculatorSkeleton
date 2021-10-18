@@ -193,11 +193,24 @@ TEST_F(whenTestingParser, WhenCreatingVectorWithParenthesis_CorrectVectorReturne
     ASSERT_EQ(sampleVector.at(6).operation, createdVector.first.at(6).operation);
 }
 
-TEST_F(whenTestingParser, WhenCreatingVectorWithIncorrectParenthesis_InvalidVectorReturned)
+TEST_F(whenTestingParser, WhenBreakingDownEquationWithInvalidExpression_ValidExpressionIsFalse)
 {
-    std::pair <std::vector<ExpressionUnit>,bool> createdVector = parserInst->createVector("(1)");
+    ExpressionUnit a;
+    ExpressionUnit b;
+    ExpressionUnit c;
+    ExpressionUnit d;
+    ExpressionUnit e;
+    a.operation = '(';
+    a.valid = true;
+    b.number = '1';
+    b.valid = true;
+    c.operation = ')';
+    c.valid = true;
 
-    ASSERT_FALSE(createdVector.second);
+    std::vector<ExpressionUnit> sampleVector = {a, b, c};
+    Expression createdExpression = parserInst->breakDownEquation(sampleVector);
+    
+    ASSERT_FALSE(createdExpression.validExpression); //(1)
 }
 
 
