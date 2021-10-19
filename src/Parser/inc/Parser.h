@@ -9,6 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -43,7 +44,7 @@ namespace calculator
              * @brief the main parsing function that puts all the peices together and returns an expression
              * @return an Expression object, along with whether it is valid or not
             */
-            Expression breakDownEquation(std::vector<ExpressionUnit> &equationVector);
+            Expression breakDownEquation(std::shared_ptr<std::vector<ExpressionUnit>> &equationVector);
 
             /**
              * @brief takes in input
@@ -55,7 +56,7 @@ namespace calculator
              * @brief creates a vector out of a string
              * @returns vector split into each unit of expression
             */
-            std::pair <std::vector<ExpressionUnit>,bool> createVector(const std::string &fullEquation);
+            std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> createVector(const std::string &fullEquation);
 
         private:
             char Operations[6] = {'+', '-', '/', '%', '*', 'x'};
@@ -64,7 +65,7 @@ namespace calculator
              * @brief counts parenthesis and ensures there are equal opening and closing
              * @return isValid if there is correct number of parenthesis
             */
-            bool validateParenthesis(std::vector<ExpressionUnit> &equationVector);
+            bool validateParenthesis(std::shared_ptr<std::vector<ExpressionUnit>> &equationVector);
 
             /**
              * @brief uses regex to ensure value is a float

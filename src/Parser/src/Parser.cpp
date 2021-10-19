@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <memory>
 #include <regex>
 #include <string>
 #include <utility>
@@ -18,10 +19,11 @@
 
 namespace calculator
 {
-    std::pair <std::vector<ExpressionUnit>,bool> Parser::createVector(const std::string &fullEquation)
+    std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> Parser::createVector(const std::string &fullEquation)
     { 
         editedEquation = fullEquation;
-        std::vector<ExpressionUnit> equationVector;
+        std::shared_ptr<std::vector<ExpressionUnit>> equationVector;
+        equationVector = std::make_shared<std::vector<ExpressionUnit>>();
         ExpressionUnit currentUnit;
         bool checkingNumber = true;
         bool validVector = true;
@@ -51,7 +53,7 @@ namespace calculator
             if(currentUnit.valid)
             {
                 checkingNumber = !checkingNumber;
-                equationVector.push_back(currentUnit);
+                equationVector->push_back(currentUnit);
             }
             else
             {
@@ -60,7 +62,7 @@ namespace calculator
             }
         }
 
-        if(validVector && equationVector.size() < 3) // input length check
+        if(validVector && equationVector->size() < 3) // input length check
         {
             std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_INVALID_INPUT_LENGTH << std::endl;
             validVector = false;
@@ -68,41 +70,36 @@ namespace calculator
 
         validVector = validateParenthesis(equationVector);
 
-        std::pair <std::vector<ExpressionUnit>,bool> completedVector (equationVector, validVector);
+        std::pair < std::shared_ptr<std::vector<ExpressionUnit>>,bool> completedVector (equationVector, validVector);
         return completedVector;
     }
 
-
-   
-
-
-
-    Expression Parser::breakDownEquation(std::vector<ExpressionUnit> &equationVector)
+    Expression Parser::breakDownEquation(std::shared_ptr<std::vector<ExpressionUnit>> &equationVector)
     {
         Expression parsedExpression;
         char importantOperator;
         int parenthesisIndex;
         char lastParenthesis = '(';
         size_t startingPoint = 0;
-        size_t endingPoint = equationVector.size();
+        size_t endingPoint = equationVector->size();
         
-        for (size_t i = 0; i < equationVector.size(); i++) //find parenthes is that open then close
+        for (size_t i = 0; i < equationVector->size(); i++) //find parenthes is that open then close
         {
-            if (equationVector.at(i).operation == '(')
+            if (equationVector->at(i).operation == '(')
             {
                 startingPoint = i;
             }
-            if (equationVector.at(i).operation == ')' && lastParenthesis == '(')
+            if (equationVector->at(i).operation == ')' && lastParenthesis == '(')
             {
                 endingPoint = i;
-                equationVector.erase(equationVector.begin() + startingPoint); //erase parenthesis
-                equationVector.erase(equationVector.begin() + (endingPoint - 1));
+                equationVector->erase(equationVector->begin() + startingPoint); //erase parenthesis
+                equationVector->erase(equationVector->begin() + (endingPoint - 1));
                 endingPoint = endingPoint - 2;
                 break;
             }           
-            if (equationVector.at(i).operation == '(' || equationVector.at(i).operation == ')')
+            if (equationVector->at(i).operation == '(' || equationVector->at(i).operation == ')')
             {
-                lastParenthesis = equationVector.at(i).operation;
+                lastParenthesis = equationVector->at(i).operation;
             }
         }
 
@@ -110,20 +107,20 @@ namespace calculator
         {
             for (size_t i = startingPoint; i < endingPoint; i++) //find operator in order
             {
-                if (equationVector.at(i).valid)
+                if (equationVector->at(i).valid)
                 {
                     parsedExpression.validExpression = true;
-                    if (equationVector.at(i).operation == '/' || equationVector.at(i).operation == '%' || equationVector.at(i).operation == 'x' || equationVector.at(i).operation == '*')
+                    if (equationVector->at(i).operation == '/' || equationVector->at(i).operation == '%' || equationVector->at(i).operation == 'x' || equationVector->at(i).operation == '*')
                     {
-                        importantOperator = equationVector.at(i).operation;
+                        importantOperator = equationVector->at(i).operation;
                         parsedExpression.placementIndex = i - 1;
                         break;
                     }
-                    if (equationVector.at(i).operation == '-' || equationVector.at(i).operation == '+')
+                    if (equationVector->at(i).operation == '-' || equationVector->at(i).operation == '+')
                     {
                         if(importantOperator != '-' && importantOperator != '+')
                         {
-                            importantOperator = equationVector.at(i).operation;
+                            importantOperator = equationVector->at(i).operation;
                             parsedExpression.placementIndex = i - 1;
                         }
                             continue;
@@ -139,15 +136,15 @@ namespace calculator
         else
         {
             parsedExpression.validExpression = false;
-            equationVector.erase(equationVector.begin() + startingPoint, equationVector.begin() + endingPoint);
+            equationVector->erase(equationVector->begin() + startingPoint, equationVector->begin() + endingPoint);
         }
 
         if (parsedExpression.validExpression)
         {
             parsedExpression.operation = importantOperator; //set up expression Object
-            parsedExpression.a = equationVector.at(parsedExpression.placementIndex).number;
-            parsedExpression.b = equationVector.at(parsedExpression.placementIndex + 2).number;
-            equationVector.erase(equationVector.begin() + parsedExpression.placementIndex, equationVector.begin() + parsedExpression.placementIndex + 3);
+            parsedExpression.a = equationVector->at(parsedExpression.placementIndex).number;
+            parsedExpression.b = equationVector->at(parsedExpression.placementIndex + 2).number;
+            equationVector->erase(equationVector->begin() + parsedExpression.placementIndex, equationVector->begin() + parsedExpression.placementIndex + 3);
         }
 
         return parsedExpression;
@@ -174,20 +171,20 @@ namespace calculator
     // Parser private methods /
     ///
 
-    bool Parser::validateParenthesis(std::vector<ExpressionUnit> &equationVector)
+    bool Parser::validateParenthesis(std::shared_ptr<std::vector<ExpressionUnit>> &equationVector)
     {
         int openParenthesisCount = 0;
         int closeParenthesisCount = 0;
         
-        for (size_t i = 0; i < equationVector.size(); i++) //find parenthesis
+        for (size_t i = 0; i < equationVector->size(); i++) //find parenthesis
         {
-            if (equationVector.at(i).valid)
+            if (equationVector->at(i).valid)
             {
-                if (equationVector.at(i).operation == '(')
+                if (equationVector->at(i).operation == '(')
                 {
                     openParenthesisCount ++;
                 }
-                if (equationVector.at(i).operation == ')')
+                if (equationVector->at(i).operation == ')')
                 {
                     closeParenthesisCount ++;
                 }

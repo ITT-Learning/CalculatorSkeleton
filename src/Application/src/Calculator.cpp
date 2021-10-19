@@ -28,7 +28,7 @@ namespace calculator
     {
         Parser parser;
 
-        std::pair <std::vector<ExpressionUnit>,bool> completedVector = parser.createVector(parser.getUserInput());
+        std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> completedVector = parser.createVector(parser.getUserInput());
         float answer;
 
         Expression parsedExpression;
@@ -50,9 +50,9 @@ namespace calculator
                     ExpressionUnit lastAnswer;
                     lastAnswer.number = answer;
                     lastAnswer.valid = true;
-                    if (completedVector.first.size()>0)
+                    if (completedVector.first->size()>0)
                     {
-                        completedVector.first.insert(completedVector.first.begin() + parsedExpression.placementIndex, lastAnswer);
+                        completedVector.first->insert(completedVector.first->begin() + parsedExpression.placementIndex, lastAnswer);
                     }
                     else
                     {
