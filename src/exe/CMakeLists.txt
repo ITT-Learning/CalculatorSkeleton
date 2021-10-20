@@ -9,6 +9,8 @@ include_directories(
 
 set(EXECUTABLE_NAME ${PROJECT_NAME}_exe)
 
+SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
+
 add_executable(${EXECUTABLE_NAME} main.cpp)
 
 target_link_libraries(${EXECUTABLE_NAME}

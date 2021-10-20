@@ -7,8 +7,10 @@
 
 #include <algorithm>
 #include <cmath>
+#include <future>
 #include <iostream>
 #include <sstream>
+#include <thread>
 #include <typeinfo>
 #include <vector>
 
@@ -26,16 +28,23 @@ namespace calculator
    
     void Calculator::runCalculator()
     {
+
         Parser parser;
-
-        std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> completedVector = parser.createVector(parser.getUserInput());
-        float answer;
-
+        float  answer;
         Expression parsedExpression;
+        std::pair<std::shared_ptr<std::vector<ExpressionUnit>>,bool> completedVector;
+
+        auto futureVector = std::async(&Parser::createVector, parser, parser.getUserInput());
+
+        futureVector.wait();
+
+        completedVector = futureVector.get();
 
         while (completedVector.second)
         {
             parsedExpression = parser.breakDownEquation(completedVector.first);
+
+            
             if(parsedExpression.validExpression)
                 {
                 answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);
