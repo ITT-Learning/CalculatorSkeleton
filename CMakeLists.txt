@@ -13,3 +13,6 @@ add_subdirectory(src/Interface)
 add_subdirectory(src/Strings)
 add_subdirectory(test)
 add_subdirectory(third-party)
+
+enable_testing()
+include(GoogleTest)
