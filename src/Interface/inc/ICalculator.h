@@ -11,18 +11,25 @@
 #define ICALCULATOR_H
 
 #include <string>
-#include <iostream>
 
 namespace calculator
 {
     class ICalculator 
     {
         public:
-            
+            /**
+             * @brief Destroy the ICalculator object
+             * 
+             */
             ~ICalculator() = default;
-
+            
             virtual float getResult() = 0;
 
+            /**
+             * @brief Convert to string function (output)
+             * 
+             * @return std::string 
+             */
             virtual std::string toString() = 0;
     };
     

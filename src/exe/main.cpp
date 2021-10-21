@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "../Application/inc/CalculatorApplication.h"
+#include "CalculatorApplication.h"
 
 using namespace calculator;
 

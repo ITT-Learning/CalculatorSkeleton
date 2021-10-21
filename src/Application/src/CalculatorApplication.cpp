@@ -8,17 +8,16 @@
 
 #include <iostream>
 #include <limits>
-#include <string>
 #include <sstream>
+#include <string>
+
 
 #include "CalculatorApplication.h"
-#include "CalculatorStrings.h"
 #include "CalculatorApplicationFactory.h"
-
+#include "CalculatorStrings.h"
 namespace calculator
 {
 
-    //function run from main
     int CalculatorApplication::calculate(float a, float b, char op)
     {
         calculator::CalculatorApplicationFactory calculatorAppFactory;  
@@ -42,27 +41,26 @@ namespace calculator
         return 0;
     }
 
-    //toString function
     std::string CalculatorApplication::toString()
     {
-        return std::to_string(first_Number) + " " + op + " " + std::to_string(second_Number) + " = " + std::to_string(getResult());
+        return std::to_string(firstNumber_) + " " + op_ + " " + std::to_string(secondNumber_) + " = " + std::to_string(getResult());
     }
 
     bool CalculatorApplication::limitCheck(float a)
     {
         if(a > std::numeric_limits<float>::max())
         {
-            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TO_LARGE << std::endl;
+            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE << std::endl;
             return false;
         }
         else if(a < std::numeric_limits<float>::min())
         {
-            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TO_SMALL << std::endl;
+            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_SMALL << std::endl;
             return false;
         }
         else if(a == std::numeric_limits<float>::infinity())
         {
-            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TO_LARGE << std::endl;
+            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE << std::endl;
             return false;
         }
         return true;

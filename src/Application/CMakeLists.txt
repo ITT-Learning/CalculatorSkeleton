@@ -12,7 +12,6 @@ add_subdirectory(test/)
 include_directories(
     inc
     $<TARGET_PROPERTY:CalculatorStrings,INCLUDE_DIRECTORIES>
-    $<TARGET_PROPERTY:CalculatorInterface,INCLUDE_DIRECTORIES>
     )
 
 # Set the output folder where your program will be created
@@ -28,5 +27,5 @@ target_include_directories(${LIBRARY_NAME} PUBLIC
 
 target_link_libraries(${LIBRARY_NAME}
     CalculatorStrings
-    CalculatorInterface
+    CalculatorINTERFACE
 )

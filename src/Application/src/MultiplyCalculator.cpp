@@ -7,21 +7,19 @@
  * @copyright Copyright (c) 2021
  * 
  */
-#include<memory>
-
-#include "../inc/MultiplyCalculator.h"
+#include "MultiplyCalculator.h"
 
 
 namespace calculator
 {
     MultiplyCalculator::MultiplyCalculator(float a, float b)
     {
-        first_Number = a; 
-        second_Number = b;
-        op = '*';
+        firstNumber_ = a; 
+        secondNumber_ = b;
+        op_ = '*';
     }
     float MultiplyCalculator::getResult()
     {
-        return first_Number * second_Number; //return variables multiplied by each other 
+        return firstNumber_ * secondNumber_; //return variables multiplied by each other 
     }
 }

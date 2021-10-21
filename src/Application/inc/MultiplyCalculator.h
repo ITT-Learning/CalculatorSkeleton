@@ -10,11 +10,11 @@
 #ifndef MULTIPLYCALCULATOR_H
 #define MULTIPLYCALCULATOR_H
 
-#include "../../Application/inc/CalculatorApplication.h"
+#include "CalculatorApplication.h"
 
 namespace calculator
 {
-    class MultiplyCalculator:public CalculatorApplication
+    class MultiplyCalculator : public CalculatorApplication
     {
         public:
             /**

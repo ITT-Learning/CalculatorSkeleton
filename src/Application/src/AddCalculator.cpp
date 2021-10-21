@@ -14,13 +14,13 @@ namespace calculator
     //Constructor places first and second inputted numbers into protected variables
     AddCalculator::AddCalculator(float a, float b)
     {
-        first_Number = a; 
-        second_Number = b;
-        op = '+';
+        firstNumber_ = a; 
+        secondNumber_ = b;
+        op_ = '+';
     }
     //composes the result of the variables added together
     float AddCalculator::getResult()
     {
-        return first_Number + second_Number;
+        return firstNumber_ + secondNumber_;
     }
 }

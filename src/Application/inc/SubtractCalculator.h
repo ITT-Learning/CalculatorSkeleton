@@ -10,7 +10,7 @@
 #ifndef SUBTRACTCALCULATOR_H
 #define SUBTRACTCALCULATOR_H
 
-#include "../../Application/inc/CalculatorApplication.h"
+#include "CalculatorApplication.h"
 
 namespace calculator
 {
@@ -38,7 +38,5 @@ namespace calculator
              */
             float getResult() override;
     };
-    
-
 }
 #endif //SUBTRACTCALCULATOR_H

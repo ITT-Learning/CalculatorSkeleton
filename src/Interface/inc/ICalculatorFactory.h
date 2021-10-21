@@ -11,17 +11,19 @@
 #define ICALCULATORFACTORY_H
 
 
-#include <string>
 #include<memory>
 
-#include "../inc/ICalculator.h"
+#include "ICalculator.h"
 
 namespace calculator 
 {
     class ICalculatorFactory
     {
         public:
-
+            /**
+             * @brief Destroy the ICalculatorFactory object
+             * 
+             */
             virtual ~ICalculatorFactory() = default;
 
             virtual std::unique_ptr<ICalculator> createCalculator(float a, float b, char op) = 0;

@@ -1,6 +1,6 @@
 /**
  * @file CalculatorApplicationFactory.h
- * @brief 
+ * @brief Factory Pattern class
  * @version 0.1
  * @date 2021-10-19
  * 
@@ -10,11 +10,10 @@
 #ifndef CALCULATORAPPLICATIONFACTORY_H
 #define CALCULATORAPPLICATIONFACTORY_H
 
-#include <string>
 #include <memory>
 
-#include "../../Interface/inc/ICalculator.h"
-#include "../../Interface/inc/ICalculatorFactory.h"
+#include "ICalculator.h"
+#include "ICalculatorFactory.h"
 namespace calculator 
 {
     class CalculatorApplicationFactory : ICalculatorFactory

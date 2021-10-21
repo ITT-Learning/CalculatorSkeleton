@@ -10,7 +10,7 @@ file(GLOB LIBRARY_SOURCES
 include_directories(
     inc
     $<TARGET_PROPERTY:CalculatorStrings,INCLUDE_DIRECTORIES>
-
+    $<TARGET_PROPERTY:CalculatorApplication,INCLUDE_DIRECTORIES>
     )
 
 # Set the output folder where your program will be created

@@ -9,38 +9,34 @@
  */
 #include<gtest/gtest.h>
 #include<gmock/gmock.h>
+#include<limits>
 
-/**
- * @brief header files included 
- * 
- */
+#include "AddCalculator.h"
+#include "CalculatorApplication.h"
 #include "CalculatorApplicationFactory.h"
+#include "CalculatorStrings.h"
 #include "DivideCalculator.h"
 #include "MultiplyCalculator.h"
 #include "SubtractCalculator.h"
-#include "AddCalculator.h"
-#include "CalculatorApplication.h"
-#include "CalculatorStrings.h"
-#include<limits>
 
 using namespace calculator;
 using namespace testing;
 
 
-class whenTestingCalculator:public ::testing::Test
+class whenTestingCalculator : public :: testing :: Test
 {
     public:
-        CalculatorApplicationFactory* calculator;
+        CalculatorApplicationFactory* calculatorFactory;
         virtual void SetUp() override;
         virtual void TearDown() override;
 };
 void whenTestingCalculator::SetUp()
 {
-    calculator = new CalculatorApplicationFactory();
+    calculatorFactory = new CalculatorApplicationFactory();
 }
 void whenTestingCalculator::TearDown()
 {
-    delete calculator;
+    delete calculatorFactory;
 }
 
 /**

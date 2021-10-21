@@ -1,19 +1,17 @@
 
 /**
  * @file CalculatorApplicationFactory.cpp
- * @brief 
+ * @brief Functions that support main.cpp
  * @version 0.1
  * @date 2021-10-19
  * 
  * @copyright Copyright (c) 2021
  * 
  */
-#include <sstream>
-
-#include "DivideCalculator.h"
 #include "AddCalculator.h"
-#include "MultiplyCalculator.h"
 #include "CalculatorApplicationFactory.h"
+#include "DivideCalculator.h"
+#include "MultiplyCalculator.h"
 #include "SubtractCalculator.h"
 
 namespace calculator
@@ -21,10 +19,7 @@ namespace calculator
     std::unique_ptr<ICalculator> CalculatorApplicationFactory::createCalculator(float a, float b, char op)
     {
         std::unique_ptr<ICalculator> result = nullptr; //create calculator type pointer and point to null
-        
-
-
-
+        {
             switch (op) //switch case decides which calculator to return 
             {
                 case '+':
@@ -53,5 +48,6 @@ namespace calculator
                 }
             }
             return result; 
-        }    
+        }
+    }    
 }

@@ -2,7 +2,6 @@
 /**
  * @file  CalculatorApplication.h
  * @date  Fri, 16 April 2021
- * @brief These are the included header files as well as the programs function declarations
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
@@ -10,17 +9,15 @@
 #ifndef CALCULATORAPPLICATION_H
 #define CALCULATORAPPLICATION_H
 
-#include <string>
-#include "../../Interface/inc/ICalculator.h"
 #include "CalculatorStrings.h"
+#include "ICalculator.h"
 #include <limits>
+#include <string>
+
 
 
 namespace calculator
 {
-    /**
-     * @brief This is the Class containing the functions and variables used in week 1
-     */
     class CalculatorApplication : public ICalculator 
     {
         public:
@@ -29,15 +26,12 @@ namespace calculator
              * 
              */
             CalculatorApplication() = default;
-            /**
-             * @brief Destroy the Calculator object
-             * 
-             */
-            ~CalculatorApplication() = default;
             
             /**
              * @brief This is the main function run in main.cpp
-             * 
+             * @param a first number float 
+             * @param b second number float
+             * @param op operator char
              */
             static int calculate(float a, float b, char op);
             
@@ -48,21 +42,21 @@ namespace calculator
              */
             virtual float getResult() = 0;
             
-            /**
-             * @brief Convert to string function
-             * 
-             * @return std::string 
-             */
             std::string toString() override;
 
+            /**
+             * @brief Checks if the inputted value is within scope
+             * 
+             * @param a 
+             * @return true 
+             * @return false 
+             */
             static bool limitCheck(float a);
 
-
-
         protected:
-            float first_Number;
-            float second_Number;
-            char op; 
+            float firstNumber_;
+            float secondNumber_;
+            char op_; 
 
 
     };

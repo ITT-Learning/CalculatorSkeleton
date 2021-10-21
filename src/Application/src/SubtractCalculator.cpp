@@ -7,21 +7,19 @@
  * @copyright Copyright (c) 2021
  * 
  */
-#include<memory>
-
-#include "../inc/SubtractCalculator.h"
+#include "SubtractCalculator.h"
 
 
 namespace calculator
 {
     SubtractCalculator::SubtractCalculator(float a, float b)
     {
-        first_Number = a; 
-        second_Number = b;
-        op = '-';
+        firstNumber_ = a; 
+        secondNumber_ = b;
+        op_ = '-';
     }
     float SubtractCalculator::getResult()
     {
-        return first_Number - second_Number; //returns second variable subtracted by first variable 
+        return firstNumber_ - secondNumber_; //returns second variable subtracted by first variable 
     }
 }

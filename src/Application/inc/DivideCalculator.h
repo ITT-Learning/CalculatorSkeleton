@@ -10,11 +10,11 @@
 #ifndef DIVIDECALCULATOR_H
 #define DIVIDECALCULATOR_H
 
-#include "../../Application/inc/CalculatorApplication.h"
+#include "CalculatorApplication.h"
 
 namespace calculator
 {
-    class DivideCalculator:public CalculatorApplication
+    class DivideCalculator : public CalculatorApplication
     {
         public:
             /**

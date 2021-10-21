@@ -10,12 +10,12 @@
 #ifndef ADDCALCULATOR_H
 #define ADDCALCULATOR_H
 
-#include "../../Application/inc/CalculatorApplication.h"
+#include "CalculatorApplication.h"
 
 
 namespace calculator
 {
-    class AddCalculator: public CalculatorApplication
+    class AddCalculator : public CalculatorApplication
     {
         public:
             /**
