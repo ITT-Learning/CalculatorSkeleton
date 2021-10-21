@@ -11,6 +11,7 @@
 
 #include "CalculatorStrings.h"
 #include "ICalculator.h"
+#include <iostream>
 #include <limits>
 #include <string>
 
