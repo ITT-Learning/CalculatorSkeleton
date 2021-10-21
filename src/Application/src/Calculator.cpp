@@ -32,19 +32,29 @@ namespace calculator
         Parser parser;
         float  answer;
         Expression parsedExpression;
-        std::pair<std::shared_ptr<std::vector<ExpressionUnit>>,bool> completedVector;
 
         auto futureVector = std::async(&Parser::createVector, parser, parser.getUserInput());
 
-        futureVector.wait();
+        while (futureVector.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+        {
+            std::cout << "\rCreating Vector...";
+        }
+        std::cout << std::endl;
 
-        completedVector = futureVector.get();
+
+        auto completedVector = futureVector.get();
 
         while (completedVector.second)
-        {
-            parsedExpression = parser.breakDownEquation(completedVector.first);
 
-            
+        {
+            auto futureParsedExpression = std::async(&Parser::breakDownEquation, parser, completedVector.first);
+            while (futureParsedExpression.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+            {
+                std::cout << "\rBreaking Down Equation / Calculating...";
+            }
+            std::cout << std::endl;
+            parsedExpression = futureParsedExpression.get();
+
             if(parsedExpression.validExpression)
                 {
                 answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);

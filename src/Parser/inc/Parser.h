@@ -44,7 +44,7 @@ namespace calculator
              * @brief the main parsing function that puts all the peices together and returns an expression
              * @return an Expression object, along with whether it is valid or not
             */
-            Expression breakDownEquation(std::shared_ptr<std::vector<ExpressionUnit>> &equationVector);
+            Expression breakDownEquation(const std::shared_ptr<std::vector<ExpressionUnit>> &equationVector);
 
             /**
              * @brief takes in input

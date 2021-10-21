@@ -10,6 +10,7 @@
 #include <memory>
 #include <regex>
 #include <string>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -28,6 +29,7 @@ namespace calculator
         bool checkingNumber = true;
         bool validVector = true;
 
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
 
         while (editedEquation.length() > 0)
         {
@@ -74,7 +76,7 @@ namespace calculator
         return completedVector;
     }
 
-    Expression Parser::breakDownEquation(std::shared_ptr<std::vector<ExpressionUnit>> &equationVector)
+    Expression Parser::breakDownEquation(const std::shared_ptr<std::vector<ExpressionUnit>> &equationVector)
     {
         Expression parsedExpression;
         char importantOperator;
@@ -83,6 +85,8 @@ namespace calculator
         size_t startingPoint = 0;
         size_t endingPoint = equationVector->size();
         
+        std::this_thread::sleep_for(std::chrono::milliseconds(800));
+
         for (size_t i = 0; i < equationVector->size(); i++) //find parenthes is that open then close
         {
             if (equationVector->at(i).operation == '(')
