@@ -17,11 +17,10 @@
 #include "CalculatorStrings.h"
 namespace calculator
 {
-
     int CalculatorApplication::calculate(float a, float b, char op)
     {
         calculator::CalculatorApplicationFactory calculatorAppFactory;  
-        
+
         if(limitCheck(a) && limitCheck(b))
         {
             auto calculator = calculatorAppFactory.createCalculator(a, b, op); //variables placed into createCalc function and placed into calculator variable

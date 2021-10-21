@@ -24,6 +24,8 @@ namespace calculator
             static constexpr char ENTER_EQUATION[] = "Enter the math equation in the form x + y, x - y, x * y, x / y (only these operations will ensure the program to run smoothly)";
             static constexpr char ERROR_MESSAGE_UNKNOWN_OPERATOR[] = "Error: Unknown Operator";
             static constexpr char WELCOME_MESSAGE[] = "Welcome to the Calculator C++ learning project.";
+            static constexpr const char EMPTY_SPACE = ' ';
+
     };
 }
 

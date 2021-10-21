@@ -34,6 +34,8 @@ namespace calculator
              * @param b second number float
              * @param op operator char
              */
+            CalculatorApplication(float a, float);
+
             static int calculate(float a, float b, char op);
             
             /**

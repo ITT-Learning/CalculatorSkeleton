@@ -12,6 +12,7 @@ add_subdirectory(test/)
 include_directories(
     inc
     $<TARGET_PROPERTY:CalculatorStrings,INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:CalculatorParser,INCLUDE_DIRECTORIES>
     $<TARGET_PROPERTY:CalculatorInterface,INCLUDE_DIRECTORIES>
 )
 add_library(${LIBRARY_NAME} SHARED ${LIBRARY_SOURCES})
@@ -23,4 +24,5 @@ target_include_directories(${LIBRARY_NAME} PUBLIC
 target_link_libraries(${LIBRARY_NAME}
     CalculatorStrings
     CalculatorInterface
+    CalculatorParser
 )
