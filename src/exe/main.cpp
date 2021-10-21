@@ -21,8 +21,6 @@ int main()
 
         std::cout << calculator::CalculatorMessages::RETRY_MESSAGE << std::endl;
         
-        
-        
         std::cin >> response;
         if (response[0] != 'y' &&  response[0] != 'Y')
         {

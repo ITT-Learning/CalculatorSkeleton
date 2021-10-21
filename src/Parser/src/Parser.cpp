@@ -51,7 +51,6 @@ namespace calculator
             {
                 checkingNumber ? currentUnit = findNumber(editedEquation) : currentUnit = findOperator(editedEquation);
             }
-
             if(currentUnit.valid)
             {
                 checkingNumber = !checkingNumber;
@@ -87,7 +86,7 @@ namespace calculator
         
         std::this_thread::sleep_for(std::chrono::milliseconds(800));
 
-        for (size_t i = 0; i < equationVector->size(); i++) //find parenthes is that open then close
+        for (size_t i = 0; i < equationVector->size(); i++) //find parenthesis that open then close
         {
             if (equationVector->at(i).operation == '(')
             {
@@ -107,7 +106,7 @@ namespace calculator
             }
         }
 
-        if ((startingPoint + 2) <= endingPoint) // if you enter something like (1+)
+        if ((startingPoint + 2) <= endingPoint) // if you enter something like "(1+)"
         {
             for (size_t i = startingPoint; i < endingPoint; i++) //find operator in order
             {
@@ -169,6 +168,11 @@ namespace calculator
         }
         originalEquation = userInput;
         return removeSpaces(userInput); 
+    }
+
+    std::string Parser::getOriginalEquation()
+    {
+        return originalEquation;
     }
 
     //*************/

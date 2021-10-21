@@ -28,29 +28,23 @@ namespace calculator
    
     void Calculator::runCalculator()
     {
-
         Parser parser;
         float  answer;
         Expression parsedExpression;
 
         auto futureVector = std::async(&Parser::createVector, parser, parser.getUserInput());
-
         while (futureVector.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
         {
-            std::cout << "\rCreating Vector...";
+            std::cout << CalculatorMessages::CREATING_VECTOR;
         }
         std::cout << std::endl;
-
-
         auto completedVector = futureVector.get();
-
         while (completedVector.second)
-
         {
             auto futureParsedExpression = std::async(&Parser::breakDownEquation, parser, completedVector.first);
             while (futureParsedExpression.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
             {
-                std::cout << "\rBreaking Down Equation / Calculating...";
+                std::cout << CalculatorMessages::BREAKING_DOWN_AND_CALCULATING;
             }
             std::cout << std::endl;
             parsedExpression = futureParsedExpression.get();
@@ -89,7 +83,7 @@ namespace calculator
         if (parsedExpression.validExpression)
         {
             ResultFactory resultFactory;
-            std::shared_ptr<IResult> result = resultFactory.createResult(parser.originalEquation, answer);
+            std::shared_ptr<IResult> result = resultFactory.createResult(parser.getOriginalEquation(), answer);
             std::cout << result->getFullResult() << std::endl;
         }
     }
@@ -132,4 +126,3 @@ namespace calculator
         return answer;
     }
 }//namespace calculator
-

@@ -73,6 +73,16 @@ namespace calculator
              * @brief appended to error message if input entered is at least three calculation units
              */
             static constexpr const char *ERROR_MESSAGE_INVALID_INPUT_LENGTH = " Invalid input length";
+
+            /**
+             * @brief used when creating vector
+             */
+            static constexpr const char *CREATING_VECTOR = "\rCreating Vector...";
+
+            /**
+             * @brief used when breaking down equation and calculating
+             */
+            static constexpr const char *BREAKING_DOWN_AND_CALCULATING = "\rBreaking Down Equation / Calculating...";
     };
 }//namespace calculator
 #endif  // CALCULATOR_H

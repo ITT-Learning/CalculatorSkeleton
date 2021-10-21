@@ -36,10 +36,6 @@ namespace calculator
     class Parser
     {
         public:
-
-            std::string originalEquation = "";
-            std::string editedEquation = "";
-            
             /**
              * @brief the main parsing function that puts all the peices together and returns an expression
              * @return an Expression object, along with whether it is valid or not
@@ -58,8 +54,15 @@ namespace calculator
             */
             std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> createVector(const std::string &fullEquation);
 
+            /**
+             * @brief returns the original equation string
+             * @returns the unedited string input by user
+            */
+            std::string getOriginalEquation();
         private:
-            char Operations[6] = {'+', '-', '/', '%', '*', 'x'};
+            std::string editedEquation = "";
+            char        Operations[6] = {'+', '-', '/', '%', '*', 'x'};
+            std::string originalEquation = "";
 
             /**
              * @brief counts parenthesis and ensures there are equal opening and closing
