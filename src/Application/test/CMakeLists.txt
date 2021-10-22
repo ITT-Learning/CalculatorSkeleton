@@ -34,6 +34,7 @@ include_directories(
     "../inc"
     $<TARGET_PROPERTY:CalculatorStrings,INCLUDE_DIRECTORIES>
     $<TARGET_PROPERTY:CalculatorInterface,INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:CalculatorApplication,INCLUDE_DIRECTORIES>
     )
 
 # Some recommendations on NOT using file globbing to grab all cpp files.  So far, it seems
@@ -44,7 +45,7 @@ file(GLOB UNIT_TEST_SOURCES
     "*.cpp"
 )
 
-add_executable(${This} ${UNIT_TEST_SOURCES} ../src/CalculatorApplication.cpp)
+add_executable(${This} ${UNIT_TEST_SOURCES})
 
 target_link_libraries(${This} PUBLIC	
     gtest_main
