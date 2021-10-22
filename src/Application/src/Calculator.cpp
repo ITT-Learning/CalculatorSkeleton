@@ -51,7 +51,7 @@ namespace calculator
 
             if(parsedExpression.validExpression)
                 {
-                answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);
+                answer = calculate(parsedExpression);
                 if (std::isinf(answer)) //if you divided by zero
                 {
                     std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_DIVIDE_BY_ZERO << std::endl;
@@ -88,36 +88,36 @@ namespace calculator
         }
     }
      
-    float Calculator::calculate(char operation, float number1, float number2)
+    float Calculator::calculate(const Expression &parsedExpression)
     {
         float answer;
 
-            switch (operation)
+            switch (parsedExpression.operation)
             {
             case '+':
             {
                 auto add = [](auto a, auto b){ return a + b;}; 
-                answer = add(number1, number2);
+                answer = add(parsedExpression.a, parsedExpression.b);
                 break;
             }
             case '-':
             {
                 auto subtract = [](auto a, auto b){ return a - b;}; 
-                answer = subtract(number1, number2);
+                answer = subtract(parsedExpression.a, parsedExpression.b);
                 break;
             }
             case 'x':
             case '*':
             {
                 auto multiply = [](auto a, auto b){ return a * b;}; 
-                answer = multiply(number1, number2);
+                answer = multiply(parsedExpression.a, parsedExpression.b);
                 break;
             }
             case '/':
             case '%':
             {   
                 auto divide = [](auto a, auto b){ return a / b;}; 
-                answer = divide(number1, number2);
+                answer = divide(parsedExpression.a, parsedExpression.b);
                 break;
             }
             default:

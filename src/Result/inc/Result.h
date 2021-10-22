@@ -18,7 +18,8 @@ namespace calculator
     class Result : public IResult
     {
         public:
-            Result(std::string originalEquation, float answer, std::string fullResult) : originalEquation_(originalEquation), answer_(answer), fullResult_(fullResult){}
+            Result(std::string originalEquation, float answer, std::string fullResult) :
+            originalEquation_(originalEquation), answer_(answer), fullResult_(fullResult){}
 
         /***
          * @brief get the full result string

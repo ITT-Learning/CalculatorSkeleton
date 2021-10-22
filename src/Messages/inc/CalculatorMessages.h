@@ -83,6 +83,13 @@ namespace calculator
              * @brief used when breaking down equation and calculating
              */
             static constexpr const char *BREAKING_DOWN_AND_CALCULATING = "\rBreaking Down Equation / Calculating...";
+            
+            /**
+             * @brief used for checking if a value is a float
+             */
+            static constexpr const char *FLOAT_REGEX = R"([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))";
+
+            
     };
 }//namespace calculator
 #endif  // CALCULATOR_H

@@ -22,34 +22,34 @@ namespace calculator
 {
     std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> Parser::createVector(const std::string &fullEquation)
     { 
-        editedEquation = fullEquation;
+        editedEquation_ = fullEquation;
         std::shared_ptr<std::vector<ExpressionUnit>> equationVector;
         equationVector = std::make_shared<std::vector<ExpressionUnit>>();
         ExpressionUnit currentUnit;
         bool checkingNumber = true;
         bool validVector = true;
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(300)); //sleeping to show off thread in use
 
-        while (editedEquation.length() > 0)
+        while (editedEquation_.length() > 0)
         {
-            if (editedEquation.at(0) == '(' || editedEquation.at(0) == ')')
+            if (editedEquation_.at(0) == '(' || editedEquation_.at(0) == ')')
             {
-                if (editedEquation.at(0) == '(')
+                if (editedEquation_.at(0) == '(')
                 {
                     checkingNumber = false;
                 }
-                if (editedEquation.at(0) == ')')
+                if (editedEquation_.at(0) == ')')
                 {
                     checkingNumber = true;
                 }
-                currentUnit.operation = editedEquation.at(0);
+                currentUnit.operation = editedEquation_.at(0);
                 currentUnit.valid = true;
-                editedEquation = editedEquation.erase(0, 1);
+                editedEquation_ = editedEquation_.erase(0, 1);
             }
             else
             {
-                checkingNumber ? currentUnit = findNumber(editedEquation) : currentUnit = findOperator(editedEquation);
+                checkingNumber ? currentUnit = findNumber(editedEquation_) : currentUnit = findOperator(editedEquation_);
             }
             if(currentUnit.valid)
             {
@@ -58,12 +58,12 @@ namespace calculator
             }
             else
             {
-                validVector=false;
+                validVector = false;
                 break;
             }
         }
 
-        if(validVector && equationVector->size() < 3) // input length check
+        if(validVector && equationVector->size() < 3) // ensuring an expressionUnit vector has at least 3 units
         {
             std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_INVALID_INPUT_LENGTH << std::endl;
             validVector = false;
@@ -78,13 +78,13 @@ namespace calculator
     Expression Parser::breakDownEquation(const std::shared_ptr<std::vector<ExpressionUnit>> &equationVector)
     {
         Expression parsedExpression;
-        char importantOperator;
-        int parenthesisIndex;
-        char lastParenthesis = '(';
-        size_t startingPoint = 0;
-        size_t endingPoint = equationVector->size();
+        char       importantOperator;
+        int        parenthesisIndex;
+        char       lastParenthesis = '(';
+        size_t     startingPoint = 0;
+        size_t     endingPoint = equationVector->size();
         
-        std::this_thread::sleep_for(std::chrono::milliseconds(800));
+        std::this_thread::sleep_for(std::chrono::milliseconds(800)); //sleeping to show off thread in use
 
         for (size_t i = 0; i < equationVector->size(); i++) //find parenthesis that open then close
         {
@@ -106,14 +106,17 @@ namespace calculator
             }
         }
 
-        if ((startingPoint + 2) <= endingPoint) // if you enter something like "(1+)"
+        if ((startingPoint + 2) <= endingPoint) // check to ensure user didn't enter something like "(1+)"
         {
             for (size_t i = startingPoint; i < endingPoint; i++) //find operator in order
             {
                 if (equationVector->at(i).valid)
                 {
                     parsedExpression.validExpression = true;
-                    if (equationVector->at(i).operation == '/' || equationVector->at(i).operation == '%' || equationVector->at(i).operation == 'x' || equationVector->at(i).operation == '*')
+                    if (equationVector->at(i).operation == '/' || 
+                        equationVector->at(i).operation == '%' || 
+                        equationVector->at(i).operation == 'x' || 
+                        equationVector->at(i).operation == '*')
                     {
                         importantOperator = equationVector->at(i).operation;
                         parsedExpression.placementIndex = i - 1;
@@ -126,7 +129,7 @@ namespace calculator
                             importantOperator = equationVector->at(i).operation;
                             parsedExpression.placementIndex = i - 1;
                         }
-                            continue;
+                        continue;
                     }
                 }
                 else
@@ -141,13 +144,14 @@ namespace calculator
             parsedExpression.validExpression = false;
             equationVector->erase(equationVector->begin() + startingPoint, equationVector->begin() + endingPoint);
         }
-
         if (parsedExpression.validExpression)
         {
             parsedExpression.operation = importantOperator; //set up expression Object
-            parsedExpression.a = equationVector->at(parsedExpression.placementIndex).number;
-            parsedExpression.b = equationVector->at(parsedExpression.placementIndex + 2).number;
-            equationVector->erase(equationVector->begin() + parsedExpression.placementIndex, equationVector->begin() + parsedExpression.placementIndex + 3);
+            parsedExpression.a = equationVector->at(parsedExpression.placementIndex).number; // start at the first unit of expression
+            parsedExpression.b = equationVector->at(parsedExpression.placementIndex + 2).number; // find the next number unit by adding 2 (skipping over the operator)
+            equationVector->erase(
+            equationVector->begin() + parsedExpression.placementIndex, //erase starting at the first number
+            equationVector->begin() + parsedExpression.placementIndex + 3); //delete 3 units (the length of a parsed expression)
         }
 
         return parsedExpression;
@@ -166,13 +170,13 @@ namespace calculator
         {
             getline(std::cin, userInput);
         }
-        originalEquation = userInput;
+        originalEquation_ = userInput;
         return removeSpaces(userInput); 
     }
 
     std::string Parser::getOriginalEquation()
     {
-        return originalEquation;
+        return originalEquation_;
     }
 
     //*************/
@@ -206,12 +210,12 @@ namespace calculator
         return openParenthesisCount == closeParenthesisCount;
     }
 
-    ExpressionUnit Parser::findOperator(std::string &editedEquation)
+    ExpressionUnit Parser::findOperator(std::string &editedEquation_)
     {
         ExpressionUnit expressionUnit;
-        expressionUnit.operation = editedEquation.at(0);
+        expressionUnit.operation = editedEquation_.at(0);
         expressionUnit.valid = validateOperator(expressionUnit.operation);
-        editedEquation = editedEquation.erase(0, 1);
+        editedEquation_ = editedEquation_.erase(0, 1);
         
         return expressionUnit;
     }
@@ -220,7 +224,7 @@ namespace calculator
     {
         bool isValid = false;
 
-        for (auto currentOperator : Operations)
+        for (auto currentOperator : operations_)
         {
             if (expressionUnit == currentOperator)
             {
@@ -238,7 +242,7 @@ namespace calculator
     bool Parser::validateFloat(const std::string &floatString)
     {
         bool isValid =false;
-        static const std::regex floatRegex{ R"([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))"};
+        static const std::regex floatRegex{CalculatorMessages::FLOAT_REGEX};
 
         if (std::regex_match(floatString, floatRegex))
         {
@@ -252,12 +256,12 @@ namespace calculator
         return isValid;
     }
 
-    ExpressionUnit Parser::findNumber(std::string &editedEquation)
+    ExpressionUnit Parser::findNumber(std::string &editedEquation_)
     {
         std::string numberString = "";
         ExpressionUnit expressionUnit;
 
-        for (auto currentChar : editedEquation)
+        for (auto currentChar : editedEquation_)
         {
             if (currentChar == '-' && numberString.length() == 0)
             {
@@ -282,7 +286,7 @@ namespace calculator
         {
             expressionUnit.number = std::stof(numberString);
         }
-        editedEquation = editedEquation.erase(0, numberString.length());
+        editedEquation_ = editedEquation_.erase(0, numberString.length());
     
         return expressionUnit;
         
@@ -299,7 +303,7 @@ namespace calculator
                 }
                 else
                 {
-                    fullEquation+=currentChar;
+                    fullEquation += currentChar;
                 }
             }
             return fullEquation;

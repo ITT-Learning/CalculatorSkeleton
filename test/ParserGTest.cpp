@@ -23,6 +23,14 @@ class whenTestingParser:public ::testing::Test
         Parser* parserInst;
         virtual void SetUp() override;
         virtual void TearDown() override;
+    protected:
+        ExpressionUnit a;
+        ExpressionUnit b;
+        ExpressionUnit c;
+        ExpressionUnit d;
+        ExpressionUnit e;
+        ExpressionUnit f;
+        ExpressionUnit g;
 };
 void whenTestingParser::SetUp()
 {
@@ -35,9 +43,6 @@ void whenTestingParser::TearDown()
 
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithValidExpressionUnits_ThenTrueReturned)
 {
-    ExpressionUnit a;
-    ExpressionUnit b;
-    ExpressionUnit c;
     a.number = 1;
     a.valid = true;
     b.operation = '+';
@@ -56,9 +61,6 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithValidExpressionUnits_ThenT
 }
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithNotValidExpressionUnits_ThenFalseReturned)
 {
-    ExpressionUnit a;
-    ExpressionUnit b;
-    ExpressionUnit c;
     a.number = 1;
     a.valid = true;
     b.operation = '?';
@@ -76,11 +78,6 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithNotValidExpressionUnits_Th
 }
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithDivision_ThenDivisionExpressionReturnedFirst)
 {
-    ExpressionUnit a;
-    ExpressionUnit b;
-    ExpressionUnit c;
-    ExpressionUnit d;
-    ExpressionUnit e;
     a.number = 1;
     a.valid = true;
     b.operation = '+';
@@ -106,11 +103,6 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithDivision_ThenDivisionExpre
 }
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplication_ThenDivisionExpressionReturnedFirst)
 {
-    ExpressionUnit a;
-    ExpressionUnit b;
-    ExpressionUnit c;
-    ExpressionUnit d;
-    ExpressionUnit e;
     a.number = 1;
     a.valid = true;
     b.operation = '+';
@@ -137,11 +129,6 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplication_ThenDivisio
 }
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplicationAndDivision_ThenFirstExpressionReturnedFirst)
 {
-    ExpressionUnit a;
-    ExpressionUnit b;
-    ExpressionUnit c;
-    ExpressionUnit d;
-    ExpressionUnit e;
     a.number = 1;
     a.valid = true;
     b.operation = '/';
@@ -169,12 +156,6 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplicationAndDivision_
 
 TEST_F(whenTestingParser, WhenCreatingVector_CorrectVectorReturned)
 {
-    ExpressionUnit a;
-    ExpressionUnit b;
-    ExpressionUnit c;
-    ExpressionUnit d;
-    ExpressionUnit e;
-    
     a.number = 1;
     b.operation = '+';
     c.number = -2;
@@ -199,14 +180,6 @@ TEST_F(whenTestingParser, WhenCreatingVector_CorrectVectorReturned)
 
 TEST_F(whenTestingParser, WhenCreatingVectorWithParenthesis_CorrectVectorReturned)
 {
-    ExpressionUnit a;
-    ExpressionUnit b;
-    ExpressionUnit c;
-    ExpressionUnit d;
-    ExpressionUnit e;
-    ExpressionUnit f;
-    ExpressionUnit g;
-    
     a.number = 1;
     b.operation = '+';
     c.operation = '(';
@@ -238,11 +211,6 @@ TEST_F(whenTestingParser, WhenCreatingVectorWithParenthesis_CorrectVectorReturne
 
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithInvalidExpression_ValidExpressionIsFalse)
 {
-    ExpressionUnit a;
-    ExpressionUnit b;
-    ExpressionUnit c;
-    ExpressionUnit d;
-    ExpressionUnit e;
     a.operation = '(';
     a.valid = true;
     b.number = '1';

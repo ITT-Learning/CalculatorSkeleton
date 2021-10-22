@@ -11,6 +11,7 @@
 
 #include "Calculator.h"
 #include "CalculatorMessages.h"
+#include "Parser.h"
 
 using namespace calculator;
 using namespace testing;
@@ -21,11 +22,17 @@ class whenTestingCalculator:public ::testing::Test
         Calculator* calculatorInst;
         virtual void SetUp() override;
         virtual void TearDown() override;
+    protected:
+        Expression sampleExpression;
+
 };
 void whenTestingCalculator::SetUp()
 {
     calculatorInst = new Calculator();
-}
+    sampleExpression.a = -10;
+    sampleExpression.b = 10;
+    
+};
 void whenTestingCalculator::TearDown()
 {
     delete calculatorInst;
@@ -33,21 +40,27 @@ void whenTestingCalculator::TearDown()
 
 TEST_F(whenTestingCalculator, WhenAddingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    ASSERT_FLOAT_EQ(calculatorInst->calculate('+', -10, 10), 0);
+    sampleExpression.operation = '+';
+    ASSERT_FLOAT_EQ(calculatorInst->calculate(sampleExpression), 0);
 }
 TEST_F(whenTestingCalculator, WhenSubtractingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    ASSERT_FLOAT_EQ(calculatorInst->calculate('-', -10, 10), -20);
+    sampleExpression.operation = '-';
+    ASSERT_FLOAT_EQ(calculatorInst->calculate(sampleExpression), -20);
 }
 TEST_F(whenTestingCalculator, WhenDividingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    ASSERT_FLOAT_EQ(calculatorInst->calculate('/', -10, 10), -1);
+    sampleExpression.operation = '/';
+    ASSERT_FLOAT_EQ(calculatorInst->calculate(sampleExpression), -1);
 }
 TEST_F(whenTestingCalculator, WhenMultiplyingAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    ASSERT_FLOAT_EQ(calculatorInst->calculate('*', -10, 10), -100);
+    sampleExpression.operation = '*';
+    ASSERT_FLOAT_EQ(calculatorInst->calculate(sampleExpression), -100);
 }
 TEST_F(whenTestingCalculator, WhenDividingByZero_ThenInfIsTrue)
 {
-    ASSERT_TRUE(std::isinf(calculatorInst->calculate('/', 1, 0)));
+    sampleExpression.operation = '/';
+    sampleExpression.b = 0;
+    ASSERT_TRUE(std::isinf(calculatorInst->calculate(sampleExpression)));
 }

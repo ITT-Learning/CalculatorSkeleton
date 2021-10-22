@@ -9,6 +9,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+
+#include "Parser.h"
 namespace calculator
 {
     class Calculator
@@ -33,7 +35,7 @@ namespace calculator
              * @param answer is what is returned from the different math functions, 
              * and used to write to the console.
             */
-            float calculate(char operation, float number1, float number2);
+            float calculate(const Expression &parsedExpression);
     };
 
 }//namespace calculator

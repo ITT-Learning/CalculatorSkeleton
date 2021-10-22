@@ -17,13 +17,13 @@ namespace calculator
 {
     struct Expression
     {
-        float a;
-        float b;
-        char operation;
+        float       a;
+        float       b;
         std::string fullExpression;
-        int placementIndex = 0;
-        bool validExpression = false;
-        bool hasParenthesis = false;
+        bool        hasParenthesis = false;
+        char        operation;
+        int         placementIndex = 0;
+        bool        validExpression = false;
     };
 
     struct ExpressionUnit
@@ -60,9 +60,9 @@ namespace calculator
             */
             std::string getOriginalEquation();
         private:
-            std::string editedEquation = "";
-            char        Operations[6] = {'+', '-', '/', '%', '*', 'x'};
-            std::string originalEquation = "";
+            std::string editedEquation_ = "";
+            char        operations_[6] = {'+', '-', '/', '%', '*', 'x'};
+            std::string originalEquation_ = "";
 
             /**
              * @brief counts parenthesis and ensures there are equal opening and closing
@@ -88,7 +88,11 @@ namespace calculator
             */
             bool validateOperator(const char &expressionUnit);
             
-            ExpressionUnit findOperator(std::string &input);
+            /**
+             * @brief creates an expression unit for an operator and edits the editedString
+             * @returns expression unit with an operator value
+             * */
+            ExpressionUnit findOperator(std::string &editedEquation);
 
             /**
              * @brief iterates through given expression and gives back the found number
