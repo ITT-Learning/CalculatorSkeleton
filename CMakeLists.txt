@@ -56,5 +56,6 @@ add_custom_target(scrub
 # Testing
 enable_testing()
 
+include(GoogleTest)
 
 add_test(output_test ${CMAKE_CURRENT_BINARY_DIR}/bin/Calculator_exe)
