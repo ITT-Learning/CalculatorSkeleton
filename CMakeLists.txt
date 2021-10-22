@@ -9,3 +9,6 @@ add_subdirectory(src/Parser)
 add_subdirectory(src/Application)
 add_subdirectory(src/exe)
 add_subdirectory(test)
+
+enable_testing()
+include(GoogleTest)
