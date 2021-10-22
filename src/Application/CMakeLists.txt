@@ -7,8 +7,6 @@ file(GLOB LIBRARY_SOURCES
     "src/*.cpp"
 ) 
 
-add_subdirectory(test/)
-
 include_directories(
     inc
     $<TARGET_PROPERTY:CalculatorStrings,INCLUDE_DIRECTORIES>
