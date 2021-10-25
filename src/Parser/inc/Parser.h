@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file CalculatorParser.h
-* @brief calculator function declarations.
+* @brief Parser function declarations.
 */
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -13,8 +13,8 @@
 
 #include "CalculatorStrings.h"
 
-namespace calculator
-{
+namespace calculator {
+
     struct Expression
     {
         float a;
@@ -65,5 +65,7 @@ namespace calculator
             */
             std::string findNumber(const std::string &input);
     };
-}//namespace calculator
+    
+} //namespace calculator
+
 #endif  // PARSER_H

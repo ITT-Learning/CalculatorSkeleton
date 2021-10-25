@@ -24,14 +24,15 @@ set(SOURCES
     main.cpp
     CalculatorApplication.cpp
     CalculatorStrings.cpp
-    )
+)
 
 # Create the gcov target. Run coverage tests with 'make gcov'
 add_custom_target(gcov
     COMMAND mkdir -p coverage
     COMMAND ${CMAKE_MAKE_PROGRAM} src/Application/test
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    )
+)
+
 add_custom_command(TARGET gcov
     COMMAND echo "=================== GCOV ===================="
     COMMAND gcov -b ${CMAKE_SOURCE_DIR}/src/*.cpp -o ${OBJECT_DIR}
@@ -40,7 +41,8 @@ add_custom_command(TARGET gcov
      COMMAND echo "-- Coverage files have been output to ${CMAKE_BINARY_DIR}/coverage"
      COMMAND echo "-- ${CMAKE_SOURCE_DIR}"
      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/coverage  # Need separate command for this line
-    )
+)
+
 add_dependencies(gcov Calculator_exe)
 # Make sure to clean up the coverage folder
 set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES coverage)
@@ -52,11 +54,9 @@ add_custom_target(scrub
     COMMAND rm -f ${OBJECT_DIR}/*.gcno
     COMMAND rm -f ${OBJECT_DIR}/*.gcda
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    )
+)
 
 # Testing
 enable_testing()
 
 include(GoogleTest)
-
-

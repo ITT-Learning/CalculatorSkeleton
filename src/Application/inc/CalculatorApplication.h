@@ -1,3 +1,6 @@
+#ifndef CALCULATORAPPLICATION_H
+#define CALCULATORAPPLICATION_H
+
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * @file  CalculatorApplication.h
@@ -6,70 +9,64 @@
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef CALCULATORAPPLICATION_H
-#define CALCULATORAPPLICATION_H
-
-#include "CalculatorStrings.h"
-#include "ICalculator.h"
 #include <iostream>
 #include <limits>
 #include <string>
 
+#include "CalculatorStrings.h"
+#include "ICalculator.h"
 
-
-<<<<<<< HEAD
 namespace calculator {
     /**
      * @brief This is the Class containing the functions and variables used in week 1
      */
-    class CalculatorApplication
-=======
-namespace calculator
-{
-    class CalculatorApplication : public ICalculator 
->>>>>>> 3c21844efb27366021dcf5946e252daa836ce015
+    class CalculatorApplication : public ICalculator
     {
         public:
             /**
              * @brief Construct a new Calculator object
-             * 
              */
             CalculatorApplication() = default;
-            
+
             /**
              * @brief This is the main function run in main.cpp
-             * @param a first number float 
-             * @param b second number float
-             * @param op operator char
+             * @param firstNumber [in] first number float 
+             * @param secondNumber [in] second number float
+             * @param operation [in] operator char
              */
-            CalculatorApplication(float a, float);
-
-            static int calculate(float a, float b, char op);
+            static int calculate(float firstNumber, float secondNumber, char operation);
             
             /**
              * @brief Get the Result object. Pure virtual function defined in child classes
-             * 
-             * @return float 
+             * @return float after value calculated has been returned
              */
             virtual float getResult() = 0;
-            
-            std::string toString() override;
 
             /**
              * @brief Checks if the inputted value is within scope
-             * 
-             * @param a 
-             * @return true 
-             * @return false 
+             * @param number [in] value that the limit is being checked
+             * @return true if within limit
+             * @return otherwise false 
              */
-            static bool limitCheck(float a);
+            static bool limitCheck(float number);
+            
+            /**
+             * @name ICalculator method.
+             * @{
+             */
+            std::string toString() override;
+            
+            /**
+             * @}
+             */
 
         protected:
             float firstNumber_;
             float secondNumber_;
-            char op_; 
-
+            char  operator_; 
 
     };
+
 } // namespace calculator
+
 #endif  // CALCULATORAPPLICATION_H

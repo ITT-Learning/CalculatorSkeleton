@@ -1,53 +1,56 @@
-
+////////////////////////////////////////////////////////////////////
 /**
  * @file CalculatorApplicationFactory.cpp
  * @brief Functions that support main.cpp
- * @version 0.1
- * @date 2021-10-19
- * 
- * @copyright Copyright (c) 2021
- * 
  */
+////////////////////////////////////////////////////////////////////
+
 #include "AddCalculator.h"
 #include "CalculatorApplicationFactory.h"
 #include "DivideCalculator.h"
 #include "MultiplyCalculator.h"
 #include "SubtractCalculator.h"
 
-namespace calculator
+namespace calculator {
+
+// *****************************************************************************/
+// ***************** CalculatorApplicationFactory public methods **********************/
+// *****************************************************************************/
+
+std::unique_ptr<ICalculator> CalculatorApplicationFactory::createCalculator(float firstNumber, float secondNumber, char operation)
 {
-    std::unique_ptr<ICalculator> CalculatorApplicationFactory::createCalculator(float a, float b, char op)
+    std::unique_ptr<ICalculator> result = nullptr; //create calculator type pointer and point to null
     {
-        std::unique_ptr<ICalculator> result = nullptr; //create calculator type pointer and point to null
+        switch (operation) //switch case decides which calculator to return 
         {
-            switch (op) //switch case decides which calculator to return 
+            case CalculatorStrings::PLUS :
             {
-                case '+':
-                {
-                    result = std::unique_ptr<ICalculator>(new AddCalculator(a, b));
-                    break;
-                }
-                case '-':
-                {
-                    result = std::unique_ptr<ICalculator>(new SubtractCalculator(a, b));
-                    break;
-                }
-                case '*':
-                {
-                    result = std::unique_ptr<ICalculator>(new MultiplyCalculator(a, b));
-                    break;
-                }
-                case '/':
-                {
-                    result = std::unique_ptr<ICalculator>(new DivideCalculator(a, b));
-                    break;
-                } 
-                default:
-                {
-                    result = nullptr; //if operator doesn't meet one of the cases, return pointing to null
-                }
+                result = std::unique_ptr<ICalculator>(new AddCalculator(firstNumber, secondNumber));
+                break;
             }
-            return result; 
+            case CalculatorStrings::MINUS :
+            {
+                result = std::unique_ptr<ICalculator>(new SubtractCalculator(firstNumber, secondNumber));
+                break;
+            }
+            case CalculatorStrings::TIMES :
+            {
+                result = std::unique_ptr<ICalculator>(new MultiplyCalculator(firstNumber, secondNumber));
+                break;
+            }
+            case CalculatorStrings::DIVIDE :
+            {
+                result = std::unique_ptr<ICalculator>(new DivideCalculator(firstNumber, secondNumber));
+                break;
+            } 
+            default:
+            {
+                result = nullptr; //if operation doesn't meet one of the cases, return pointing to null
+            }
         }
-    }    
-}
+
+        return result; 
+    }
+}   
+
+} //namespace calculator

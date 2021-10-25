@@ -12,8 +12,7 @@
 
 #include <string>
 
-namespace calculator
-{
+namespace calculator {
     class ICalculator 
     {
         public:

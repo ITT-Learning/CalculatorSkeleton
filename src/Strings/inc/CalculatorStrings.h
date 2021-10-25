@@ -1,13 +1,13 @@
+#ifndef CALCULATORSTRINGS_H
+#define CALCULATORSTRINGS_H
+
 ///////////////////////////////////////////////////////////////////////
 /**
  * @file CalculatorStrings.h
- * @author your name (you@domain.com)
  * @brief Contains all the strings
  * 
  */
 //////////////////////////////////////////////////////////////////////
-#ifndef CALCULATORSTRINGS_H
-#define CALCUALTORSTRING_H
 
 #include <string>
 
@@ -30,6 +30,12 @@ namespace calculator {
             static constexpr char REPEAT_PROGRAM[] = "Would you like to run the program again? y/n";
             static constexpr char YES = 'y';
             static constexpr const char EMPTY_SPACE = ' ';
+
+            static constexpr const char PLUS = '+';
+            static constexpr const char MINUS = '-';
+            static constexpr const char DIVIDE = '/';
+            static constexpr const char TIMES = '*';
+            static constexpr const char EQUAL_SIGN = '=';
 
     };
 

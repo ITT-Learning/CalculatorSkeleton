@@ -1,19 +1,21 @@
-/**
- * @file SubtractCalculator.h
- * @brief Calculator for subtraction '-', subtracts two terms together
- * @version 0.1
- * @date 2021-10-19
- * 
- * @copyright Copyright (c) 2021
- * 
- */
 #ifndef SUBTRACTCALCULATOR_H
 #define SUBTRACTCALCULATOR_H
 
+/////////////////////////////////////////////////////////////////////
+/**
+ * @file SubtractCalculator.h
+ * @brief Calculator for subtraction '-', subtracts two terms together
+ */
+/////////////////////////////////////////////////////////////////////
+
 #include "CalculatorApplication.h"
 
-namespace calculator
-{
+namespace calculator {
+
+    /**
+     * @brief SubtractCalculator interface which exposes to other components
+     *
+     */
     class SubtractCalculator : public CalculatorApplication
     {
         public:
@@ -24,19 +26,25 @@ namespace calculator
             SubtractCalculator() = delete;
             
             /**
-             * @brief Construct a new Subtract Calculator object
-             * 
-             * @param a first number
-             * @param b second number
+             * @brief Construct a new Subtract Calculator object 
+             * @param firstNumber [in] firstNumber set to firstNumber_
+             * @param secondNumber [in] secondNumber set to secondNumber_
              */
-            explicit SubtractCalculator(float a, float b);
+            explicit SubtractCalculator(float firstNumber, float secondNumber);
 
             /**
-             * @brief Get the Result object
-             * 
-             * @return float 
+             * @name CalculatorApplication methods.
+             * @{
              */
+
             float getResult() override;
+
+            /**
+             * @}
+             */
+
     };
-}
+
+} // namespace calculator
+
 #endif //SUBTRACTCALCULATOR_H
