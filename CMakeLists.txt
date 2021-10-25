@@ -8,9 +8,12 @@ set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE ON)
 add_subdirectory(src/Application)
 add_subdirectory(src/Strings)
 add_subdirectory(src/exe)
+add_subdirectory(src/Interface)
+add_subdirectory(src/Parser)
+add_subdirectory(src/Application/test)
 
 # Create OBJECT_DIR variable
-set(OBJECT_DIR ${CMAKE_BINARY_DIR}/CMakeFiles/Calculator.dir)
+set(OBJECT_DIR ${CMAKE_BINARY_DIR}/CMakeFiles/CalculatorApplication.dir)
 message("-- Object files will be output to: ${OBJECT_DIR}")
 message( "--cmake binary dir " ${CMAKE_BINARY_DIR})
 message( "--cmake make prog " ${CMAKE_MAKE_PROGRAM})
@@ -54,5 +57,6 @@ add_custom_target(scrub
 # Testing
 enable_testing()
 
+include(GoogleTest)
 
-add_test(output_test ${CMAKE_CURRENT_BINARY_DIR}/bin/Calculator_exe)
+

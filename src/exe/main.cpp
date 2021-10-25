@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "CalculatorApplication.h"
+#include "Parser.h"
 
 using namespace calculator;
 
@@ -18,8 +19,14 @@ int main()
     while(true)
     {
         char repeat; 
-        CalculatorApplication calculator;
-        calculator.calculate();
+
+        Parser p;
+        Expression paredExpression = p.parseFullEquation(p.getUserInput());
+
+        if(paredExpression.valid)
+        {
+            CalculatorApplication::calculate(paredExpression.a, paredExpression.b, paredExpression.operation);
+        }
         std::cout << "Would you like to run the program again? y/n" << std::endl;
         std::cin >> repeat;
         if(repeat != 'y')
