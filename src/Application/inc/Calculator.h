@@ -9,16 +9,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+
+#include "Parser.h"
 namespace calculator
 {
     class Calculator
     {
         public:
             /**
-             * @brief initiates calculator and asks for inputs, then runs the validate function
-             * @param number1 is first number entered
-             * @param number2 is second number entered
-             * @param operation is the operator entered (+, - , / or % , * or x)
+             * @brief initiates calculator and works with the parser to return a result object
+             * @param futureVector is the thread for a created vector object
+             * @param futureParsedExpression is the thread for a created expression object 
             */
             void runCalculator();
 
@@ -34,7 +35,7 @@ namespace calculator
              * @param answer is what is returned from the different math functions, 
              * and used to write to the console.
             */
-            float calculate(char operation, float number1, float number2);
+            float calculate(const Expression &parsedExpression);
     };
 
 }//namespace calculator

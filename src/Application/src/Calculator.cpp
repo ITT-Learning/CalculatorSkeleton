@@ -5,10 +5,14 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <algorithm>
 #include <cmath>
+#include <future>
 #include <iostream>
 #include <sstream>
+#include <thread>
 #include <typeinfo>
+#include <vector>
 
 #include "Calculator.h"
 #include "CalculatorMessages.h"
@@ -24,56 +28,96 @@ namespace calculator
    
     void Calculator::runCalculator()
     {
-        Parser p;
-        Expression parsedExpression = p.parseFullEquation(p.getUserInput());
-        
-        if (parsedExpression.valid)
-        {
-            ResultFactory resultFactory;
-            float answer = calculate(parsedExpression.operation, parsedExpression.a, parsedExpression.b);
-            std::shared_ptr<IResult> result = resultFactory.createResult(parsedExpression, answer);
+        Parser parser;
+        float  answer;
+        Expression parsedExpression;
 
-            if (std::isinf(answer)) //if you divided by zero
+        auto futureVector = std::async(&Parser::createVector, parser, parser.getUserInput());
+        while (futureVector.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+        {
+            std::cout << CalculatorMessages::CREATING_VECTOR;
+        }
+        std::cout << std::endl;
+        auto completedVector = futureVector.get();
+        while (completedVector.second)
+        {
+            auto futureParsedExpression = std::async(&Parser::breakDownEquation, parser, completedVector.first);
+            while (futureParsedExpression.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
             {
-                std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_DIVIDE_BY_ZERO << std::endl;
+                std::cout << CalculatorMessages::BREAKING_DOWN_AND_CALCULATING;
+            }
+            std::cout << std::endl;
+            parsedExpression = futureParsedExpression.get();
+
+            if(parsedExpression.validExpression)
+                {
+                answer = calculate(parsedExpression);
+                if (std::isinf(answer)) //if you divided by zero
+                {
+                    std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_DIVIDE_BY_ZERO << std::endl;
+                    parsedExpression.validExpression = false;
+                    break;
+                }
+                else
+                {
+                    ExpressionUnit lastAnswer;
+                    lastAnswer.number = answer;
+                    lastAnswer.valid = true;
+                    if (completedVector.first->size()>0)
+                    {
+                        completedVector.first->insert(completedVector.first->begin() + parsedExpression.placementIndex, lastAnswer);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
             else
             {
-                std::cout << result->getFullResult() << std::endl;
+               std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_INVALID_EXPRESSION << std::endl;
+               break;
             }
         }
+
+        if (parsedExpression.validExpression)
+        {
+            ResultFactory resultFactory;
+            std::shared_ptr<IResult> result = resultFactory.createResult(parser.getOriginalEquation(), answer);
+            std::cout << result->getFullResult() << std::endl;
+        }
     }
-    
-    float Calculator::calculate(char operation, float number1, float number2)
+     
+    float Calculator::calculate(const Expression &parsedExpression)
     {
         float answer;
 
-            switch (operation)
+            switch (parsedExpression.operation)
             {
             case '+':
             {
                 auto add = [](auto a, auto b){ return a + b;}; 
-                answer = add(number1, number2);
+                answer = add(parsedExpression.a, parsedExpression.b);
                 break;
             }
             case '-':
             {
                 auto subtract = [](auto a, auto b){ return a - b;}; 
-                answer = subtract(number1, number2);
+                answer = subtract(parsedExpression.a, parsedExpression.b);
                 break;
             }
             case 'x':
             case '*':
             {
                 auto multiply = [](auto a, auto b){ return a * b;}; 
-                answer = multiply(number1, number2);
+                answer = multiply(parsedExpression.a, parsedExpression.b);
                 break;
             }
             case '/':
             case '%':
             {   
                 auto divide = [](auto a, auto b){ return a / b;}; 
-                answer = divide(number1, number2);
+                answer = divide(parsedExpression.a, parsedExpression.b);
                 break;
             }
             default:
@@ -82,4 +126,3 @@ namespace calculator
         return answer;
     }
 }//namespace calculator
-

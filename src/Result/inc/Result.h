@@ -18,7 +18,8 @@ namespace calculator
     class Result : public IResult
     {
         public:
-            Result(Expression expression, float answer, std::string fullResult) : expression_(expression), answer_(answer), fullResult_(fullResult){}
+            Result(std::string originalEquation, float answer, std::string fullResult) :
+            originalEquation_(originalEquation), answer_(answer), fullResult_(fullResult){}
 
         /***
          * @brief get the full result string
@@ -29,7 +30,7 @@ namespace calculator
 
         private:
             float       answer_;
-            Expression  expression_;
+            std::string originalEquation_;
             std::string fullResult_;
     };
 }

@@ -30,9 +30,8 @@ void whenTestingResult::SetUp()
     sampleExpression.a=1;
     sampleExpression.b=2;
     sampleExpression.operation='+';
-    sampleExpression.valid=true;
 
-    resultInst = new Result(sampleExpression, 3, "1 + 2 = 3\n");
+    resultInst = new Result("1 + 2", 3, "1 + 2 = 3");
 }
 void whenTestingResult::TearDown()
 {
@@ -41,5 +40,5 @@ void whenTestingResult::TearDown()
 
 TEST_F(whenTestingResult, WhenCreatingResult_CorrectFullResultReturned)
 {
-    ASSERT_EQ(resultInst->getFullResult(), "1 + 2 = 3\n");
+    ASSERT_EQ(resultInst->getFullResult(), "1 + 2 = 3");
 }

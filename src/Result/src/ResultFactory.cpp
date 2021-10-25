@@ -22,14 +22,12 @@ namespace calculator
 // ResultFactory public methods /
 ///
    
-    std::shared_ptr<IResult> ResultFactory::createResult(const Expression &parsedExpression, float answer)
+    std::shared_ptr<IResult> ResultFactory::createResult(const std::string &originalEquation, float answer)
     {
         std::stringstream stringStream;
         
-        stringStream << parsedExpression.a << CalculatorMessages::EMPTY_SPACE 
-        << parsedExpression.operation << CalculatorMessages::EMPTY_SPACE 
-        << parsedExpression.b << CalculatorMessages::EQUALS << answer << std::endl;
+        stringStream << originalEquation << CalculatorMessages::EQUALS << answer;
         
-        return std::make_shared<Result>(parsedExpression, answer, stringStream.str());
+        return std::make_shared<Result>(originalEquation, answer, stringStream.str());
     }
 }

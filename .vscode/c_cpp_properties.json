@@ -7,6 +7,7 @@
                 "${workspaceFolder}/inc"
             ],
             "defines": [],
+            "compilerArgs": ["-pthread"],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "gnu17",
             "cppStandard": "gnu++14",
