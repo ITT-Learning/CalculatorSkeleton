@@ -20,3 +20,7 @@ add_library(${LIBRARY_NAME} ${LIBRARY_SOURCES})
 target_include_directories(${LIBRARY_NAME} PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}/inc
 )
+
+target_link_libraries(
+    CalculatorStrings
+)

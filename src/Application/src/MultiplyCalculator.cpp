@@ -1,25 +1,32 @@
+/////////////////////////////////////////////////////////
 /**
  * @file MultiplyCalculator.cpp
- * @brief Funtions that support main.cpp
- * @version 0.1
- * @date 2021-10-19
- * 
- * @copyright Copyright (c) 2021
- * 
+ * @brief Implement Multiplication Calculator
  */
+/////////////////////////////////////////////////////////
+
 #include "MultiplyCalculator.h"
 
+namespace calculator {
 
-namespace calculator
+// ***************************************************************************** /
+// ***************** MultiplyCalculator Constructor **************************** /
+// ***************************************************************************** /
+
+MultiplyCalculator::MultiplyCalculator(float firstNumber, float secondNumber)
 {
-    MultiplyCalculator::MultiplyCalculator(float a, float b)
-    {
-        firstNumber_ = a; 
-        secondNumber_ = b;
-        op_ = '*';
-    }
-    float MultiplyCalculator::getResult()
-    {
-        return firstNumber_ * secondNumber_; //return variables multiplied by each other 
-    }
+    firstNumber_ = firstNumber; 
+    secondNumber_ = secondNumber;
+    operator_ = CalculatorStrings::TIMES;
 }
+
+// ***************************************************************************** /
+// ***************** MultiplyCalculator public methods  ************************ /
+// ***************************************************************************** /
+
+float MultiplyCalculator::getResult()
+{
+    return firstNumber_ * secondNumber_; //return variables multiplied by each other 
+}
+
+} // namespace calculator

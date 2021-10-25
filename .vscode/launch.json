@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/Calculator",
+            "program": "${workspaceFolder}/bin/Calculator_exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

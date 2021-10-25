@@ -11,59 +11,65 @@
 #include <sstream>
 #include <string>
 
-
 #include "CalculatorApplication.h"
 #include "CalculatorApplicationFactory.h"
 #include "CalculatorStrings.h"
-namespace calculator
+namespace calculator {
+
+// *****************************************************************************/
+// ***************** CalculatorApplication public methods **********************/
+// *****************************************************************************/
+
+int CalculatorApplication::calculate(float firstNumber, float secondNumber, char operation)
 {
-    int CalculatorApplication::calculate(float a, float b, char op)
+    int result = 0;
+
+    if(limitCheck(firstNumber) && limitCheck(secondNumber))
     {
         calculator::CalculatorApplicationFactory calculatorAppFactory;  
-
-        if(limitCheck(a) && limitCheck(b))
+        auto calculator = calculatorAppFactory.createCalculator(firstNumber, secondNumber, operation); //variables placed into createCalc function and placed into calculator variable
+        if(calculator)
         {
-            auto calculator = calculatorAppFactory.createCalculator(a, b, op); //variables placed into createCalc function and placed into calculator variable
-            if(calculator)
-            {
-                std::cout << calculator->toString() << std::endl; //if calculator returned from function is valid, point to string function and output expression and result
-            }
-            else
-            {
-                std::cout << CalculatorStrings::ERROR_MESSAGE_INVALID_INPUT << std::endl;
-            }
+            result = calculator->getResult();
+            std::cout << calculator->toString() << std::endl; //if calculator returned from function is valid, point to string function and output expression and result
         }
         else
         {
-            return -1;
+            std::cout << CalculatorStrings::ERROR_MESSAGE_INVALID_INPUT << std::endl;
         }
-        return 0;
     }
-
-    std::string CalculatorApplication::toString()
+    else
     {
-        return std::to_string(firstNumber_) + " " + op_ + " " + std::to_string(secondNumber_) + " = " + std::to_string(getResult());
+        result = -1;
     }
 
-    bool CalculatorApplication::limitCheck(float a)
-    {
-        if(a > std::numeric_limits<float>::max())
-        {
-            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE << std::endl;
-            return false;
-        }
-        else if(a < std::numeric_limits<float>::min())
-        {
-            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_SMALL << std::endl;
-            return false;
-        }
-        else if(a == std::numeric_limits<float>::infinity())
-        {
-            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE << std::endl;
-            return false;
-        }
-        return true;
-    }
-    
-
+    return result;
 }
+
+std::string CalculatorApplication::toString()
+{
+    return std::to_string(firstNumber_) + CalculatorStrings::EMPTY_SPACE + operator_ + CalculatorStrings::EMPTY_SPACE + std::to_string(secondNumber_) + CalculatorStrings::EQUAL_SIGN + std::to_string(getResult());
+}
+
+bool CalculatorApplication::limitCheck(float firstNumber)
+{
+    bool result = true;
+    if(firstNumber > std::numeric_limits<float>::max())
+    {
+        std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE << std::endl;
+        result = false;
+    }
+    else if(firstNumber < std::numeric_limits<float>::min())
+    {
+        std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_SMALL << std::endl;
+        result = false;
+    }
+    else if(firstNumber == std::numeric_limits<float>::infinity())
+    {
+        std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE << std::endl;
+        result = false;
+    }
+    return result;
+}
+
+} //namespace calculator
