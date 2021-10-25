@@ -9,22 +9,31 @@
 #include <iostream>
 
 #include "CalculatorApplication.h"
+#include "CalculatorStrings.h"
 
 using namespace calculator;
-
+/**
+ * @brief Main interface which exposes to other components
+ *
+ */
 int main() 
 {
+    bool again = true;
     //This calculator can do super basic and simple math. 
-    while(true)
+    while(again)
     {
-        char repeat; 
         CalculatorApplication calculator;
         calculator.calculate();
-        std::cout << "Would you like to run the program again? y/n" << std::endl;
-        std::cin >> repeat;
-        if(repeat != 'y')
+        std::cout << CalculatorStrings::REPEAT_PROGRAM << std::endl;
+        
+        char repeat;      
+        std::cin >> repeat; 
+ 
+        if(repeat != CalculatorStrings::YES)
         {
-            return 0;
+            again = false;
         }
     }
+
+    return 0;
 }

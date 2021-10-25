@@ -11,8 +11,7 @@
 #define CALCULATORAPPLICATION_H
 
 
-namespace calculator
-{
+namespace calculator {
     /**
      * @brief This is the Class containing the functions and variables used in week 1
      */
@@ -24,52 +23,56 @@ namespace calculator
              * 
              */
             CalculatorApplication() = default;
+
             /**
              * @brief Destroy the Calculator object
              * 
              */
             ~CalculatorApplication() = default;
+
             /**
              * @brief This is the main function run in main.cpp
              * 
              */
             void calculate();
+
             /**
              * @brief This is the function adding two floats using the '+' character
-             * @param number1 This is the first float passed into
-             * @param number2 This is the second float passed into 
-             * @param op This is the operator character and will add both floats
+             * @param number1 [in] This is the first float passed into
+             * @param number2 [in]This is the second float passed into 
+             * @return both values added together
              */
             float add(float number1, float number2);
+
             /**
              * @brief This is the function multiplying two floats using the '*' character
-             * @param number1 This is the first float passed into
-             * @param number2 This is the second float passed into
-             * @param op This is the operator character and will multiply both floats
+             * @param number1 [in] This is the first float passed into
+             * @param number2 [in] This is the second float passed into
+             * @return both values added together
              */
             float multiply(float number1, float number2);
             /**
              * @brief This is the function dividing two floats using the '/' character
-             * @param number1 This is the first float passed into
-             * @param number2 This is the second float passed into
-             * @param op This is the operator character and will divide both floats
+             * @param number1 [in] This is the first float passed into
+             * @param number2 [in] This is the second float passed into
+             * @return both values multiplied together
              */
             float divide(float number1, float number2);
             /**
              * @brief This is the function subtract two floats using the '-' character
-             * @param number1 This is the first float passed into
-             * @param number2 This is the second float passed into
-             * @param op This is the operator character and will subtract both floats
+             * @param number1 [in] This is the first float passed into
+             * @param number2 [in] This is the second float passed into
+             * @return both values divided together
              */
             
             float subtract(float number1, float number2);
             /**
              * @brief This is the function taking the modulus two floats using the '%' character
-             * @param number1 This is the first float passed into
-             * @param number2 This is the second float passed into
-             * @param op This is the operator character and will return the modulus of both floats
+             * @param number1 [in] This is the first float passed into
+             * @param number2 [in] This is the second float passed into
+             * @return both values subtracted together
              */
             int modulus(float number1, float number2);
     };
-}
-#endif  // CALCULATOR_H
+} // namespace calculator
+#endif  // CALCULATORAPPLICATION_H
