@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.20)
 
 include(FetchContent)
 
@@ -7,7 +7,7 @@ set(FETCHCONTENT_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 FetchContent_Declare(
   googletest
   GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG        release-1.10.0
+  GIT_TAG        release-1.11.0
 )
 
 FetchContent_GetProperties(googletest)
@@ -32,6 +32,9 @@ enable_testing()
 
 include_directories(
     "../inc"
+    $<TARGET_PROPERTY:CalculatorStrings,INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:CalculatorInterface,INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:CalculatorApplication,INCLUDE_DIRECTORIES>
     )
 
 # Some recommendations on NOT using file globbing to grab all cpp files.  So far, it seems
@@ -42,11 +45,15 @@ file(GLOB UNIT_TEST_SOURCES
     "*.cpp"
 )
 
-add_executable(${This} ${UNIT_TEST_SOURCES} ../src/Calculator.cpp)
+add_executable(${This} ${UNIT_TEST_SOURCES})
 
 target_link_libraries(${This} PUBLIC	
     gtest_main
     gmock_main
     gtest
     gmock
+    CalculatorApplication
 )
+
+include(GoogleTest) 
+gtest_discover_tests(${This})

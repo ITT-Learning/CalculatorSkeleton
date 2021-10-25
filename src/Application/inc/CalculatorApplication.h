@@ -1,8 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
- * @file  Calculator.h
+ * @file  CalculatorApplication.h
  * @date  Fri, 16 April 2021
- * @brief These are the included header files as well as the programs function declarations
  * 
  */
 ///////////////////////////////////////////////////////////////////////////////
@@ -10,12 +9,25 @@
 #ifndef CALCULATORAPPLICATION_H
 #define CALCULATORAPPLICATION_H
 
+#include "CalculatorStrings.h"
+#include "ICalculator.h"
+#include <iostream>
+#include <limits>
+#include <string>
 
+
+
+<<<<<<< HEAD
 namespace calculator {
     /**
      * @brief This is the Class containing the functions and variables used in week 1
      */
     class CalculatorApplication
+=======
+namespace calculator
+{
+    class CalculatorApplication : public ICalculator 
+>>>>>>> 3c21844efb27366021dcf5946e252daa836ce015
     {
         public:
             /**
@@ -23,56 +35,41 @@ namespace calculator {
              * 
              */
             CalculatorApplication() = default;
-
-            /**
-             * @brief Destroy the Calculator object
-             * 
-             */
-            ~CalculatorApplication() = default;
-
+            
             /**
              * @brief This is the main function run in main.cpp
-             * 
+             * @param a first number float 
+             * @param b second number float
+             * @param op operator char
              */
-            void calculate();
+            CalculatorApplication(float a, float);
 
-            /**
-             * @brief This is the function adding two floats using the '+' character
-             * @param number1 [in] This is the first float passed into
-             * @param number2 [in]This is the second float passed into 
-             * @return both values added together
-             */
-            float add(float number1, float number2);
-
-            /**
-             * @brief This is the function multiplying two floats using the '*' character
-             * @param number1 [in] This is the first float passed into
-             * @param number2 [in] This is the second float passed into
-             * @return both values added together
-             */
-            float multiply(float number1, float number2);
-            /**
-             * @brief This is the function dividing two floats using the '/' character
-             * @param number1 [in] This is the first float passed into
-             * @param number2 [in] This is the second float passed into
-             * @return both values multiplied together
-             */
-            float divide(float number1, float number2);
-            /**
-             * @brief This is the function subtract two floats using the '-' character
-             * @param number1 [in] This is the first float passed into
-             * @param number2 [in] This is the second float passed into
-             * @return both values divided together
-             */
+            static int calculate(float a, float b, char op);
             
-            float subtract(float number1, float number2);
             /**
-             * @brief This is the function taking the modulus two floats using the '%' character
-             * @param number1 [in] This is the first float passed into
-             * @param number2 [in] This is the second float passed into
-             * @return both values subtracted together
+             * @brief Get the Result object. Pure virtual function defined in child classes
+             * 
+             * @return float 
              */
-            int modulus(float number1, float number2);
+            virtual float getResult() = 0;
+            
+            std::string toString() override;
+
+            /**
+             * @brief Checks if the inputted value is within scope
+             * 
+             * @param a 
+             * @return true 
+             * @return false 
+             */
+            static bool limitCheck(float a);
+
+        protected:
+            float firstNumber_;
+            float secondNumber_;
+            char op_; 
+
+
     };
 } // namespace calculator
 #endif  // CALCULATORAPPLICATION_H
