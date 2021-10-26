@@ -8,14 +8,15 @@
 
 #include "Result.h"
 
-namespace calculator
-{
+namespace calculator {
+
 //*************/
 // Result public methods /
 ///
    
-    std::string Result::getFullResult() const
-    {
-        return fullResult_;
-    }
+std::string Result::getFullResult() const
+{
+    return fullResult_;
 }
+
+} //namespace calculator

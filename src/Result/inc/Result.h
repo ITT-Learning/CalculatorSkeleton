@@ -13,25 +13,39 @@
 #include "Parser.h"
 #include "IResult.h"
 
-namespace calculator
-{
+namespace calculator {
+
+    /**
+    * @brief Result interface which exposes to other components
+    */
+
     class Result : public IResult
     {
         public:
+            /***
+             * Constructor for Result
+             */
             Result(std::string originalEquation, float answer, std::string fullResult) :
             originalEquation_(originalEquation), answer_(answer), fullResult_(fullResult){}
 
-        /***
-         * @brief get the full result string
-         * @return std::string the fullResult
-         */
+            /**
+             * @name IResult methods.
+             * @{
+             */
 
             std::string getFullResult() const override;
+
+            /**
+             * @}
+             */
+
 
         private:
             float       answer_;
             std::string originalEquation_;
             std::string fullResult_;
     };
-}
+
+} //namespace calculator
+
 #endif  // RESULT_H

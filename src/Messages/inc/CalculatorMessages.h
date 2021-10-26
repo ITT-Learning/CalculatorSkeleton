@@ -9,11 +9,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <string>
-namespace calculator
-{
+namespace calculator {
     class CalculatorMessages
     {
         public:
+            /**
+             * @brief available operations
+             */
+            static constexpr const char *OPERATIONS = "+-/%*x";
+
             /**
              * @brief equals sign
              */
@@ -23,6 +27,26 @@ namespace calculator
              * @brief an empty space
              */
             static constexpr const char EMPTY_SPACE = ' ';
+
+            /**
+             * @brief an empty space
+             */
+            static constexpr const char PERIOD = '.';
+
+            /**
+             * @brief an empty space
+             */
+            static constexpr const char OPEN_PARENTHESIS = '(';
+
+            /**
+             * @brief an empty space
+             */
+            static constexpr const char CLOSE_PARENTHESIS = ')';
+
+            /**
+             * @brief an empty space
+             */
+            static constexpr const char *EMPTY_STRING = "";
 
             /**
              * @brief Intro message on program start
@@ -87,9 +111,9 @@ namespace calculator
             /**
              * @brief used for checking if a value is a float
              */
-            static constexpr const char *FLOAT_REGEX = R"([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))";
-
-            
+            static constexpr const char *FLOAT_REGEX = R"([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))";    
     };
+
 }//namespace calculator
+
 #endif  // CALCULATOR_H

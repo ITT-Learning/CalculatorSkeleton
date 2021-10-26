@@ -10,8 +10,12 @@
 
 #include <string>
 
-namespace calculator 
-{
+namespace calculator {
+
+    /**
+    * @brief IResult interface which exposes to other components
+    */
+
     class IResult
     {
         public:
@@ -26,5 +30,7 @@ namespace calculator
              */
             virtual std::string getFullResult() const = 0;
     };
-}
+
+} //namespace calculator
+
 #endif  // ICALCULATOR_H

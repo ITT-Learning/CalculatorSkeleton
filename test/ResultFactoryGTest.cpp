@@ -35,10 +35,13 @@ void whenTestingResultFactory::TearDown()
     delete resultFactoryInst;
 }
 
+/**
+* @brief Unit test for creating a result object
+*/
 TEST_F(whenTestingResultFactory, WhenCreatingResult_CorrectFullResultReturned)
 {
     Result sampleResult{"1 + 2", 3, "1 + 2 = 3"};
     std::shared_ptr<IResult> sampleIResult = resultFactoryInst->createResult("1 + 2", 3);
 
-    ASSERT_EQ(sampleIResult->getFullResult(), sampleResult.getFullResult());
+    EXPECT_EQ(sampleResult.getFullResult(), sampleIResult->getFullResult());
 }

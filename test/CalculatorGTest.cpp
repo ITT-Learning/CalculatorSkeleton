@@ -29,8 +29,8 @@ class whenTestingCalculator:public ::testing::Test
 void whenTestingCalculator::SetUp()
 {
     calculatorInst = new Calculator();
-    sampleExpression.a = -10;
-    sampleExpression.b = 10;
+    sampleExpression.number1 = -10;
+    sampleExpression.number2 = 10;
     
 };
 void whenTestingCalculator::TearDown()
@@ -38,29 +38,46 @@ void whenTestingCalculator::TearDown()
     delete calculatorInst;
 }
 
+/**
+* @brief Unit test for adding positive and negative integers
+*/
 TEST_F(whenTestingCalculator, WhenAddingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    sampleExpression.operation = '+';
-    ASSERT_FLOAT_EQ(calculatorInst->calculate(sampleExpression), 0);
+    sampleExpression.operation = CalculatorMessages::OPERATIONS[0];
+    EXPECT_FLOAT_EQ(0, calculatorInst->calculate(sampleExpression));
 }
+
+/**
+* @brief Unit test for subtracting positive and negative integers
+*/
 TEST_F(whenTestingCalculator, WhenSubtractingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    sampleExpression.operation = '-';
-    ASSERT_FLOAT_EQ(calculatorInst->calculate(sampleExpression), -20);
+    sampleExpression.operation = CalculatorMessages::OPERATIONS[1];
+    EXPECT_FLOAT_EQ(-20, calculatorInst->calculate(sampleExpression));
 }
+/**
+* @brief Unit test for dividing positive and negative integers
+*/
 TEST_F(whenTestingCalculator, WhenDividingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    sampleExpression.operation = '/';
-    ASSERT_FLOAT_EQ(calculatorInst->calculate(sampleExpression), -1);
+    sampleExpression.operation = CalculatorMessages::OPERATIONS[2];
+    EXPECT_FLOAT_EQ(-1, calculatorInst->calculate(sampleExpression));
 }
-TEST_F(whenTestingCalculator, WhenMultiplyingAndNegativeIntegers_ThenCorrectValueReturned)
+/**
+* @brief Unit test for multiplying positive and negative integers
+*/
+TEST_F(whenTestingCalculator, WhenMultiplyingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    sampleExpression.operation = '*';
-    ASSERT_FLOAT_EQ(calculatorInst->calculate(sampleExpression), -100);
+    sampleExpression.operation = CalculatorMessages::OPERATIONS[4];
+    EXPECT_FLOAT_EQ(-100, calculatorInst->calculate(sampleExpression));
 }
+
+/**
+* @brief Unit test for dividing by zero
+*/
 TEST_F(whenTestingCalculator, WhenDividingByZero_ThenInfIsTrue)
 {
-    sampleExpression.operation = '/';
-    sampleExpression.b = 0;
-    ASSERT_TRUE(std::isinf(calculatorInst->calculate(sampleExpression)));
+    sampleExpression.operation = CalculatorMessages::OPERATIONS[2];
+    sampleExpression.number2 = 0;
+    EXPECT_TRUE(std::isinf(calculatorInst->calculate(sampleExpression)));
 }

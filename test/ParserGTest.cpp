@@ -23,14 +23,15 @@ class whenTestingParser:public ::testing::Test
         Parser* parserInst;
         virtual void SetUp() override;
         virtual void TearDown() override;
+
     protected:
-        ExpressionUnit a;
-        ExpressionUnit b;
-        ExpressionUnit c;
-        ExpressionUnit d;
-        ExpressionUnit e;
-        ExpressionUnit f;
-        ExpressionUnit g;
+        ExpressionUnit unit1;
+        ExpressionUnit unit2;
+        ExpressionUnit unit3;
+        ExpressionUnit unit4;
+        ExpressionUnit unit5;
+        ExpressionUnit unit6;
+        ExpressionUnit unit7;
 };
 void whenTestingParser::SetUp()
 {
@@ -41,190 +42,216 @@ void whenTestingParser::TearDown()
     delete parserInst;
 }
 
+/**
+* @brief Unit test for breaking down equation with valid expression units 
+*/
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithValidExpressionUnits_ThenTrueReturned)
 {
-    a.number = 1;
-    a.valid = true;
-    b.operation = '+';
-    b.valid = true;
-    c.number = 1;
-    c.valid = true;
+    unit1.number = 1;
+    unit1.isValid = true;
+    unit2.operation = CalculatorMessages::OPERATIONS[0];
+    unit2.isValid = true;
+    unit3.number = 1;
+    unit3.isValid = true;
 
     auto sampleVector = std::make_shared<std::vector<ExpressionUnit>>();
-    sampleVector->push_back(a);
-    sampleVector->push_back(b);
-    sampleVector->push_back(c);
+    sampleVector->push_back(unit1);
+    sampleVector->push_back(unit2);
+    sampleVector->push_back(unit3);
 
     Expression sampleExpression = parserInst->breakDownEquation(sampleVector);
     
-    ASSERT_TRUE(sampleExpression.validExpression); //1+1
+    EXPECT_TRUE(sampleExpression.isValidExpression); //1+1
 }
+
+/**
+* @brief Unit test for breaking down equation with invalid expression units 
+*/
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithNotValidExpressionUnits_ThenFalseReturned)
 {
-    a.number = 1;
-    a.valid = true;
-    b.operation = '?';
-    b.valid = false;
-    c.number = 1;
-    c.valid = true;
+    unit1.number = 1;
+    unit1.isValid = true;
+    unit2.operation = '?';
+    unit2.isValid = false;
+    unit3.number = 1;
+    unit3.isValid = true;
 
     auto sampleVector = std::make_shared<std::vector<ExpressionUnit>> ();
-    sampleVector->push_back(a);
-    sampleVector->push_back(b);
-    sampleVector->push_back(c);
+    sampleVector->push_back(unit1);
+    sampleVector->push_back(unit2);
+    sampleVector->push_back(unit3);
     Expression sampleExpression = parserInst->breakDownEquation(sampleVector);
     
-    ASSERT_FALSE(sampleExpression.validExpression); //1?1
+    EXPECT_FALSE(sampleExpression.isValidExpression); //1?1
 }
+
+/**
+* @brief Unit test for breaking down equation with priority division operator
+*/
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithDivision_ThenDivisionExpressionReturnedFirst)
 {
-    a.number = 1;
-    a.valid = true;
-    b.operation = '+';
-    b.valid = true;
-    c.number = 1;
-    c.valid = true;
-    d.operation = '/';
-    d.valid = true;
-    e.operation = '5';
-    e.valid = true;
+    unit1.number = 1;
+    unit1.isValid = true;
+    unit2.operation = CalculatorMessages::OPERATIONS[0];
+    unit2.isValid = true;
+    unit3.number = 1;
+    unit3.isValid = true;
+    unit4.operation = CalculatorMessages::OPERATIONS[2];
+    unit4.isValid = true;
+    unit5.number = 5;
+    unit5.isValid = true;
 
     auto sampleVector = std::make_shared<std::vector<ExpressionUnit>> ();
-    sampleVector->push_back(a);
-    sampleVector->push_back(b);
-    sampleVector->push_back(c);
-    sampleVector->push_back(d);
-    sampleVector->push_back(e);
+    sampleVector->push_back(unit1);
+    sampleVector->push_back(unit2);
+    sampleVector->push_back(unit3);
+    sampleVector->push_back(unit4);
+    sampleVector->push_back(unit5);
 
     Expression createdExpression = parserInst->breakDownEquation(sampleVector);
-    char returnedExpressionOperator = '/';
+    char returnedExpressionOperator = CalculatorMessages::OPERATIONS[2];
     
-    ASSERT_EQ(createdExpression.operation, returnedExpressionOperator); //1+1/5
+    EXPECT_EQ(returnedExpressionOperator, createdExpression.operation); //1+1/5
 }
-TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplication_ThenDivisionExpressionReturnedFirst)
+
+/**
+* @brief Unit test for breaking down equation with priority multiplication operator
+*/
+TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplication_ThenMultiplicationExpressionReturnedFirst)
 {
-    a.number = 1;
-    a.valid = true;
-    b.operation = '+';
-    b.valid = true;
-    c.number = 1;
-    c.valid = true;
-    d.operation = '*';
-    d.valid = true;
-    e.operation = '5';
-    e.valid = true;
+    unit1.number = 1;
+    unit1.isValid = true;
+    unit2.operation = CalculatorMessages::OPERATIONS[1];
+    unit2.isValid = true;
+    unit3.number = 1;
+    unit3.isValid = true;
+    unit4.operation = CalculatorMessages::OPERATIONS[4];
+    unit4.isValid = true;
+    unit5.number = 5;
+    unit5.isValid = true;
 
     auto sampleVector = std::make_shared<std::vector<ExpressionUnit>> ();
 
-    sampleVector->push_back(a);
-    sampleVector->push_back(b);
-    sampleVector->push_back(c);
-    sampleVector->push_back(d);
-    sampleVector->push_back(e);
+    sampleVector->push_back(unit1);
+    sampleVector->push_back(unit2);
+    sampleVector->push_back(unit3);
+    sampleVector->push_back(unit4);
+    sampleVector->push_back(unit5);
 
     Expression createdExpression = parserInst->breakDownEquation(sampleVector);
-    char returnedExpressionOperator = '*';
+    char returnedExpressionOperator = CalculatorMessages::OPERATIONS[4];
     
-    ASSERT_EQ(createdExpression.operation, returnedExpressionOperator); //1+1*5
+    EXPECT_EQ(returnedExpressionOperator, createdExpression.operation); //1+1*5
 }
+
+/**
+* @brief Unit test for breaking down equation with two priority operators
+*/
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplicationAndDivision_ThenFirstExpressionReturnedFirst)
 {
-    a.number = 1;
-    a.valid = true;
-    b.operation = '/';
-    b.valid = true;
-    c.number = 1;
-    c.valid = true;
-    d.operation = '*';
-    d.valid = true;
-    e.operation = '5';
-    e.valid = true;
+    unit1.number = 1;
+    unit1.isValid = true;
+    unit2.operation = CalculatorMessages::OPERATIONS[2];
+    unit2.isValid = true;
+    unit3.number = 1;
+    unit3.isValid = true;
+    unit4.operation = CalculatorMessages::OPERATIONS[4];
+    unit4.isValid = true;
+    unit5.number = 5;
+    unit5.isValid = true;
 
     auto sampleVector = std::make_shared<std::vector<ExpressionUnit>> ();
 
-    sampleVector->push_back(a);
-    sampleVector->push_back(b);
-    sampleVector->push_back(c);
-    sampleVector->push_back(d);
-    sampleVector->push_back(e);
+    sampleVector->push_back(unit1);
+    sampleVector->push_back(unit2);
+    sampleVector->push_back(unit3);
+    sampleVector->push_back(unit4);
+    sampleVector->push_back(unit5);
 
     Expression createdExpression = parserInst->breakDownEquation(sampleVector);
-    char returnedExpressionOperator = '/';
+    char returnedExpressionOperator = CalculatorMessages::OPERATIONS[2];
     
-    ASSERT_EQ(createdExpression.operation, returnedExpressionOperator); //1/1*5
+    EXPECT_EQ(returnedExpressionOperator, createdExpression.operation); //1/1*5
 }
 
+/**
+* @brief Unit test for creating an expression unit vector
+*/
 TEST_F(whenTestingParser, WhenCreatingVector_CorrectVectorReturned)
 {
-    a.number = 1;
-    b.operation = '+';
-    c.number = -2;
-    d.operation = '/';
-    e.number = 3.2;
+    unit1.number = 1;
+    unit2.operation = CalculatorMessages::OPERATIONS[0];
+    unit3.number = -2;
+    unit4.operation = CalculatorMessages::OPERATIONS[2];
+    unit5.number = 3.2;
 
     auto sampleVector = std::make_shared<std::vector<ExpressionUnit>> ();
     std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> createdVector = parserInst->createVector("1+-2/3.2");
 
-    sampleVector->push_back(a);
-    sampleVector->push_back(b);
-    sampleVector->push_back(c);
-    sampleVector->push_back(d);
-    sampleVector->push_back(e);
+    sampleVector->push_back(unit1);
+    sampleVector->push_back(unit2);
+    sampleVector->push_back(unit3);
+    sampleVector->push_back(unit4);
+    sampleVector->push_back(unit5);
 
-    ASSERT_EQ(sampleVector->at(0).number, createdVector.first->at(0).number);
-    ASSERT_EQ(sampleVector->at(1).operation, createdVector.first->at(1).operation);
-    ASSERT_EQ(sampleVector->at(2).number, createdVector.first->at(2).number);
-    ASSERT_EQ(sampleVector->at(3).operation, createdVector.first->at(3).operation);
-    ASSERT_EQ(sampleVector->at(4).number, createdVector.first->at(4).number);
+    EXPECT_EQ(sampleVector->at(0).number, createdVector.first->at(0).number);
+    EXPECT_EQ(sampleVector->at(1).operation, createdVector.first->at(1).operation);
+    EXPECT_EQ(sampleVector->at(2).number, createdVector.first->at(2).number);
+    EXPECT_EQ(sampleVector->at(3).operation, createdVector.first->at(3).operation);
+    EXPECT_EQ(sampleVector->at(4).number, createdVector.first->at(4).number);
 }
 
+/**
+* @brief Unit test for creating an expression unit vector with parenthesis
+*/
 TEST_F(whenTestingParser, WhenCreatingVectorWithParenthesis_CorrectVectorReturned)
 {
-    a.number = 1;
-    b.operation = '+';
-    c.operation = '(';
-    d.number = -2;
-    e.operation = '/';
-    f.number = 3.2;
-    g.operation = ')';
+    unit1.number = 1;
+    unit2.operation = CalculatorMessages::OPERATIONS[0];
+    unit3.operation = CalculatorMessages::OPEN_PARENTHESIS;
+    unit4.number = -2;
+    unit5.operation = CalculatorMessages::OPERATIONS[2];
+    unit6.number = 3.2;
+    unit7.operation = CalculatorMessages::CLOSE_PARENTHESIS;
 
     auto sampleVector = std::make_shared<std::vector<ExpressionUnit>> ();
 
-    sampleVector->push_back(a);
-    sampleVector->push_back(b);
-    sampleVector->push_back(c);
-    sampleVector->push_back(d);
-    sampleVector->push_back(e);
-    sampleVector->push_back(f);
-    sampleVector->push_back(g);
+    sampleVector->push_back(unit1);
+    sampleVector->push_back(unit2);
+    sampleVector->push_back(unit3);
+    sampleVector->push_back(unit4);
+    sampleVector->push_back(unit5);
+    sampleVector->push_back(unit6);
+    sampleVector->push_back(unit7);
 
     std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> createdVector = parserInst->createVector("1+(-2/3.2)");
 
-    ASSERT_EQ(sampleVector->at(0).number, createdVector.first->at(0).number);
-    ASSERT_EQ(sampleVector->at(1).operation, createdVector.first->at(1).operation);
-    ASSERT_EQ(sampleVector->at(2).operation, createdVector.first->at(2).operation);
-    ASSERT_EQ(sampleVector->at(3).number, createdVector.first->at(3).number);
-    ASSERT_EQ(sampleVector->at(4).operation, createdVector.first->at(4).operation);
-    ASSERT_EQ(sampleVector->at(5).number, createdVector.first->at(5).number);
-    ASSERT_EQ(sampleVector->at(6).operation, createdVector.first->at(6).operation);
+    EXPECT_EQ(sampleVector->at(0).number, createdVector.first->at(0).number);
+    EXPECT_EQ(sampleVector->at(1).operation, createdVector.first->at(1).operation);
+    EXPECT_EQ(sampleVector->at(2).operation, createdVector.first->at(2).operation);
+    EXPECT_EQ(sampleVector->at(3).number, createdVector.first->at(3).number);
+    EXPECT_EQ(sampleVector->at(4).operation, createdVector.first->at(4).operation);
+    EXPECT_EQ(sampleVector->at(5).number, createdVector.first->at(5).number);
+    EXPECT_EQ(sampleVector->at(6).operation, createdVector.first->at(6).operation);
 }
 
+/**
+* @brief Unit test for creating an invalid expression unit
+*/
 TEST_F(whenTestingParser, WhenBreakingDownEquationWithInvalidExpression_ValidExpressionIsFalse)
 {
-    a.operation = '(';
-    a.valid = true;
-    b.number = '1';
-    b.valid = true;
-    c.operation = ')';
-    c.valid = true;
+    unit1.operation = CalculatorMessages::OPEN_PARENTHESIS;
+    unit1.isValid = true;
+    unit2.number = 1;
+    unit2.isValid = true;
+    unit3.operation = CalculatorMessages::CLOSE_PARENTHESIS;
+    unit3.isValid = true;
 
     auto sampleVector = std::make_shared<std::vector<ExpressionUnit>> ();
-    sampleVector->push_back(a);
-    sampleVector->push_back(b);
-    sampleVector->push_back(c);
+    sampleVector->push_back(unit1);
+    sampleVector->push_back(unit2);
+    sampleVector->push_back(unit3);
     Expression createdExpression = parserInst->breakDownEquation(sampleVector);
     
-    ASSERT_FALSE(createdExpression.validExpression); //(1)
+    EXPECT_FALSE(createdExpression.isValidExpression); //(1)
 }
-
-
