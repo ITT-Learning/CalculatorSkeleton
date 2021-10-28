@@ -11,27 +11,29 @@
 #include <memory>
 
 #include "ICalculatorFactory.h"
+
 namespace calculator {
-    
+
+/**
+* @brief CalculatorFactory interface which exposes to other components
+*
+*/
+
+class CalculatorApplicationFactory : public ICalculatorFactory
+{
+    public:
     /**
-    * @brief CalculatorFactory interface which exposes to other components
-    *
-    */
-    class CalculatorApplicationFactory : public ICalculatorFactory
-    {
-        public:
-        /**
-         * @name ICalculatorFactory methods.
-         * @{
-         */
+     * @name ICalculatorFactory methods.
+     * @{
+     */
 
-        std::unique_ptr<ICalculator> createCalculator(float firstNumber, float secondNumber, char operation) override;
+    std::unique_ptr<ICalculator> createCalculator(float firstNumber, float secondNumber, char operation) override;
 
-        /**
-         * @}
-         */
+    /**
+     * @}
+     */
 
-    };
+};
 
 }
 

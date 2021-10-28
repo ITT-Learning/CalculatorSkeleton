@@ -12,38 +12,39 @@
 
 namespace calculator {
 
-    /**
-     * @brief SubtractCalculator interface which exposes to other components
-     *
-     */
-    class SubtractCalculator : public CalculatorApplication
-    {
-        public:
-            /**
-             * @brief Delete default SubtractCalculator constructor
-             * 
-             */
-            SubtractCalculator() = delete;
-            
-            /**
-             * @brief Construct a new Subtract Calculator object 
-             * @param firstNumber [in] firstNumber set to firstNumber_
-             * @param secondNumber [in] secondNumber set to secondNumber_
-             */
-            explicit SubtractCalculator(float firstNumber, float secondNumber);
+/**
+ * @brief SubtractCalculator interface which exposes to other components
+ *
+ */
 
-            /**
-             * @name CalculatorApplication methods.
-             * @{
-             */
+class SubtractCalculator : public CalculatorApplication
+{
+    public:
+        /**
+         * @brief Delete default SubtractCalculator constructor
+         * 
+         */
+        SubtractCalculator() = delete;
+        
+        /**
+         * @brief Construct a new Subtract Calculator object 
+         * @param firstNumber [in] firstNumber set to firstNumber_
+         * @param secondNumber [in] secondNumber set to secondNumber_
+         */
+        explicit SubtractCalculator(float firstNumber, float secondNumber);
 
-            float getResult() override;
+        /**
+         * @name CalculatorApplication methods.
+         * @{
+         */
 
-            /**
-             * @}
-             */
+        float getResult() override;
 
-    };
+        /**
+         * @}
+         */
+
+};
 
 } // namespace calculator
 

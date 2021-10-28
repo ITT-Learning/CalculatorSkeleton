@@ -12,37 +12,38 @@
 
 namespace calculator {
 
-    /**
-    * @brief DivideCalculator interface which exposes to other components
-    */
-    class DivideCalculator : public CalculatorApplication
-    {
-        public:
-            /**
-             * @brief Delete default DivideCalculator Constructor
-             * 
-             */
-            DivideCalculator() = delete;
+/**
+* @brief DivideCalculator interface which exposes to other components
+*/
 
-            /**
-             * @brief Construct a new Divide Calculator object
-             * @param firstNumber [in] firstNumber set to secondNumber_
-             * @param secondNumber [in] secondNumber set to secondNumber_
-             */
-            explicit DivideCalculator(float firstNumber, float secondNumber);
+class DivideCalculator : public CalculatorApplication
+{
+    public:
+        /**
+         * @brief Delete default DivideCalculator Constructor
+         * 
+         */
+        DivideCalculator() = delete;
 
-            /**
-             * @name CalculatorApplication methods.
-             * @{
-             */
+        /**
+         * @brief Construct a new Divide Calculator object
+         * @param firstNumber [in] firstNumber set to secondNumber_
+         * @param secondNumber [in] secondNumber set to secondNumber_
+         */
+        explicit DivideCalculator(float firstNumber, float secondNumber);
 
-            float getResult() override;
+        /**
+         * @name CalculatorApplication methods.
+         * @{
+         */
 
-            /**
-             * @}
-             */
+        float getResult() override;
 
-    };
+        /**
+         * @}
+         */
+
+};
 
 } // namespace calculator
 

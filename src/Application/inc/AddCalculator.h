@@ -12,38 +12,39 @@
 
 namespace calculator {
 
-    /**
-    * @brief AddCalculator interface which exposes to other components
-    *
-    */
-    class AddCalculator : public CalculatorApplication
-    {
-        public:
-            /**
-             * @brief Delete default constructor
-             */
-            AddCalculator() = delete;
+/**
+* @brief AddCalculator interface which exposes to other components
+*
+*/
 
-            /**
-             * @brief Construct a new Add Calculator object
-             * @param firstNumber [in] first number set to firstNumber_
-             * @param secondNumber [in] Second number set to secondNumber_
-             */
-            explicit AddCalculator(float firstNumber, float secondNumber);
+class AddCalculator : public CalculatorApplication
+{
+    public:
+        /**
+         * @brief Delete default constructor
+         */
+        AddCalculator() = delete;
 
-            /**
-             * @name CalculatorApplication methods.
-             * @{
-             */
+        /**
+         * @brief Construct a new Add Calculator object
+         * @param firstNumber [in] first number set to firstNumber_
+         * @param secondNumber [in] Second number set to secondNumber_
+         */
+        explicit AddCalculator(float firstNumber, float secondNumber);
 
-            float getResult() override;
+        /**
+         * @name CalculatorApplication methods.
+         * @{
+         */
 
-            /**
-             * @}
-             */ 
-            
-    };
-    
+        float getResult() override;
+
+        /**
+         * @}
+         */ 
+        
+};
+
 } //namespace calculator
 
 #endif //ADDCALCULATOR_H

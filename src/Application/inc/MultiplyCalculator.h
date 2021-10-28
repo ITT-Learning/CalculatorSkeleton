@@ -12,38 +12,39 @@
 
 namespace calculator {
 
-    /**
-    * @brief MultiplyCalculator interface which exposes to other components
-    *
-    */
-    class MultiplyCalculator : public CalculatorApplication
-    {
-        public:
-            /**
-             * @brief Delete default MultiplyCalculator constructor
-             * 
-             */
-            MultiplyCalculator() = delete;
-            
-            /**
-             * @brief Construct a new Multiply Calculator object
-             * @param firstNumber [in] firstNumber set to firstNumber_
-             * @param secondNumber [in] secondNumber set to secondNumber_
-             */
-            explicit MultiplyCalculator(float firstNumber, float secondNumber);
+/**
+* @brief MultiplyCalculator interface which exposes to other components
+*
+*/
 
-            /**
-             * @name CalculatorApplication methods.
-             * @{
-             */
+class MultiplyCalculator : public CalculatorApplication
+{
+    public:
+        /**
+         * @brief Delete default MultiplyCalculator constructor
+         * 
+         */
+        MultiplyCalculator() = delete;
+        
+        /**
+         * @brief Construct a new Multiply Calculator object
+         * @param firstNumber [in] firstNumber set to firstNumber_
+         * @param secondNumber [in] secondNumber set to secondNumber_
+         */
+        explicit MultiplyCalculator(float firstNumber, float secondNumber);
 
-            float getResult() override;
+        /**
+         * @name CalculatorApplication methods.
+         * @{
+         */
 
-            /**
-             * @}
-             */
+        float getResult() override;
 
-    };
+        /**
+         * @}
+         */
+
+};
 
 } // namespace calculator
 
