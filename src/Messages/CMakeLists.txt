@@ -2,7 +2,6 @@ get_filename_component(lib_dir ${CMAKE_CURRENT_BINARY_DIR} NAME)
 
 set(LIBRARY_NAME ${PROJECT_NAME}${lib_dir})
 
-
 include_directories(inc)
 
 SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -plthread")

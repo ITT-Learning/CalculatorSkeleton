@@ -27,9 +27,9 @@ class whenTestingResult:public ::testing::Test
 void whenTestingResult::SetUp()
 {
     Expression sampleExpression;
-    sampleExpression.a=1;
-    sampleExpression.b=2;
-    sampleExpression.operation='+';
+    sampleExpression.number1 = 1;
+    sampleExpression.number2 = 2;
+    sampleExpression.operation = CalculatorMessages::ADD;
 
     resultInst = new Result("1 + 2", 3, "1 + 2 = 3");
 }
@@ -38,7 +38,10 @@ void whenTestingResult::TearDown()
     delete resultInst;
 }
 
-TEST_F(whenTestingResult, WhenCreatingResult_CorrectFullResultReturned)
+/**
+* @brief Unit test for getting the full Result from a Result object
+*/
+TEST_F(whenTestingResult, WhenGettingFullResult_CorrectFullResultReturned)
 {
-    ASSERT_EQ(resultInst->getFullResult(), "1 + 2 = 3");
+    EXPECT_EQ("1 + 2 = 3", resultInst->getFullResult());
 }

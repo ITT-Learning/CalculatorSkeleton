@@ -10,21 +10,26 @@
 
 #include <string>
 
-namespace calculator 
-{
-    class IResult
-    {
-        public:
-            /**
-             * @brief Destroy the IResult object
-             */
-            virtual ~IResult() = default;
+namespace calculator {
 
-            /**
-             * @brief return the result objects full result
-             * @return std::string 
-             */
-            virtual std::string getFullResult() const = 0;
-    };
-}
+/**
+* @brief IResult interface which exposes to other components
+*/
+
+class IResult
+{
+    public:
+        /**
+         * @brief Destroy the IResult object
+         */
+        virtual ~IResult() = default;
+
+        /**
+         * @brief virtual function that will be defined by classes inheriting from the Interface
+         */
+        virtual std::string getFullResult() const = 0;
+};
+
+} //namespace calculator
+
 #endif  // ICALCULATOR_H

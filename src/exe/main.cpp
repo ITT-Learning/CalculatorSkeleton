@@ -12,20 +12,22 @@
 
 int main() 
 {
-    while(true)
+    bool running = true;
+    while(running)
     {
         calculator::Calculator calculator;
-        std::string response;
-
         calculator.runCalculator();
 
         std::cout << calculator::CalculatorMessages::RETRY_MESSAGE << std::endl;
         
+        std::string response;
         std::cin >> response;
-        if (response[0] != 'y' &&  response[0] != 'Y')
+        if (response[0] != 'y' && response[0] != 'Y') // didn't save 'y's in messages since only using here
         {
             std::cout << calculator::CalculatorMessages::OUTRO_MESSAGE << std::endl;
-            return 0;
+            running = false;
         }
     }
+
+    return 0;
 }

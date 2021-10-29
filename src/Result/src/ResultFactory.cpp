@@ -15,19 +15,19 @@
 #include "ResultFactory.h"
 
 
-namespace calculator
-{
+namespace calculator {
 
-//*************/
-// ResultFactory public methods /
-///
+// ***************************************************************************** /
+// ***************** Result Factory public methods ***************************** /
+// ***************************************************************************** /
    
-    std::shared_ptr<IResult> ResultFactory::createResult(const std::string &originalEquation, float answer)
-    {
-        std::stringstream stringStream;
-        
-        stringStream << originalEquation << CalculatorMessages::EQUALS << answer;
-        
-        return std::make_shared<Result>(originalEquation, answer, stringStream.str());
-    }
+std::shared_ptr<IResult> ResultFactory::createResult(const std::string &originalEquation, float answer)
+{
+    std::stringstream stringStream;
+    
+    stringStream << originalEquation << CalculatorMessages::EQUALS << answer;
+    
+    return std::make_shared<Result>(originalEquation, answer, stringStream.str());
 }
+
+} //namespace calculator

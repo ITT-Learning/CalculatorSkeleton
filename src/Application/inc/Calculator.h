@@ -11,32 +11,28 @@
 #include <iostream>
 
 #include "Parser.h"
-namespace calculator
+namespace calculator {
+
+/**
+* @brief Calculator interface which exposes to other components
+*/
+
+class Calculator
 {
-    class Calculator
-    {
-        public:
-            /**
-             * @brief initiates calculator and works with the parser to return a result object
-             * @param futureVector is the thread for a created vector object
-             * @param futureParsedExpression is the thread for a created expression object 
-            */
-            void runCalculator();
+    public:
+        /**
+         * @brief initiates calculator and works with the parser to return a result object
+        */
+        void runCalculator();
 
-            /**
-             * @brief takes in a string for calculator and validates input
-             * @param operation is the operator entered (+, - , / or % , * or x)
-            */
-            bool validateInput(const std::string &input);
-
-            /**
-             * @brief Runs a switch statement with entered operator, and then chooses the correct 
-             * function to return the calculated float then writes answer to the console
-             * @param answer is what is returned from the different math functions, 
-             * and used to write to the console.
-            */
-            float calculate(const Expression &parsedExpression);
-    };
+        /**
+         * @brief Runs a switch statement with entered operator to calculate 2 numbers
+         * @param [in] parsedExpression an expression object containing 2 numbers and an operators
+         * @return the calculated float answer
+        */
+        float calculate(const Expression &parsedExpression);
+};
 
 }//namespace calculator
+
 #endif  // CALCULATOR_H

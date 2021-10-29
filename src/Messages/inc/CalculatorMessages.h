@@ -9,87 +9,134 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <string>
-namespace calculator
+namespace calculator {
+class CalculatorMessages
 {
-    class CalculatorMessages
-    {
-        public:
-            /**
-             * @brief equals sign
-             */
-            static constexpr const char *EQUALS = " = ";
+    public:
+        /**
+         * @brief available operations for loops and comparing against input
+         */
+        static constexpr const char *POSSIBLE_OPERATIONS = "+-/%*xX";
 
-            /**
-             * @brief an empty space
-             */
-            static constexpr const char EMPTY_SPACE = ' ';
+        /**
+         * @brief addition operation
+         */
+        static constexpr const char ADD = '+';
 
-            /**
-             * @brief Intro message on program start
-             */
-            static constexpr const char *INTRODUCTION_MESSAGE = "Let's calculate something!";
+        /**
+         * @brief subtraction operation
+         */
+        static constexpr const char SUBTRACT = '-';
 
-            /**
-             * @brief how to use the calculator
-             */
-            static constexpr const char *INSTRUCTIONS_MESSAGE = "Enter a number, an operator, and another number...";
+        /**
+         * @brief division operation
+         */
+        static constexpr const char DIVIDE = '/';
+        static constexpr const char DIVIDE2 = '%';
 
-            /**
-             * @brief displays after finishing calculation
-             */
-            static constexpr const char *RETRY_MESSAGE = "Do you have another calculation? (y/n)";
+        /**
+         * @brief division operation
+         */
+        static constexpr const char MULTIPLY = '*';
+        static constexpr const char MULTIPLY2 = 'x';
+        static constexpr const char MULTIPLY3 = 'X';
 
-            /**
-             * @brief message on program exit
-             */
-            static constexpr const char *OUTRO_MESSAGE = "Goodbye!";
+        /**
+         * @brief equals sign
+         */
+        static constexpr const char *EQUALS = " = ";
 
-            /**
-             * @brief message on program exit
-             */
-            static constexpr const char *ERROR_INVALID_OPERATOR = " Invalid operator detected";
+        /**
+         * @brief an empty space
+         */
+        static constexpr const char EMPTY_SPACE = ' ';
 
-            /**
-             * @brief Beginning of error message
-             */
-            static constexpr const char *ERROR_MESSAGE = "Error:";
+        /**
+         * @brief an empty space
+         */
+        static constexpr const char PERIOD = '.';
 
-            /**
-             * @brief appended to error message if expression gets through vector but ends up as an invalid expression after 
-             */
-            static constexpr const char *ERROR_MESSAGE_INVALID_EXPRESSION = "Invalid expression detected";
+        /**
+         * @brief an empty space
+         */
+        static constexpr const char OPEN_PARENTHESIS = '(';
 
-            /**
-             * @brief appended to error message if divide by zero is attempted
-             */
-            static constexpr const char *ERROR_MESSAGE_DIVIDE_BY_ZERO = " divide by zero";
+        /**
+         * @brief an empty space
+         */
+        static constexpr const char CLOSE_PARENTHESIS = ')';
+
+        /**
+         * @brief an empty space
+         */
+        static constexpr const char *EMPTY_STRING = "";
+
+        /**
+         * @brief Intro message on program start
+         */
+        static constexpr const char *INTRODUCTION_MESSAGE = "Let's calculate something!";
+
+        /**
+         * @brief how to use the calculator
+         */
+        static constexpr const char *INSTRUCTIONS_MESSAGE = "Enter a number, an operator, and another number...";
+
+        /**
+         * @brief displays after finishing calculation
+         */
+        static constexpr const char *RETRY_MESSAGE = "Do you have another calculation? (y/n)";
+
+        /**
+         * @brief message on program exit
+         */
+        static constexpr const char *OUTRO_MESSAGE = "Goodbye!";
+
+        /**
+         * @brief message on program exit
+         */
+        static constexpr const char *ERROR_INVALID_OPERATOR = " Invalid operator detected";
+
+        /**
+         * @brief Beginning of error message
+         */
+        static constexpr const char *ERROR_MESSAGE = "Error:";
+
+        /**
+         * @brief appended to error message if expression gets through vector but ends up as an invalid expression after 
+         */
+        static constexpr const char *ERROR_MESSAGE_INVALID_EXPRESSION = "Invalid expression detected";
+
+        /**
+         * @brief appended to error message if divide by zero is attempted
+         */
+        static constexpr const char *ERROR_MESSAGE_DIVIDE_BY_ZERO = " divide by zero";
+    
+        /**
+         * @brief appended to error message if number entered incorrectly
+         */
+        static constexpr const char *ERROR_MESSAGE_INVALID_NUMBER = " Invalid number detected";
+
+        /**
+         * @brief appended to error message if input entered is at least three calculation units
+         */
+        static constexpr const char *ERROR_MESSAGE_INVALID_INPUT_LENGTH = " Invalid input length";
+
+        /**
+         * @brief used when creating vector
+         */
+        static constexpr const char *CREATING_EQUATIONS = "\rCreating Equations...";
+
+        /**
+         * @brief used when breaking down equation and calculating
+         */
+        static constexpr const char *BREAKING_DOWN_AND_CALCULATING = "\rBreaking Down Equation / Calculating...";
         
-            /**
-             * @brief appended to error message if number entered incorrectly
-             */
-            static constexpr const char *ERROR_MESSAGE_INVALID_NUMBER = " Invalid number detected";
+        /**
+         * @brief used for checking if a value is a float
+         */
+        static constexpr const char *FLOAT_REGEX = R"([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))";    
+};
 
-            /**
-             * @brief appended to error message if input entered is at least three calculation units
-             */
-            static constexpr const char *ERROR_MESSAGE_INVALID_INPUT_LENGTH = " Invalid input length";
-
-            /**
-             * @brief used when creating vector
-             */
-            static constexpr const char *CREATING_VECTOR = "\rCreating Vector...";
-
-            /**
-             * @brief used when breaking down equation and calculating
-             */
-            static constexpr const char *BREAKING_DOWN_AND_CALCULATING = "\rBreaking Down Equation / Calculating...";
-            
-            /**
-             * @brief used for checking if a value is a float
-             */
-            static constexpr const char *FLOAT_REGEX = R"([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))";
-
-            
-    };
 }//namespace calculator
+
 #endif  // CALCULATOR_H
