@@ -24,123 +24,113 @@ namespace calculator {
 // ***************** Parser public methods ************************************* /
 // ***************************************************************************** /
 
-std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> Parser::createVector(const std::string &fullEquation)
+std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> Parser::getValidParsedEquationUnits(const std::string &fullEquation)
 { 
-    editedEquation_ = fullEquation;
-    std::shared_ptr<std::vector<ExpressionUnit>> equationVector;
-    equationVector = std::make_shared<std::vector<ExpressionUnit>>();
+    std::shared_ptr<std::vector<ExpressionUnit>> equations;
+    equations = std::make_shared<std::vector<ExpressionUnit>>();
     ExpressionUnit currentUnit;
-    bool checkingNumber = true;
-    bool validVector = true;
+    bool isCheckingForNumber = true;
+    bool isValid = true;
 
     std::this_thread::sleep_for(std::chrono::milliseconds(300)); //sleeping to show off thread in use
+
+    setEditedEquation(fullEquation);
 
     while (editedEquation_.length() > 0)
     {
         if (editedEquation_.at(0) == CalculatorMessages::OPEN_PARENTHESIS || editedEquation_.at(0) == CalculatorMessages::CLOSE_PARENTHESIS)
         {
-            if (editedEquation_.at(0) == CalculatorMessages::OPEN_PARENTHESIS)
-            {
-                checkingNumber = false;
-            }
-
-            if (editedEquation_.at(0) == CalculatorMessages::CLOSE_PARENTHESIS)
-            {
-                checkingNumber = true;
-            }
-
             currentUnit.operation = editedEquation_.at(0);
             currentUnit.isValid = true;
-            editedEquation_ = editedEquation_.erase(0, 1);
+            isCheckingForNumber = checkParenthesis(currentUnit.operation);
         }
         else
         {
-            checkingNumber ? currentUnit = findNumber(editedEquation_) : currentUnit = findOperator(editedEquation_);
+            isCheckingForNumber ? currentUnit = getNumberExpressionUnit(editedEquation_) : currentUnit = getOperatorExpressionUnit(editedEquation_.at(0));
         }
         
         if(currentUnit.isValid)
         {
-            checkingNumber = !checkingNumber;
-            equationVector->push_back(currentUnit);
+            setEditedEquation(currentUnit.unitLength);
+            isCheckingForNumber = !isCheckingForNumber;
+            equations->push_back(currentUnit);
         }
         else
         {
-            validVector = false;
+            isValid = false;
             break;
         }
     }
 
-    if(validVector && equationVector->size() < 3) // ensuring an expressionUnit vector has at least 3 units
+    if(isValid && equations->size() < EXPRESSION_SIZE) // ensuring an expressionUnit vector has at least 3 units
     {
         std::cout << std::endl;
         std::cout << CalculatorMessages::ERROR_MESSAGE << CalculatorMessages::ERROR_MESSAGE_INVALID_INPUT_LENGTH << std::endl;
-        validVector = false;
+        isValid = false;
     }
 
-    if (validVector)
+    if (isValid)
     {
-        validVector = validateParenthesis(equationVector);
+        isValid = validateParenthesis(equations);
     }
 
-    std::pair < std::shared_ptr<std::vector<ExpressionUnit>>,bool> completedVector (equationVector, validVector);
+    std::pair < std::shared_ptr<std::vector<ExpressionUnit>>,bool> expressionUnits (equations, isValid);
 
-    return completedVector;
+    return expressionUnits;
 }
 
-Expression Parser::breakDownEquation(const std::shared_ptr<std::vector<ExpressionUnit>> &equationVector)
+Expression Parser::breakDownEquation(const std::shared_ptr<std::vector<ExpressionUnit>> &equations)
 {
-    Expression parsedExpression;
-    char       importantOperator;
-    char       lastParenthesis = CalculatorMessages::OPEN_PARENTHESIS;
-    size_t     startingPoint = 0;
-    size_t     endingPoint = equationVector->size();
-    
     std::this_thread::sleep_for(std::chrono::milliseconds(800)); //sleeping to show off thread in use
+    
+    char lastParenthesis = CalculatorMessages::OPEN_PARENTHESIS;  
+    size_t startingPoint = 0;
+    size_t endingPoint = equations->size();
 
-    for (size_t i = 0; i < equationVector->size(); i++) //find parenthesis that open then close
+    for (size_t i = 0; i < equations->size(); i++) //find parenthesis that open then close
     {
-        if (equationVector->at(i).operation == CalculatorMessages::OPEN_PARENTHESIS)
+        if (equations->at(i).operation == CalculatorMessages::OPEN_PARENTHESIS)
         {
             startingPoint = i;
         }
 
-        if (equationVector->at(i).operation == CalculatorMessages::CLOSE_PARENTHESIS && lastParenthesis == CalculatorMessages::OPEN_PARENTHESIS)
+        if (equations->at(i).operation == CalculatorMessages::CLOSE_PARENTHESIS && lastParenthesis == CalculatorMessages::OPEN_PARENTHESIS)
         {
             endingPoint = i;
-            equationVector->erase(equationVector->begin() + startingPoint); //erase parenthesis
-            equationVector->erase(equationVector->begin() + (endingPoint - 1));
+            equations->erase(equations->begin() + startingPoint); //erase parenthesis
+            equations->erase(equations->begin() + (endingPoint - 1));
             endingPoint = endingPoint - 2;
             break;
         }
 
-        if (equationVector->at(i).operation == CalculatorMessages::OPEN_PARENTHESIS || equationVector->at(i).operation == CalculatorMessages::CLOSE_PARENTHESIS)
+        if (equations->at(i).operation == CalculatorMessages::OPEN_PARENTHESIS || equations->at(i).operation == CalculatorMessages::CLOSE_PARENTHESIS)
         {
-            lastParenthesis = equationVector->at(i).operation;
+            lastParenthesis = equations->at(i).operation;
         }
     }
 
-    if ((startingPoint + 2) <= endingPoint) // check to ensure user didn't enter something like "(1+)"
+    char priorityOperator;
+    Expression parsedExpression;
+
+    if ((startingPoint + (EXPRESSION_SIZE - 1)) <= endingPoint) // check to ensure user didn't enter something like "(1+)"
     {
         for (size_t i = startingPoint; i < endingPoint; i++) //find operator in order
         {
-            if (equationVector->at(i).isValid)
+            if (equations->at(i).isValid)
             {
-                parsedExpression.isValidExpression = true;
-                if (equationVector->at(i).operation == CalculatorMessages::OPERATIONS[2] || 
-                    equationVector->at(i).operation == CalculatorMessages::OPERATIONS[3] || 
-                    equationVector->at(i).operation == CalculatorMessages::OPERATIONS[4] || 
-                    equationVector->at(i).operation == CalculatorMessages::OPERATIONS[5])
+                parsedExpression.isValid = true;
+                if (equations->at(i).operation == CalculatorMessages::DIVIDE || equations->at(i).operation == CalculatorMessages::MULTIPLY)
                 {
-                    importantOperator = equationVector->at(i).operation;
+                    priorityOperator = equations->at(i).operation;
                     parsedExpression.placementIndex = i - 1;
                     break;
                 }
                 
-                if (equationVector->at(i).operation == CalculatorMessages::OPERATIONS[1] || equationVector->at(i).operation == CalculatorMessages::OPERATIONS[0])
+                if (equations->at(i).operation == CalculatorMessages::SUBTRACT || equations->at(i).operation == CalculatorMessages::ADD)
                 {
-                    if(importantOperator != CalculatorMessages::OPERATIONS[1]  && importantOperator != CalculatorMessages::OPERATIONS[0])
+                    if(priorityOperator != CalculatorMessages::SUBTRACT  && priorityOperator != CalculatorMessages::ADD)
                     {
-                        importantOperator = equationVector->at(i).operation;
+                        priorityOperator = equations->at(i).operation;
                         parsedExpression.placementIndex = i - 1;
                     }
 
@@ -149,25 +139,25 @@ Expression Parser::breakDownEquation(const std::shared_ptr<std::vector<Expressio
             }
             else
             {
-                parsedExpression.isValidExpression = false;
+                parsedExpression.isValid = false;
                 break;
             }
         }
     }
     else
     {
-        parsedExpression.isValidExpression = false;
-        equationVector->erase(equationVector->begin() + startingPoint, equationVector->begin() + endingPoint);
+        parsedExpression.isValid = false;
+        equations->erase(equations->begin() + startingPoint, equations->begin() + endingPoint);
     }
 
-    if (parsedExpression.isValidExpression)
+    if (parsedExpression.isValid)
     {
-        parsedExpression.operation = importantOperator; //set up expression Object
-        parsedExpression.number1 = equationVector->at(parsedExpression.placementIndex).number; // start at the first unit of expression
-        parsedExpression.number2 = equationVector->at(parsedExpression.placementIndex + 2).number; // find the next number unit by adding 2 (skipping over the operator)
-        equationVector->erase(
-        equationVector->begin() + parsedExpression.placementIndex, //erase starting at the first number
-        equationVector->begin() + parsedExpression.placementIndex + 3); //delete 3 units (the length of a parsed expression)
+        parsedExpression.operation = priorityOperator; //set up expression Object
+        parsedExpression.number1 = equations->at(parsedExpression.placementIndex).number; // start at the first unit of expression
+        parsedExpression.number2 = equations->at(parsedExpression.placementIndex + (EXPRESSION_SIZE - 1)).number; // find the next number unit by adding 2 (skipping over the operator)
+        equations->erase(
+        equations->begin() + parsedExpression.placementIndex, //erase starting at the first number
+        equations->begin() + parsedExpression.placementIndex + EXPRESSION_SIZE); //delete 3 units (the length of a parsed expression)
     }
 
     return parsedExpression;
@@ -188,7 +178,7 @@ std::string Parser::getUserInput()
     }
 
     originalEquation_ = userInput;
-
+    
     return removeSpaces(userInput); 
 }
 
@@ -201,21 +191,21 @@ std::string Parser::getOriginalEquation()
 // ***************** Parser private methods ************************************ /
 // ***************************************************************************** /
 
-bool Parser::validateParenthesis(std::shared_ptr<std::vector<ExpressionUnit>> &equationVector)
+bool Parser::validateParenthesis(std::shared_ptr<std::vector<ExpressionUnit>> &equations)
 {
     int openParenthesisCount = 0;
     int closeParenthesisCount = 0;
     
-    for (size_t i = 0; i < equationVector->size(); i++) //find parenthesis
+    for (size_t i = 0; i < equations->size(); i++) //find parenthesis
     {
-        if (equationVector->at(i).isValid)
+        if (equations->at(i).isValid)
         {
-            if (equationVector->at(i).operation == CalculatorMessages::OPEN_PARENTHESIS)
+            if (equations->at(i).operation == CalculatorMessages::OPEN_PARENTHESIS)
             {
                 openParenthesisCount++;
             }
 
-            if (equationVector->at(i).operation == CalculatorMessages::CLOSE_PARENTHESIS)
+            if (equations->at(i).operation == CalculatorMessages::CLOSE_PARENTHESIS)
             {
                 closeParenthesisCount++;
             }
@@ -230,23 +220,34 @@ bool Parser::validateParenthesis(std::shared_ptr<std::vector<ExpressionUnit>> &e
     return openParenthesisCount == closeParenthesisCount;
 }
 
-ExpressionUnit Parser::findOperator(std::string &editedEquation)
+ExpressionUnit Parser::getOperatorExpressionUnit(char operation)
 {
     ExpressionUnit expressionUnit;
-    expressionUnit.operation = editedEquation.at(0);
-    expressionUnit.isValid = validateOperator(expressionUnit.operation);
-    editedEquation_ = editedEquation.erase(0, 1);
+    expressionUnit.isValid = validateOperator(operation);
     
+    if (operation == CalculatorMessages::MULTIPLY2 || operation == CalculatorMessages::MULTIPLY3)
+    {
+        expressionUnit.operation = CalculatorMessages::MULTIPLY;
+    }
+    else if (operation == CalculatorMessages::DIVIDE2)
+    {
+        expressionUnit.operation = CalculatorMessages::DIVIDE;
+    }
+    else 
+    {
+        expressionUnit.operation = operation;
+    }
+
     return expressionUnit;
 }
 
-bool Parser::validateOperator(const char &operation)
+bool Parser::validateOperator(const char operation)
 {
     bool isValid = false;
 
-    for (size_t i = 0; CalculatorMessages::OPERATIONS[i] != '\0'; i++)
+    for (size_t i = 0; CalculatorMessages::POSSIBLE_OPERATIONS[i] != '\0'; i++)
     {
-        if (operation == CalculatorMessages::OPERATIONS[i])
+        if (operation == CalculatorMessages::POSSIBLE_OPERATIONS[i])
         {
             isValid = true;
         }
@@ -277,14 +278,13 @@ bool Parser::validateFloat(const std::string &floatString)
     return isValid;
 }
 
-ExpressionUnit Parser::findNumber(std::string &editedEquation)
+ExpressionUnit Parser::getNumberExpressionUnit(std::string &editedEquation)
 {
     std::string numberString = CalculatorMessages::EMPTY_STRING;
-    ExpressionUnit expressionUnit;
 
     for (auto currentChar : editedEquation)
     {
-        if (currentChar == CalculatorMessages::OPERATIONS[1] && numberString.length() == 0)
+        if (currentChar == CalculatorMessages::SUBTRACT && numberString.length() == 0)
         {
             numberString += currentChar;
         }
@@ -302,13 +302,13 @@ ExpressionUnit Parser::findNumber(std::string &editedEquation)
         }      
     }
 
+    ExpressionUnit expressionUnit;
     expressionUnit.isValid = validateFloat(numberString);
     if (expressionUnit.isValid)
     {
         expressionUnit.number = std::stof(numberString);
+        expressionUnit.unitLength = numberString.length();
     }
-
-    editedEquation_ = editedEquation_.erase(0, numberString.length());
 
     return expressionUnit;
 }
@@ -329,6 +329,33 @@ std::string Parser::removeSpaces(const std::string &userInput)
     }
 
     return fullEquation;
+}
+
+bool Parser::checkParenthesis(char parenthesis)
+{
+    bool isCheckingForNumber;
+
+    if (parenthesis == CalculatorMessages::OPEN_PARENTHESIS)
+    {
+        isCheckingForNumber = false;
+    }
+
+    if (parenthesis == CalculatorMessages::CLOSE_PARENTHESIS)
+    {
+        isCheckingForNumber = true;
+    }
+
+    return isCheckingForNumber;
+}
+
+void Parser::setEditedEquation(const std::string &fullEquation)
+{
+    editedEquation_ = fullEquation;
+}
+
+void Parser::setEditedEquation(int editAmmount)
+{
+    editedEquation_ = editedEquation_.erase(0, editAmmount);
 }
 
 } //namespace calculator

@@ -43,7 +43,7 @@ void whenTestingCalculator::TearDown()
 */
 TEST_F(whenTestingCalculator, WhenAddingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    sampleExpression.operation = CalculatorMessages::OPERATIONS[0];
+    sampleExpression.operation = CalculatorMessages::ADD;
     EXPECT_FLOAT_EQ(0, calculatorInst->calculate(sampleExpression));
 }
 
@@ -52,7 +52,7 @@ TEST_F(whenTestingCalculator, WhenAddingPositiveAndNegativeIntegers_ThenCorrectV
 */
 TEST_F(whenTestingCalculator, WhenSubtractingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    sampleExpression.operation = CalculatorMessages::OPERATIONS[1];
+    sampleExpression.operation = CalculatorMessages::SUBTRACT;
     EXPECT_FLOAT_EQ(-20, calculatorInst->calculate(sampleExpression));
 }
 /**
@@ -60,7 +60,7 @@ TEST_F(whenTestingCalculator, WhenSubtractingPositiveAndNegativeIntegers_ThenCor
 */
 TEST_F(whenTestingCalculator, WhenDividingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    sampleExpression.operation = CalculatorMessages::OPERATIONS[2];
+    sampleExpression.operation = CalculatorMessages::DIVIDE;
     EXPECT_FLOAT_EQ(-1, calculatorInst->calculate(sampleExpression));
 }
 /**
@@ -68,7 +68,7 @@ TEST_F(whenTestingCalculator, WhenDividingPositiveAndNegativeIntegers_ThenCorrec
 */
 TEST_F(whenTestingCalculator, WhenMultiplyingPositiveAndNegativeIntegers_ThenCorrectValueReturned)
 {
-    sampleExpression.operation = CalculatorMessages::OPERATIONS[4];
+    sampleExpression.operation = CalculatorMessages::MULTIPLY;
     EXPECT_FLOAT_EQ(-100, calculatorInst->calculate(sampleExpression));
 }
 
@@ -77,7 +77,7 @@ TEST_F(whenTestingCalculator, WhenMultiplyingPositiveAndNegativeIntegers_ThenCor
 */
 TEST_F(whenTestingCalculator, WhenDividingByZero_ThenInfIsTrue)
 {
-    sampleExpression.operation = CalculatorMessages::OPERATIONS[2];
+    sampleExpression.operation = CalculatorMessages::DIVIDE;
     sampleExpression.number2 = 0;
     EXPECT_TRUE(std::isinf(calculatorInst->calculate(sampleExpression)));
 }

@@ -49,7 +49,7 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithValidExpressionUnits_ThenT
 {
     unit1.number = 1;
     unit1.isValid = true;
-    unit2.operation = CalculatorMessages::OPERATIONS[0];
+    unit2.operation = CalculatorMessages::ADD;
     unit2.isValid = true;
     unit3.number = 1;
     unit3.isValid = true;
@@ -61,7 +61,7 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithValidExpressionUnits_ThenT
 
     Expression sampleExpression = parserInst->breakDownEquation(sampleVector);
     
-    EXPECT_TRUE(sampleExpression.isValidExpression); //1+1
+    EXPECT_TRUE(sampleExpression.isValid); //1+1
 }
 
 /**
@@ -82,7 +82,7 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithNotValidExpressionUnits_Th
     sampleVector->push_back(unit3);
     Expression sampleExpression = parserInst->breakDownEquation(sampleVector);
     
-    EXPECT_FALSE(sampleExpression.isValidExpression); //1?1
+    EXPECT_FALSE(sampleExpression.isValid); //1?1
 }
 
 /**
@@ -92,11 +92,11 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithDivision_ThenDivisionExpre
 {
     unit1.number = 1;
     unit1.isValid = true;
-    unit2.operation = CalculatorMessages::OPERATIONS[0];
+    unit2.operation = CalculatorMessages::ADD;
     unit2.isValid = true;
     unit3.number = 1;
     unit3.isValid = true;
-    unit4.operation = CalculatorMessages::OPERATIONS[2];
+    unit4.operation = CalculatorMessages::DIVIDE;
     unit4.isValid = true;
     unit5.number = 5;
     unit5.isValid = true;
@@ -109,7 +109,7 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithDivision_ThenDivisionExpre
     sampleVector->push_back(unit5);
 
     Expression createdExpression = parserInst->breakDownEquation(sampleVector);
-    char returnedExpressionOperator = CalculatorMessages::OPERATIONS[2];
+    char returnedExpressionOperator = CalculatorMessages::DIVIDE;
     
     EXPECT_EQ(returnedExpressionOperator, createdExpression.operation); //1+1/5
 }
@@ -121,11 +121,11 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplication_ThenMultipl
 {
     unit1.number = 1;
     unit1.isValid = true;
-    unit2.operation = CalculatorMessages::OPERATIONS[1];
+    unit2.operation = CalculatorMessages::ADD;
     unit2.isValid = true;
     unit3.number = 1;
     unit3.isValid = true;
-    unit4.operation = CalculatorMessages::OPERATIONS[4];
+    unit4.operation = CalculatorMessages::MULTIPLY;
     unit4.isValid = true;
     unit5.number = 5;
     unit5.isValid = true;
@@ -139,7 +139,7 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplication_ThenMultipl
     sampleVector->push_back(unit5);
 
     Expression createdExpression = parserInst->breakDownEquation(sampleVector);
-    char returnedExpressionOperator = CalculatorMessages::OPERATIONS[4];
+    char returnedExpressionOperator = CalculatorMessages::MULTIPLY;
     
     EXPECT_EQ(returnedExpressionOperator, createdExpression.operation); //1+1*5
 }
@@ -151,11 +151,11 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplicationAndDivision_
 {
     unit1.number = 1;
     unit1.isValid = true;
-    unit2.operation = CalculatorMessages::OPERATIONS[2];
+    unit2.operation = CalculatorMessages::DIVIDE;
     unit2.isValid = true;
     unit3.number = 1;
     unit3.isValid = true;
-    unit4.operation = CalculatorMessages::OPERATIONS[4];
+    unit4.operation = CalculatorMessages::MULTIPLY;
     unit4.isValid = true;
     unit5.number = 5;
     unit5.isValid = true;
@@ -169,7 +169,7 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplicationAndDivision_
     sampleVector->push_back(unit5);
 
     Expression createdExpression = parserInst->breakDownEquation(sampleVector);
-    char returnedExpressionOperator = CalculatorMessages::OPERATIONS[2];
+    char returnedExpressionOperator = CalculatorMessages::DIVIDE;
     
     EXPECT_EQ(returnedExpressionOperator, createdExpression.operation); //1/1*5
 }
@@ -180,19 +180,22 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithMultiplicationAndDivision_
 TEST_F(whenTestingParser, WhenCreatingVector_CorrectVectorReturned)
 {
     unit1.number = 1;
-    unit2.operation = CalculatorMessages::OPERATIONS[0];
+    unit2.operation = CalculatorMessages::ADD;
     unit3.number = -2;
-    unit4.operation = CalculatorMessages::OPERATIONS[2];
+    unit4.operation = CalculatorMessages::DIVIDE;
     unit5.number = 3.2;
 
     auto sampleVector = std::make_shared<std::vector<ExpressionUnit>> ();
-    std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> createdVector = parserInst->createVector("1+-2/3.2");
+    std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> createdVector = parserInst->getValidParsedEquationUnits("1+-2/3.2");
 
     sampleVector->push_back(unit1);
     sampleVector->push_back(unit2);
     sampleVector->push_back(unit3);
     sampleVector->push_back(unit4);
     sampleVector->push_back(unit5);
+    
+
+    auto test = createdVector.first->at(1);
 
     EXPECT_EQ(sampleVector->at(0).number, createdVector.first->at(0).number);
     EXPECT_EQ(sampleVector->at(1).operation, createdVector.first->at(1).operation);
@@ -207,10 +210,10 @@ TEST_F(whenTestingParser, WhenCreatingVector_CorrectVectorReturned)
 TEST_F(whenTestingParser, WhenCreatingVectorWithParenthesis_CorrectVectorReturned)
 {
     unit1.number = 1;
-    unit2.operation = CalculatorMessages::OPERATIONS[0];
+    unit2.operation = CalculatorMessages::ADD;
     unit3.operation = CalculatorMessages::OPEN_PARENTHESIS;
     unit4.number = -2;
-    unit5.operation = CalculatorMessages::OPERATIONS[2];
+    unit5.operation = CalculatorMessages::DIVIDE;
     unit6.number = 3.2;
     unit7.operation = CalculatorMessages::CLOSE_PARENTHESIS;
 
@@ -224,7 +227,7 @@ TEST_F(whenTestingParser, WhenCreatingVectorWithParenthesis_CorrectVectorReturne
     sampleVector->push_back(unit6);
     sampleVector->push_back(unit7);
 
-    std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> createdVector = parserInst->createVector("1+(-2/3.2)");
+    std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> createdVector = parserInst->getValidParsedEquationUnits("1+(-2/3.2)");
 
     EXPECT_EQ(sampleVector->at(0).number, createdVector.first->at(0).number);
     EXPECT_EQ(sampleVector->at(1).operation, createdVector.first->at(1).operation);
@@ -253,5 +256,5 @@ TEST_F(whenTestingParser, WhenBreakingDownEquationWithInvalidExpression_ValidExp
     sampleVector->push_back(unit3);
     Expression createdExpression = parserInst->breakDownEquation(sampleVector);
     
-    EXPECT_FALSE(createdExpression.isValidExpression); //(1)
+    EXPECT_FALSE(createdExpression.isValid); //(1)
 }

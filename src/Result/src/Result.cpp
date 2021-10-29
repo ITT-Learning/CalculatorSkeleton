@@ -10,10 +10,13 @@
 
 namespace calculator {
 
-//*************/
-// Result public methods /
-///
-   
+Result::Result(std::string originalEquation, float answer, std::string fullResult) :
+originalEquation_(originalEquation), answer_(answer), fullResult_(fullResult){}
+
+// ************************************************************************* /
+// ***************** Result public methods ********************************* /
+// ************************************************************************* /
+        
 std::string Result::getFullResult() const
 {
     return fullResult_;

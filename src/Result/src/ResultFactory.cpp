@@ -17,9 +17,9 @@
 
 namespace calculator {
 
-//*************/
-// ResultFactory public methods /
-///
+// ***************************************************************************** /
+// ***************** Result Factory public methods ***************************** /
+// ***************************************************************************** /
    
 std::shared_ptr<IResult> ResultFactory::createResult(const std::string &originalEquation, float answer)
 {

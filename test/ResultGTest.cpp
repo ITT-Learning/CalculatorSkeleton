@@ -29,7 +29,7 @@ void whenTestingResult::SetUp()
     Expression sampleExpression;
     sampleExpression.number1 = 1;
     sampleExpression.number2 = 2;
-    sampleExpression.operation = CalculatorMessages::OPERATIONS[0];
+    sampleExpression.operation = CalculatorMessages::ADD;
 
     resultInst = new Result("1 + 2", 3, "1 + 2 = 3");
 }

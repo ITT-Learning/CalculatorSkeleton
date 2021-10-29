@@ -13,25 +13,25 @@
 #include "Parser.h"
 namespace calculator {
 
-    /**
-    * @brief Calculator interface which exposes to other components
-    */
-   
-    class Calculator
-    {
-        public:
-            /**
-             * @brief initiates calculator and works with the parser to return a result object
-            */
-            void runCalculator();
+/**
+* @brief Calculator interface which exposes to other components
+*/
 
-            /**
-             * @brief Runs a switch statement with entered operator to calculate 2 numbers
-             * @param [in] parsedExpression an expression object containing 2 numbers and an operators
-             * @return the calculated float answer
-            */
-            float calculate(const Expression &parsedExpression);
-    };
+class Calculator
+{
+    public:
+        /**
+         * @brief initiates calculator and works with the parser to return a result object
+        */
+        void runCalculator();
+
+        /**
+         * @brief Runs a switch statement with entered operator to calculate 2 numbers
+         * @param [in] parsedExpression an expression object containing 2 numbers and an operators
+         * @return the calculated float answer
+        */
+        float calculate(const Expression &parsedExpression);
+};
 
 }//namespace calculator
 
