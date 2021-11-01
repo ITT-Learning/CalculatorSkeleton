@@ -61,6 +61,12 @@ src/Application/test/googletest-*/
 src/Application/test/googletest-*
 src/Application/test/calculator_test
 
+# ignore third party libraries, they should all be built by CMake
+third-party/*
+!third-party/CMakeLists.txt
+!third-party/flatbuffers/CMakeLists.txt
+!third-party/fmt/CMakeLists.txt
+
 
 # ignore .vscode
 .vscode/
@@ -72,3 +78,6 @@ src/Application/test/calculator_test
 
 # ignore test folder
 test/*
+
+# output file 
+CalculatorData.txt

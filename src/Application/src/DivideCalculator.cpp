@@ -24,7 +24,7 @@ DivideCalculator::DivideCalculator(float firstNumber, float secondNumber)
 // ***************** DivideCalculator public methods ****************************/
 // ***************************************************************************** /
 
-float DivideCalculator::getResult()
+float DivideCalculator::getResult() const
 {
     int result = 0;
     if(secondNumber_ == 0) //if second number = 0, output error message
@@ -39,5 +39,11 @@ float DivideCalculator::getResult()
     
     return result;
 }
+
+std::string const DivideCalculator::toString()
+{
+    return std::to_string(firstNumber_) + CalculatorStrings::EMPTY_SPACE + operator_ + CalculatorStrings::EMPTY_SPACE + std::to_string(secondNumber_) + CalculatorStrings::EQUAL_SIGN + std::to_string(getResult());
+}
+
 
 } // namespace calculator
