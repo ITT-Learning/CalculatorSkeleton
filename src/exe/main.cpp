@@ -9,6 +9,7 @@
 #include "CalculatorApplication.h"
 #include "CalculatorStrings.h"
 #include "Parser.h"
+#include "History.h"
 
 using namespace calculator;
 /**
@@ -21,7 +22,8 @@ int main()
 
     while(again)
     {
-        CalculatorApplication::runCalculator();
+        CalculatorApplication calculatorApplication;
+        calculatorApplication.runCalculator();
 
         std::cout << CalculatorStrings::REPEAT_PROGRAM << std::endl;
         

@@ -36,9 +36,18 @@ class CalculatorStrings
         static constexpr const char PLUS = '+';
         static constexpr const char MINUS = '-';
         static constexpr const char DIVIDE = '/';
+        static constexpr const char SPACE = ' ';
         static constexpr const char TIMES = '*';
+        static constexpr const char OPEN_PARENTHESIS = '(';
+        static constexpr const char CLOSE_PARENTHESIS = ')';
         static constexpr const char EQUAL_SIGN = '=';
         static constexpr const char *FLOAT_REGEX = R"([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))";
+        static constexpr char NO_HISTORY[] = "There is currently no logged history";
+        static constexpr char BRACKET_CLOSE = '}';
+        static constexpr char BRACKET_OPEN  = '{';
+        static constexpr char W6_HISTORY_PROMPT[] = "[w] to move up, [s] to move down, or number [0+] to get by index";
+
+
 };
 
 } //namespace calculator

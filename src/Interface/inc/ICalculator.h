@@ -8,7 +8,10 @@
  */
 /////////////////////////////////////////////////////
 
+#include <iostream>
 #include <string>
+
+#include <CalculatorStrings.h>
 
 namespace calculator {
 class ICalculator 
@@ -21,18 +24,18 @@ class ICalculator
         ~ICalculator() = default;
 
         /**
-         * @brief Get the Result object 
-         * 
-         * @return float defined by calculation defined in child classes 
+         * @brief Get the Result object. Pure virtual function defined in child classes
+         * @return float after value calculated has been returned
          */
-        virtual float getResult() = 0;
+
+        virtual float getResult() const = 0;
 
         /**
          * @brief Convert to string function (output)
          * 
          * @return convert calculator output and functionality std::toString
          */
-        virtual std::string toString() = 0;
+        virtual std::string const toString() = 0;
 };
     
 } // namespace calculator

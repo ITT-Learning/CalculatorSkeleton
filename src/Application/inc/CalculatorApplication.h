@@ -20,9 +20,11 @@
 namespace calculator {
 
 /**
- * @brief This is the Class containing the functions and variables used in week 1
- */
-class CalculatorApplication : public ICalculator
+* @brief CalculatorApplication interface which exposes to other components
+*
+*/
+
+class CalculatorApplication
 {
     public:
         /**
@@ -36,14 +38,9 @@ class CalculatorApplication : public ICalculator
          * @param secondNumber [in] second number float
          * @param operation [in] operator char
          */
-        static int calculate(float firstNumber, float secondNumber, char operation);
-        
-        /**
-         * @brief Get the Result object. Pure virtual function defined in child classes
-         * @return float after value calculated has been returned
-         */
-        virtual float getResult() = 0;
 
+        static int calculate(float firstNumber, float secondNumber, char operation, std::string originalEquation);
+        
         /**
          * @brief Checks if the inputted value is within scope
          * @param number [in] value that the limit is being checked
@@ -56,23 +53,14 @@ class CalculatorApplication : public ICalculator
          * @brief main funtion that runs the calculator
          * 
          */
-        static void runCalculator();
         
-        /**
-         * @name ICalculator method.
-         * @{
-         */
+        void runCalculator();
         
-        std::string toString() override;
-        
-        /**
-         * @}
-         */
-
     protected:
         float firstNumber_;
         float secondNumber_;
         char  operator_; 
+        float finalCalculatedAnswer_; 
 
 };
 

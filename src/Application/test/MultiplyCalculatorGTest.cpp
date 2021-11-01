@@ -25,6 +25,14 @@ TEST(whenTestingMultiplyCalculator, WhenCallingMultiplyWithPositiveFloatingPoint
 {
     MultiplyCalculator multiCalc = MultiplyCalculator(10.0, 5.0);
     float result = multiCalc.getResult();
+    EXPECT_FLOAT_EQ(50, result);
+}
+
+/**
+ * @brief Unit test to make sure multiply with negative and positive floating points works
+ * 
+ */
+
 TEST(whenTestingMultiplyCalculator, WhenCallingMultiplyWithPositiveAndNegativeFloatingPoints_ThenCorrectNegativeValueReturn)
 {
     MultiplyCalculator multiCalc = MultiplyCalculator(10.0, -5.0);
