@@ -25,6 +25,7 @@ TEST(whenTestingDivideCalculator, WhenCallingDivideWithPositiveFloatingPoints_Th
 {
     DivideCalculator divideCalc = DivideCalculator(10.0, 5.0);
     float result = divideCalc.getResult();
+}
 /**
  * 
  */
