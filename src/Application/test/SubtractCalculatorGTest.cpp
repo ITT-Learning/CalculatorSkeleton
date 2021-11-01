@@ -17,16 +17,11 @@
 using namespace calculator;
 using namespace testing;
 
-class whenTestingSubtractCalculator : public :: testing :: Test
-{
-
-};
-
 /**
  * @brief Unit test to make sure subtraction with positive floating points works
  * 
  */
-TEST_F(whenTestingSubtractCalculator, WhenCallingSubtractWithPositiveFloatingPoints_ThenCorrectPositiveValueReturn)
+TEST(whenTestingSubtractCalculator, WhenCallingSubtractWithPositiveFloatingPoints_ThenCorrectPositiveValueReturn)
 {
     SubtractCalculator subCalc = SubtractCalculator(10.0, 5.0);
     float result = subCalc.getResult();
@@ -37,7 +32,7 @@ TEST_F(whenTestingSubtractCalculator, WhenCallingSubtractWithPositiveFloatingPoi
  * @brief Unit test to make sure subtraction with negative floating points works
  * 
  */
-TEST_F(whenTestingSubtractCalculator, WhenCallingSubtractWithNegativeFloatingPoints_ThenCorrectPositiveValueReturn)
+TEST(whenTestingSubtractCalculator, WhenCallingSubtractWithNegativeFloatingPoints_ThenCorrectPositiveValueReturn)
 {
     SubtractCalculator subCalc = SubtractCalculator(-10.0, -5.0);
     float result = subCalc.getResult();

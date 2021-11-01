@@ -6,8 +6,6 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include <iostream>
-
 #include "CalculatorApplication.h"
 #include "CalculatorStrings.h"
 #include "Parser.h"
@@ -20,21 +18,16 @@ using namespace calculator;
 int main() 
 {
     bool again = true;
-    //This calculator can do super basic and simple math. 
+
     while(again)
     {
-        Parser parser;
-        Expression parsedExpression = parser.parseFullEquation(parser.getUserInput());
-
-        if(parsedExpression.valid)
-        {
-            CalculatorApplication::calculate(parsedExpression.a, parsedExpression.b, parsedExpression.operation);
-        }
+        CalculatorApplication::runCalculator();
 
         std::cout << CalculatorStrings::REPEAT_PROGRAM << std::endl;
-
-        char repeat;         
-        std::cin >> repeat;
+        
+        char repeat;      
+        std::cin >> repeat; 
+ 
         if(repeat != CalculatorStrings::YES)
         {
             again = false;
@@ -42,4 +35,5 @@ int main()
     }
 
     return 0;
-}
+    
+} // namespace calculator

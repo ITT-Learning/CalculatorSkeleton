@@ -25,22 +25,38 @@ std::unique_ptr<ICalculator> CalculatorApplicationFactory::createCalculator(floa
         {
             case CalculatorStrings::PLUS :
             {
+<<<<<<< HEAD
                 result = std::unique_ptr<ICalculator>(new AddCalculator(firstNumber, secondNumber));
+=======
+                result = std::make_unique<AddCalculator>(firstNumber, secondNumber);
+>>>>>>> 2085be165f0cff9b9b8d290c375838c98aaaabb9
                 break;
             }
             case CalculatorStrings::MINUS :
             {
+<<<<<<< HEAD
                 result = std::unique_ptr<ICalculator>(new SubtractCalculator(firstNumber, secondNumber));
+=======
+                result = std::make_unique<SubtractCalculator>(firstNumber, secondNumber);
+>>>>>>> 2085be165f0cff9b9b8d290c375838c98aaaabb9
                 break;
             }
             case CalculatorStrings::TIMES :
             {
+<<<<<<< HEAD
                 result = std::unique_ptr<ICalculator>(new MultiplyCalculator(firstNumber, secondNumber));
+=======
+                result = std::make_unique<MultiplyCalculator>(firstNumber, secondNumber);
+>>>>>>> 2085be165f0cff9b9b8d290c375838c98aaaabb9
                 break;
             }
             case CalculatorStrings::DIVIDE :
             {
+<<<<<<< HEAD
                 result = std::unique_ptr<ICalculator>(new DivideCalculator(firstNumber, secondNumber));
+=======
+                result = std::make_unique<DivideCalculator>(firstNumber, secondNumber);
+>>>>>>> 2085be165f0cff9b9b8d290c375838c98aaaabb9
                 break;
             } 
             default:

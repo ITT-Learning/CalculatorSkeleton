@@ -17,27 +17,15 @@
 using namespace calculator;
 using namespace testing;
 
-class whenTestingMultiplyCalculator : public :: testing :: Test
-{
-
-};
-
 /**
  * @brief Unit test to make sure multiply with positive floating points works
  * 
  */
-TEST_F(whenTestingMultiplyCalculator, WhenCallingMultiplyWithPositiveFloatingPoints_ThenCorrectPositiveValueReturn)
+TEST(whenTestingMultiplyCalculator, WhenCallingMultiplyWithPositiveFloatingPoints_ThenCorrectPositiveValueReturn)
 {
     MultiplyCalculator multiCalc = MultiplyCalculator(10.0, 5.0);
     float result = multiCalc.getResult();
-    EXPECT_FLOAT_EQ(50.0, result);
-}
-
-/**
- * @brief Unit test to make sure multiply with positive and negative floating points works
- * 
- */
-TEST_F(whenTestingMultiplyCalculator, WhenCallingMultiplyWithPositiveAndNegativeFloatingPoints_ThenCorrectNegativeValueReturn)
+TEST(whenTestingMultiplyCalculator, WhenCallingMultiplyWithPositiveAndNegativeFloatingPoints_ThenCorrectNegativeValueReturn)
 {
     MultiplyCalculator multiCalc = MultiplyCalculator(10.0, -5.0);
     float result = multiCalc.getResult();
@@ -48,7 +36,7 @@ TEST_F(whenTestingMultiplyCalculator, WhenCallingMultiplyWithPositiveAndNegative
  * @brief Unit test to make sure multiply with negative floating points works
  * 
  */
-TEST_F(whenTestingMultiplyCalculator, WhenCallingMultiplyWithNegativeFloatingPoints_ThenCorrectPositiveValueReturn)
+TEST(whenTestingMultiplyCalculator, WhenCallingMultiplyWithNegativeFloatingPoints_ThenCorrectPositiveValueReturn)
 {
     MultiplyCalculator multiCalc = MultiplyCalculator(-10.0, -5.0);
     float result = multiCalc.getResult();

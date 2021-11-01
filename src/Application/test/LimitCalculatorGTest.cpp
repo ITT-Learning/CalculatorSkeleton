@@ -16,16 +16,11 @@
 using namespace calculator;
 using namespace testing;
 
-class whenTestingLimitCalculator : public :: testing :: Test
-{
-
-};
-
 /**
  * @brief Unit test to make sure max input is caught
  * 
  */
-TEST_F(whenTestingLimitCalculator, WhenCallingCalculateWithMaxFloatingPoints_ThenCorrectErrorReturned)
+TEST(whenTestingLimitCalculator, WhenCallingCalculateWithMaxFloatingPoints_ThenCorrectErrorReturned)
 {
     int result = CalculatorApplication::calculate(3.40283e+038, 3.40283e+038,'+');
     EXPECT_EQ(-1, result);
@@ -35,7 +30,7 @@ TEST_F(whenTestingLimitCalculator, WhenCallingCalculateWithMaxFloatingPoints_The
  * @brief Unit test to make sure min input is caught
  * 
  */
-TEST_F(whenTestingLimitCalculator, WhenCallingCalculateWithMinFloatingPoints_ThenCorrectErrorReturned)
+TEST(whenTestingLimitCalculator, WhenCallingCalculateWithMinFloatingPoints_ThenCorrectErrorReturned)
 {
     int result = CalculatorApplication::calculate(1.17548e-038, 1.17548e-038,'+');
     EXPECT_EQ(-1, result);
@@ -45,7 +40,7 @@ TEST_F(whenTestingLimitCalculator, WhenCallingCalculateWithMinFloatingPoints_The
  * @brief Unit test to make sure infinite input is caught
  * 
  */
-TEST_F(whenTestingLimitCalculator, WhenCallingCalculateWitInfiniteFloatingPoints_ThenCorrectErrorReturned)
+TEST(whenTestingLimitCalculator, WhenCallingCalculateWitInfiniteFloatingPoints_ThenCorrectErrorReturned)
 {
     int result = CalculatorApplication::calculate(std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity(),'+');
     EXPECT_EQ(-1, result);

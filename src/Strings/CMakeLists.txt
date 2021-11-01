@@ -15,12 +15,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIBRARY_NAME}/bin)
 
 include_directories(inc)
 
-add_library(${LIBRARY_NAME} STATIC 
-    ${LIBRARY_SOURCES})
+add_library(${LIBRARY_NAME} SHARED ${LIBRARY_SOURCES})
 
 target_sources(${LIBRARY_NAME} PUBLIC
     ${LIBRARY_SOURCES})
 
 target_include_directories(${LIBRARY_NAME} PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}/inc
-) 
+)
