@@ -17,11 +17,6 @@
 using namespace calculator;
 using namespace testing;
 
-class whenTestingMultiplyCalculator : public :: testing :: Test
-{
-
-};
-
 /**
  * @brief Unit test to make sure multiply with positive floating points works
  * 

@@ -17,11 +17,6 @@
 using namespace calculator;
 using namespace testing;
 
-class whenTestingAddCalculator : public :: testing :: Test
-{
-
-};
-
 /**
  * @brief Unit test to make sure Addition with positive floating points works
  * 

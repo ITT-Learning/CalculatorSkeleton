@@ -17,11 +17,6 @@
 using namespace calculator;
 using namespace testing;
 
-class whenTestingSubtractCalculator : public :: testing :: Test
-{
-
-};
-
 /**
  * @brief Unit test to make sure subtraction with positive floating points works
  * 

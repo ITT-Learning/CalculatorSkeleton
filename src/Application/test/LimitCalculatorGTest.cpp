@@ -16,11 +16,6 @@
 using namespace calculator;
 using namespace testing;
 
-class whenTestingLimitCalculator : public :: testing :: Test
-{
-
-};
-
 /**
  * @brief Unit test to make sure max input is caught
  * 

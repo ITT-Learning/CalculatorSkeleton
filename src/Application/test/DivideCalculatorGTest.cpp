@@ -17,11 +17,6 @@
 using namespace calculator;
 using namespace testing;
 
-class whenTestingDivideCalculator : public :: testing :: Test
-{
-
-};
-
 /**
  * @brief Unit test to make sure Division with positive floats works
  * 

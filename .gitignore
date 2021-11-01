@@ -65,6 +65,10 @@ src/Application/test/calculator_test
 # ignore .vscode
 .vscode/
 .vscode/*
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
 
 # ignore test folder
 test/*
