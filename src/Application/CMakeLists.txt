@@ -13,6 +13,7 @@ include_directories(
     $<TARGET_PROPERTY:CalculatorParser,INCLUDE_DIRECTORIES>
     $<TARGET_PROPERTY:CalculatorInterface,INCLUDE_DIRECTORIES>
 )
+
 add_library(${LIBRARY_NAME} SHARED ${LIBRARY_SOURCES})
 
 target_include_directories(${LIBRARY_NAME} PUBLIC

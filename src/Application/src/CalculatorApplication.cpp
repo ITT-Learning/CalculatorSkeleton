@@ -6,64 +6,125 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
+#include <future>
 #include <iostream>
 #include <limits>
 #include <sstream>
 #include <string>
-
+#include <thread>
 
 #include "CalculatorApplication.h"
 #include "CalculatorApplicationFactory.h"
 #include "CalculatorStrings.h"
-namespace calculator
+
+namespace calculator {
+
+// *****************************************************************************/
+// ***************** CalculatorApplication public methods **********************/
+// *****************************************************************************/
+
+int CalculatorApplication::calculate(float firstNumber, float secondNumber, char operation)
 {
-    int CalculatorApplication::calculate(float a, float b, char op)
+    int result = 0;
+
+    if(limitCheck(firstNumber) && limitCheck(secondNumber))
     {
         calculator::CalculatorApplicationFactory calculatorAppFactory;  
-
-        if(limitCheck(a) && limitCheck(b))
+        auto calculator = calculatorAppFactory.createCalculator(firstNumber, secondNumber, operation);
+        if(calculator)
         {
-            auto calculator = calculatorAppFactory.createCalculator(a, b, op); //variables placed into createCalc function and placed into calculator variable
-            if(calculator)
-            {
-                std::cout << calculator->toString() << std::endl; //if calculator returned from function is valid, point to string function and output expression and result
-            }
-            else
-            {
-                std::cout << CalculatorStrings::ERROR_MESSAGE_INVALID_INPUT << std::endl;
-            }
+            result = calculator->getResult();
+            std::cout << calculator->toString() << std::endl;
         }
         else
         {
-            return -1;
+            std::cout << CalculatorStrings::ERROR_MESSAGE_INVALID_INPUT << std::endl;
         }
-        return 0;
+    }
+    else
+    {
+        result = -1;
     }
 
-    std::string CalculatorApplication::toString()
-    {
-        return std::to_string(firstNumber_) + " " + op_ + " " + std::to_string(secondNumber_) + " = " + std::to_string(getResult());
-    }
+    return result;
+}
 
-    bool CalculatorApplication::limitCheck(float a)
+void CalculatorApplication::runCalculator()
+{
+    Parser parser;
+    float answer;
+    Expression parsedExpression;
+
+    auto tempExpressionUnits = std::async(&Parser::createVector, parser, parser.getUserInput());
+    while(tempExpressionUnits.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
     {
-        if(a > std::numeric_limits<float>::max())
+        std::cout << CalculatorStrings::BUILDING_VECTORS;
+    }
+    std::cout << std::endl;
+    auto setExpressionUnits = tempExpressionUnits.get();
+
+    while(setExpressionUnits.second)
+    {
+        auto tempParsedExpression = std::async(&Parser::breakDownEquation, parser, setExpressionUnits.first);
+        while(tempParsedExpression.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
         {
-            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE << std::endl;
-            return false;
+            std::cout << CalculatorStrings::DISSECTING_AND_CALCULATING;
         }
-        else if(a < std::numeric_limits<float>::min())
+        std::cout << std::endl;
+
+        parsedExpression = tempParsedExpression.get();
+
+        if(parsedExpression.validExpression)
         {
-            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_SMALL << std::endl;
-            return false;
+            answer = CalculatorApplication::calculate(parsedExpression.firstNumber, parsedExpression.secondNumber, parsedExpression.operation);
+            ExpressionUnit prevAnswer;
+            prevAnswer.number = answer;
+            prevAnswer.valid = true;
+
+            if(setExpressionUnits.first->size() > 0)
+            {
+                setExpressionUnits.first->insert(setExpressionUnits.first->begin() + parsedExpression.placementIndex, prevAnswer);
+            }
+            else
+            {
+                break;
+            }
+            
         }
-        else if(a == std::numeric_limits<float>::infinity())
+        else
         {
-            std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE << std::endl;
-            return false;
+            std::cout << CalculatorStrings::ERROR_MESSAGE_INVALID_INPUT << std::endl;
+            break;
         }
-        return true;
+
+    }
+}
+
+std::string CalculatorApplication::toString()
+{
+    return std::to_string(firstNumber_) + CalculatorStrings::EMPTY_SPACE + operator_ + CalculatorStrings::EMPTY_SPACE + std::to_string(secondNumber_) + CalculatorStrings::EQUAL_SIGN + std::to_string(getResult());
+}
+
+bool CalculatorApplication::limitCheck(float firstNumber)
+{
+    bool result = true;
+    if(firstNumber > std::numeric_limits<float>::max())
+    {
+        std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE << std::endl;
+        result = false;
+    }
+    else if(firstNumber < std::numeric_limits<float>::min())
+    {
+        std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_SMALL << std::endl;
+        result = false;
+    }
+    else if(firstNumber == std::numeric_limits<float>::infinity())
+    {
+        std::cerr << CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE << std::endl;
+        result = false;
     }
     
-
+    return result;
 }
+
+} //namespace calculator

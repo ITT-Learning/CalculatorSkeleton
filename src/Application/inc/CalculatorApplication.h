@@ -1,3 +1,6 @@
+#ifndef CALCULATORAPPLICATION_H
+#define CALCULATORAPPLICATION_H
+
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * @file  CalculatorApplication.h
@@ -6,62 +9,73 @@
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef CALCULATORAPPLICATION_H
-#define CALCULATORAPPLICATION_H
-
-#include "CalculatorStrings.h"
-#include "ICalculator.h"
 #include <iostream>
 #include <limits>
 #include <string>
 
+#include "CalculatorStrings.h"
+#include "ICalculator.h"
+#include "Parser.h"
 
+namespace calculator {
 
-namespace calculator
+/**
+ * @brief This is the Class containing the functions and variables used in week 1
+ */
+class CalculatorApplication : public ICalculator
 {
-    class CalculatorApplication : public ICalculator 
-    {
-        public:
-            /**
-             * @brief Construct a new Calculator object
-             * 
-             */
-            CalculatorApplication() = default;
-            
-            /**
-             * @brief This is the main function run in main.cpp
-             * @param a first number float 
-             * @param b second number float
-             * @param op operator char
-             */
-            CalculatorApplication(float a, float);
+    public:
+        /**
+         * @brief Construct a new Calculator object
+         */
+        CalculatorApplication() = default;
 
-            static int calculate(float a, float b, char op);
-            
-            /**
-             * @brief Get the Result object. Pure virtual function defined in child classes
-             * 
-             * @return float 
-             */
-            virtual float getResult() = 0;
-            
-            std::string toString() override;
+        /**
+         * @brief This is the main function run in main.cpp
+         * @param firstNumber [in] first number float 
+         * @param secondNumber [in] second number float
+         * @param operation [in] operator char
+         */
+        static int calculate(float firstNumber, float secondNumber, char operation);
+        
+        /**
+         * @brief Get the Result object. Pure virtual function defined in child classes
+         * @return float after value calculated has been returned
+         */
+        virtual float getResult() = 0;
 
-            /**
-             * @brief Checks if the inputted value is within scope
-             * 
-             * @param a 
-             * @return true 
-             * @return false 
-             */
-            static bool limitCheck(float a);
+        /**
+         * @brief Checks if the inputted value is within scope
+         * @param number [in] value that the limit is being checked
+         * @return true if within limit
+         * @return otherwise false 
+         */
+        static bool limitCheck(float number);
 
-        protected:
-            float firstNumber_;
-            float secondNumber_;
-            char op_; 
+        /**
+         * @brief main funtion that runs the calculator
+         * 
+         */
+        static void runCalculator();
+        
+        /**
+         * @name ICalculator method.
+         * @{
+         */
+        
+        std::string toString() override;
+        
+        /**
+         * @}
+         */
 
+    protected:
+        float firstNumber_;
+        float secondNumber_;
+        char  operator_; 
 
-    };
-}
+};
+
+} // namespace calculator
+
 #endif  // CALCULATORAPPLICATION_H
