@@ -6,15 +6,6 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include <algorithm>
-#include <cmath>
-#include <future>
-#include <iostream>
-#include <sstream>
-#include <thread>
-#include <typeinfo>
-#include <vector>
-
 #include "CalculatorApplication.h"
 #include "CalculatorStrings.h"
 #include "Parser.h"

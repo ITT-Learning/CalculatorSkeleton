@@ -64,6 +64,7 @@ src/Application/test/calculator_test
 
 # ignore .vscode
 .vscode/
+.vscode/*
 
 # ignore test folder
 test/*

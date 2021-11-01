@@ -26,7 +26,7 @@ class whenTestingAddCalculator : public :: testing :: Test
  * @brief Unit test to make sure Addition with positive floating points works
  * 
  */
-TEST_F(whenTestingAddCalculator, WhenCallingAddWithPositiveFloatingPoints_ThenCorrectPositiveValueReturn)
+TEST(whenTestingAddCalculator, WhenCallingAddWithPositiveFloatingPoints_ThenCorrectPositiveValueReturn)
 {
     AddCalculator addCalc = AddCalculator(10.0, 5.0);
     float result = addCalc.getResult();
@@ -37,7 +37,7 @@ TEST_F(whenTestingAddCalculator, WhenCallingAddWithPositiveFloatingPoints_ThenCo
  * @brief Unit test to make sure Addition with negative floating points works
  * 
  */
-TEST_F(whenTestingAddCalculator, WhenCallingAddWithNegativeFloatingPoints_ThenCorrectNegativeValueReturn)
+TEST(whenTestingAddCalculator, WhenCallingAddWithNegativeFloatingPoints_ThenCorrectNegativeValueReturn)
 {
     AddCalculator addCalc = AddCalculator(-10.0, -5.0);
     float result = addCalc.getResult();

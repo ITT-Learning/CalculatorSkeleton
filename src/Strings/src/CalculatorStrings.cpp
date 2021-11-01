@@ -6,10 +6,6 @@
 
 namespace calculator {
 
-// ***************************************************************************** /
-// ***************** CalculatorStrings public methods ************************** /
-// ***************************************************************************** /
-
 constexpr char CalculatorStrings::ERROR_MESSAGE_DIVIDE_BY_ZERO[];
 constexpr char CalculatorStrings::ERROR_MESSAGE_INVALID_INPUT[];
 constexpr char CalculatorStrings::ERROR_MESSAGE_INPUT_TOO_LARGE[];
