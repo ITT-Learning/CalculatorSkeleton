@@ -25,7 +25,7 @@ namespace calculator {
 // ***************** Calculator public methods ********************************* /
 // ***************************************************************************** /
  
-void Calculator::runCalculator()
+void Calculator::runCalculator(std::shared_ptr<calculator::History> &history)
 {
     Parser parser;
     auto futureExpressionUnits = std::async(&Parser::getValidParsedEquationUnits, parser, parser.getUserInput());
@@ -86,10 +86,13 @@ void Calculator::runCalculator()
     {
         ResultFactory resultFactory;
         std::shared_ptr<IResult> result = resultFactory.createResult(parser.getOriginalEquation(), answer);
-        std::cout << result->getFullResult() << std::endl;
+        std::string fullResult = result->getFullResult();
+        history->addToHistory(fullResult);
+        history->serializeHistory(history->getCurrentHistory());
+        std::cout << fullResult << std::endl;
     }
 }
-    
+
 float Calculator::calculate(const Expression &parsedExpression)
 {
     float answer;
@@ -125,6 +128,38 @@ float Calculator::calculate(const Expression &parsedExpression)
         }
 
     return answer;
+}
+
+bool Calculator::restart(std::shared_ptr<calculator::History> &history)
+{
+    bool keepRunning = true;
+    std::cout << calculator::CalculatorMessages::RETRY_MESSAGE << std::endl;
+        
+    std::string response;
+    std::cin >> response;
+
+    if (response[0] != 'y' && response[0] != 'Y') // didn't save 'y's in messages since only using here
+    {
+        if (response[0] == 'h' || response[0] == 'H') // didn't save 'h's in messages since only using here
+        {
+            if (history->getCurrentHistory().size() > 0)
+            {
+                history->deserializeAndPrintHistory();
+            }
+            else
+            {
+                std::cout << CalculatorMessages::NO_HISTORY << std::endl;
+            }
+            restart(history);
+        }
+        else
+        {
+            std::cout << calculator::CalculatorMessages::OUTRO_MESSAGE << std::endl;
+            keepRunning = false;
+        }
+    }
+
+    return keepRunning;
 }
 
 }//namespace calculator
