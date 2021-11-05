@@ -63,6 +63,8 @@ src/Application/test/calculator_test
 
 # ignore third party libraries, they should all be built by CMake
 third-party/*
+third-party/flatbuffers/*
+!third-party/flatbuffers/
 !third-party/CMakeLists.txt
 !third-party/flatbuffers/CMakeLists.txt
 !third-party/fmt/CMakeLists.txt
