@@ -162,4 +162,4 @@ bool Calculator::restart(std::shared_ptr<calculator::History> &history)
     return keepRunning;
 }
 
-}//namespace calculator
+} //namespace calculator

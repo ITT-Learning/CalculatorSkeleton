@@ -148,6 +148,6 @@ class Parser
 
 };
 
-}//namespace calculator
+} //namespace calculator
 
 #endif  // PARSER_H

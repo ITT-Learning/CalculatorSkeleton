@@ -17,7 +17,6 @@
 #include "CalculatorMessages.h"
 #include "Parser.h"
 
-
 namespace calculator {
 
 // ***************************************************************************** /

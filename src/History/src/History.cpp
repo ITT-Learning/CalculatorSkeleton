@@ -16,7 +16,7 @@ namespace calculator
 {
 
 // ***************************************************************************** /
-// ***************** Parser public methods ************************************* /
+// ***************** History public methods ************************************* /
 // ***************************************************************************** /
 
 void History::addToHistory(std::string fullResult)
@@ -53,4 +53,4 @@ std::vector<std::string> History::getCurrentHistory()
     return allHistory_;
 }
 
-}//namespace calculator
+} //namespace calculator

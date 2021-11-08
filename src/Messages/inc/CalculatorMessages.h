@@ -9,6 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <string>
+
 namespace calculator {
 
 /**
@@ -157,6 +158,6 @@ class CalculatorMessages
         static constexpr const char *FLOAT_REGEX = R"([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))";    
 };
 
-}//namespace calculator
+} //namespace calculator
 
 #endif  // CALCULATOR_H
