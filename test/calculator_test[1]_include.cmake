@@ -1,0 +1,5 @@
+if(EXISTS "/mnt/c/Users/jared.vandewater/Learning/CalculatorSkeleton/test/calculator_test[1]_tests.cmake")
+  include("/mnt/c/Users/jared.vandewater/Learning/CalculatorSkeleton/test/calculator_test[1]_tests.cmake")
+else()
+  add_test(calculator_test_NOT_BUILT calculator_test_NOT_BUILT)
+endif()
