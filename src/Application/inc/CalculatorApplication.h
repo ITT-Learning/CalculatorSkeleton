@@ -34,16 +34,16 @@ class CalculatorApplication
 
         /**
          * @brief This is the main function run in main.cpp
-         * @param firstNumber [in] first number float 
-         * @param secondNumber [in] second number float
-         * @param operation [in] operator char
+         * @param [in] firstNumber first number float 
+         * @param [in] secondNumber second number float
+         * @param [in] operation operator char
          */
 
         static int calculate(float firstNumber, float secondNumber, char operation, std::string originalEquation);
         
         /**
          * @brief Checks if the inputted value is within scope
-         * @param number [in] value that the limit is being checked
+         * @param [in] number value that the limit is being checked
          * @return true if within limit
          * @return otherwise false 
          */

@@ -16,7 +16,7 @@ namespace calculator {
 * @brief String interface which exposes to other components
 *
 */
-class CalculatorStrings
+class CalculatorStrings 
 {
     public: 
         static constexpr char ERROR_MESSAGE_DIVIDE_BY_ZERO[] = "Error: Can not divide by zero";

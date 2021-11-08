@@ -104,9 +104,11 @@ void CalculatorApplication::runCalculator()
         }
 
     }
+        History::getInstance()->ReadFromFile();
         History::getInstance()->appendCalculator(answer, parser.getOriginalEquation());
         History::getInstance()->storedHistory();
-
+        History::getInstance()->printHistory();
+        
 }
 
 bool CalculatorApplication::limitCheck(float firstNumber)

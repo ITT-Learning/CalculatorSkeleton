@@ -28,8 +28,8 @@ class MultiplyCalculator : public ICalculator
         
         /**
          * @brief Construct a new Multiply Calculator object
-         * @param firstNumber [in] firstNumber set to firstNumber_
-         * @param secondNumber [in] secondNumber set to secondNumber_
+         * @param [in] firstNumber firstNumber set to firstNumber_
+         * @param [in] secondNumber secondNumber set to secondNumber_
          */
         explicit MultiplyCalculator(float firstNumber, float secondNumber);
 

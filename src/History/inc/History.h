@@ -4,9 +4,8 @@
 ////////////////////////////////////////////////////////////////////////////
 /**
  *  @file   History.h
- * @author Jeff Trent
  *  @date   Tue, June 22 2021
- *  @brief  Singleton containing the history
+ *  @brief  Functions used to retrieve and store history into flatbuffers and files
  */
 ////////////////////////////////////////////////////////////////////////////
 
@@ -39,8 +38,8 @@ class History
 
         /**
          * @brief creates a flat buffer object from ICalculator and appends it to calculators_
-         * @param answer [in] float containing the final answer
-         * @param originalEquation string containing the originalEquation
+         * @param [in] answer float containing the final answer
+         * @param [in] originalEquation string containing the originalEquation
          */
         void appendCalculator(float answer, std::string originalEquation);
 
@@ -51,13 +50,13 @@ class History
 
         /**
          * @brief Get flatbuffer object of the history containing all calculators
-         * @return faltbuffer history object
+         * @return flatbuffer history object
          */
         schema::HistoryT *getBuiltHistory();
 
         /**
          * @brief Get the flatbuffer calculator object from calculators_
-         * @param index [in] index of calculator from container
+         * @param [in] index  index of calculator from container
          * @return calculatorT if index is valid, otherwise returns nullptr
          */
         const schema::CalculatorDataT *getCalculatorData(int index);
@@ -75,12 +74,26 @@ class History
         int getSize();
 
         /**
+         * @brief print history from running calculator
+         * 
+         */
+        void printHistory();
+
+        /**
+         * @brief Read from file 
+         * 
+         */
+        void ReadFromFile();
+        
+        /**
          * @brief Places storedHistory from appendCalculator into outputFile
          */
         void storedHistory();
 
     private:
         std::vector<const schema::CalculatorDataT*> calculators_;
+
+        std::vector<const schema::HistoryT* > history_;
 
         static std::shared_ptr<History>         instance_;
 

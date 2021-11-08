@@ -27,7 +27,6 @@ class ICalculator
          * @brief Get the Result object. Pure virtual function defined in child classes
          * @return float after value calculated has been returned
          */
-
         virtual float getResult() const = 0;
 
         /**

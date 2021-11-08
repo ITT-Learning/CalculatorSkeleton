@@ -28,8 +28,8 @@ class SubtractCalculator : public ICalculator
         
         /**
          * @brief Construct a new Subtract Calculator object 
-         * @param firstNumber [in] firstNumber set to firstNumber_
-         * @param secondNumber [in] secondNumber set to secondNumber_
+         * @param [in] firstNumber firstNumber set to firstNumber_
+         * @param [in] secondNumber secondNumber set to secondNumber_
          */
         explicit SubtractCalculator(float firstNumber, float secondNumber);
 

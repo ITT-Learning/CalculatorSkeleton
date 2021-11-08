@@ -8,8 +8,8 @@
 
 #include "Color.h"
 
-namespace calculator
-{
+namespace calculator {
+    
     constexpr char Color::blue[];
     constexpr char Color::bold[];
     constexpr char Color::faint[];

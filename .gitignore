@@ -80,4 +80,5 @@ third-party/*
 test/*
 
 # output file 
-CalculatorData.txt
+CalculatorData.bin
+data.bin

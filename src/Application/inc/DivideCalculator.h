@@ -27,8 +27,8 @@ class DivideCalculator : public ICalculator
 
         /**
          * @brief Construct a new Divide Calculator object
-         * @param firstNumber [in] firstNumber set to secondNumber_
-         * @param secondNumber [in] secondNumber set to secondNumber_
+         * @param [in] firstNumber firstNumber set to secondNumber_
+         * @param [in] secondNumber secondNumber set to secondNumber_
          */
         explicit DivideCalculator(float firstNumber, float secondNumber);
 

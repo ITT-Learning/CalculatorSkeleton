@@ -27,8 +27,8 @@ class AddCalculator : public ICalculator
 
         /**
          * @brief Construct a new Add Calculator object
-         * @param firstNumber [in] first number set to firstNumber_
-         * @param secondNumber [in] Second number set to secondNumber_
+         * @param [in] firstNumber  first number set to firstNumber_
+         * @param [in] secondNumber Second number set to secondNumber_
          */
         explicit AddCalculator(float firstNumber, float secondNumber);
 
