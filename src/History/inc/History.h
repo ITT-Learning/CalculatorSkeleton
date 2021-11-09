@@ -23,12 +23,12 @@ class History
          * @brief takes in a vector of history strings and serializes it into the history flatbuffer
          * @param [in] history a pointer to a created history class usd to track completed expressions
         */
-        void serializeHistory(const std::vector<std::string> &history);
+        void serializeHistoryAndStoreOnDisk(const std::vector<std::string> &history);
 
         /**
          * @brief deserializes the history flatbuffer and prints all it's contents
         */
-        void deserializeAndPrintHistory();
+        void deserializeHistoryAndPrint(const std::string & fileName);
 
         /**
          * @brief creates a vector out of a string
@@ -42,9 +42,16 @@ class History
         */
         std::vector<std::string> getCurrentHistory();
 
+        /**
+         * @brief returns private variable historyFile_
+         * @returns private variable historyFile_
+        */
+        std::string getHistoryFileName();
+
     private:
         std::vector<std::string> allHistory_ = std::vector<std::string>{};
         uint8_t *historyBufferptr_;
+        const std::string historyFile_ = "historyData.bin";
 };
 
 } //namespace calculator
