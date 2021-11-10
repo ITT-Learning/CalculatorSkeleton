@@ -37,12 +37,6 @@ void History::appendCalculator(float answer, std::string originalEquation)
     auto calculatorOffset = calculatorBuilder.Finish();
     builder.Finish(calculatorOffset);
 
-    // uint8_t *buf = builder.GetBufferPointer();
-    // int size = builder.GetSize();
-    // std::ofstream ouputFile("../data.bin", std::ios::binary);
-    // ouputFile.write((char * )buf, size);
-    // ouputFile.close();
-
     calculators_.push_back(schema::GetCalculatorData(builder.GetBufferPointer())->UnPack());
 }
 
@@ -115,8 +109,6 @@ void History::storedHistory()
     }
     else
     {
-        int location = history.size() - 1;
-
         std::ofstream outputFile("../CalculatorData.bin");
 
         for(const auto e : calculators_) outputFile << e->originalEquation << " = " << e->answer<<"\n";
@@ -140,7 +132,6 @@ void History::ReadFromFile()
     auto historyData = schema::GetHistory(data)->UnPack();
     for(size_t i = 0; i < historyData->list.size(); i++)
     {
-        // std::cout << "{" << i << "} " << historyData->list.at(i)->originalEquation << " = " << historyData->list.at(i)->answer << std::endl;
         calculators_.push_back(historyData->list.at(i).get());
     }
 
@@ -148,13 +139,13 @@ void History::ReadFromFile()
 
 void History::printHistory()
 {
-    std::cout << "-----------------------History Start--------------------" << std::endl;
+    std::cout << CalculatorStrings::HISTORY_START << std::endl;
     
-    for(int i = 0; i < calculators_.size(); i++)
+    for(int i = 0; i < History::getInstance()->getSize(); i++)
     {
         std::cout << "{" << i << "} " << calculators_.at(i)->originalEquation << " = " << calculators_.at(i)->answer << std::endl;
     }
-    std::cout << "-----------------------History End--------------------" << std::endl;
+    std::cout << CalculatorStrings::HISTORY_END << std::endl;
 }
 
 } // namespace calculator

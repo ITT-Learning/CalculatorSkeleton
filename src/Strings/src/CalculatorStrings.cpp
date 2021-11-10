@@ -20,6 +20,9 @@ constexpr char CalculatorStrings::DISSECTING_AND_CALCULATING[];
 constexpr char CalculatorStrings::REPEAT_PROGRAM[];
 constexpr char CalculatorStrings::NO_HISTORY[];
 constexpr char CalculatorStrings::W6_HISTORY_PROMPT[];
+constexpr char CalculatorStrings::HISTORY_END[];
+constexpr char CalculatorStrings::HISTORY_START[];
+
 
 
 } // namespace calculator

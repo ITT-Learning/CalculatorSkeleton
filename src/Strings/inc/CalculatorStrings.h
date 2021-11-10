@@ -46,6 +46,8 @@ class CalculatorStrings
         static constexpr char BRACKET_CLOSE = '}';
         static constexpr char BRACKET_OPEN  = '{';
         static constexpr char W6_HISTORY_PROMPT[] = "[w] to move up, [s] to move down, or number [0+] to get by index";
+        static constexpr char HISTORY_START[] = "-----------------------History Start--------------------";
+        static constexpr char HISTORY_END[] = "-----------------------History End--------------------";
 
 
 };

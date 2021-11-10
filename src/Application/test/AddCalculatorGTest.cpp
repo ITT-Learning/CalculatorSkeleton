@@ -10,6 +10,7 @@
 #include<limits>
 
 #include "AddCalculator.h"
+#include "ICalculator.h"
 #include "CalculatorApplication.h"
 #include "CalculatorApplicationFactory.h"
 #include "CalculatorStrings.h"
