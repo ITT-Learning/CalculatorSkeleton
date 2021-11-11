@@ -80,5 +80,5 @@ third-party/*
 test/*
 
 # output file 
-CalculatorData.bin
+*/CalculatorData.bin
 data.bin

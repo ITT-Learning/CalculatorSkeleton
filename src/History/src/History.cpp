@@ -45,7 +45,7 @@ void History::clear()
     calculators_.clear();
 }
 
-schema::HistoryT *History::getBuiltHistory() //rename
+schema::HistoryT *History::getBuiltHistory()
 {
     flatbuffers::FlatBufferBuilder builder(1024);
     schema::HistoryT *history = nullptr;
