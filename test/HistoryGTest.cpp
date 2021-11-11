@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "History.h"
+#include "flatbuffers/idl.h"
 
 using namespace calculator;
 using namespace testing;
@@ -33,27 +34,49 @@ void whenTestingHistory::TearDown()
 }
 
 /**
-* @brief Unit test for getCurrentHistory
+* @brief Unit test for addToHistory without history
 */
-TEST_F(whenTestingHistory, WhenGettingCurrentHistoryWithoutHistory_CorrectEmptyVectorReturned)
+TEST_F(whenTestingHistory, WhenTestingAddToHistoryWithoutHistory_AllHistoryUpdatedProperly)
 {
-    std::vector<std::string> expected = std::vector<std::string>{};
-    std::vector<std::string> result = historyInst->getCurrentHistory();
+
+    std::remove("historyData.bin");
+    testing::internal::CaptureStdout();
+    historyInst->printHistory();
+    std::string result = testing::internal::GetCapturedStdout();
+
+    std::string expected = "No History Available";
 
     EXPECT_EQ(expected, result);
 }
 
-/**
-* @brief Unit test for addToHistory
-*/
-TEST_F(whenTestingHistory, WhenGettingCurrentHistoryWithHistory_CorrectVectorReturned)
+TEST_F(whenTestingHistory, WhenTestingAddToHistoryWithHistory_AllHistoryUpdatedProperly)
 {
-    std::vector<std::string> expected = std::vector<std::string>{};
-    expected.push_back("1 + 1 = 2");
+    std::remove("historyData.bin");
+    historyInst->addToHistory("1 + 2 = 3");
 
-    historyInst->addToHistory("1 + 1 = 2");
-    std::vector<std::string> result = historyInst->getCurrentHistory();
+    testing::internal::CaptureStdout();
+    historyInst->printHistory();
+    std::string result = testing::internal::GetCapturedStdout();
 
-    EXPECT_EQ(expected.at(0), result.at(0));
+    std::string expected = "---History---\n1 + 2 = 3\n---End History---\n";
+
+    EXPECT_EQ(expected, result);
 }
 
+TEST_F(whenTestingHistory, WhenTestingAddToHistoryWithMoreHistory_AllHistoryUpdatedProperly)
+{
+    std::remove("historyData.bin");
+    historyInst->addToHistory("1 + 2 = 3");
+    historyInst->addToHistory("14-2 = 12");
+
+    testing::internal::CaptureStdout();
+    historyInst->printHistory();
+    std::string result = testing::internal::GetCapturedStdout();
+
+    std::string expected = "---History---\n1 + 2 = 3\n14-2 = 12\n---End History---\n";
+
+    EXPECT_EQ(expected, result);
+}
+
+// I NEED TO START WITH A FRESH REMOVED HISTORY FILE FOR THESE TO WORK
+//STD::REMOVE IS NOT WORKING

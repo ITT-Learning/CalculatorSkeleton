@@ -62,6 +62,8 @@ test/googletest-*/
 #vscode defaults
 .vscode/
 
+#ignore saved calculatorData
+historyData.bin
 # ignore third party libraries, they should all be built by CMake
 third-party/*
 !third-party/CMakeLists.txt

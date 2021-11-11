@@ -8,7 +8,11 @@
 */
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <vector>
+#include <string>
+
 #include "flatbuffers/flatbuffers.h"
+#include "history_generated.h"
 
 namespace calculator {
 
@@ -20,15 +24,9 @@ class History
 {
     public:
         /**
-         * @brief takes in a vector of history strings and serializes it into the history flatbuffer
-         * @param [in] history a pointer to a created history class usd to track completed expressions
+         * @brief constructor for History
         */
-        void serializeHistoryAndStoreOnDisk(const std::vector<std::string> &history);
-
-        /**
-         * @brief deserializes the history flatbuffer and prints all it's contents
-        */
-        void deserializeHistoryAndPrint(const std::string & fileName);
+        History();
 
         /**
          * @brief creates a vector out of a string
@@ -37,21 +35,32 @@ class History
         void addToHistory(std::string fullResult);
 
         /**
-         * @brief creates a vector out of a string
-         * @returns allHistory_, a vector containing all the history strings
+         * @brief prints all history
         */
-        std::vector<std::string> getCurrentHistory();
-
-        /**
-         * @brief returns private variable historyFile_
-         * @returns private variable historyFile_
-        */
-        std::string getHistoryFileName();
+        void printHistory();
 
     private:
         std::vector<std::string> allHistory_ = std::vector<std::string>{};
-        uint8_t *historyBufferptr_;
-        const std::string historyFile_ = "historyData.bin";
+        const std::string historyFile_ =       "historyData.bin";
+        bool hasHistoryFile_ =                 false;
+
+        /**
+         * @brief finds history file, and deserializes it into allHistory_
+         * @returns true if there is a history file
+        */
+        bool findHistoryFileAndSetAllHistory();
+
+        /**
+         * @brief takes in a vector of history strings and serializes it into the history flatbuffer
+         * @param [in] history a pointer to a created history class used to track completed expressions
+        */
+        void serializeHistoryAndStoreOnDisk(const std::vector<std::string> &history);
+
+        /**
+         * @brief deserializes the history and sets it to allhistory_
+        */
+        void deserializeHistory();
+
 };
 
 } //namespace calculator

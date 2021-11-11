@@ -89,7 +89,6 @@ void Calculator::runCalculator(std::shared_ptr<calculator::History> &history)
         std::shared_ptr<IResult> result = resultFactory.createResult(parser.getOriginalEquation(), answer);
         std::string fullResult = result->getFullResult();
         history->addToHistory(fullResult);
-        history->serializeHistoryAndStoreOnDisk(history->getCurrentHistory());
         std::cout << fullResult << std::endl;
     }
 }
@@ -143,14 +142,7 @@ bool Calculator::restart(std::shared_ptr<calculator::History> &history)
     {
         if (response[0] == 'h' || response[0] == 'H') // didn't save 'h's in messages since only using here
         {
-            if (history->getCurrentHistory().size() > 0)
-            {
-                history->deserializeHistoryAndPrint(history->getHistoryFileName());
-            }
-            else
-            {
-                std::cout << CalculatorMessages::NO_HISTORY << std::endl;
-            }
+            history->printHistory();
             restart(history);
         }
         else
