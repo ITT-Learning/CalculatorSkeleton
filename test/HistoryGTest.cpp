@@ -11,8 +11,8 @@
 #include <string>
 #include <vector>
 
-#include "History.h"
 #include "flatbuffers/idl.h"
+#include "History.h"
 
 using namespace calculator;
 using namespace testing;

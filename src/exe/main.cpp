@@ -5,13 +5,13 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include <string>
-#include <memory>
-#include "flatbuffers/util.h"
 #include <fstream>
+#include <memory>
+#include <string>
 
 #include "Calculator.h"
 #include "CalculatorMessages.h"
+#include "flatbuffers/util.h"
 #include "History.h"
 
 int main() 

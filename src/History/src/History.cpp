@@ -4,19 +4,19 @@
 * @brief Function definitions for Calculator History
 */
 ////////////////////////////////////////////////////////////////////////////////
+
 #include <fstream>
 #include <iostream>
 #include <vector>
 
 #include "CalculatorMessages.h"
 #include "flatbuffers/flatbuffers.h"
+#include "flatbuffers/idl.h"
 #include "flatbuffers/util.h"
 #include "History.h"
 #include "history_generated.h"
-#include "flatbuffers/idl.h"
 
-namespace calculator
-{
+namespace calculator {
 
 // ***************************************************************************** /
 // ***************** History public methods ************************************ /
