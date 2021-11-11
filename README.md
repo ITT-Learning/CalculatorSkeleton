@@ -48,3 +48,4 @@ cd test
 ./calculator_test
 ```
 
+You can install vscode extensions to streamline some of this process
