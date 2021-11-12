@@ -28,7 +28,7 @@ class Calculator
          * @brief initiates calculator and works with the parser to return a result object
          * @param [in] history a pointer to a created history class usd to track completed expressions
         */
-        void runCalculator(std::shared_ptr<calculator::History> &history);
+        void runCalculator(std::shared_ptr<calculator::History> const &history);
 
         /**
          * @brief Runs a switch statement with entered operator to calculate 2 numbers
@@ -39,10 +39,10 @@ class Calculator
 
         /**
          * @brief checks user input to see if they want to calculate again, quit, or view history
-         * @param [in] history a pointer to a created history class usd to track completed expressions
+         * @param [in] history is a created history class used to track completed expressions
          * @return bool for whether or not calculator should keep running
         */
-        bool restart(std::shared_ptr<calculator::History> &history);
+        bool restart(std::shared_ptr<calculator::History> const &history);
 };
 
 } //namespace calculator

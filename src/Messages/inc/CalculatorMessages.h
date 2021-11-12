@@ -121,6 +121,11 @@ class CalculatorMessages
          * @brief Shows if user attempts to view history without any history
          */
         static constexpr const char *NO_HISTORY = "No History Available";
+
+        /**
+         * @brief Shows if user attempts to view history without any history
+         */
+        static constexpr const char *HISTORY_FILE = "historyData.bin";
         
         /**
          * @brief shows before showing all history

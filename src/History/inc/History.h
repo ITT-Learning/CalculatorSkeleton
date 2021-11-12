@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 
+#include "CalculatorMessages.h"
 #include "flatbuffers/flatbuffers.h"
 #include "history_generated.h"
 
@@ -32,7 +33,7 @@ class History
          * @brief creates a vector out of a string
          * @param [in] fullResult string of the full result taken from result object ex: "1+1 = 2"
         */
-        void addToHistory(std::string fullResult);
+        void addToHistory(std::string const &fullResult);
 
         /**
          * @brief prints all history
@@ -41,20 +42,20 @@ class History
 
     private:
         std::vector<std::string> allHistory_ = std::vector<std::string>{};
-        const std::string historyFile_ =       "historyData.bin";
+        const std::string historyFile_ =       CalculatorMessages::HISTORY_FILE;
         bool hasHistoryFile_ =                 false;
 
         /**
          * @brief finds history file, and deserializes it into allHistory_
          * @returns true if there is a history file
         */
-        bool findHistoryFileAndSetAllHistory();
+        bool loadHistory();
 
         /**
          * @brief takes in a vector of history strings and serializes it into the history flatbuffer
          * @param [in] history a pointer to a created history class used to track completed expressions
         */
-        void serializeHistoryAndStoreOnDisk(const std::vector<std::string> &history);
+        void saveHistory(const std::vector<std::string> &history);
 
         /**
          * @brief deserializes the history and sets it to allhistory_

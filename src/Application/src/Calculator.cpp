@@ -26,7 +26,7 @@ namespace calculator {
 // ***************** Calculator public methods ********************************* /
 // ***************************************************************************** /
  
-void Calculator::runCalculator(std::shared_ptr<calculator::History> &history)
+void Calculator::runCalculator(std::shared_ptr<calculator::History> const &history)
 {
     Parser parser;
     auto futureExpressionUnits = std::async(&Parser::getValidParsedEquationUnits, parser, parser.getUserInput());
@@ -130,7 +130,7 @@ float Calculator::calculate(const Expression &parsedExpression)
     return answer;
 }
 
-bool Calculator::restart(std::shared_ptr<calculator::History> &history)
+bool Calculator::restart(std::shared_ptr<calculator::History> const &history)
 {
     bool keepRunning = true;
     std::cout << calculator::CalculatorMessages::RETRY_MESSAGE << std::endl;
@@ -138,9 +138,9 @@ bool Calculator::restart(std::shared_ptr<calculator::History> &history)
     std::string response;
     std::cin >> response;
 
-    if (response[0] != 'y' && response[0] != 'Y') // didn't save 'y's in messages since only using here
+    if (response[0] != 'y' && response[0] != 'Y')
     {
-        if (response[0] == 'h' || response[0] == 'H') // didn't save 'h's in messages since only using here
+        if (response[0] == 'h' || response[0] == 'H')
         {
             history->printHistory();
             restart(history);

@@ -24,33 +24,32 @@ namespace calculator {
 
 History::History()
 {
-    findHistoryFileAndSetAllHistory();
+    loadHistory();
     printHistory();
 }
 
-void History::addToHistory(std::string fullResult)
+void History::addToHistory(std::string const &fullResult)
 {
     allHistory_.clear();
 
     if(!hasHistoryFile_)
     {
-        serializeHistoryAndStoreOnDisk(allHistory_);
+        saveHistory(allHistory_);
     }
 
     deserializeHistory();
     allHistory_.push_back(fullResult);
-    serializeHistoryAndStoreOnDisk(allHistory_);
+    saveHistory(allHistory_);
 }
 
 void History::printHistory()
 {
-    
     if (allHistory_.size() > 0)
     {
         std::cout << CalculatorMessages::HISTORY_START << std::endl;
-        for (size_t i = 0; i < allHistory_.size(); i++)
+        for (auto &history : allHistory_)
         {
-            std::cout << allHistory_.at(i) << std::endl;
+            std::cout << history << std::endl;
         }
         std::cout << CalculatorMessages::HISTORY_END << std::endl;
     }
@@ -64,7 +63,7 @@ void History::printHistory()
 // ***************** History private methods *********************************** /
 // ***************************************************************************** /
 
-bool History::findHistoryFileAndSetAllHistory()
+bool History::loadHistory()
 {
     bool hasHistory = false;
     const char* checkFile = historyFile_.c_str();
@@ -81,18 +80,19 @@ bool History::findHistoryFileAndSetAllHistory()
 void History::deserializeHistory()
 {
     std::ifstream infile;
-	infile.open(historyFile_, std::ios::binary | std::ios::in);
-	infile.seekg(0, std::ios::end);
-	int length = infile.tellg();
-	infile.seekg(0, std::ios::beg);
-	char* data = new char[length];
-	infile.read(data, length);
-	infile.close();
+    infile.open(historyFile_, std::ios::binary | std::ios::in);
+    infile.seekg(0, std::ios::end);
+    int length = infile.tellg();
+    infile.seekg(0, std::ios::beg);
+    char* data = new char[length];
+    infile.read(data, length);
+    infile.close();
 
-	allHistory_ = schema::GetHistory(data)->UnPack()->historyList;
+    allHistory_ = schema::GetHistory(data)->UnPack()->historyList;
+    delete[] data;
 }
 
-void History::serializeHistoryAndStoreOnDisk(const std::vector<std::string> &history)
+void History::saveHistory(const std::vector<std::string> &history)
 {
     flatbuffers::FlatBufferBuilder builder;
     auto historyBuffer = builder.CreateVectorOfStrings(history);
@@ -102,8 +102,8 @@ void History::serializeHistoryAndStoreOnDisk(const std::vector<std::string> &his
     builder.Finish(historyOffset);
 
     std::ofstream ofStream(historyFile_, std::ofstream::binary);
-	ofStream.write((char*)builder.GetBufferPointer(), builder.GetSize());
-	ofStream.close();
+    ofStream.write((char*)builder.GetBufferPointer(), builder.GetSize());
+    ofStream.close();
 }
 
 } //namespace calculator
