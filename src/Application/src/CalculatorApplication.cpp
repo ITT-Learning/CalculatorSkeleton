@@ -6,19 +6,12 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
-#include <chrono>
-#include <ctime>
 #include <future>
-#include <iostream>
-#include <limits>
 #include <sstream>
-#include <string>
 #include <thread>
 
-#include "AddCalculator.h"
 #include "CalculatorApplication.h"
 #include "CalculatorApplicationFactory.h"
-#include "CalculatorStrings.h"
 #include "History.h"
 
 namespace calculator {
@@ -27,7 +20,7 @@ namespace calculator {
 // ***************** CalculatorApplication public methods **********************/
 // *****************************************************************************/
 
-int CalculatorApplication::calculate(float firstNumber, float secondNumber, char operation, std::string originalEquation)
+int CalculatorApplication::calculate(float firstNumber, float secondNumber, char operation, std::string const &originalEquation)
 {
     int result = 0;
 
@@ -40,7 +33,6 @@ int CalculatorApplication::calculate(float firstNumber, float secondNumber, char
             CalculatorApplication calculatorApplication;
             result = calculator->getResult();
             std::cout << calculator->toString() << std::endl;
-
         }
         else
         {
@@ -106,7 +98,7 @@ void CalculatorApplication::runCalculator()
     }
         History::getInstance()->ReadFromFile();
         History::getInstance()->appendCalculator(answer, parser.getOriginalEquation());
-        History::getInstance()->storedHistory();
+        History::getInstance()->storeHistory();
         History::getInstance()->printHistory();
         
 }

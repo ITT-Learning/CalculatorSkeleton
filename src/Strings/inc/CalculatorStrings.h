@@ -48,8 +48,8 @@ class CalculatorStrings
         static constexpr char W6_HISTORY_PROMPT[] = "[w] to move up, [s] to move down, or number [0+] to get by index";
         static constexpr char HISTORY_START[] = "-----------------------History Start--------------------";
         static constexpr char HISTORY_END[] = "-----------------------History End--------------------";
-
-
+        static constexpr char CALCULATOR_DATA_FILE[] = "../CalculatorData.bin";
+        static constexpr char DATA_FILE[] = "../data.bin";
 };
 
 } //namespace calculator

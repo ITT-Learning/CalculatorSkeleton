@@ -5,11 +5,13 @@
  */
 ///////////////////////////////////////////////////
 
-#include<gtest/gtest.h>
-#include<gmock/gmock.h>
+
 #include <cstdint>
 #include <fstream>
 #include <iostream>
+
+#include<gtest/gtest.h>
+#include<gmock/gmock.h>
 
 #include "History.h"
 #include "CalculatorApplication.h"

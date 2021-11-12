@@ -42,6 +42,8 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
+src/Application/test/calculator_test[1]_include.cmake
+src/Application/test/calculator_test[1]_tests.cmake
 _deps
 
 # default build
@@ -70,11 +72,6 @@ third-party/*
 
 # ignore .vscode
 .vscode/
-.vscode/*
-.vscode/c_cpp_properties.json
-.vscode/launch.json
-.vscode/settings.json
-.vscode/tasks.json
 
 # ignore test folder
 test/*

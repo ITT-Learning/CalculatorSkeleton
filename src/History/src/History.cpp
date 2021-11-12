@@ -63,7 +63,7 @@ schema::HistoryT *History::getBuiltHistory()
     uint8_t *buf = builder.GetBufferPointer();
     int size = builder.GetSize();
 
-    std::ofstream ofile("../data.bin", std::ios::binary);
+    std::ofstream ofile(CalculatorStrings::DATA_FILE, std::ios::binary);
     ofile.write((char * )buf, size);
     ofile.close();
 
@@ -99,7 +99,7 @@ int History::getSize()
     return calculators_.size();
 }
 
-void History::storedHistory()
+void History::storeHistory()
 {
     auto &history = History::getInstance()->getBuiltHistory()->list;
     if(history.empty())
@@ -109,16 +109,16 @@ void History::storedHistory()
     }
     else
     {
-        std::ofstream outputFile("../CalculatorData.bin");
+        std::ofstream outputFile(CalculatorStrings::CALCULATOR_DATA_FILE);
 
-        for(const auto e : calculators_) outputFile << e->originalEquation << " = " << e->answer<<"\n";
+        for(const auto e : calculators_) outputFile << e->originalEquation << CalculatorStrings::EQUAL_SIGN << e->answer<< std::endl;
 
     }
 }
 
 void History::ReadFromFile()
 {
-    const std::string inputFile = "../data.bin";
+    const std::string inputFile = CalculatorStrings::DATA_FILE;
     std::ifstream infile(inputFile, std::ios_base::binary | std::ios::in);
     infile.seekg(0, std::ios::end);
     int length = infile.tellg();
@@ -135,15 +135,16 @@ void History::ReadFromFile()
         calculators_.push_back(historyData->list.at(i).get());
     }
 
+    delete[] data;
 }
 
 void History::printHistory()
 {
     std::cout << CalculatorStrings::HISTORY_START << std::endl;
     
-    for(int i = 0; i < History::getInstance()->getSize(); i++)
+    for(size_t i = 0; i < calculators_.size(); i++)
     {
-        std::cout << "{" << i << "} " << calculators_.at(i)->originalEquation << " = " << calculators_.at(i)->answer << std::endl;
+        std::cout << CalculatorStrings::BRACKET_OPEN << i << CalculatorStrings::BRACKET_CLOSE << calculators_.at(i)->originalEquation << CalculatorStrings::EQUAL_SIGN<< calculators_.at(i)->answer << std::endl;
     }
     std::cout << CalculatorStrings::HISTORY_END << std::endl;
 }

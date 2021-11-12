@@ -88,7 +88,7 @@ class History
         /**
          * @brief Places storedHistory from appendCalculator into outputFile
          */
-        void storedHistory();
+        void storeHistory();
 
     private:
         std::vector<const schema::CalculatorDataT*> calculators_;
