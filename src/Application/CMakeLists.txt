@@ -12,6 +12,8 @@ include_directories(
     $<TARGET_PROPERTY:CalculatorStrings,INCLUDE_DIRECTORIES>
     $<TARGET_PROPERTY:CalculatorParser,INCLUDE_DIRECTORIES>
     $<TARGET_PROPERTY:CalculatorInterface,INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:CalculatorHistory,INCLUDE_DIRECTORIES>
+    ${CMAKE_SOURCE_DIR}/schema
 )
 
 add_library(${LIBRARY_NAME} SHARED ${LIBRARY_SOURCES})
@@ -24,4 +26,6 @@ target_link_libraries(${LIBRARY_NAME}
     CalculatorStrings
     CalculatorInterface
     CalculatorParser
+    CalculatorHistory
+    flatbuffers
 )

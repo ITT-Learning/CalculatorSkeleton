@@ -20,9 +20,11 @@
 namespace calculator {
 
 /**
- * @brief This is the Class containing the functions and variables used in week 1
- */
-class CalculatorApplication : public ICalculator
+* @brief CalculatorApplication interface which exposes to other components
+*
+*/
+
+class CalculatorApplication
 {
     public:
         /**
@@ -32,21 +34,16 @@ class CalculatorApplication : public ICalculator
 
         /**
          * @brief This is the main function run in main.cpp
-         * @param firstNumber [in] first number float 
-         * @param secondNumber [in] second number float
-         * @param operation [in] operator char
+         * @param [in] firstNumber first number float 
+         * @param [in] secondNumber second number float
+         * @param [in] operation operator char
          */
-        static int calculate(float firstNumber, float secondNumber, char operation);
+
+        static int calculate(float firstNumber, float secondNumber, char operation, const std::string &originalEquation);
         
         /**
-         * @brief Get the Result object. Pure virtual function defined in child classes
-         * @return float after value calculated has been returned
-         */
-        virtual float getResult() = 0;
-
-        /**
          * @brief Checks if the inputted value is within scope
-         * @param number [in] value that the limit is being checked
+         * @param [in] number value that the limit is being checked
          * @return true if within limit
          * @return otherwise false 
          */
@@ -56,23 +53,14 @@ class CalculatorApplication : public ICalculator
          * @brief main funtion that runs the calculator
          * 
          */
-        static void runCalculator();
         
-        /**
-         * @name ICalculator method.
-         * @{
-         */
+        void runCalculator();
         
-        std::string toString() override;
-        
-        /**
-         * @}
-         */
-
     protected:
         float firstNumber_;
         float secondNumber_;
         char  operator_; 
+        float finalCalculatedAnswer_; 
 
 };
 

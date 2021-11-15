@@ -8,7 +8,7 @@
  */
 /////////////////////////////////////////////////////////////////////
 
-#include "CalculatorApplication.h"
+#include "ICalculator.h"
 
 namespace calculator {
 
@@ -17,7 +17,7 @@ namespace calculator {
  *
  */
 
-class SubtractCalculator : public CalculatorApplication
+class SubtractCalculator : public ICalculator
 {
     public:
         /**
@@ -28,22 +28,28 @@ class SubtractCalculator : public CalculatorApplication
         
         /**
          * @brief Construct a new Subtract Calculator object 
-         * @param firstNumber [in] firstNumber set to firstNumber_
-         * @param secondNumber [in] secondNumber set to secondNumber_
+         * @param [in] firstNumber firstNumber set to firstNumber_
+         * @param [in] secondNumber secondNumber set to secondNumber_
          */
         explicit SubtractCalculator(float firstNumber, float secondNumber);
 
         /**
-         * @name CalculatorApplication methods.
+         * @name ICalculator methods.
          * @{
          */
 
-        float getResult() override;
+        float getResult() const override;
+
+        std::string const toString() override;
 
         /**
          * @}
          */
 
+        private:   
+            float firstNumber_;
+            float secondNumber_;
+            char  operator_;
 };
 
 } // namespace calculator

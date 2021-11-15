@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /**
 * @file Parser.h
-* @brief calculator function declarations.
+* @brief Parser function declarations.
 */
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -47,6 +47,7 @@ class Parser
     public:
         /**
          * @brief the main parsing function that puts all the peices together and returns an expression
+         * @param [in] expressionUnits shared pointer of a vector passed in by reference
          * @return an Expression object, along with whether it is valid or not
         */
         Expression breakDownEquation(const std::shared_ptr<std::vector<ExpressionUnit>> &expressionUnits);
@@ -59,6 +60,7 @@ class Parser
 
         /**
          * @brief creates a vector out of a string
+         * @param [in] fullEquation string passed in by reference 
          * @returns vector split into each unit of expression
         */
         std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> createVector(const std::string &fullEquation);
@@ -75,32 +77,42 @@ class Parser
 
         /**
          * @brief counts parenthesis and ensures there are equal opening and closing
+         * @param [in] expressionUnits shared pointer of a vector passed in by reference
          * @return isValid if there is correct number of parenthesis
         */
         bool validateParenthesis(std::shared_ptr<std::vector<ExpressionUnit>> &expressionUnits);
 
         /**
          * @brief uses regex to ensure value is a float
+         * @param [in] input input string passed by reference
          * @return isValid if it is a float
         */
         bool validateFloat(const std::string &input);
 
         /**
          * @brief removes all spaces from user input
+         * @param [in] input input string passed by reference
          * @returns string of input entered, without spaces
         */
         std::string removeSpaces(const std::string &input);
 
         /**
          * @brief checks if inputed char is inside of Operations array
+         * @param [in] expressionUnit expression unit string passed by reference
          * @returns isValid if it is valid operator
         */
         bool validateOperator(const char &expressionUnit);
         
+        /**
+         * @brief finds the operator in the string input
+         * @param [in] input input string passed by reference  
+         * @return ExpressionUnit 
+         */
         ExpressionUnit findOperator(std::string &input);
 
         /**
          * @brief iterates through given expression and gives back the found number
+         * @param [in] editedEquation edited equation string passed by reference
          * @returns isValid if it is valid operator
         */
         ExpressionUnit findNumber(std::string &editedEquation);

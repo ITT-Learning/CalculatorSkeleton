@@ -7,22 +7,24 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include <future>
-#include <iostream>
-#include <limits>
 #include <sstream>
-#include <string>
 #include <thread>
 
 #include "CalculatorApplication.h"
 #include "CalculatorApplicationFactory.h"
+<<<<<<< HEAD
 #include "CalculatorStrings.h"
+=======
+#include "History.h"
+
+>>>>>>> b33283edce5691dfa92fac665c46ce7ead6e951c
 namespace calculator {
 
 // *****************************************************************************/
 // ***************** CalculatorApplication public methods **********************/
 // *****************************************************************************/
 
-int CalculatorApplication::calculate(float firstNumber, float secondNumber, char operation)
+int CalculatorApplication::calculate(float firstNumber, float secondNumber, char operation, std::string const &originalEquation)
 {
     int result = 0;
 
@@ -32,6 +34,7 @@ int CalculatorApplication::calculate(float firstNumber, float secondNumber, char
         auto calculator = calculatorAppFactory.createCalculator(firstNumber, secondNumber, operation);
         if(calculator)
         {
+            CalculatorApplication calculatorApplication;
             result = calculator->getResult();
             std::cout << calculator->toString() << std::endl;
         }
@@ -75,7 +78,7 @@ void CalculatorApplication::runCalculator()
 
         if(parsedExpression.validExpression)
         {
-            answer = CalculatorApplication::calculate(parsedExpression.firstNumber, parsedExpression.secondNumber, parsedExpression.operation);
+            answer = CalculatorApplication::calculate(parsedExpression.firstNumber, parsedExpression.secondNumber, parsedExpression.operation, parser.getOriginalEquation());
             ExpressionUnit prevAnswer;
             prevAnswer.number = answer;
             prevAnswer.valid = true;
@@ -97,11 +100,11 @@ void CalculatorApplication::runCalculator()
         }
 
     }
-}
-
-std::string CalculatorApplication::toString()
-{
-    return std::to_string(firstNumber_) + CalculatorStrings::EMPTY_SPACE + operator_ + CalculatorStrings::EMPTY_SPACE + std::to_string(secondNumber_) + CalculatorStrings::EQUAL_SIGN + std::to_string(getResult());
+        History::getInstance()->ReadFromFile();
+        History::getInstance()->appendCalculator(answer, parser.getOriginalEquation());
+        History::getInstance()->storeHistory();
+        History::getInstance()->printHistory();
+        
 }
 
 bool CalculatorApplication::limitCheck(float firstNumber)

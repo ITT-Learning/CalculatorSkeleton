@@ -24,9 +24,16 @@ MultiplyCalculator::MultiplyCalculator(float firstNumber, float secondNumber)
 // ***************** MultiplyCalculator public methods  ************************ /
 // ***************************************************************************** /
 
-float MultiplyCalculator::getResult()
+float MultiplyCalculator::getResult() const
 {
     return firstNumber_ * secondNumber_; //return variables multiplied by each other 
 }
+
+std::string const MultiplyCalculator::toString()
+{
+    return std::to_string(firstNumber_) + CalculatorStrings::EMPTY_SPACE + operator_ + CalculatorStrings::EMPTY_SPACE + 
+           std::to_string(secondNumber_) + CalculatorStrings::EQUAL_SIGN + std::to_string(getResult());
+}
+
 
 } // namespace calculator

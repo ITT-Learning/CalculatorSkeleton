@@ -8,7 +8,7 @@
  */
 ///////////////////////////////////////////////////////////////////
 
-#include "CalculatorApplication.h"
+#include "ICalculator.h"
 
 namespace calculator {
 
@@ -17,7 +17,7 @@ namespace calculator {
 *
 */
 
-class AddCalculator : public CalculatorApplication
+class AddCalculator : public ICalculator
 {
     public:
         /**
@@ -27,21 +27,28 @@ class AddCalculator : public CalculatorApplication
 
         /**
          * @brief Construct a new Add Calculator object
-         * @param firstNumber [in] first number set to firstNumber_
-         * @param secondNumber [in] Second number set to secondNumber_
+         * @param [in] firstNumber  first number set to firstNumber_
+         * @param [in] secondNumber Second number set to secondNumber_
          */
         explicit AddCalculator(float firstNumber, float secondNumber);
 
         /**
-         * @name CalculatorApplication methods.
+         * @name ICalculator methods.
          * @{
          */
 
-        float getResult() override;
+        float getResult() const override;
+
+        std::string const toString() override;
 
         /**
          * @}
          */ 
+
+        private:   
+            float firstNumber_;
+            float secondNumber_;
+            char  operator_;
         
 };
 
