@@ -33,7 +33,7 @@ class History
          * @brief creates a vector out of a string
          * @param [in] fullResult string of the full result taken from result object ex: "1+1 = 2"
         */
-        void addToHistory(std::string const &fullResult);
+        void addToHistory(const std::string &fullResult);
 
         /**
          * @brief prints all history
