@@ -27,9 +27,7 @@ TEST(whenTestingDivideCalculator, WhenCallingDivideWithPositiveFloatingPoints_Th
     float result = divideCalc.getResult();
     EXPECT_FLOAT_EQ(2.0, result);
 }
-
 /**
- * @brief Unit test to make sure Division with positive and negative floats works
  * 
  */
 TEST(whenTestingDivideCalculator, WhenCallingDivideWithPositiveAndNegativeFloatingPoints_ThenCorrectValueReturn)

@@ -8,7 +8,7 @@
  */
 ///////////////////////////////////////////////////////////////////
 
-#include "CalculatorApplication.h"
+#include "ICalculator.h"
 
 namespace calculator {
 
@@ -16,7 +16,7 @@ namespace calculator {
 * @brief DivideCalculator interface which exposes to other components
 */
 
-class DivideCalculator : public CalculatorApplication
+class DivideCalculator : public ICalculator
 {
     public:
         /**
@@ -27,21 +27,29 @@ class DivideCalculator : public CalculatorApplication
 
         /**
          * @brief Construct a new Divide Calculator object
-         * @param firstNumber [in] firstNumber set to secondNumber_
-         * @param secondNumber [in] secondNumber set to secondNumber_
+         * @param [in] firstNumber firstNumber set to secondNumber_
+         * @param [in] secondNumber secondNumber set to secondNumber_
          */
         explicit DivideCalculator(float firstNumber, float secondNumber);
 
         /**
-         * @name CalculatorApplication methods.
+         * @name ICalculator methods.
          * @{
          */
 
-        float getResult() override;
+        float getResult() const override;
+
+        std::string const toString() override;
+
 
         /**
          * @}
          */
+
+        private:   
+            float firstNumber_;
+            float secondNumber_;
+            char  operator_;
 
 };
 

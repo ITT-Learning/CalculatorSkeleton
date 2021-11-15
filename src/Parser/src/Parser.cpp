@@ -26,13 +26,13 @@ std::pair <std::shared_ptr<std::vector<ExpressionUnit>>,bool> Parser::createVect
 
     while (editedEquation_.length() > 0)
     {
-        if (editedEquation_.at(0) == '(' || editedEquation_.at(0) == ')')
+        if (editedEquation_.at(0) == CalculatorStrings::OPEN_PARENTHESIS || editedEquation_.at(0) == CalculatorStrings::CLOSE_PARENTHESIS)
         {
-            if (editedEquation_.at(0) == '(')
+            if (editedEquation_.at(0) == CalculatorStrings::OPEN_PARENTHESIS)
             {
                 isCheckingNumber = false;
             }
-            if (editedEquation_.at(0) == ')')
+            if (editedEquation_.at(0) == CalculatorStrings::CLOSE_PARENTHESIS)
             {
                 isCheckingNumber = true;
             }
@@ -75,8 +75,7 @@ Expression Parser::breakDownEquation(const std::shared_ptr<std::vector<Expressio
 {
     Expression parsedExpression;
     char       importantOperator;
-    int        parenthesisIndex;
-    char       lastParenthesis = '(';
+    char       lastParenthesis = CalculatorStrings::OPEN_PARENTHESIS;
     size_t     startingPoint = 0;
     size_t     endingPoint = expressionUnits->size();
     
@@ -84,11 +83,11 @@ Expression Parser::breakDownEquation(const std::shared_ptr<std::vector<Expressio
 
     for (size_t i = 0; i < expressionUnits->size(); i++) //find parenthesis that open then close
     {
-        if (expressionUnits->at(i).operation == '(')
+        if (expressionUnits->at(i).operation == CalculatorStrings::OPEN_PARENTHESIS)
         {
             startingPoint = i;
         }
-        if (expressionUnits->at(i).operation == ')' && lastParenthesis == '(')
+        if (expressionUnits->at(i).operation == CalculatorStrings::CLOSE_PARENTHESIS && lastParenthesis == CalculatorStrings::OPEN_PARENTHESIS)
         {
             endingPoint = i;
             expressionUnits->erase(expressionUnits->begin() + startingPoint); //erase parenthesis
@@ -96,7 +95,7 @@ Expression Parser::breakDownEquation(const std::shared_ptr<std::vector<Expressio
             endingPoint = endingPoint - ExpressionUnit::LENGTH_OVER_OPERATOR;
             break;
         }           
-        if (expressionUnits->at(i).operation == '(' || expressionUnits->at(i).operation == ')')
+        if (expressionUnits->at(i).operation == CalculatorStrings::OPEN_PARENTHESIS || expressionUnits->at(i).operation == CalculatorStrings::CLOSE_PARENTHESIS)
         {
             lastParenthesis = expressionUnits->at(i).operation;
         }
@@ -109,18 +108,18 @@ Expression Parser::breakDownEquation(const std::shared_ptr<std::vector<Expressio
             if (expressionUnits->at(i).valid)
             {
                 parsedExpression.validExpression = true;
-                if (expressionUnits->at(i).operation == '/' || 
+                if (expressionUnits->at(i).operation == CalculatorStrings::DIVIDE || 
                     expressionUnits->at(i).operation == '%' || 
                     expressionUnits->at(i).operation == 'x' || 
-                    expressionUnits->at(i).operation == '*')
+                    expressionUnits->at(i).operation == CalculatorStrings::TIMES)
                 {
                     importantOperator = expressionUnits->at(i).operation;
                     parsedExpression.placementIndex = i - 1;
                     break;
                 }
-                if (expressionUnits->at(i).operation == '-' || expressionUnits->at(i).operation == '+')
+                if (expressionUnits->at(i).operation == CalculatorStrings::MINUS || expressionUnits->at(i).operation == CalculatorStrings::PLUS)
                 {
-                    if(importantOperator != '-' && importantOperator != '+')
+                    if(importantOperator != CalculatorStrings::MINUS && importantOperator != CalculatorStrings::PLUS)
                     {
                         importantOperator = expressionUnits->at(i).operation;
                         parsedExpression.placementIndex = i - 1;
@@ -189,11 +188,11 @@ bool Parser::validateParenthesis(std::shared_ptr<std::vector<ExpressionUnit>> &e
     {
         if (expressionUnits->at(i).valid)
         {
-            if (expressionUnits->at(i).operation == '(')
+            if (expressionUnits->at(i).operation == CalculatorStrings::OPEN_PARENTHESIS)
             {
                 openParenthesisCount ++;
             }
-            if (expressionUnits->at(i).operation == ')')
+            if (expressionUnits->at(i).operation == CalculatorStrings::CLOSE_PARENTHESIS)
             {
                 closeParenthesisCount ++;
             }

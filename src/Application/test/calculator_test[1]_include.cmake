@@ -1,5 +1,0 @@
-if(EXISTS "/mnt/c/users/marcus.antimie/documents/LearningPlan/CalculatorSkeleton/src/Application/test/calculator_test[1]_tests.cmake")
-  include("/mnt/c/users/marcus.antimie/documents/LearningPlan/CalculatorSkeleton/src/Application/test/calculator_test[1]_tests.cmake")
-else()
-  add_test(calculator_test_NOT_BUILT calculator_test_NOT_BUILT)
-endif()

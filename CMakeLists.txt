@@ -8,9 +8,11 @@ set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE ON)
 add_subdirectory(src/Application)
 add_subdirectory(src/Strings)
 add_subdirectory(src/exe)
+add_subdirectory(src/History)
 add_subdirectory(src/Interface)
 add_subdirectory(src/Parser)
 add_subdirectory(src/Application/test)
+add_subdirectory(third-party)
 
 # Create OBJECT_DIR variable
 set(OBJECT_DIR ${CMAKE_BINARY_DIR}/CMakeFiles/CalculatorApplication.dir)

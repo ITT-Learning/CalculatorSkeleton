@@ -18,5 +18,11 @@ constexpr char CalculatorStrings::ERROR_MESSAGE_INVALID_INPUT_LENGTH[];
 constexpr char CalculatorStrings::BUILDING_VECTORS[];
 constexpr char CalculatorStrings::DISSECTING_AND_CALCULATING[];
 constexpr char CalculatorStrings::REPEAT_PROGRAM[];
+constexpr char CalculatorStrings::NO_HISTORY[];
+constexpr char CalculatorStrings::W6_HISTORY_PROMPT[];
+constexpr char CalculatorStrings::HISTORY_END[];
+constexpr char CalculatorStrings::HISTORY_START[];
+constexpr char CalculatorStrings::CALCULATOR_DATA_FILE[];
+constexpr char CalculatorStrings::DATA_FILE[];
 
 } // namespace calculator

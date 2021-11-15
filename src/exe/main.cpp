@@ -9,21 +9,22 @@
 #include "CalculatorApplication.h"
 #include "CalculatorStrings.h"
 #include "Parser.h"
+#include "History.h"
 
 using namespace calculator;
-
 /**
  * @brief Main interface which exposes to other components
  *
  */
 int main() 
 {
-    bool again = true;
+    bool isRunning = true;
 
-    while(again)
+    while(isRunning)
     {
-        CalculatorApplication::runCalculator();
-
+        CalculatorApplication calculatorApplication;
+        calculatorApplication.runCalculator();
+        
         std::cout << CalculatorStrings::REPEAT_PROGRAM << std::endl;
         
         char repeat;      
@@ -31,7 +32,7 @@ int main()
  
         if(repeat != CalculatorStrings::YES)
         {
-            again = false;
+            isRunning = false;
         }
     }
 
