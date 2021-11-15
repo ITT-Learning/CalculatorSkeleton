@@ -9,7 +9,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <string>
+
 namespace calculator {
+
+/**
+* @brief Messages interface which exposes to other components
+*/
+
 class CalculatorMessages
 {
     public:
@@ -84,7 +90,7 @@ class CalculatorMessages
         /**
          * @brief displays after finishing calculation
          */
-        static constexpr const char *RETRY_MESSAGE = "Do you have another calculation? (y/n)";
+        static constexpr const char *RETRY_MESSAGE = "Do you have another calculation? (Y)es / (N)o / (H)istory...";
 
         /**
          * @brief message on program exit
@@ -110,6 +116,26 @@ class CalculatorMessages
          * @brief appended to error message if divide by zero is attempted
          */
         static constexpr const char *ERROR_MESSAGE_DIVIDE_BY_ZERO = " divide by zero";
+
+        /**
+         * @brief Shows if user attempts to view history without any history
+         */
+        static constexpr const char *NO_HISTORY = "No History Available";
+
+        /**
+         * @brief Shows if user attempts to view history without any history
+         */
+        static constexpr const char *HISTORY_FILE = "historyData.bin";
+        
+        /**
+         * @brief shows before showing all history
+         */
+        static constexpr const char *HISTORY_START = "---History---";
+        
+        /**
+         * @brief shows after showing all history
+         */
+        static constexpr const char *HISTORY_END = "---End History---";
     
         /**
          * @brief appended to error message if number entered incorrectly
@@ -137,6 +163,6 @@ class CalculatorMessages
         static constexpr const char *FLOAT_REGEX = R"([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+))";    
 };
 
-}//namespace calculator
+} //namespace calculator
 
 #endif  // CALCULATOR_H

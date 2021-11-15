@@ -33,6 +33,7 @@ enable_testing()
 include_directories(
   $<TARGET_PROPERTY:CalculatorApplication,INCLUDE_DIRECTORIES>
   $<TARGET_PROPERTY:CalculatorParser,INCLUDE_DIRECTORIES>
+  $<TARGET_PROPERTY:CalculatorHistory,INCLUDE_DIRECTORIES>
 )
 
 # Some recommendations on NOT using file globbing to grab all cpp files.  So far, it seems
@@ -53,6 +54,7 @@ target_link_libraries(${This} PUBLIC
     pthread
     CalculatorApplication
     CalculatorParser
+    CalculatorHistory
 )
 
 include(GoogleTest)

@@ -5,28 +5,25 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
+#include <fstream>
+#include <memory>
 #include <string>
 
 #include "Calculator.h"
 #include "CalculatorMessages.h"
+#include "flatbuffers/util.h"
+#include "History.h"
 
 int main() 
 {
+    std::shared_ptr<calculator::History> history = std::make_shared<calculator::History>();
+    
     bool running = true;
     while(running)
     {
         calculator::Calculator calculator;
-        calculator.runCalculator();
-
-        std::cout << calculator::CalculatorMessages::RETRY_MESSAGE << std::endl;
-        
-        std::string response;
-        std::cin >> response;
-        if (response[0] != 'y' && response[0] != 'Y') // didn't save 'y's in messages since only using here
-        {
-            std::cout << calculator::CalculatorMessages::OUTRO_MESSAGE << std::endl;
-            running = false;
-        }
+        calculator.runCalculator(history);
+        running = calculator.restart(history);
     }
 
     return 0;
