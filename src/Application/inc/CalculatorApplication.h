@@ -39,7 +39,7 @@ class CalculatorApplication
          * @param [in] operation operator char
          */
 
-        static int calculate(float firstNumber, float secondNumber, char operation, std::string const &originalEquation);
+        static int calculate(float firstNumber, float secondNumber, char operation, const std::string &originalEquation);
         
         /**
          * @brief Checks if the inputted value is within scope
