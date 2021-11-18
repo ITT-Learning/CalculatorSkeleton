@@ -1,0 +1,71 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# CMake files
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# default build
+build/
+
+# Anything build...
+[Bb][Uu][Ii][Ll][Dd]/
+
+# default bin
+bin/
+
+# Anything bin...
+[Bb][Ii][Nn]/
+
+# ignore googletest items
+test/googletest-*/
+
+#vscode defaults
+.vscode/
+
+#ignore saved calculatorData
+historyData.bin
+# ignore third party libraries, they should all be built by CMake
+third-party/*
+!third-party/CMakeLists.txt
+!third-party/flatbuffers/CMakeLists.txt
+!third-party/pistache/CMakeLists.txt
