@@ -59,5 +59,6 @@
         "mutex": "cpp",
         "thread": "cpp",
         "variant": "cpp"
-    }
+    },
+    "search.useGlobalIgnoreFiles": true
 }

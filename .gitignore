@@ -32,22 +32,22 @@
 *.app
 
 # CMake files
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-src/Application/test/calculator_test[1]_include.cmake
-src/Application/test/calculator_test[1]_tests.cmake
-_deps
+Backend/CMakeLists.txt.user
+Backend/CMakeCache.txt
+Backend/CMakeFiles
+Backend/CMakeScripts
+Backend/Testing
+Backend/Makefile
+Backend/cmake_install.cmake
+Backend/install_manifest.txt
+Backend/compile_commands.json
+Backend/CTestTestfile.cmake
+Backend/src/Application/test/calculator_test[1]_include.cmake
+Backend/src/Application/test/calculator_test[1]_tests.cmake
+Backend/_deps
 
 # default build
-build/
+Backend/build/
 
 # Anything build...
 [Bb][Uu][Ii][Ll][Dd]/
@@ -59,23 +59,36 @@ bin/
 [Bb][Ii][Nn]/
 
 # ignore googletest items
-src/Application/test/googletest-*/
-src/Application/test/googletest-*
-src/Application/test/calculator_test
+Backend/src/Application/test/googletest-*/
+Backend/src/Application/test/googletest-*
+Backend/src/Application/test/calculator_test
 
 # ignore third party libraries, they should all be built by CMake
+<<<<<<< HEAD
+Backend/third-party/*
+!Backend/third-party/CMakeLists.txt
+!Backend/third-party/flatbuffers/CMakeLists.txt
+!Backend/third-party/pistache/CMakeLists.txt
+=======
 third-party/*
 !third-party/CMakeLists.txt
 !third-party/flatbuffers/CMakeLists.txt
-!third-party/fmt/CMakeLists.txt
-
+!third-party/pistache/CMakeLists.txt
+<<<<<<< HEAD
+>>>>>>> d4df52ce2f053045cfd43c96dd4c8d75f48864ab
+=======
+>>>>>>> d4df52ce2f053045cfd43c96dd4c8d75f48864ab
 
 # ignore .vscode
-.vscode/
+Backend/.vscode/
 
 # ignore test folder
-test/*
+Backend/test/*
 
 # output file 
-CalculatorData.bin
-data.bin
+Backend/CalculatorData.bin
+Backend/data.bin
+
+Frontend/node_modules/
+Frontend/.angular/
+
