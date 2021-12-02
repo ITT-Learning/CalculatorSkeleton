@@ -54,7 +54,7 @@ class Parser
 
         /**
          * @brief takes in input
-         * @param [in] webInput
+         * @param [in] webInput string passed in by website/input from website
          * @returns string of input entered
         */
         std::string getUserInput(std::string webInput);

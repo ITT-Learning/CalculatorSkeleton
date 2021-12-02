@@ -51,7 +51,7 @@ class CalculatorApplication
 
         /**
          * @brief runCalculator function that runs the calculator on the server
-         * @param [in] webInput string passed in by website
+         * @param [in] webInput string passed in by website/input from website
          * @return string which is the final answer, and bool which states if successful or not 
          */
         std::pair<std::string, bool> runCalculator(std::string webInput);
