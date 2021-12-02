@@ -9,7 +9,6 @@ file(GLOB LIBRARY_SOURCES
 include_directories(
     inc
     $<TARGET_PROPERTY:CalculatorMessages,INCLUDE_DIRECTORIES>
-    $<TARGET_PROPERTY:CalculatorParser,INCLUDE_DIRECTORIES>
     $<TARGET_PROPERTY:CalculatorApplication,INCLUDE_DIRECTORIES>
 )
 
@@ -25,7 +24,6 @@ target_include_directories(${LIBRARY_NAME} PUBLIC
 
 target_link_libraries(${LIBRARY_NAME}
     CalculatorMessages
-    CalculatorParser
     CalculatorApplication
     pistache
 )

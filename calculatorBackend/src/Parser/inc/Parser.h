@@ -61,11 +61,10 @@ class Parser
         Expression breakDownEquation(const std::shared_ptr<std::vector<ExpressionUnit>> &equations);
 
         /**
-         * @brief takes in input from cin and edits it, also saves it to originalEquation_
-         * @returns userInput after it's sent through removeSpaces function
+         * @brief sets the original equation and returns the original without spaces
+         * @param [in] input is the submitted equation string
+         * @returns original equation without spaces after being run through removeSpaces function
         */
-        std::string getUserInput();
-
         std::string processUserInput(std::string input);
 
         /**

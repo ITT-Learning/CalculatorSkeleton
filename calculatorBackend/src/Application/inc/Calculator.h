@@ -27,7 +27,7 @@ class Calculator
     public:
         /**
          * @brief initiates calculator and works with the parser to return a result object
-         * @param [in] history a pointer to a created history class usd to track completed expressions
+         * @param [in] webInput input taken from the frontend website
         */
         std::pair <std::string,bool> runCalculator(std::string webInput);
 

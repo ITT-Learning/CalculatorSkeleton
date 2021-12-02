@@ -9,12 +9,8 @@
 
 #include <iostream>
 
-#include "pistache/endpoint.h"
-#include "pistache/router.h"
-
 #include "Calculator.h"
 #include "CalculatorMessages.h"
-#include "Parser.h"
 
 namespace calculator {
 

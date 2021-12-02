@@ -164,11 +164,9 @@ Expression Parser::breakDownEquation(const std::shared_ptr<std::vector<Expressio
 
 std::string Parser::processUserInput(std::string input)
 {
-    std::string userInput = input;
-
-    originalEquation_ = userInput;
+    originalEquation_ = input;
     
-    return removeSpaces(userInput); 
+    return removeSpaces(input); 
 }
 
 std::string Parser::getOriginalEquation()
