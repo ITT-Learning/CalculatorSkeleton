@@ -92,3 +92,5 @@ Backend/data.bin
 Frontend/node_modules/
 Frontend/.angular/
 
+# lib.0 files
+*.0

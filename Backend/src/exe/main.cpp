@@ -21,7 +21,6 @@ int main()
     Pistache::Rest::Router router;
     calculator::Rest rest; 
     
-    // this bind thing is where I am binding this function to the route, that is why it is called when arriving
     auto test = Pistache::Rest::Routes::bind(&calculator::Rest::calculateRoute, &rest);
     Pistache::Rest::Routes::Post(router, "/calculate", test);
     auto optionsHeader = Pistache::Rest::Routes::bind(&calculator::Rest::optionsHeader, &rest);

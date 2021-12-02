@@ -48,7 +48,7 @@ float CalculatorApplication::calculate(float firstNumber, float secondNumber, ch
     return result;
 }
 
-std::pair <std::string, bool> CalculatorApplication::runCalculator(std::string webInput) //set to return bool and final answer and string and pass into request.body from pistatio 
+std::pair <std::string, bool> CalculatorApplication::runCalculator(std::string webInput) 
 {
     bool isValid = false;
     std::string finalResult;
@@ -56,7 +56,7 @@ std::pair <std::string, bool> CalculatorApplication::runCalculator(std::string w
     float answer;
     Expression parsedExpression;
 
-    auto tempExpressionUnits = std::async(&Parser::createVector, parser, parser.getUserInput(webInput)); // pass into getUserinput request.body
+    auto tempExpressionUnits = std::async(&Parser::createVector, parser, parser.getUserInput(webInput));
     while(tempExpressionUnits.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
     {
         std::cout << CalculatorStrings::BUILDING_VECTORS;
