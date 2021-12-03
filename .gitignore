@@ -26,6 +26,9 @@
 *.a
 *.lib
 
+# Info files
+*.info
+
 # Executables
 *.exe
 *.out
@@ -74,13 +77,9 @@ third-party/*
 !third-party/CMakeLists.txt
 !third-party/flatbuffers/CMakeLists.txt
 !third-party/pistache/CMakeLists.txt
-<<<<<<< HEAD
->>>>>>> d4df52ce2f053045cfd43c96dd4c8d75f48864ab
-=======
->>>>>>> d4df52ce2f053045cfd43c96dd4c8d75f48864ab
 
 # ignore .vscode
-Backend/.vscode/
+.vscode/
 
 # ignore test folder
 Backend/test/*
@@ -92,5 +91,11 @@ Backend/data.bin
 Frontend/node_modules/
 Frontend/.angular/
 
-# lib.0 files
-*.0
+# lib files
+Backend/lib/
+
+
+#tmp files
+Backend/CoverageSummary.tmp
+Backend/coverage/
+
