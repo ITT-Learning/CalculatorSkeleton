@@ -1,11 +1,15 @@
 version: "3.8"
 services:
-  app:
-      build: .
+    calculator:
+        build: ./Backend
+        ports:
+          - 9080:9080
+    web:
+      build: ./Frontend
       restart: always
       volumes:
           - "/angularProject/node_modules"
-          - ./:/angularProject
+          - ./Frontend/:/angularProject
       ports:
           - 4200:4200
       command:
