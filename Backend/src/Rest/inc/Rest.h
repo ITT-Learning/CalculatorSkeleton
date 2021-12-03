@@ -32,7 +32,7 @@ class Rest
          * @param [in] request request sent by browser
          * @param [in] response response to be sent by Api back to browser
         */
-        void calculateRoute(const Pistache::Rest::Request& request, Pistache::Http::ResponseWriter response);
+        void calculatePost(const Pistache::Rest::Request& request, Pistache::Http::ResponseWriter response);
 };
 
 } //namespace calculator

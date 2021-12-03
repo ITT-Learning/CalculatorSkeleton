@@ -21,7 +21,7 @@ int main()
     Pistache::Rest::Router router;
     calculator::Rest rest; 
     
-    auto test = Pistache::Rest::Routes::bind(&calculator::Rest::calculateRoute, &rest);
+    auto test = Pistache::Rest::Routes::bind(&calculator::Rest::calculatePost, &rest);
     Pistache::Rest::Routes::Post(router, "/calculate", test);
     auto optionsHeader = Pistache::Rest::Routes::bind(&calculator::Rest::optionsHeader, &rest);
 

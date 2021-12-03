@@ -12,7 +12,7 @@
 
 namespace calculator {
 
-void Rest::calculateRoute(const Pistache::Rest::Request& request, Pistache::Http::ResponseWriter response)
+void Rest::calculatePost(const Pistache::Rest::Request& request, Pistache::Http::ResponseWriter response)
 {
    response.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("*");
    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Text, Json));

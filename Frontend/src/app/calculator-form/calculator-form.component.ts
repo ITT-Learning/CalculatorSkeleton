@@ -9,6 +9,7 @@ import { catchError, throwError } from 'rxjs';
   templateUrl: './calculator-form.component.html',
   styleUrls: ['./calculator-form.component.css']
 })
+
 export class CalculatorFormComponent implements OnInit{
 
   answer:any;
@@ -21,8 +22,6 @@ export class CalculatorFormComponent implements OnInit{
         console.log(result)})
     }
 
-  
-  
   ngOnInit() {this.answer = ''}
     
 }
