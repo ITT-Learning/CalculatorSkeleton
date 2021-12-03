@@ -69,3 +69,7 @@ third-party/*
 !third-party/CMakeLists.txt
 !third-party/flatbuffers/CMakeLists.txt
 !third-party/pistache/CMakeLists.txt
+
+
+*.0
+*src/CalculatorSkeleton

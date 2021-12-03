@@ -21,14 +21,14 @@ class Rest
 {
     public:
         /**
-         * @brief handler for when client hits the calculate route
+         * @brief handler for when client hits the calculate route POST /calculate
          * @param [in] request the pistache data needed to handle server requests
          * @param [in] response the pistache data needed to handle the response from the server
         */
         void calculateRoute(const Pistache::Rest::Request& request, Pistache::Http::ResponseWriter response);
 
         /**
-         * @brief Tests for options to prevent browser from throwing cors error
+         * @brief Tests for options to prevent browser from throwing cors error utilizes OPTIONS /calculate
          * @param [in] request the pistache data needed to handle server requests
          * @param [in] response the pistache data needed to handle the response from the server
         */

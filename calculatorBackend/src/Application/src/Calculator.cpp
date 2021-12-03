@@ -88,18 +88,13 @@ std::pair <std::string,bool> Calculator::runCalculator(std::string webInput)
 
     if (parsedExpression.isValid)
     {
-
         ResultFactory resultFactory;
         std::shared_ptr<IResult> result = resultFactory.createResult(parser.getOriginalEquation(), answer);
         finalResult = result->getFullResult();
         isValid = true;
-        // history->addToHistory(fullResult);
-        // std::cout << fullResult << std::endl;
     }
     
-    std::pair <std::string,bool> calculatedResult (finalResult, isValid);
-
-    return calculatedResult;
+    return std::pair<std::string,bool>(finalResult, isValid);
 }
 
 float Calculator::calculate(const Expression &parsedExpression)
