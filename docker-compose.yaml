@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+    calculator:
+        build: ./Backend
+        ports:
+          - 9080:9080
+    web:
+      build: ./Frontend
+      restart: always
+      volumes:
+          - "/angularProject/node_modules"
+          - ./Frontend/:/angularProject
+      ports:
+          - 4200:4200
+      command:
+          ng serve --host 0.0.0.0

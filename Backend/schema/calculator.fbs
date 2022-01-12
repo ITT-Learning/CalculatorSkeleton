@@ -1,0 +1,18 @@
+namespace calculator.schema;
+
+enum CalculatorType : byte
+{
+    AddCalculator,
+    SubtractCalculator,
+    MultiplyCalculator,
+    DivideCalculator
+}
+
+table CalculatorData
+{
+    originalEquation:string;
+    answer:float;
+    type:CalculatorType;
+}
+
+root_type CalculatorData;
