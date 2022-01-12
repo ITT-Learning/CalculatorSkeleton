@@ -1,0 +1,26 @@
+
+<div class="container">
+  <div class="row spacer">
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex justify-content-center pb-3">
+      <h1 class="rainbow rainbow_text_animated">Jared's Incredible Calculator</h1>
+    </div>
+
+    <div class="col-12">
+      <div class="content" role="main">
+        <form ngNativeValidate (ngSubmit)="onSubmit($event)">
+          <div class="form-group d-flex py-5">
+            <label name="Enter an Equation" for="exampleFormControlInput1"></label>
+            <input required minlength="3" name="equation" value="" type="text" class="form-control" id="equationInput" placeholder="Enter an Equation...">
+            <button type="submit" class="d-flex justify-content-end btn btn-primary">Calculate</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-12">
+      <h5>Result: {{answer}}</h5>
+    </div>
+  </div>
+</div>
+

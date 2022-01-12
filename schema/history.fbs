@@ -1,9 +1,0 @@
-include "result.fbs";
-namespace calculator.schema;
-
-table History
-{
-    historyList:[Result];
-}
-
-root_type History;

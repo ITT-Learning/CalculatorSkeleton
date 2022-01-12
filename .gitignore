@@ -68,3 +68,8 @@ historyData.bin
 third-party/*
 !third-party/CMakeLists.txt
 !third-party/flatbuffers/CMakeLists.txt
+calculatorBackend/test/calculator_test[1]_include.cmake
+calculatorBackend/test/calculator_test[1]_include.cmake
+calculatorBackend/test/calculator_test[1]_tests.cmake
+calculatorBackend/test/calculator_test[1]_include.cmake
+calculatorBackend/test/calculator_test
