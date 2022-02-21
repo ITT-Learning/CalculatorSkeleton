@@ -13,4 +13,8 @@
 #include <iostream>
 // Add your function declarations here.
 
+namespace Calculator {
+    
+}
+
 #endif  // CALCULATOR_H
