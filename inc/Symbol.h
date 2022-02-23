@@ -6,39 +6,25 @@
 namespace Calculator {
 
 /**
- * @brief Represents a symbol in a mathematical expression. Symbols can be any single character from a-z.
+ * @brief Represents a symbol in a mathematical expression. Symbols have a single associated glyph from a-z 
+ * and can optionally have a value bound to them.
  * 
  */
 template<typename T>
-class Symbol {
-public:
-    const char symbol;
+class Symbol
+{
 private:
-    bool is_bound;
-    T bound_value;
+    const char symbol_;
+    bool isBound_;
+    T boundValue_;
 public:
-    Symbol() = delete;
+    Symbol(void) = delete;
+    Symbol(char symbol);
 
-    Symbol(char c) : symbol(tolower(c)), is_bound(false) {
-        if(!isalpha(c)) throw new std::domain_error("given character was not a letter");
-    }
-
-    bool hasValue() {
-        return this->is_bound;
-    }
-
-    void setValue(T value_to_bind) {
-        this->is_bound = true;
-        this->bound_value = value_to_bind;
-    }
-
-    T getValue() { return this->bound_value; }
-
-    void bindFromStdIO(void) {
-        std::cout << symbol << " = ";
-        this->is_bound = true;
-        std::cin >> this->bound_value;
-    }
+    bool hasValue(void);
+    void setValue(T valueToBind);
+    T getValue(void);
+    void bindFromStdIO(void);
 };
 
 }
