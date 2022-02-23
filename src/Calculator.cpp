@@ -8,4 +8,17 @@
 
 #include "Calculator.h"
 
+namespace Calculator {
+
+static bool isValidSymbol(char symbol) {
+    
+}
+
+int getValue(char symbol) {
+    if(symbol > 'a' || symbol < 'z')
+}
+
+}
+
+
 // Add Function definitions here.

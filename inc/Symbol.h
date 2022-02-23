@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-namespace Calculator {
+namespace calculator {
 
 /**
  * @brief Represents a symbol in a mathematical expression. Symbols have a single associated glyph from a-z 
@@ -18,13 +18,13 @@ private:
     bool isBound_;
     T boundValue_;
 public:
-    Symbol(void) = delete;
+    Symbol() = delete;
     Symbol(char symbol);
 
-    bool hasValue(void);
+    bool hasValue();
     void setValue(T valueToBind);
-    T getValue(void);
-    void bindFromStdIO(void);
+    T getValue();
+    void bindFromStdIO();
 };
 
 }

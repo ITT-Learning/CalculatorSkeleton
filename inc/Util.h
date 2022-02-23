@@ -3,7 +3,7 @@
 
 #include "Symbol.h"
 
-namespace Calculator::Util {
+namespace calculator::Util {
     
 }
 

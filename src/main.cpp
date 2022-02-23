@@ -15,9 +15,9 @@ int main()
 {
     // Fill in or change code here as necessary.  See also Calculator.cpp
     std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
-    std::vector<Calculator::Symbol<int>> symbols { Calculator::Symbol<int>{'a'}, Calculator::Symbol<int>{'b'} };
+    std::vector<calculator::Symbol<int>> symbols { calculator::Symbol<int>{'a'}, calculator::Symbol<int>{'b'} };
 
-    for(Calculator::Symbol<int>& s : symbols)
+    for(calculator::Symbol<int>& s : symbols)
     {
         s.bindFromStdIO();
     }

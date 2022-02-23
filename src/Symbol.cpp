@@ -3,7 +3,7 @@
 #include <cctype>
 #include <stdexcept>
 
-namespace Calculator {
+namespace calculator {
 
 template<typename T>
 Symbol<T>::Symbol(char symbol) : symbol(tolower(symbol)), is_bound(false)
