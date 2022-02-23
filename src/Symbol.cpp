@@ -2,15 +2,17 @@
 
 #include <cctype>
 #include <stdexcept>
+#include <functional>
+#include <limits>
 
 namespace calculator {
 
 template<typename T>
-Symbol<T>::Symbol(char symbol) : symbol(tolower(symbol)), is_bound(false)
+Symbol<T>::Symbol(char symbol) : symbol_(tolower(symbol)), isBound_(false)
 {
     if(!isalpha(symbol)) 
     {
-        throw new std::domain_error("given character was not a letter");
+        throw std::domain_error("given character was not a letter");
     }
 }
 
@@ -30,17 +32,28 @@ void Symbol<T>::setValue(T valueToBind)
 template<typename T>
 T Symbol<T>::getValue()
 {
-    if(!isBound_) throw new std::exception("attempted to get the value of a "
-            "symbol with no bound value");
     return boundValue_;
 }
 
 template<typename T>
-void Symbol<T>::bindFromStdIO()
+void Symbol<T>::bindFromStreams(std::istream& istream, std::ostream& ostream)
 {
-    std::cout << symbol_ << " = ";
+    do
+    {
+        ostream << symbol_ << " = ";
+        if(istream >> boundValue_)
+        {
+            // good input, we can stop asking.
+            break;
+        }
+        else
+        {
+            istream.clear();
+            istream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            ostream << "Please enter a valid integer." << std::endl;
+        }
+    } while (true);
     isBound_ = true;
-    std::cin >> boundValue_;
 }
 
 // Explicit template specialization needed since template is defined in .cpp 

@@ -13,10 +13,6 @@ namespace calculator {
 template<typename T>
 class Symbol
 {
-private:
-    const char symbol_;
-    bool isBound_;
-    T boundValue_;
 public:
     Symbol() = delete;
     Symbol(char symbol);
@@ -24,7 +20,11 @@ public:
     bool hasValue();
     void setValue(T valueToBind);
     T getValue();
-    void bindFromStdIO();
+    void bindFromStreams(std::istream& istream, std::ostream& ostream);
+private:
+    const char symbol_;
+    bool isBound_;
+    T boundValue_;
 };
 
 }
