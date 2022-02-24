@@ -21,7 +21,7 @@ T Symbol<T>::defaultValue()
 
 
 template<typename T>
-Symbol<T>::Symbol(char symbol): symbol_{char(tolower(symbol))}, isBound_{false},
+Symbol<T>::Symbol(char symbol): symbol_{static_cast<char>(tolower(symbol))}, isBound_{false},
         boundValue_{defaultValue()}
 {
     if(!isalpha(symbol)) 
