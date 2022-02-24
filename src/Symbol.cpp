@@ -6,8 +6,6 @@
 #include <limits>
 
 namespace calculator {
-
-
     
 template<typename T>
 T Symbol<T>::defaultValue()
@@ -15,7 +13,7 @@ T Symbol<T>::defaultValue()
     // Exceptions are discouraged, but we ideally shouldn't ever use a variable 
     // that hasn't had a value bound to it, so let's use an unusual value that 
     // will cause an obviously wrong result.
-    return std::numeric_limits<T>::min();
+    return std::numeric_limits<T>::min() / 2;
 }
 
 
@@ -81,7 +79,7 @@ void Symbol<T>::bindFromStreams(std::istream &istream, std::ostream &ostream)
         {
             istream.clear();
             istream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            ostream << "Please enter a valid integer." << std::endl;
+            ostream << "Please enter a valid number." << std::endl;
         }
     }
     isBound_ = true;

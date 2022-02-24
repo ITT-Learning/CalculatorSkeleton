@@ -18,88 +18,142 @@ using namespace testing;
 class SymbolFixture: public ::testing::Test
 {
     protected:
+        static constexpr int FIRST_INT_VALUE = 42;
+        static constexpr int SECOND_INT_VALUE = 43;
+        static constexpr int THIRD_INT_VALUE = 41;
+        static constexpr int FOURTH_INT_VALUE = 44;
+        static constexpr double FIRST_DOUBLE_VALUE = 42.42e10;
+        static constexpr double SECOND_DOUBLE_VALUE = 43.43e10;
+        static constexpr double THIRD_DOUBLE_VALUE = 41.41e10;
+        static constexpr double FOURTH_DOUBLE_VALUE = 44.44e10;
+        static constexpr const char *BAD_USER_INPUT = "asdf";
+
         calculator::Symbol<int> intSymbolA;
         calculator::Symbol<int> intSymbolBBound;
-        calculator::Symbol<int> intSymbolCBound;
         calculator::Symbol<int> intSymbolDBound;
-        calculator::Symbol<int> intSymbolEBound;
-        calculator::Symbol<int> intSymbolFBound;
-        calculator::Symbol<int> intSymbolZ;
-        
         calculator::Symbol<double> doubleSymbolA;
-        calculator::Symbol<double> doubleSymbolBBound;
-        calculator::Symbol<double> doubleSymbolCBound;
         calculator::Symbol<double> doubleSymbolDBound;
-        calculator::Symbol<double> doubleSymbolEBound;
-        calculator::Symbol<double> doubleSymbolFBound;
-        calculator::Symbol<double> doubleSymbolZ;
+        calculator::Symbol<double> doubleSymbolBBound;
 
+        // Using SetUp() is normally preferred to having a ctor.
+        // In this case, we can't get away from initializing in the ctor since 
+        // the instance variables require symbols to be set on construction
         SymbolFixture(): 
                 intSymbolA{'a'},
-                intSymbolBBound{'B'}, 
-                intSymbolCBound{'c'},
+                intSymbolBBound{'B'},
                 intSymbolDBound{'d'},
-                intSymbolEBound{'e'},
-                intSymbolFBound{'f'},
-                intSymbolZ{'Z'},
                 doubleSymbolA{'A'},
-                doubleSymbolBBound{'b'},
-                doubleSymbolCBound{'C'},
-                doubleSymbolDBound{'d'},
-                doubleSymbolEBound{'e'},
-                doubleSymbolFBound{'f'},
-                doubleSymbolZ{'z'}
+                doubleSymbolBBound{'B'},
+                doubleSymbolDBound{'d'}
         {
-            intSymbolBBound.setValue(-12);
-            intSymbolCBound.setValue(0);
-            intSymbolDBound.setValue(42);
-            intSymbolEBound.setValue(std::numeric_limits<int>::max());
-            intSymbolFBound.setValue(std::numeric_limits<int>::min());
+        }
 
-            doubleSymbolBBound.setValue(-123.45);
-            doubleSymbolCBound.setValue(0.0);
-            doubleSymbolDBound.setValue(42.42e10);
-            doubleSymbolEBound.setValue(std::numeric_limits<double>::max());
-            doubleSymbolFBound.setValue(std::numeric_limits<double>::min());
+        void SetUp() override
+        {
+            intSymbolBBound.setValue(FIRST_INT_VALUE);
+            intSymbolDBound.setValue(FIRST_INT_VALUE);
+            doubleSymbolBBound.setValue(FIRST_DOUBLE_VALUE);
+            doubleSymbolDBound.setValue(FIRST_DOUBLE_VALUE);
         }
 };
-TEST_F(SymbolFixture, hasValue)
+constexpr int SymbolFixture::FIRST_INT_VALUE;
+constexpr int SymbolFixture::SECOND_INT_VALUE;
+constexpr int SymbolFixture::THIRD_INT_VALUE;
+constexpr int SymbolFixture::FOURTH_INT_VALUE;
+constexpr double SymbolFixture::FIRST_DOUBLE_VALUE;
+constexpr double SymbolFixture::SECOND_DOUBLE_VALUE;
+constexpr double SymbolFixture::THIRD_DOUBLE_VALUE;
+constexpr double SymbolFixture::FOURTH_DOUBLE_VALUE;
+constexpr const char *SymbolFixture::BAD_USER_INPUT;
+
+TEST_F(SymbolFixture, hasValueWithoutValue)
 {
     EXPECT_FALSE(intSymbolA.hasValue());
-    EXPECT_TRUE(intSymbolBBound.hasValue());
     EXPECT_FALSE(doubleSymbolA.hasValue());
-    EXPECT_TRUE(doubleSymbolBBound.hasValue());
-}
-TEST_F(SymbolFixture, setValueAndGetValue)
-{
-    // In practice, setValue is tested for the most part in the test fixture's 
-    // constructor.
-    // We allow re-setting the value if the symbol already has a bound value, so
-    // this shouldn't conflict with the fixture's constructor at all.
-    intSymbolDBound.setValue(41);
-    EXPECT_EQ(intSymbolDBound.getValue(), 41);
-    doubleSymbolDBound.setValue(41.42e10);
-    EXPECT_EQ(doubleSymbolDBound.getValue(), 41.42e10);
-    EXPECT_EQ(intSymbolA.getValue(), calculator::Symbol<int>::defaultValue());
-    EXPECT_EQ(doubleSymbolZ.getValue(),
-            calculator::Symbol<double>::defaultValue());
 }
 
-TEST_F(SymbolFixture, bindFromStreams)
+TEST_F(SymbolFixture, hasValueWithValue)
+{
+    EXPECT_TRUE(intSymbolBBound.hasValue());
+    EXPECT_TRUE(doubleSymbolBBound.hasValue());
+}
+
+TEST_F(SymbolFixture, setValueFirstTime)
+{
+    calculator::Symbol<int> intSymbolC{'C'};
+    calculator::Symbol<double> doubleSymbolC{'C'};
+    intSymbolC.setValue(FIRST_INT_VALUE);
+    doubleSymbolC.setValue(FIRST_DOUBLE_VALUE);
+}
+
+TEST_F(SymbolFixture, setValueRepeatedly)
+{
+    intSymbolDBound.setValue(FIRST_INT_VALUE);
+    doubleSymbolDBound.setValue(FIRST_DOUBLE_VALUE);
+    intSymbolDBound.setValue(SECOND_INT_VALUE);
+    doubleSymbolDBound.setValue(SECOND_DOUBLE_VALUE);
+}
+
+TEST_F(SymbolFixture, getValueWhenItIsSet)
+{
+    EXPECT_EQ(intSymbolBBound.getValue(), FIRST_INT_VALUE);
+    // Add some epsilon for floating point comparisons
+    EXPECT_NEAR(doubleSymbolBBound.getValue(), FIRST_DOUBLE_VALUE,
+            nextafter(FIRST_DOUBLE_VALUE, INFINITY) - 
+            nextafter(FIRST_DOUBLE_VALUE, -INFINITY));
+}
+
+TEST_F(SymbolFixture, getValueWhenItIsNotSet)
+{
+    EXPECT_EQ(intSymbolA.getValue(), calculator::Symbol<int>::defaultValue());
+    EXPECT_NEAR(doubleSymbolA.getValue(),
+            calculator::Symbol<double>::defaultValue(),
+            nextafter(calculator::Symbol<double>::defaultValue(), INFINITY) -
+            nextafter(calculator::Symbol<double>::defaultValue(), -INFINITY));
+}
+
+TEST_F(SymbolFixture, bindFromStreamsWithGoodInput)
 {
     std::stringstream inStream;
     std::stringstream outStream;
-    inStream << 43 << std::endl;
+    inStream << THIRD_INT_VALUE << std::endl;
     intSymbolDBound.bindFromStreams(inStream, outStream);
-    EXPECT_EQ(intSymbolDBound.getValue(), 43);
+    EXPECT_EQ(intSymbolDBound.getValue(), THIRD_INT_VALUE);
     EXPECT_EQ(outStream.str(),
             std::string{intSymbolDBound.getSymbol()} + " = ");
     
     inStream.str(std::string{});
     outStream.str(std::string{});
-    inStream << 43.43e10 << std::endl;
+    inStream << THIRD_DOUBLE_VALUE << std::endl;
     doubleSymbolDBound.bindFromStreams(inStream, outStream);
-    EXPECT_EQ(doubleSymbolDBound.getValue(), 43.43e10);
+    EXPECT_NEAR(doubleSymbolDBound.getValue(), THIRD_DOUBLE_VALUE,
+            nextafter(THIRD_DOUBLE_VALUE, INFINITY) - 
+            nextafter(THIRD_DOUBLE_VALUE, -INFINITY));
     EXPECT_EQ(outStream.str(),
             std::string{intSymbolDBound.getSymbol()} + " = ");
+}
+
+TEST_F(SymbolFixture, bindFromStreamsWithBadInput)
+{
+    std::stringstream inStream;
+    std::stringstream outStream;
+    inStream << BAD_USER_INPUT << std::endl << FOURTH_INT_VALUE << std::endl;
+    intSymbolDBound.bindFromStreams(inStream, outStream);
+    EXPECT_EQ(intSymbolDBound.getValue(), FOURTH_INT_VALUE);
+    EXPECT_EQ(outStream.str(),
+            std::string{intSymbolDBound.getSymbol()} +
+            " = Please enter a valid number.\n" + intSymbolDBound.getSymbol() +
+            " = ");
+    
+    inStream.str(std::string{});
+    outStream.str(std::string{});
+    inStream << BAD_USER_INPUT << std::endl << FOURTH_DOUBLE_VALUE << std::endl;
+    doubleSymbolDBound.bindFromStreams(inStream, outStream);
+    EXPECT_NEAR(doubleSymbolDBound.getValue(), FOURTH_DOUBLE_VALUE,
+            nextafter(FOURTH_DOUBLE_VALUE, INFINITY) - 
+            nextafter(FOURTH_DOUBLE_VALUE, -INFINITY));
+    EXPECT_EQ(outStream.str(),
+            std::string{intSymbolDBound.getSymbol()} +
+            " = Please enter a valid number.\n" + intSymbolDBound.getSymbol() +
+            " = ");
 }
