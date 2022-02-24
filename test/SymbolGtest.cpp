@@ -15,7 +15,7 @@
 
 using namespace testing;
 
-class SymbolFixture: public ::testing::Test
+class GivenInitializedSymbolsSomeWithValues: public ::testing::Test
 {
     protected:
         static constexpr int FIRST_INT_VALUE = 42;
@@ -38,7 +38,7 @@ class SymbolFixture: public ::testing::Test
         // Using SetUp() is normally preferred to having a ctor.
         // In this case, we can't get away from initializing in the ctor since 
         // the instance variables require symbols to be set on construction
-        SymbolFixture(): 
+        GivenInitializedSymbolsSomeWithValues(): 
                 intSymbolA{'a'},
                 intSymbolBBound{'B'},
                 intSymbolDBound{'d'},
@@ -56,29 +56,38 @@ class SymbolFixture: public ::testing::Test
             doubleSymbolDBound.setValue(FIRST_DOUBLE_VALUE);
         }
 };
-constexpr int SymbolFixture::FIRST_INT_VALUE;
-constexpr int SymbolFixture::SECOND_INT_VALUE;
-constexpr int SymbolFixture::THIRD_INT_VALUE;
-constexpr int SymbolFixture::FOURTH_INT_VALUE;
-constexpr double SymbolFixture::FIRST_DOUBLE_VALUE;
-constexpr double SymbolFixture::SECOND_DOUBLE_VALUE;
-constexpr double SymbolFixture::THIRD_DOUBLE_VALUE;
-constexpr double SymbolFixture::FOURTH_DOUBLE_VALUE;
-constexpr const char *SymbolFixture::BAD_USER_INPUT;
+constexpr int GivenInitializedSymbolsSomeWithValues::FIRST_INT_VALUE;
+constexpr int GivenInitializedSymbolsSomeWithValues::SECOND_INT_VALUE;
+constexpr int GivenInitializedSymbolsSomeWithValues::THIRD_INT_VALUE;
+constexpr int GivenInitializedSymbolsSomeWithValues::FOURTH_INT_VALUE;
+constexpr double GivenInitializedSymbolsSomeWithValues::FIRST_DOUBLE_VALUE;
+constexpr double GivenInitializedSymbolsSomeWithValues::SECOND_DOUBLE_VALUE;
+constexpr double GivenInitializedSymbolsSomeWithValues::THIRD_DOUBLE_VALUE;
+constexpr double GivenInitializedSymbolsSomeWithValues::FOURTH_DOUBLE_VALUE;
+constexpr const char *GivenInitializedSymbolsSomeWithValues::BAD_USER_INPUT;
 
-TEST_F(SymbolFixture, hasValueWithoutValue)
+
+
+TEST_F(GivenInitializedSymbolsSomeWithValues,
+        WhenHasValueIsCalledWithoutSettingValue_ThenFalseIsReturned)
 {
     EXPECT_FALSE(intSymbolA.hasValue());
     EXPECT_FALSE(doubleSymbolA.hasValue());
 }
 
-TEST_F(SymbolFixture, hasValueWithValue)
+
+
+TEST_F(GivenInitializedSymbolsSomeWithValues,
+        WhenHasValueIsCalledAfterSettingValue_ThenTrueIsReturned)
 {
     EXPECT_TRUE(intSymbolBBound.hasValue());
     EXPECT_TRUE(doubleSymbolBBound.hasValue());
 }
 
-TEST_F(SymbolFixture, setValueFirstTime)
+
+
+TEST_F(GivenInitializedSymbolsSomeWithValues,
+        WhenSetValueIsCalledForTheFirstTime_ThenInternalValueIsUpdatedAndNoErrorsHappen)
 {
     calculator::Symbol<int> intSymbolC{'C'};
     calculator::Symbol<double> doubleSymbolC{'C'};
@@ -86,7 +95,10 @@ TEST_F(SymbolFixture, setValueFirstTime)
     doubleSymbolC.setValue(FIRST_DOUBLE_VALUE);
 }
 
-TEST_F(SymbolFixture, setValueRepeatedly)
+
+
+TEST_F(GivenInitializedSymbolsSomeWithValues,
+        WhenSetValueIsCalledRepeatedly_ThenInternalValueIsUpdatedAndNoErrorsHappen)
 {
     intSymbolDBound.setValue(FIRST_INT_VALUE);
     doubleSymbolDBound.setValue(FIRST_DOUBLE_VALUE);
@@ -94,7 +106,10 @@ TEST_F(SymbolFixture, setValueRepeatedly)
     doubleSymbolDBound.setValue(SECOND_DOUBLE_VALUE);
 }
 
-TEST_F(SymbolFixture, getValueWhenItIsSet)
+
+
+TEST_F(GivenInitializedSymbolsSomeWithValues,
+        WhenGetValueIsCalledOnASymbolWithAValue_ThenTheInternalValueIsReturned)
 {
     EXPECT_EQ(intSymbolBBound.getValue(), FIRST_INT_VALUE);
     // Add some epsilon for floating point comparisons
@@ -103,7 +118,10 @@ TEST_F(SymbolFixture, getValueWhenItIsSet)
             nextafter(FIRST_DOUBLE_VALUE, -INFINITY));
 }
 
-TEST_F(SymbolFixture, getValueWhenItIsNotSet)
+
+
+TEST_F(GivenInitializedSymbolsSomeWithValues,
+        WhenGetValueIsCalledOnASymbolWithoutAValue_ThenTheDefaultValueIsReturned)
 {
     EXPECT_EQ(intSymbolA.getValue(), calculator::Symbol<int>::defaultValue());
     EXPECT_NEAR(doubleSymbolA.getValue(),
@@ -112,7 +130,10 @@ TEST_F(SymbolFixture, getValueWhenItIsNotSet)
             nextafter(calculator::Symbol<double>::defaultValue(), -INFINITY));
 }
 
-TEST_F(SymbolFixture, bindFromStreamsWithGoodInput)
+
+
+TEST_F(GivenInitializedSymbolsSomeWithValues,
+        WhenBindFromStreamsIsCalledWithGoodInput_ThenTheInternalValueIsUpdated)
 {
     std::stringstream inStream;
     std::stringstream outStream;
@@ -133,13 +154,17 @@ TEST_F(SymbolFixture, bindFromStreamsWithGoodInput)
             std::string{intSymbolDBound.getSymbol()} + " = ");
 }
 
-TEST_F(SymbolFixture, bindFromStreamsWithBadInput)
+
+
+TEST_F(GivenInitializedSymbolsSomeWithValues,
+        WhenBindFromStreamsIsCalledWithGoodInput_ThenTheInternalValueIsNotUpdatedAndOutputFeedbackIsGiven)
 {
     std::stringstream inStream;
     std::stringstream outStream;
     inStream << BAD_USER_INPUT << std::endl << FOURTH_INT_VALUE << std::endl;
     intSymbolDBound.bindFromStreams(inStream, outStream);
     EXPECT_EQ(intSymbolDBound.getValue(), FOURTH_INT_VALUE);
+    // I don't feel great about using these string literals below, but 
     EXPECT_EQ(outStream.str(),
             std::string{intSymbolDBound.getSymbol()} +
             " = Please enter a valid number.\n" + intSymbolDBound.getSymbol() +
