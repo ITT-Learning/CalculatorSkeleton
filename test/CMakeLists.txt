@@ -50,4 +50,5 @@ target_link_libraries(${This} PUBLIC
     gtest
     gmock
     pthread
+    libCalculator
 )

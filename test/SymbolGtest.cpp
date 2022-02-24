@@ -99,7 +99,7 @@ TEST_F(SymbolFixture, bindFromStreams)
     outStream.str(std::string{});
     inStream << 43.43e10 << std::endl;
     doubleSymbolDBound.bindFromStreams(inStream, outStream);
-    EXPECT_EQ(intSymbolDBound.getValue(), 43.43e10);
+    EXPECT_EQ(doubleSymbolDBound.getValue(), 43.43e10);
     EXPECT_EQ(outStream.str(),
             std::string{intSymbolDBound.getSymbol()} + " = ");
 }

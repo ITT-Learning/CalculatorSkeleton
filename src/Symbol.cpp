@@ -8,9 +8,20 @@
 namespace calculator {
 
 
+    
+template<typename T>
+T Symbol<T>::defaultValue()
+{
+    // Exceptions are discouraged, but we ideally shouldn't ever use a variable 
+    // that hasn't had a value bound to it, so let's use an unusual value that 
+    // will cause an obviously wrong result.
+    return std::numeric_limits<T>::min();
+}
+
+
 
 template<typename T>
-Symbol<T>::Symbol(char symbol): symbol_{tolower(symbol)}, isBound_{false},
+Symbol<T>::Symbol(char symbol): symbol_{char(tolower(symbol))}, isBound_{false},
         boundValue_{defaultValue()}
 {
     if(!isalpha(symbol)) 
@@ -81,23 +92,6 @@ void Symbol<T>::bindFromStreams(std::istream &istream, std::ostream &ostream)
 // Explicit template specialization needed since template is defined in .cpp 
 // file now.
 template class Symbol<int>;
-template<>
-int Symbol<int>::defaultValue()
-{
-    // Exceptions are discouraged, but we ideally shouldn't ever use a variable 
-    // that hasn't had a value bound to it, so let's use an unusual value that 
-    // will cause an obviously wrong result.
-    return std::numeric_limits<int>::min();
-}
-
 template class Symbol<double>;
-template<>
-double Symbol<double>::defaultValue()
-{
-    // Exceptions are discouraged, but we ideally shouldn't ever use a variable 
-    // that hasn't had a value bound to it, so let's use an unusual value that 
-    // will cause an obviously wrong result.
-    return std::numeric_limits<double>::min();
-}
 
 }
