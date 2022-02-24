@@ -61,3 +61,6 @@ test/googletest-*/
 
 # ignore IDE folders
 .vscode
+
+# the test binary isn't already ignored for some reason
+test/calculator_test
