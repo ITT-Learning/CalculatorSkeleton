@@ -5,11 +5,13 @@ on:
     branches:
     - jared-learning
     - marcus-learning
+    - simon-learning
     - master
   pull_request:
     branches: 
     - jared-learning
     - marcus-learning
+    - simon-learning
     - master
   workflow_dispatch:
 
