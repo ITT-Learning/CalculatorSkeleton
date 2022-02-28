@@ -1,4 +1,9 @@
-list(APPEND _sources ../inc/Symbol.h Symbol.cpp)
+list(APPEND _sources
+        ../inc/ExpressionInterface.h ExpressionInterface.cpp
+        ../inc/ValueExpression.h ValueExpression.cpp
+        ../inc/SymbolExpression.h SymbolExpression.cpp
+        ../inc/ExpressionFactory.h ExpressionFactory.cpp
+        ../inc/OperatorExpression.h OperatorExpression.cpp)
 
 # Set the output folder where your program will be created
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
