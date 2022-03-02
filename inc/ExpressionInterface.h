@@ -40,8 +40,8 @@ class ExpressionInterface
         /**
          * @brief traverses the expression tree, replacing any symbols matching
          * the given glyph with the given value
-         * @param glyph the glyph to search and replace
-         * @param value the value with which to replace the symbol
+         * @param [in] glyph the glyph to search and replace
+         * @param [in] value the value with which to replace the symbol
          * @return std::unique_ptr<ExpressionInterface<T> *> a ValueExpression
          * if the node upon which this method was called was a SymbolExpression,
          * otherwise nullptr

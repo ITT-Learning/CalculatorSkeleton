@@ -26,7 +26,8 @@ class SymbolExpression : public ExpressionInterface<T>
     public:
         /**
          * @brief Construct a new SymbolExpression object with the given glyph
-         * @param glyph the glyph (written character) to represent this symbol
+         * @param [in] glyph the glyph (written character) to represent this
+         * symbol
          */
         SymbolExpression(char glyph);
 

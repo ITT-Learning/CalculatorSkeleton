@@ -26,7 +26,7 @@ class ValueExpression: public ExpressionInterface<T>
     public:
         /**
          * @brief Construct a new ValueExpression object from the given number
-         * @param value the number given to this ValueExpression object
+         * @param [in] value the number given to this ValueExpression object
          */
         ValueExpression(T value);
 

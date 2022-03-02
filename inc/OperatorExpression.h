@@ -40,12 +40,12 @@ class OperatorExpression : public ExpressionInterface<T>
         /**
          * @brief Construct a new OperatorExpression object from the given left
          * and right sub-expressions and the given operator
-         * @param left the left sub-expression of which this OperatorExpression 
-         * will take ownership
-         * @param right the right sub-expression of which this
+         * @param [in] left the left sub-expression of which this
          * OperatorExpression will take ownership
-         * @param operatorType the operator for which this OperatorExpression
-         * will calculate
+         * @param [in] right the right sub-expression of which this
+         * OperatorExpression will take ownership
+         * @param [in] operatorType the operator for which this
+         * OperatorExpression will calculate
          */
         OperatorExpression(
                 std::unique_ptr<ExpressionInterface<T>> &&left,

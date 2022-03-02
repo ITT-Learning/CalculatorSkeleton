@@ -35,7 +35,7 @@ class ExpressionFactory
          * @brief attempts to parse mathematical expressions of the form "5 - 3"
          * aka simple, not compound, expressions which only contain literals
          * and a single operator
-         * @param string the string to attempt to parse
+         * @param [in] string the string to attempt to parse
          * @return std::unique_ptr<ExpressionInterface<T> *> the parsed
          * expression or nullptr if the expression couldn't be successfully
          * parsed
