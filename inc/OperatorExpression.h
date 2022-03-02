@@ -67,12 +67,14 @@ class OperatorExpression : public ExpressionInterface<T>
         char operatorGlyph_;
         SafeOperatorFunction safeOperatorFunction_;
         
-        // Since the modulo operator (%) is not overloaded for doubles, this 
-        // stand-in function needs to take the place for all types, or else 
-        // the template specialization will fail.
+        /**
+         * @brief computes the modulo for the type for which this template was specialized
+         * @param [in] left left operand
+         * @param [in] right right operand
+         * @return boost::optional<T> 
+         */
         static boost::optional<T> safeModulo(const T left, const T right);
-        // will use the zero element in a generic way to check for division by
-        // zero
+
         /**
          * @brief returns the zero element for the type for which this template was specialized
          * @return T the zero element for the type for which this template was specialized
