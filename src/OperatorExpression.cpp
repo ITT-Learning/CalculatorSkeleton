@@ -63,6 +63,7 @@ OperatorExpression<T>::OperatorExpression(
                 {
                     result = left / right;
                 }
+
                 return result;
             };
             operatorGlyph_ = '/';
@@ -99,6 +100,7 @@ boost::optional<T> OperatorExpression<T>::calculateExpression() const
             result = safeOperatorFunction_(*leftValue, *rightValue);
         }
     }
+
     return result;
 }
 
@@ -118,6 +120,7 @@ std::unique_ptr<ExpressionInterface<T>> OperatorExpression<T>::
     {
         right_ = std::move(newRight);
     }
+
     return nullptr;
 }
 
@@ -147,6 +150,7 @@ boost::optional<int> OperatorExpression<int>::safeModulo(const int left, const i
     {
         result = left % right;
     }
+
     return result;
 }
 
@@ -164,6 +168,7 @@ boost::optional<double> OperatorExpression<double>::safeModulo(const double left
     {
         result = fmod(left, right);
     }
+    
     return result;
 }
 

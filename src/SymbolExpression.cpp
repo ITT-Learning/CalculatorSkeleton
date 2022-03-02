@@ -48,6 +48,7 @@ std::unique_ptr<ExpressionInterface<T>> SymbolExpression<T>::bindValueToSymbol(
     {
         result = std::make_unique<ValueExpression<T>>(value);
     }
+    
     return result;
 }
 

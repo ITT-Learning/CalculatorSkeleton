@@ -29,6 +29,7 @@ int main()
                 "12 * 7), or enter [Q]uit to quit: " << std::endl;
         userQuit = handleInput();
     }
+
     return 0;
 }
 
@@ -46,6 +47,7 @@ bool handleInput()
     {
         handleNonQuittingInput(input);
     }
+    
     return result;
 }
 

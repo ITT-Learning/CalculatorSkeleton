@@ -53,6 +53,7 @@ std::unique_ptr<ExpressionInterface<T>> ExpressionFactory<T>::
             }
         }
     }
+
     // copy elision, so this is a move
     return result;
 }
@@ -72,6 +73,7 @@ boost::optional<T> ExpressionFactory<T>::consumeValueFromStream(
     {
         result = val;
     }
+    
     return result;
 }
 
@@ -131,6 +133,7 @@ boost::optional<OperatorType> ExpressionFactory<T>::
             stream.get();
         }
     }
+    
     return result;
 }
 
