@@ -77,15 +77,8 @@ OperatorExpression<T>::OperatorExpression(
     }
 }
 
-
-
 template<typename T>
-OperatorExpression<T>::~OperatorExpression()
-{
-
-}
-
-
+OperatorExpression<T>::~OperatorExpression() = default;
 
 // ---------------------------------------------------------------------------//
 // //
@@ -109,8 +102,6 @@ boost::optional<T> OperatorExpression<T>::calculateExpression() const
     return result;
 }
 
-
-
 template<typename T>
 std::unique_ptr<ExpressionInterface<T>> OperatorExpression<T>::
         bindValueToSymbol(char glyph, T value)
@@ -130,16 +121,12 @@ std::unique_ptr<ExpressionInterface<T>> OperatorExpression<T>::
     return nullptr;
 }
 
-
-
 template<typename T>
 std::string OperatorExpression<T>::toString() const
 {
     return "(" + left_->toString() + " " + operatorGlyph_ + " " + 
             right_->toString() + ")";
 }
-
-
 
 // ---------------------------------------------------------------------------//
 // //
@@ -152,8 +139,6 @@ int OperatorExpression<int>::zero()
     return 0;
 }
 
-
-
 template<>
 boost::optional<int> OperatorExpression<int>::safeModulo(const int left, const int right)
 {
@@ -165,15 +150,11 @@ boost::optional<int> OperatorExpression<int>::safeModulo(const int left, const i
     return result;
 }
 
-
-
 template<>
 double OperatorExpression<double>::zero()
 {
     return 0.0;
 }
-
-
 
 template<>
 boost::optional<double> OperatorExpression<double>::safeModulo(const double left, const double right)
@@ -185,8 +166,6 @@ boost::optional<double> OperatorExpression<double>::safeModulo(const double left
     }
     return result;
 }
-
-
 
 template class OperatorExpression<int>;
 template class OperatorExpression<double>;

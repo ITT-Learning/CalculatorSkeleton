@@ -17,9 +17,7 @@ namespace calculator::expression
 // //
 // ---------------------------------------------------------------------------//
 template<typename T>
-ExpressionInterface<T>::~ExpressionInterface()
-{
-}
+ExpressionInterface<T>::~ExpressionInterface() = default;
 
 template class ExpressionInterface<int>;
 template class ExpressionInterface<double>;

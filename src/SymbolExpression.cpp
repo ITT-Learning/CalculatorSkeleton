@@ -25,14 +25,8 @@ SymbolExpression<T>::SymbolExpression(char glyph): glyph_{glyph}
 {
 }
 
-
-
 template<typename T>
-SymbolExpression<T>::~SymbolExpression()
-{
-}
-
-
+SymbolExpression<T>::~SymbolExpression() = default;
 
 // ---------------------------------------------------------------------------//
 // //
@@ -44,8 +38,6 @@ boost::optional<T> SymbolExpression<T>::calculateExpression() const
 {
     return boost::none;
 }
-
-
 
 template<typename T>
 std::unique_ptr<ExpressionInterface<T>> SymbolExpression<T>::bindValueToSymbol(
@@ -59,15 +51,11 @@ std::unique_ptr<ExpressionInterface<T>> SymbolExpression<T>::bindValueToSymbol(
     return result;
 }
 
-
-
 template<typename T>
 std::string SymbolExpression<T>::toString() const
 {
     return std::string{glyph_};
 }
-
-
 
 template class SymbolExpression<int>;
 template class SymbolExpression<double>;

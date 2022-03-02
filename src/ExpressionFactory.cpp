@@ -18,7 +18,6 @@
 
 namespace calculator::expression
 {
-
 // ---------------------------------------------------------------------------//
 // //
 // ExpressionFactory<T> Public Methods //
@@ -58,8 +57,6 @@ std::unique_ptr<ExpressionInterface<T>> ExpressionFactory<T>::
     return result;
 }
 
-
-
 // ---------------------------------------------------------------------------//
 // //
 // ExpressionFactory<T> Private Methods //
@@ -78,8 +75,6 @@ boost::optional<T> ExpressionFactory<T>::consumeValueFromStream(
     return result;
 }
 
-
-
 template<typename T>
 boost::optional<OperatorType> ExpressionFactory<T>::
         consumeOperatorFromStream(std::istream &stream)
@@ -90,38 +85,38 @@ boost::optional<OperatorType> ExpressionFactory<T>::
     {
         // we have to peek here (and get the char out later) to make sure that 
         // we don't remove a non-whitespace, non-operator from the stream.
-        int curChar = stream.peek();
-        if(curChar == '+')
+        int currentChar = stream.peek();
+        if(currentChar == '+')
         {
             result = OperatorType::ADDITION;
             searching = false;
             stream.get();
         }
-        else if(curChar == '-')
+        else if(currentChar == '-')
         {
             result = OperatorType::SUBTRACTION;
             searching = false;
             stream.get();
         }
-        else if(curChar == '*')
+        else if(currentChar == '*')
         {
             result = OperatorType::MULTIPLICATION;
             searching = false;
             stream.get();
         }
-        else if(curChar == '/')
+        else if(currentChar == '/')
         {
             result = OperatorType::DIVISION;
             searching = false;
             stream.get();
         }
-        else if(curChar == '%')
+        else if(currentChar == '%')
         {
             result = OperatorType::MODULO;
             searching = false;
             stream.get();
         }
-        else if(!isspace(curChar))
+        else if(!isspace(currentChar))
         {
             // we found a non-whitespace character, so we should bail out early
             // but leave that char in the stream, or else we mangle the stream.
