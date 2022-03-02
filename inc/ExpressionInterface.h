@@ -15,7 +15,7 @@
 
 #include <boost/optional.hpp>
 
-namespace calculator::expression
+namespace calculator { namespace expression
 {
 /**
  * @brief an abstract interface containing all methods that a mathematical
@@ -57,6 +57,6 @@ class ExpressionInterface
          */
         virtual std::string toString() const = 0;
 };
-}
+}}
 
 #endif // #ifndef EXPRESSION_H

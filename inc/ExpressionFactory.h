@@ -17,7 +17,7 @@
 #include "ExpressionInterface.h"
 #include "OperatorExpression.h"
 
-namespace calculator::expression
+namespace calculator { namespace expression
 {
 
 /**
@@ -49,6 +49,6 @@ class ExpressionFactory
                 std::istream &stream);
 };
 
-}
+}}
 
 #endif // #ifndef EXPRESSION_FACTORY_H

@@ -13,7 +13,7 @@
 
 #include "ExpressionInterface.h"
 
-namespace calculator::expression
+namespace calculator { namespace expression
 {
 /**
  * @brief a class representing a numerical value in a mathematical expression
@@ -39,6 +39,6 @@ class ValueExpression: public ExpressionInterface<T>
     private:
         const T value_;
 };
-}
+}}
 
 #endif // #ifndef VALUEEXPRESSION_H

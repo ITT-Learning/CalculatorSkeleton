@@ -9,7 +9,7 @@
 
 #include "ExpressionInterface.h"
 
-namespace calculator::expression
+namespace calculator { namespace expression
 {
 // ---------------------------------------------------------------------------//
 // //
@@ -21,4 +21,4 @@ ExpressionInterface<T>::~ExpressionInterface() = default;
 
 template class ExpressionInterface<int>;
 template class ExpressionInterface<double>;
-}
+}}

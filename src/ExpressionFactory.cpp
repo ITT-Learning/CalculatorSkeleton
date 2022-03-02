@@ -16,7 +16,7 @@
 
 #include "ValueExpression.h"
 
-namespace calculator::expression
+namespace calculator { namespace expression
 {
 // ---------------------------------------------------------------------------//
 // //
@@ -139,4 +139,4 @@ boost::optional<OperatorType> ExpressionFactory<T>::
 
 template class ExpressionFactory<int>;
 template class ExpressionFactory<double>;
-}
+}}

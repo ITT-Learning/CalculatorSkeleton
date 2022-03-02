@@ -13,7 +13,7 @@
 
 #include "ValueExpression.h"
 
-namespace calculator::expression
+namespace calculator { namespace expression
 {
 // ---------------------------------------------------------------------------//
 // //
@@ -60,4 +60,4 @@ std::string SymbolExpression<T>::toString() const
 
 template class SymbolExpression<int>;
 template class SymbolExpression<double>;
-}
+}}

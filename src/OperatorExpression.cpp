@@ -12,7 +12,7 @@
 #include <exception>
 #include <cmath>
 
-namespace calculator::expression
+namespace calculator { namespace expression
 {
 // ---------------------------------------------------------------------------//
 // //
@@ -174,4 +174,4 @@ boost::optional<double> OperatorExpression<double>::safeModulo(const double left
 
 template class OperatorExpression<int>;
 template class OperatorExpression<double>;
-}
+}}

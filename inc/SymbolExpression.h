@@ -13,7 +13,7 @@
 
 #include "ExpressionInterface.h"
 
-namespace calculator::expression
+namespace calculator { namespace expression
 {
 /**
  * @brief a class representing a symbol in a mathematical expression
@@ -40,6 +40,6 @@ class SymbolExpression : public ExpressionInterface<T>
     private:
         char glyph_;
 };
-}
+}}
 
 #endif // #ifndef SYMBOLEXPRESSION_H

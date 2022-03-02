@@ -13,7 +13,7 @@
 
 #include "ExpressionInterface.h"
 
-namespace calculator::expression
+namespace calculator { namespace expression
 {
 /**
  * @brief a type of mathematical binary operator
@@ -75,6 +75,6 @@ class OperatorExpression : public ExpressionInterface<T>
         // zero
         static T zero();
 };
-}
+}}
 
 #endif // #ifndef OPERATOREXPRESSION_H

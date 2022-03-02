@@ -8,7 +8,7 @@
 
 #include "ValueExpression.h"
 
-namespace calculator::expression
+namespace calculator { namespace expression
 {
 // ---------------------------------------------------------------------------//
 // //
@@ -59,4 +59,4 @@ std::string ValueExpression<double>::toString() const
 
 template class ValueExpression<int>;
 template class ValueExpression<double>;
-}
+}}
