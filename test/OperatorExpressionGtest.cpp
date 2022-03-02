@@ -141,12 +141,10 @@ TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithInitializedSubEx
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::Y_INT_VALUE);
-    EXPECT_THROW(
-            calculator::expression::OperatorExpression<int> expression(
-                    std::move(leftSubExpression),
-                    std::move(rightSubExpression),
-                    calculator::expression::OperatorType::ADDITION),
-            std::domain_error);
+    EXPECT_NO_THROW(calculator::expression::OperatorExpression<int> expression(
+            std::move(leftSubExpression),
+            std::move(rightSubExpression),
+            calculator::expression::OperatorType::ADDITION));
 }
 
 /**
@@ -478,12 +476,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithInitializedSu
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::Y_DOUBLE_VALUE);
-    EXPECT_THROW(
+    EXPECT_NO_THROW(
             calculator::expression::OperatorExpression<double> expression(
                     std::move(leftSubExpression),
                     std::move(rightSubExpression),
-                    calculator::expression::OperatorType::ADDITION),
-            std::domain_error);
+                    calculator::expression::OperatorType::ADDITION));
 }
 
 /**
