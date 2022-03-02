@@ -38,15 +38,8 @@ constexpr double ValueExpressionTestConstants::DOUBLE_VALUE_TO_BIND;
  */
 TEST(ValueExpressionIntTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAreThrown)
 {
-    try
-    {
-        calculator::expression::ValueExpression<int> result{
-                ValueExpressionTestConstants::INT_VALUE};
-    }
-    catch(const std::exception& e)
-    {
-        ADD_FAILURE() << "ValueExpression was not successfully constructed";
-    }
+    EXPECT_NO_THROW(calculator::expression::ValueExpression<int> result{
+                ValueExpressionTestConstants::INT_VALUE});
     
 }
 
@@ -94,16 +87,8 @@ TEST(ValueExpressionIntTestSuite, WhenToStringIsCalled_ThenCorrectStringRepresen
  */
 TEST(ValueExpressionDoubleTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAreThrown)
 {
-    try
-    {
-        calculator::expression::ValueExpression<double> result{
-                ValueExpressionTestConstants::DOUBLE_VALUE};
-    }
-    catch(const std::exception& e)
-    {
-        ADD_FAILURE() << "ValueExpression was not successfully constructed";
-    }
-    
+    EXPECT_NO_THROW(calculator::expression::ValueExpression<double> result{
+            ValueExpressionTestConstants::DOUBLE_VALUE});
 }
 
 /**

@@ -33,15 +33,8 @@ constexpr double SymbolExpressionTestConstants::DOUBLE_VALUE_TO_BIND;
  */
 TEST(SymbolExpressionIntTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAreThrown)
 {
-    try
-    {
-        calculator::expression::SymbolExpression<int> result{
-                SymbolExpressionTestConstants::GLYPH_X};
-    }
-    catch(const std::exception& e)
-    {
-        ADD_FAILURE() << "SymbolExpression was not successfully constructed";
-    }
+    EXPECT_NO_THROW(calculator::expression::SymbolExpression<int> result{
+            SymbolExpressionTestConstants::GLYPH_X});
 }
 
 /**
@@ -107,15 +100,8 @@ TEST(SymbolExpressionIntTestSuite, WhenToStringIsCalled_ThenCorrectStringReprese
  */
 TEST(SymbolExpressionDoubleTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAreThrown)
 {
-    try
-    {
-        calculator::expression::SymbolExpression<double> result{
-                SymbolExpressionTestConstants::GLYPH_X};
-    }
-    catch(const std::exception& e)
-    {
-        ADD_FAILURE() << "SymbolExpression was not successfully constructed";
-    }
+    EXPECT_NO_THROW(calculator::expression::SymbolExpression<double> result{
+            SymbolExpressionTestConstants::GLYPH_X});
 }
 
 /**

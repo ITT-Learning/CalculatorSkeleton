@@ -99,19 +99,12 @@ TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithNullptrLeftSubEx
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::Y_INT_VALUE);
-    try
-    {
-        calculator::expression::OperatorExpression<int> expression(
-                std::move(leftNullptr),
-                std::move(rightSubExpression),
-                calculator::expression::OperatorType::ADDITION);
-        ADD_FAILURE() << "An exception was not thrown when one of the given "
-                "sub-expressions was null";
-    }
-    catch(const std::exception& e)
-    {
-        SUCCEED();
-    }
+    EXPECT_THROW(
+            calculator::expression::OperatorExpression<int> expression(
+                    std::move(leftNullptr),
+                    std::move(rightSubExpression),
+                    calculator::expression::OperatorType::ADDITION),
+            std::domain_error);
 }
 
 /**
@@ -126,19 +119,12 @@ TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithNullptrRightSubE
             OperatorExpressionTestConstants::X_INT_VALUE);
     std::unique_ptr<calculator::expression::ExpressionInterface<int>>
             rightNullptr{nullptr};
-    try
-    {
-        calculator::expression::OperatorExpression<int> expression(
-                std::move(leftSubExpression),
-                std::move(rightNullptr),
-                calculator::expression::OperatorType::ADDITION);
-        ADD_FAILURE() << "An exception was not thrown when one of the given "
-                "sub-expressions was null";
-    }
-    catch(const std::exception& e)
-    {
-        SUCCEED();
-    }
+    EXPECT_THROW(
+            calculator::expression::OperatorExpression<int> expression(
+                    std::move(leftSubExpression),
+                    std::move(rightNullptr),
+                    calculator::expression::OperatorType::ADDITION),
+            std::domain_error);
 }
 
 /**
@@ -155,19 +141,12 @@ TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithInitializedSubEx
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::Y_INT_VALUE);
-    try
-    {
-        calculator::expression::OperatorExpression<int> expression(
-                std::move(leftSubExpression),
-                std::move(rightSubExpression),
-                calculator::expression::OperatorType::ADDITION);
-        SUCCEED();
-    }
-    catch(const std::exception& e)
-    {
-        ADD_FAILURE() << "An exception was thrown when both sub-expressions "
-                "were valid";
-    }
+    EXPECT_THROW(
+            calculator::expression::OperatorExpression<int> expression(
+                    std::move(leftSubExpression),
+                    std::move(rightSubExpression),
+                    calculator::expression::OperatorType::ADDITION),
+            std::domain_error);
 }
 
 /**
@@ -457,19 +436,12 @@ TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithNullptrLeftSu
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::Y_DOUBLE_VALUE);
-    try
-    {
-        calculator::expression::OperatorExpression<double> expression(
-                std::move(leftNullptr),
-                std::move(rightSubExpression),
-                calculator::expression::OperatorType::ADDITION);
-        ADD_FAILURE() << "An exception was not thrown when one of the given "
-                "sub-expressions was null";
-    }
-    catch(const std::exception& e)
-    {
-        SUCCEED();
-    }
+    EXPECT_THROW(
+            calculator::expression::OperatorExpression<double> expression(
+                    std::move(leftNullptr),
+                    std::move(rightSubExpression),
+                    calculator::expression::OperatorType::ADDITION),
+            std::domain_error);
 }
 
 /**
@@ -484,19 +456,12 @@ TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithNullptrRightS
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
     std::unique_ptr<calculator::expression::ExpressionInterface<double>>
             rightNullptr{nullptr};
-    try
-    {
-        calculator::expression::OperatorExpression<double> expression(
-                std::move(leftSubExpression),
-                std::move(rightNullptr),
-                calculator::expression::OperatorType::ADDITION);
-        ADD_FAILURE() << "An exception was not thrown when one of the given "
-                "sub-expressions was null";
-    }
-    catch(const std::exception& e)
-    {
-        SUCCEED();
-    }
+    EXPECT_THROW(
+            calculator::expression::OperatorExpression<double> expression(
+                    std::move(leftSubExpression),
+                    std::move(rightNullptr),
+                    calculator::expression::OperatorType::ADDITION),
+            std::domain_error);
 }
 
 /**
@@ -513,19 +478,12 @@ TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithInitializedSu
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::Y_DOUBLE_VALUE);
-    try
-    {
-        calculator::expression::OperatorExpression<double> expression(
-                std::move(leftSubExpression),
-                std::move(rightSubExpression),
-                calculator::expression::OperatorType::ADDITION);
-        SUCCEED();
-    }
-    catch(const std::exception& e)
-    {
-        ADD_FAILURE() << "An exception was thrown when both sub-expressions "
-                "were valid";
-    }
+    EXPECT_THROW(
+            calculator::expression::OperatorExpression<double> expression(
+                    std::move(leftSubExpression),
+                    std::move(rightSubExpression),
+                    calculator::expression::OperatorType::ADDITION),
+            std::domain_error);
 }
 
 /**
