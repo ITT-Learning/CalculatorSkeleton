@@ -50,8 +50,6 @@ TEST(ValueExpressionIntTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAreThr
     
 }
 
-
-
 /**
  * @brief tests the evaluation of a ValueExpression<int>, ensuring that its
  * output value equals its value given at construction
@@ -64,8 +62,6 @@ TEST(ValueExpressionIntTestSuite, WhenCalculateExpressionIsCalled_ThenAValueIsRe
     ASSERT_NE(result, boost::none);
     ASSERT_EQ(*result, ValueExpressionTestConstants::INT_VALUE);
 }
-
-
 
 /**
  * @brief tests binding a value to a symbol of a ValueExpression<int>, which
@@ -81,8 +77,6 @@ TEST(ValueExpressionIntTestSuite, WhenBindValueToSymbolIsCalled_ThenNullptrIsRet
     ASSERT_EQ(result, nullptr);
 }
 
-
-
 /**
  * @brief tests converting a ValueExpression<int> to a string, which should 
  * yield the original number
@@ -94,8 +88,6 @@ TEST(ValueExpressionIntTestSuite, WhenToStringIsCalled_ThenCorrectStringRepresen
     auto result = objectToTest.toString();
     ASSERT_EQ(result, std::to_string(ValueExpressionTestConstants::INT_VALUE));
 }
-
-
 
 /**
  * @brief tests the construction of a ValueExpression<double> with a known value
@@ -114,8 +106,6 @@ TEST(ValueExpressionDoubleTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAre
     
 }
 
-
-
 /**
  * @brief tests the evaluation of a ValueExpression<double>, ensuring that its
  * output value equals its value given at construction
@@ -128,8 +118,6 @@ TEST(ValueExpressionDoubleTestSuite, WhenCalculateExpressionIsCalled_ThenAValueI
     ASSERT_NE(result, boost::none);
     ASSERT_EQ(*result, ValueExpressionTestConstants::DOUBLE_VALUE);
 }
-
-
 
 /**
  * @brief tests binding a value to a symbol of a ValueExpression<double>, which
@@ -144,8 +132,6 @@ TEST(ValueExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalled_ThenNullptrIs
             ValueExpressionTestConstants::DOUBLE_VALUE_TO_BIND);
     ASSERT_EQ(result, nullptr);
 }
-
-
 
 /**
  * @brief tests converting a ValueExpression<double> to a string, which should 

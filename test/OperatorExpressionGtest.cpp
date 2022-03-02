@@ -87,8 +87,6 @@ constexpr double OperatorExpressionTestConstants::COMPOUND_DOUBLE_RESULT;
 constexpr const char *OperatorExpressionTestConstants::INT_STRING_TEST_EXPRESSION;
 constexpr const char *OperatorExpressionTestConstants::DOUBLE_STRING_TEST_EXPRESSION;
 
-
-
 /**
  * @brief tests that an OperatorExpression throws an exception during
  * construction if its given left sub-expression is nullptr
@@ -116,8 +114,6 @@ TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithNullptrLeftSubEx
     }
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression throws an exception during
  * construction if its given right sub-expression is nullptr
@@ -144,8 +140,6 @@ TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithNullptrRightSubE
         SUCCEED();
     }
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression can be constructed successfully if 
@@ -176,8 +170,6 @@ TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithInitializedSubEx
     }
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression returns nothing when attempting to
  * calculate an expression that would divide by zero
@@ -199,8 +191,6 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithDivision
     auto value = expression.calculateExpression();
     EXPECT_EQ(value, boost::none);
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression returns the correct value when
@@ -225,8 +215,6 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithAddition
     EXPECT_EQ(*value, OperatorExpressionTestConstants::ADDITION_INT_RESULT);
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression returns the correct value when
  * calculating an expression with a single subtraction operation
@@ -249,8 +237,6 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithSubtract
     EXPECT_NE(value, boost::none);
     EXPECT_EQ(*value, OperatorExpressionTestConstants::SUBTRACTION_INT_RESULT);
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression returns the correct value when
@@ -275,8 +261,6 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithMultipli
     EXPECT_EQ(*value, OperatorExpressionTestConstants::MULTIPLICATION_INT_RESULT);
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression returns the correct value when
  * calculating an expression with a single division operation
@@ -300,8 +284,6 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithDivision
     EXPECT_EQ(*value, OperatorExpressionTestConstants::DIVISION_INT_RESULT);
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression returns the correct value when
  * calculating an expression with a single modulo operation
@@ -324,8 +306,6 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithModulo_T
     EXPECT_NE(value, boost::none);
     EXPECT_EQ(*value, OperatorExpressionTestConstants::MODULO_INT_RESULT);
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression returns the correct value when
@@ -372,8 +352,6 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithCompound
     EXPECT_NE(value, boost::none);
     EXPECT_EQ(*value, OperatorExpressionTestConstants::COMPOUND_INT_RESULT);
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression will replace symbols as the caller
@@ -445,8 +423,6 @@ TEST(OperatorExpressionIntTestSuite, WhenBindValueToSymbolIsCalledWithCompoundEx
     EXPECT_EQ(*value, OperatorExpressionTestConstants::COMPOUND_INT_RESULT);
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression builds the correct string
  * representation
@@ -468,8 +444,6 @@ TEST(OperatorExpressionIntTestSuite, WhenToStringIsCalled_ThenTheCorrectStringVa
     auto stringRepresentation = expression.toString();
     EXPECT_EQ(stringRepresentation, OperatorExpressionTestConstants::INT_STRING_TEST_EXPRESSION);
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression throws an exception during
@@ -498,8 +472,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithNullptrLeftSu
     }
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression throws an exception during
  * construction if its given right sub-expression is nullptr
@@ -526,8 +498,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithNullptrRightS
         SUCCEED();
     }
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression can be constructed successfully if 
@@ -558,8 +528,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithInitializedSu
     }
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression returns nothing when attempting to
  * calculate an expression that would divide by zero
@@ -581,8 +549,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithDivis
     auto value = expression.calculateExpression();
     EXPECT_EQ(value, boost::none);
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression returns the correct value when
@@ -607,8 +573,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithAddit
     EXPECT_EQ(*value, OperatorExpressionTestConstants::ADDITION_DOUBLE_RESULT);
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression returns the correct value when
  * calculating an expression with a single subtraction operation
@@ -631,8 +595,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithSubtr
     EXPECT_NE(value, boost::none);
     EXPECT_EQ(*value, OperatorExpressionTestConstants::SUBTRACTION_DOUBLE_RESULT);
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression returns the correct value when
@@ -657,8 +619,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithMulti
     EXPECT_EQ(*value, OperatorExpressionTestConstants::MULTIPLICATION_DOUBLE_RESULT);
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression returns the correct value when
  * calculating an expression with a single division operation
@@ -682,8 +642,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithDivis
     EXPECT_EQ(*value, OperatorExpressionTestConstants::DIVISION_DOUBLE_RESULT);
 }
 
-
-
 /**
  * @brief tests that an OperatorExpression returns the correct value when
  * calculating an expression with a single modulo operation
@@ -706,8 +664,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithModul
     EXPECT_NE(value, boost::none);
     EXPECT_EQ(*value, OperatorExpressionTestConstants::MODULO_DOUBLE_RESULT);
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression returns the correct value when
@@ -754,8 +710,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithCompo
     EXPECT_NE(value, boost::none);
     EXPECT_EQ(*value, OperatorExpressionTestConstants::COMPOUND_DOUBLE_RESULT);
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression will replace symbols as the caller
@@ -826,8 +780,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithCompoun
     EXPECT_NE(value, boost::none);
     EXPECT_EQ(*value, OperatorExpressionTestConstants::COMPOUND_DOUBLE_RESULT);
 }
-
-
 
 /**
  * @brief tests that an OperatorExpression builds the correct string

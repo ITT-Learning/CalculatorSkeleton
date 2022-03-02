@@ -28,8 +28,6 @@ constexpr char   SymbolExpressionTestConstants::GLYPH_Y;
 constexpr int    SymbolExpressionTestConstants::INT_VALUE_TO_BIND;
 constexpr double SymbolExpressionTestConstants::DOUBLE_VALUE_TO_BIND;
 
-
-
 /**
  * @brief tests the construction of a SymbolExpression<int> with a known glyph
  */
@@ -46,8 +44,6 @@ TEST(SymbolExpressionIntTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAreTh
     }
 }
 
-
-
 /**
  * @brief tests the evaluation of a SymbolExpression<int>, which should not 
  * yield a value, as it has not had a value bound to it
@@ -59,8 +55,6 @@ TEST(SymbolExpressionIntTestSuite, WhenCalculateExpressionIsCalled_ThenNoneIsRet
     auto result = objectToTest.calculateExpression();
     ASSERT_EQ(result, boost::none);
 }
-
-
 
 /**
  * @brief tests binding a value to a symbol that matches the symbol of a
@@ -80,8 +74,6 @@ TEST(SymbolExpressionIntTestSuite, WhenBindValueToSymbolIsCalled_ThenAnExpressio
     ASSERT_EQ(*value, SymbolExpressionTestConstants::INT_VALUE_TO_BIND);
 }
 
-
-
 /**
  * @brief tests binding a value to a symbol that does not match the symbol of a
  * SymbolExpression<int>, which should return a nullptr, indicating that
@@ -97,8 +89,6 @@ TEST(SymbolExpressionIntTestSuite, WhenBindValueToSymbolIsCalledWithoutTheMatchi
     ASSERT_EQ(result, nullptr);
 }
 
-
-
 /**
  * @brief tests converting a SymbolExpression<int> to a string, which should 
  * yield the glyph used to construct it
@@ -110,8 +100,6 @@ TEST(SymbolExpressionIntTestSuite, WhenToStringIsCalled_ThenCorrectStringReprese
     auto result = objectToTest.toString();
     ASSERT_EQ(result, std::string(1, SymbolExpressionTestConstants::GLYPH_X));
 }
-
-
 
 /**
  * @brief tests the construction of a SymbolExpression<double> with a known
@@ -130,8 +118,6 @@ TEST(SymbolExpressionDoubleTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAr
     }
 }
 
-
-
 /**
  * @brief tests the evaluation of a SymbolExpression<double>, which should not 
  * yield a value, as it has not had a value bound to it
@@ -143,8 +129,6 @@ TEST(SymbolExpressionDoubleTestSuite, WhenCalculateExpressionIsCalled_ThenNoneIs
     auto result = objectToTest.calculateExpression();
     ASSERT_EQ(result, boost::none);
 }
-
-
 
 /**
  * @brief tests binding a value to a symbol that matches the symbol of a
@@ -164,8 +148,6 @@ TEST(SymbolExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithTheMatchi
     ASSERT_EQ(*value, SymbolExpressionTestConstants::DOUBLE_VALUE_TO_BIND);
 }
 
-
-
 /**
  * @brief tests binding a value to a symbol that does not match the symbol of a
  * SymbolExpression<double>, which should return a nullptr, indicating that
@@ -180,8 +162,6 @@ TEST(SymbolExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithoutTheMat
             SymbolExpressionTestConstants::DOUBLE_VALUE_TO_BIND);
     ASSERT_EQ(result, nullptr);
 }
-
-
 
 /**
  * @brief tests converting a SymbolExpression<double> to a string, which should 

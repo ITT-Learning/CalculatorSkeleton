@@ -213,8 +213,6 @@ constexpr double      ExpressionFactoryTestConstants::GOOD_DOUBLE_DIVIDE_RESULT;
 constexpr const char *ExpressionFactoryTestConstants::GOOD_DOUBLE_MODULO;
 constexpr double      ExpressionFactoryTestConstants::GOOD_DOUBLE_MODULO_RESULT;
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a known random string is given, which should return no
@@ -228,8 +226,6 @@ TEST(ExpressionFactoryIntTestSuite,
             std::string{ExpressionFactoryTestConstants::RANDOM_TEXT});
     EXPECT_EQ(result, nullptr);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -246,8 +242,6 @@ TEST(ExpressionFactoryIntTestSuite,
     EXPECT_EQ(result, nullptr);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a known random string followed by a space followed by a valid
@@ -262,8 +256,6 @@ TEST(ExpressionFactoryIntTestSuite,
             RANDOM_TEXT_BEFORE_SPACE});
     EXPECT_EQ(result, nullptr);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -280,8 +272,6 @@ TEST(ExpressionFactoryIntTestSuite,
     EXPECT_EQ(result, nullptr);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a valid single operator string followed by a space followed by a
@@ -296,8 +286,6 @@ TEST(ExpressionFactoryIntTestSuite,
             RANDOM_TEXT_AFTER_SPACE});
     EXPECT_EQ(result, nullptr);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -314,8 +302,6 @@ TEST(ExpressionFactoryIntTestSuite,
     EXPECT_EQ(result, nullptr);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a single operator string with an unknown operator is given,
@@ -330,8 +316,6 @@ TEST(ExpressionFactoryIntTestSuite,
     EXPECT_EQ(result, nullptr);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a valid expression string is given, but with too many operators,
@@ -345,8 +329,6 @@ TEST(ExpressionFactoryIntTestSuite,
             std::string{ExpressionFactoryTestConstants::TOO_MANY_OPERATORS});
     EXPECT_EQ(result, nullptr);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -363,8 +345,6 @@ TEST(ExpressionFactoryIntTestSuite,
     auto calculation = result->calculateExpression();
     EXPECT_EQ(calculation, boost::none);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -383,8 +363,6 @@ TEST(ExpressionFactoryIntTestSuite,
     EXPECT_EQ(*calculation, ExpressionFactoryTestConstants::GOOD_INT_ADD_INT_RESULT);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a valid single addition string without spaces is given, which
@@ -401,8 +379,6 @@ TEST(ExpressionFactoryIntTestSuite,
     EXPECT_NE(calculation, boost::none);
     EXPECT_EQ(*calculation, ExpressionFactoryTestConstants::GOOD_INT_ADD_INT_RESULT);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -422,8 +398,6 @@ TEST(ExpressionFactoryIntTestSuite,
     EXPECT_EQ(*calculation, ExpressionFactoryTestConstants::GOOD_INT_SUBTRACT_RESULT);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a valid single multiplication string is given, which should
@@ -440,8 +414,6 @@ TEST(ExpressionFactoryIntTestSuite,
     EXPECT_NE(calculation, boost::none);
     EXPECT_EQ(*calculation, ExpressionFactoryTestConstants::GOOD_INT_MULTIPLICATION_RESULT);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -460,8 +432,6 @@ TEST(ExpressionFactoryIntTestSuite,
     EXPECT_EQ(*calculation, ExpressionFactoryTestConstants::GOOD_INT_DIVISION_RESULT);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a valid single modulo string is given, which should return an
@@ -479,8 +449,6 @@ TEST(ExpressionFactoryIntTestSuite,
     EXPECT_EQ(*calculation, ExpressionFactoryTestConstants::GOOD_INT_MODULO_RESULT);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a known random string is given, which should return no
@@ -494,8 +462,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
             std::string{ExpressionFactoryTestConstants::RANDOM_TEXT});
     EXPECT_EQ(result, nullptr);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -512,8 +478,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
     EXPECT_EQ(result, nullptr);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a known random string followed by a space followed by a valid
@@ -528,8 +492,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
             RANDOM_TEXT_BEFORE_SPACE});
     EXPECT_EQ(result, nullptr);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -546,8 +508,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
     EXPECT_EQ(result, nullptr);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a valid single operator string followed by a space followed by a
@@ -562,8 +522,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
             RANDOM_TEXT_AFTER_SPACE});
     EXPECT_EQ(result, nullptr);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -580,8 +538,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
     EXPECT_EQ(result, nullptr);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a single operator string with an unknown operator is given,
@@ -596,8 +552,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
     EXPECT_EQ(result, nullptr);
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a valid expression string is given, but with too many operators,
@@ -611,8 +565,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
             std::string{ExpressionFactoryTestConstants::TOO_MANY_OPERATORS});
     EXPECT_EQ(result, nullptr);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -629,8 +581,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
     auto calculation = result->calculateExpression();
     EXPECT_EQ(calculation, boost::none);
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -651,8 +601,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
             128 * (nextafter(*calculation, INFINITY) - *calculation));
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a valid single addition string without spaces is given, which
@@ -671,8 +619,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
             ExpressionFactoryTestConstants::GOOD_INT_ADD_DOUBLE_RESULT,
             128 * (nextafter(*calculation, INFINITY) - *calculation));
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -694,8 +640,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
             128 * (nextafter(*calculation, INFINITY) - *calculation));
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a valid single multiplication string is given, which should
@@ -714,8 +658,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
             ExpressionFactoryTestConstants::GOOD_DOUBLE_MULTIPLY_RESULT,
             128 * (nextafter(*calculation, INFINITY) - *calculation));
 }
-
-
 
 /**
  * @brief tests the building of an expression when a single operator string is
@@ -736,8 +678,6 @@ TEST(ExpressionFactoryDoubleTestSuite,
             128 * (nextafter(*calculation, INFINITY) - *calculation));
 }
 
-
-
 /**
  * @brief tests the building of an expression when a single operator string is
  * expected and a valid single modulo string is given, which should return an
@@ -756,5 +696,3 @@ TEST(ExpressionFactoryDoubleTestSuite,
             ExpressionFactoryTestConstants::GOOD_DOUBLE_MODULO_RESULT,
             128 * (nextafter(*calculation, INFINITY) - *calculation));
 }
-
-// TODO more tests
