@@ -11,20 +11,20 @@
 
 #include <memory>
 
-#include "ExpressionInterface.h"
+#include "IExpression.h"
 
 namespace calculator { namespace expression
 {
 /**
  * @brief a type of mathematical binary operator
  */
-enum class OperatorType
+enum class OperatorType: char
 {
-    ADDITION,
-    SUBTRACTION,
-    MULTIPLICATION,
-    DIVISION,
-    MODULO
+    ADDITION = '+',
+    SUBTRACTION = '-',
+    MULTIPLICATION = '*',
+    DIVISION = '/',
+    MODULO = '%'
 };
 
 /**
@@ -34,7 +34,7 @@ enum class OperatorType
  * for example)
  */
 template<typename T>
-class OperatorExpression : public ExpressionInterface<T>
+class OperatorExpression : public IExpression<T>
 {
     public:
         /**
@@ -48,21 +48,21 @@ class OperatorExpression : public ExpressionInterface<T>
          * OperatorExpression will calculate
          */
         OperatorExpression(
-                std::unique_ptr<ExpressionInterface<T>> &&left,
-                std::unique_ptr<ExpressionInterface<T>> &&right,
+                std::unique_ptr<IExpression<T>> &&left,
+                std::unique_ptr<IExpression<T>> &&right,
                 OperatorType operatorType);
 
         virtual ~OperatorExpression();
 
         boost::optional<T> calculateExpression() const override;
-        std::unique_ptr<ExpressionInterface<T>> bindValueToSymbol(char glyph,
+        std::unique_ptr<IExpression<T>> bindValueToSymbol(char glyph,
                 T value) override;
         std::string toString() const override;
     private:
         using SafeOperatorFunction = boost::optional<T>(*)(T, T);
 
-        std::unique_ptr<ExpressionInterface<T>> left_;
-        std::unique_ptr<ExpressionInterface<T>> right_;
+        std::unique_ptr<IExpression<T>> left_;
+        std::unique_ptr<IExpression<T>> right_;
         OperatorType operatorType_;
         char operatorGlyph_;
         SafeOperatorFunction safeOperatorFunction_;

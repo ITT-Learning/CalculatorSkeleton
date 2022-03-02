@@ -11,7 +11,7 @@
 
 #include <boost/optional.hpp>
 
-#include "ExpressionInterface.h"
+#include "IExpression.h"
 
 namespace calculator { namespace expression
 {
@@ -21,7 +21,7 @@ namespace calculator { namespace expression
  * for example)
  */
 template<typename T>
-class ValueExpression: public ExpressionInterface<T>
+class ValueExpression: public IExpression<T>
 {
     public:
         /**
@@ -33,7 +33,7 @@ class ValueExpression: public ExpressionInterface<T>
         virtual ~ValueExpression();
 
         boost::optional<T> calculateExpression() const override;
-        std::unique_ptr<ExpressionInterface<T>> bindValueToSymbol(char glyph,
+        std::unique_ptr<IExpression<T>> bindValueToSymbol(char glyph,
                 T value) override;
         std::string toString() const override;
     private:

@@ -1,5 +1,5 @@
 list(APPEND _sources
-        ../inc/ExpressionInterface.h ExpressionInterface.cpp
+        ../inc/IExpression.h IExpression.cpp
         ../inc/ValueExpression.h ValueExpression.cpp
         ../inc/SymbolExpression.h SymbolExpression.cpp
         ../inc/ExpressionFactory.h ExpressionFactory.cpp

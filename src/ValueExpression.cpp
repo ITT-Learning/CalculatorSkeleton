@@ -25,7 +25,7 @@ ValueExpression<T>::~ValueExpression() = default;
 
 // ---------------------------------------------------------------------------//
 // //
-// ExpressionInterface<T> Public Methods //
+// IExpression<T> Public Methods //
 // //
 // ---------------------------------------------------------------------------//
 template<typename T>
@@ -35,7 +35,7 @@ boost::optional<T> ValueExpression<T>::calculateExpression() const
 }
 
 template<typename T>
-std::unique_ptr<ExpressionInterface<T>> ValueExpression<T>::bindValueToSymbol(
+std::unique_ptr<IExpression<T>> ValueExpression<T>::bindValueToSymbol(
         char glyph, T value)
 {
     return nullptr;

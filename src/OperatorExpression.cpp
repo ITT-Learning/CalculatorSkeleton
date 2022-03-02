@@ -21,8 +21,8 @@ namespace calculator { namespace expression
 // ---------------------------------------------------------------------------//
 template<typename T>
 OperatorExpression<T>::OperatorExpression(
-        std::unique_ptr<ExpressionInterface<T>> &&left,
-        std::unique_ptr<ExpressionInterface<T>> &&right,
+        std::unique_ptr<IExpression<T>> &&left,
+        std::unique_ptr<IExpression<T>> &&right,
         OperatorType operatorType):
         left_{std::move(left)},
         right_{std::move(right)},
@@ -83,7 +83,7 @@ OperatorExpression<T>::~OperatorExpression() = default;
 
 // ---------------------------------------------------------------------------//
 // //
-// ExpressionInterface<T> Public Methods //
+// IExpression<T> Public Methods //
 // //
 // ---------------------------------------------------------------------------//
 template<typename T>
@@ -105,16 +105,16 @@ boost::optional<T> OperatorExpression<T>::calculateExpression() const
 }
 
 template<typename T>
-std::unique_ptr<ExpressionInterface<T>> OperatorExpression<T>::
+std::unique_ptr<IExpression<T>> OperatorExpression<T>::
         bindValueToSymbol(char glyph, T value)
 {
-    std::unique_ptr<ExpressionInterface<T>> newLeft{nullptr};
+    std::unique_ptr<IExpression<T>> newLeft{nullptr};
     newLeft = left_->bindValueToSymbol(glyph, value);
     if(newLeft)
     {
         left_ = std::move(newLeft);
     }
-    std::unique_ptr<ExpressionInterface<T>> newRight{nullptr};
+    std::unique_ptr<IExpression<T>> newRight{nullptr};
     newRight = right_->bindValueToSymbol(glyph, value);
     if(newRight)
     {

@@ -14,7 +14,7 @@
 
 #include <boost/optional.hpp>
 
-#include "ExpressionInterface.h"
+#include "IExpression.h"
 #include "OperatorExpression.h"
 
 namespace calculator { namespace expression
@@ -36,11 +36,11 @@ class ExpressionFactory
          * aka simple, not compound, expressions which only contain literals
          * and a single operator
          * @param [in] singleOperationString the string to attempt to parse
-         * @return std::unique_ptr<ExpressionInterface<T> *> the parsed
+         * @return std::unique_ptr<IExpression<T> *> the parsed
          * expression or nullptr if the expression couldn't be successfully
          * parsed
          */
-        static std::unique_ptr<ExpressionInterface<T>>
+        static std::unique_ptr<IExpression<T>>
                 parseFromSingleOperationString(
                 const std::string &singleOperationString);
     private:

@@ -30,7 +30,7 @@ SymbolExpression<T>::~SymbolExpression() = default;
 
 // ---------------------------------------------------------------------------//
 // //
-// ExpressionInterface<T> Public Methods //
+// IExpression<T> Public Methods //
 // //
 // ---------------------------------------------------------------------------//
 template<typename T>
@@ -40,10 +40,10 @@ boost::optional<T> SymbolExpression<T>::calculateExpression() const
 }
 
 template<typename T>
-std::unique_ptr<ExpressionInterface<T>> SymbolExpression<T>::bindValueToSymbol(
+std::unique_ptr<IExpression<T>> SymbolExpression<T>::bindValueToSymbol(
         char glyph, T value)
 {
-    std::unique_ptr<ExpressionInterface<T>> result{nullptr};
+    std::unique_ptr<IExpression<T>> result{nullptr};
     if(glyph == glyph_)
     {
         result = std::make_unique<ValueExpression<T>>(value);

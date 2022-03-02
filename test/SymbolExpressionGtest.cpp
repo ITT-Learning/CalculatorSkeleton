@@ -51,7 +51,7 @@ TEST(SymbolExpressionIntTestSuite, WhenCalculateExpressionIsCalled_ThenNoneIsRet
 
 /**
  * @brief tests binding a value to a symbol that matches the symbol of a
- * SymbolExpression<int>, which should return a new ExpressionInterface<int>
+ * SymbolExpression<int>, which should return a new IExpression<int>
  * with the correct bound value
  */
 TEST(SymbolExpressionIntTestSuite, WhenBindValueToSymbolIsCalled_ThenAnExpressionIsReturnedThatYieldsTheCorrectValue)
@@ -119,7 +119,7 @@ TEST(SymbolExpressionDoubleTestSuite, WhenCalculateExpressionIsCalled_ThenNoneIs
 /**
  * @brief tests binding a value to a symbol that matches the symbol of a
  * SymbolExpression<double>, which should return a new 
- * ExpressionInterface<double> with the correct bound value 
+ * IExpression<double> with the correct bound value 
  */
 TEST(SymbolExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithTheMatchingGlyph_ThenAnExpressionIsReturnedThatYieldsTheCorrectValue)
 {

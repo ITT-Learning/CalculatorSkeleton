@@ -24,10 +24,10 @@ namespace calculator { namespace expression
 // //
 // ---------------------------------------------------------------------------//
 template<typename T>
-std::unique_ptr<ExpressionInterface<T>> ExpressionFactory<T>::
+std::unique_ptr<IExpression<T>> ExpressionFactory<T>::
         parseFromSingleOperationString(const std::string &string)
 {
-    std::unique_ptr<ExpressionInterface<T>> result{nullptr};
+    std::unique_ptr<IExpression<T>> result{nullptr};
     std::stringstream stream{string};
     T leftValue;
     if(stream >> leftValue)
@@ -53,8 +53,7 @@ std::unique_ptr<ExpressionInterface<T>> ExpressionFactory<T>::
             }
         }
     }
-
-    // copy elision, so this is a move
+    
     return result;
 }
 

@@ -93,9 +93,9 @@ constexpr const char *OperatorExpressionTestConstants::DOUBLE_STRING_TEST_EXPRES
  */
 TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithNullptrLeftSubExpression_ThenAnExceptionIsThrown)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             leftNullptr{nullptr};
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::Y_INT_VALUE);
@@ -113,11 +113,11 @@ TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithNullptrLeftSubEx
  */
 TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithNullptrRightSubExpression_ThenAnExceptionIsThrown)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightNullptr{nullptr};
     EXPECT_THROW(
             calculator::expression::OperatorExpression<int> expression(
@@ -133,11 +133,11 @@ TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithNullptrRightSubE
  */
 TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithInitializedSubExpressions_ThenTheObjectIsConstructed)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::Y_INT_VALUE);
@@ -153,11 +153,11 @@ TEST(OperatorExpressionIntTestSuite, WhenConstructorIsCalledWithInitializedSubEx
  */
 TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithDivisionByZero_ThenNoneIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::Y_INT_VALUE);
@@ -175,11 +175,11 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithDivision
  */
 TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithAddition_ThenTheCorrectValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::Z_INT_VALUE);
@@ -198,11 +198,11 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithAddition
  */
 TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithSubtraction_ThenTheCorrectValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::Z_INT_VALUE);
@@ -221,11 +221,11 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithSubtract
  */
 TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithMultiplication_ThenTheCorrectValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::U_INT_VALUE);
@@ -244,11 +244,11 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithMultipli
  */
 TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithDivision_ThenCorrectValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::U_INT_VALUE);
@@ -267,11 +267,11 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithDivision
  */
 TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithModulo_ThenCorrectValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::U_INT_VALUE);
@@ -291,30 +291,30 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithModulo_T
 TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithCompoundExpression_ThenCorrectValueIsReturned)
 {
     // nodes at depth = 2
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftLeftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             leftRightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::Z_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             rightLeftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightRightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::U_INT_VALUE);
     // nodes at depth = 1
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::OperatorExpression<int>>(
             std::move(leftLeftSubExpression),
             std::move(leftRightSubExpression),
             calculator::expression::OperatorType::ADDITION);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::OperatorExpression<int>>(
             std::move(rightLeftSubExpression),
@@ -341,30 +341,30 @@ TEST(OperatorExpressionIntTestSuite, WhenBindValueToSymbolIsCalledWithCompoundEx
     // an expression will ONLY yield the correct result after all symbols are
     // bound in a way that also binds multiple symbols?
     // nodes at depth = 2
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftLeftSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<int>>(
             OperatorExpressionTestConstants::GLYPH_X);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             leftRightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<int>>(
             OperatorExpressionTestConstants::GLYPH_Z);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             rightLeftSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<int>>(
             OperatorExpressionTestConstants::GLYPH_X);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightRightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<int>>(
             OperatorExpressionTestConstants::GLYPH_U);
     // nodes at depth = 1
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::OperatorExpression<int>>(
             std::move(leftLeftSubExpression),
             std::move(leftRightSubExpression),
             calculator::expression::OperatorType::ADDITION);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::OperatorExpression<int>>(
             std::move(rightLeftSubExpression),
@@ -406,11 +406,11 @@ TEST(OperatorExpressionIntTestSuite, WhenBindValueToSymbolIsCalledWithCompoundEx
  */
 TEST(OperatorExpressionIntTestSuite, WhenToStringIsCalled_ThenTheCorrectStringValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>> 
+    std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<int>>(
             OperatorExpressionTestConstants::X_INT_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<int>>
+    std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<int>>(
             OperatorExpressionTestConstants::GLYPH_Z);
@@ -428,9 +428,9 @@ TEST(OperatorExpressionIntTestSuite, WhenToStringIsCalled_ThenTheCorrectStringVa
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithNullptrLeftSubExpression_ThenAnExceptionIsThrown)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             leftNullptr{nullptr};
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::Y_DOUBLE_VALUE);
@@ -448,11 +448,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithNullptrLeftSu
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithNullptrRightSubExpression_ThenAnExceptionIsThrown)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightNullptr{nullptr};
     EXPECT_THROW(
             calculator::expression::OperatorExpression<double> expression(
@@ -468,11 +468,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithNullptrRightS
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithInitializedSubExpressions_ThenTheObjectIsConstructed)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::Y_DOUBLE_VALUE);
@@ -489,11 +489,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenConstructorIsCalledWithInitializedSu
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithDivisionByZero_ThenNoneIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::Y_DOUBLE_VALUE);
@@ -511,11 +511,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithDivis
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithAddition_ThenTheCorrectValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::Z_DOUBLE_VALUE);
@@ -534,11 +534,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithAddit
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithSubtraction_ThenTheCorrectValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::Z_DOUBLE_VALUE);
@@ -557,11 +557,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithSubtr
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithMultiplication_ThenTheCorrectValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::U_DOUBLE_VALUE);
@@ -580,11 +580,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithMulti
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithDivision_ThenCorrectValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::U_DOUBLE_VALUE);
@@ -603,11 +603,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithDivis
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithModulo_ThenCorrectValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::U_DOUBLE_VALUE);
@@ -627,30 +627,30 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithModul
 TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithCompoundExpression_ThenCorrectValueIsReturned)
 {
     // nodes at depth = 2
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftLeftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             leftRightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::Z_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             rightLeftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightRightSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::U_DOUBLE_VALUE);
     // nodes at depth = 1
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::OperatorExpression<double>>(
             std::move(leftLeftSubExpression),
             std::move(leftRightSubExpression),
             calculator::expression::OperatorType::ADDITION);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::OperatorExpression<double>>(
             std::move(rightLeftSubExpression),
@@ -677,30 +677,30 @@ TEST(OperatorExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithCompoun
     // an expression will ONLY yield the correct result after all symbols are
     // bound in a way that also binds multiple symbols?
     // nodes at depth = 2
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftLeftSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<double>>(
             OperatorExpressionTestConstants::GLYPH_X);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             leftRightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<double>>(
             OperatorExpressionTestConstants::GLYPH_Z);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             rightLeftSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<double>>(
             OperatorExpressionTestConstants::GLYPH_X);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightRightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<double>>(
             OperatorExpressionTestConstants::GLYPH_U);
     // nodes at depth = 1
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::OperatorExpression<double>>(
             std::move(leftLeftSubExpression),
             std::move(leftRightSubExpression),
             calculator::expression::OperatorType::ADDITION);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::OperatorExpression<double>>(
             std::move(rightLeftSubExpression),
@@ -742,11 +742,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithCompoun
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenToStringIsCalled_ThenTheCorrectStringValueIsReturned)
 {
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>> 
+    std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
             calculator::expression::ValueExpression<double>>(
             OperatorExpressionTestConstants::X_DOUBLE_VALUE);
-    std::unique_ptr<calculator::expression::ExpressionInterface<double>>
+    std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<double>>(
             OperatorExpressionTestConstants::GLYPH_Z);

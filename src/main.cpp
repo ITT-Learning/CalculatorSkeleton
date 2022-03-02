@@ -13,7 +13,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include "ExpressionFactory.h"
-#include "ExpressionInterface.h"
+#include "IExpression.h"
 
 bool handleInput();
 void handleNonQuittingInput(const std::string &input);

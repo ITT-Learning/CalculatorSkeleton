@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * @file ExpressionInterface.h
+ * @file IExpression.h
  * @date Fri February 25 2022
  * @brief header for an interface that represents a mathematical expression that
  * can have symbols, values, and operators
@@ -24,10 +24,10 @@ namespace calculator { namespace expression
  * for example)
  */
 template<typename T>
-class ExpressionInterface
+class IExpression
 {
     public:
-        virtual ~ExpressionInterface();
+        virtual ~IExpression();
 
         /**
          * @brief attempts to calculate the value for the whole expression tree,
@@ -42,11 +42,11 @@ class ExpressionInterface
          * the given glyph with the given value
          * @param [in] glyph the glyph to search and replace
          * @param [in] value the value with which to replace the symbol
-         * @return std::unique_ptr<ExpressionInterface<T> *> a ValueExpression
+         * @return std::unique_ptr<IExpression<T> *> a ValueExpression
          * if the node upon which this method was called was a SymbolExpression,
          * otherwise nullptr
          */
-        virtual std::unique_ptr<ExpressionInterface<T>> bindValueToSymbol(
+        virtual std::unique_ptr<IExpression<T>> bindValueToSymbol(
                 char glyph,
                 T value) = 0;
 
