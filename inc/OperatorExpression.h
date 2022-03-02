@@ -73,6 +73,10 @@ class OperatorExpression : public ExpressionInterface<T>
         static boost::optional<T> safeModulo(const T left, const T right);
         // will use the zero element in a generic way to check for division by
         // zero
+        /**
+         * @brief returns the zero element for the type for which this template was specialized
+         * @return T the zero element for the type for which this template was specialized
+         */
         static T zero();
 };
 }}

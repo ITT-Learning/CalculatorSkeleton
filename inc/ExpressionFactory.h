@@ -35,16 +35,28 @@ class ExpressionFactory
          * @brief attempts to parse mathematical expressions of the form "5 - 3"
          * aka simple, not compound, expressions which only contain literals
          * and a single operator
-         * @param [in] string the string to attempt to parse
+         * @param [in] singleOperationString the string to attempt to parse
          * @return std::unique_ptr<ExpressionInterface<T> *> the parsed
          * expression or nullptr if the expression couldn't be successfully
          * parsed
          */
         static std::unique_ptr<ExpressionInterface<T>>
                 parseFromSingleOperationString(
-                const std::string &string);
+                const std::string &singleOperationString);
     private:
+        /**
+         * @brief Attempts to parse a literal value from the given input stream, updating the read head of the input
+         * stream and returning the parsed value, if successful
+         * @param [in] stream the stream from which to consume the literal value
+         * @return boost::optional<T> the literal value parsed, if any
+         */
         static boost::optional<T> consumeValueFromStream(std::istream &stream);
+        /**
+         * @brief Attempts to parse an operator from the given input stream, updating the read head of the input stream
+         * and returning the parsed operator, if successful
+         * @param [in] stream the stream from which to consume the operator
+         * @return boost::optional<T> the operator parsed, if any
+         */
         static boost::optional<OperatorType> consumeOperatorFromStream(
                 std::istream &stream);
 };
