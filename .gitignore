@@ -64,3 +64,6 @@ test/googletest-*/
 
 # the test binary isn't already ignored for some reason
 test/calculator_test
+
+# ignore cmake's internal files
+.cmake
