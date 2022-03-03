@@ -39,21 +39,18 @@ OperatorExpression<T>::OperatorExpression(
             {
                 return boost::optional<T>{left + right};
             };
-            operatorGlyph_ = '+';
             break;
         case OperatorType::SUBTRACTION:
             safeOperatorFunction_ = [](T left, T right)
             {
                 return boost::optional<T>{left - right};
             };
-            operatorGlyph_ = '-';
             break;
         case OperatorType::MULTIPLICATION:
             safeOperatorFunction_ = [](T left, T right)
             {
                 return boost::optional<T>{left * right};
             };
-            operatorGlyph_ = '*';
             break;
         case OperatorType::DIVISION:
             safeOperatorFunction_ = [](T left, T right)
@@ -66,11 +63,9 @@ OperatorExpression<T>::OperatorExpression(
 
                 return result;
             };
-            operatorGlyph_ = '/';
             break;
         case OperatorType::MODULO:
             safeOperatorFunction_ = &safeModulo;
-            operatorGlyph_ = '%';
             break;
         default:
             throw std::domain_error("Unknown operator");
@@ -127,7 +122,7 @@ std::unique_ptr<IExpression<T>> OperatorExpression<T>::
 template<typename T>
 std::string OperatorExpression<T>::toString() const
 {
-    return "(" + left_->toString() + " " + operatorGlyph_ + " " + 
+    return "(" + left_->toString() + " " + char(operatorType_) + " " + 
             right_->toString() + ")";
 }
 

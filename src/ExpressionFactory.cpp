@@ -88,19 +88,11 @@ boost::optional<OperatorType> ExpressionFactory<T>::
         switch(currentChar)
         {
             case '+':
-                result = OperatorType::ADDITION;
-                break;
             case '-':
-                result = OperatorType::SUBTRACTION;
-                break;
             case '*':
-                result = OperatorType::MULTIPLICATION;
-                break;
             case '/':
-                result = OperatorType::DIVISION;
-                break;
             case '%':
-                result = OperatorType::MODULO;
+                result = OperatorType(currentChar);
                 break;
             case ' ':
             case '\t':

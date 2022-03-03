@@ -64,7 +64,6 @@ class OperatorExpression : public IExpression<T>
         std::unique_ptr<IExpression<T>> left_;
         std::unique_ptr<IExpression<T>> right_;
         OperatorType operatorType_;
-        char operatorGlyph_;
         SafeOperatorFunction safeOperatorFunction_;
         
         /**
