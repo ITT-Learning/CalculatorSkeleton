@@ -81,52 +81,44 @@ boost::optional<OperatorType> ExpressionFactory<T>::
     bool searching{true};
     while(searching)
     {
-        // we have to peek here (and get the char out later) to make sure that 
-        // we don't remove a non-whitespace, non-operator from the stream.
-        int currentChar = stream.peek();
-        if(currentChar == '+')
+        int currentChar = stream.get();
+        // since only one case continues the search (when we see a whitespace char), and all other cases stop the
+        // search, just set searching = false here to save some lines of code
+        searching = false;
+        switch(currentChar)
         {
-            result = OperatorType::ADDITION;
-            searching = false;
-            stream.get();
-        }
-        else if(currentChar == '-')
-        {
-            result = OperatorType::SUBTRACTION;
-            searching = false;
-            stream.get();
-        }
-        else if(currentChar == '*')
-        {
-            result = OperatorType::MULTIPLICATION;
-            searching = false;
-            stream.get();
-        }
-        else if(currentChar == '/')
-        {
-            result = OperatorType::DIVISION;
-            searching = false;
-            stream.get();
-        }
-        else if(currentChar == '%')
-        {
-            result = OperatorType::MODULO;
-            searching = false;
-            stream.get();
-        }
-        else if(!isspace(currentChar))
-        {
-            // we found a non-whitespace character, so we should bail out early
-            // but leave that char in the stream, or else we mangle the stream.
-            // In the case the stream is EOF, this *should* handle it gracefully
-            // as well.
-            searching = false;
-        }
-        else
-        {
-            // whitespace character, keep consuming until we get to the real
-            // stuff
-            stream.get();
+            case '+':
+                result = OperatorType::ADDITION;
+                break;
+            case '-':
+                result = OperatorType::SUBTRACTION;
+                break;
+            case '*':
+                result = OperatorType::MULTIPLICATION;
+                break;
+            case '/':
+                result = OperatorType::DIVISION;
+                break;
+            case '%':
+                result = OperatorType::MODULO;
+                break;
+            case ' ':
+            case '\t':
+            case '\n':
+            case '\v':
+            case '\f':
+            case '\r':
+                // whitespace
+                searching = true;
+                break;
+            case std::char_traits<char>::eof():
+                // end of stream
+                break;
+            default:
+                // we encountered a non-whitespace, non-operator character, so put it back in the stream to make sure 
+                // the stream doesn't get messed up
+                stream.putback(currentChar);
+                break;
         }
     }
     
