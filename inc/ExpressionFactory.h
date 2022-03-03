@@ -47,18 +47,18 @@ class ExpressionFactory
         /**
          * @brief Attempts to parse a literal value from the given input stream, updating the read head of the input
          * stream and returning the parsed value, if successful
-         * @param [in] stream the stream from which to consume the literal value
+         * @param [in] streamFromWhichToConsume the stream from which to consume the literal value
          * @return boost::optional<T> the literal value parsed, if any
          */
-        static boost::optional<T> consumeValueFromStream(std::istream &stream);
+        static boost::optional<T> consumeValueFromStream(std::istream &streamFromWhichToConsume);
         /**
          * @brief Attempts to parse an operator from the given input stream, updating the read head of the input stream
          * and returning the parsed operator, if successful
-         * @param [in] stream the stream from which to consume the operator
+         * @param [in] streamFromWhichToConsume the stream from which to consume the operator
          * @return boost::optional<T> the operator parsed, if any
          */
         static boost::optional<OperatorType> consumeOperatorFromStream(
-                std::istream &stream);
+                std::istream &streamFromWhichToConsume);
 };
 
 }}
