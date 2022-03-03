@@ -10,12 +10,13 @@
 #include <memory>
 
 #include <boost/optional.hpp>
+#include <boost/optional/optional_io.hpp>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "../inc/OperatorExpression.h"
-#include "../inc/ValueExpression.h"
-#include "../inc/SymbolExpression.h"
+#include "OperatorExpression.h"
+#include "ValueExpression.h"
+#include "SymbolExpression.h"
 
 /**
  * @brief a collection of constants used by the OperatorExpression test suites
@@ -171,9 +172,11 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithDivision
 
 /**
  * @brief tests that an OperatorExpression returns the correct value when
- * calculating an expression with a single addition operation
+ * calculating an expression with a single addition operation and tests
+ * whether the caching feature works correctly by calculating the expression
+ * twice
  */
-TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithAddition_ThenTheCorrectValueIsReturned)
+TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithAdditionTwice_ThenTheCorrectValueIsReturnedTwice)
 {
     std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
@@ -188,6 +191,9 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithAddition
             std::move(rightSubExpression),
             calculator::expression::OperatorType::ADDITION);
     auto value = expression.calculateExpression();
+    EXPECT_NE(value, boost::none);
+    EXPECT_EQ(*value, OperatorExpressionTestConstants::ADDITION_INT_RESULT);
+    value = expression.calculateExpression();
     EXPECT_NE(value, boost::none);
     EXPECT_EQ(*value, OperatorExpressionTestConstants::ADDITION_INT_RESULT);
 }
@@ -344,19 +350,19 @@ TEST(OperatorExpressionIntTestSuite, WhenBindValueToSymbolIsCalledWithCompoundEx
     std::unique_ptr<calculator::expression::IExpression<int>> 
             leftLeftSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<int>>(
-            OperatorExpressionTestConstants::GLYPH_X);
+            OperatorExpressionTestConstants::GLYPH_X, true);
     std::unique_ptr<calculator::expression::IExpression<int>>
             leftRightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<int>>(
-            OperatorExpressionTestConstants::GLYPH_Z);
+            OperatorExpressionTestConstants::GLYPH_Z, true);
     std::unique_ptr<calculator::expression::IExpression<int>> 
             rightLeftSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<int>>(
-            OperatorExpressionTestConstants::GLYPH_X);
+            OperatorExpressionTestConstants::GLYPH_X, true);
     std::unique_ptr<calculator::expression::IExpression<int>>
             rightRightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<int>>(
-            OperatorExpressionTestConstants::GLYPH_U);
+            OperatorExpressionTestConstants::GLYPH_U, true);
     // nodes at depth = 1
     std::unique_ptr<calculator::expression::IExpression<int>> 
             leftSubExpression = std::make_unique<
@@ -413,7 +419,7 @@ TEST(OperatorExpressionIntTestSuite, WhenToStringIsCalled_ThenTheCorrectStringVa
     std::unique_ptr<calculator::expression::IExpression<int>>
             rightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<int>>(
-            OperatorExpressionTestConstants::GLYPH_Z);
+            OperatorExpressionTestConstants::GLYPH_Z, true);
     calculator::expression::OperatorExpression<int> expression(
             std::move(leftSubExpression),
             std::move(rightSubExpression),
@@ -507,9 +513,11 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithDivis
 
 /**
  * @brief tests that an OperatorExpression returns the correct value when
- * calculating an expression with a single addition operation
+ * calculating an expression with a single addition operation and tests
+ * whether the caching feature works correctly by calculating the expression
+ * twice
  */
-TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithAddition_ThenTheCorrectValueIsReturned)
+TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithAdditionTwice_ThenTheCorrectValueIsReturnedTwice)
 {
     std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
@@ -524,6 +532,9 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithAddit
             std::move(rightSubExpression),
             calculator::expression::OperatorType::ADDITION);
     auto value = expression.calculateExpression();
+    EXPECT_NE(value, boost::none);
+    EXPECT_EQ(*value, OperatorExpressionTestConstants::ADDITION_DOUBLE_RESULT);
+    value = expression.calculateExpression();
     EXPECT_NE(value, boost::none);
     EXPECT_EQ(*value, OperatorExpressionTestConstants::ADDITION_DOUBLE_RESULT);
 }
@@ -680,19 +691,19 @@ TEST(OperatorExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithCompoun
     std::unique_ptr<calculator::expression::IExpression<double>> 
             leftLeftSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<double>>(
-            OperatorExpressionTestConstants::GLYPH_X);
+            OperatorExpressionTestConstants::GLYPH_X, true);
     std::unique_ptr<calculator::expression::IExpression<double>>
             leftRightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<double>>(
-            OperatorExpressionTestConstants::GLYPH_Z);
+            OperatorExpressionTestConstants::GLYPH_Z, true);
     std::unique_ptr<calculator::expression::IExpression<double>> 
             rightLeftSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<double>>(
-            OperatorExpressionTestConstants::GLYPH_X);
+            OperatorExpressionTestConstants::GLYPH_X, true);
     std::unique_ptr<calculator::expression::IExpression<double>>
             rightRightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<double>>(
-            OperatorExpressionTestConstants::GLYPH_U);
+            OperatorExpressionTestConstants::GLYPH_U, true);
     // nodes at depth = 1
     std::unique_ptr<calculator::expression::IExpression<double>> 
             leftSubExpression = std::make_unique<
@@ -749,7 +760,7 @@ TEST(OperatorExpressionDoubleTestSuite, WhenToStringIsCalled_ThenTheCorrectStrin
     std::unique_ptr<calculator::expression::IExpression<double>>
             rightSubExpression = std::make_unique<
             calculator::expression::SymbolExpression<double>>(
-            OperatorExpressionTestConstants::GLYPH_Z);
+            OperatorExpressionTestConstants::GLYPH_Z, true);
     calculator::expression::OperatorExpression<double> expression(
             std::move(leftSubExpression),
             std::move(rightSubExpression),
