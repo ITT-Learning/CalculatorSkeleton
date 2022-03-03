@@ -32,21 +32,18 @@ std::unique_ptr<IExpression<T>> ExpressionFactory<T>::
     T leftValue;
     if(stream >> leftValue)
     {
-        // success on first number
         std::unique_ptr<ValueExpression<T>> leftExpression = 
                 std::make_unique<ValueExpression<T>>(leftValue);
         auto operatorType = consumeOperatorFromStream(stream);
         if(operatorType)
         {
-            // success on operator
             T rightValue;
             if(stream >> rightValue && stream.get() == std::char_traits<char>::eof())
             {
-                // success on second number and nothing else in the stream
+                // successfully parsed all pieces, and there's nothing else in the stream
                 std::unique_ptr<ValueExpression<T>> rightExpression = 
                         std::make_unique<ValueExpression<T>>(rightValue);
                 result = std::make_unique<OperatorExpression<T>>(
-                        // transfer ownership to result
                         std::move(leftExpression),
                         std::move(rightExpression),
                         *operatorType);
