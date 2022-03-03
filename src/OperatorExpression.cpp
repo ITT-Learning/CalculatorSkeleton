@@ -28,7 +28,7 @@ OperatorExpression<T>::OperatorExpression(
         right_{std::move(right)},
         operatorType_{operatorType}
 {
-    if(!left_ || !right_)
+    if(nullptr == left_ || nullptr == right_)
     {
         throw std::domain_error("sub-expressions must not be null");
     }
