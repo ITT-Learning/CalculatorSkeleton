@@ -7,10 +7,11 @@
  */
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/optional/optional_io.hpp>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../inc/SymbolExpression.h"
+#include "SymbolExpression.h"
 
 /**
  * @brief a collection of constants used by the SymbolExpression test suites
@@ -18,23 +19,25 @@
 class SymbolExpressionTestConstants
 {
 public:
-    static constexpr char   GLYPH_X = 'x';
-    static constexpr char   GLYPH_Y = 'y';
-    static constexpr int    INT_VALUE_TO_BIND = 42;
-    static constexpr double DOUBLE_VALUE_TO_BIND = 42.42;
+    static constexpr char        GLYPH_X = 'x';
+    static constexpr const char *NEGATIVE_GLYPH_X = "-x";
+    static constexpr char        GLYPH_Y = 'y';
+    static constexpr int         INT_VALUE_TO_BIND = 42;
+    static constexpr double      DOUBLE_VALUE_TO_BIND = 42.42;
 };
-constexpr char   SymbolExpressionTestConstants::GLYPH_X;
-constexpr char   SymbolExpressionTestConstants::GLYPH_Y;
-constexpr int    SymbolExpressionTestConstants::INT_VALUE_TO_BIND;
-constexpr double SymbolExpressionTestConstants::DOUBLE_VALUE_TO_BIND;
+constexpr char        SymbolExpressionTestConstants::GLYPH_X;
+constexpr const char *SymbolExpressionTestConstants::NEGATIVE_GLYPH_X;
+constexpr char        SymbolExpressionTestConstants::GLYPH_Y;
+constexpr int         SymbolExpressionTestConstants::INT_VALUE_TO_BIND;
+constexpr double      SymbolExpressionTestConstants::DOUBLE_VALUE_TO_BIND;
 
 /**
  * @brief tests the construction of a SymbolExpression<int> with a known glyph
  */
 TEST(SymbolExpressionIntTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAreThrown)
 {
-    EXPECT_NO_THROW(calculator::expression::SymbolExpression<int> result{
-            SymbolExpressionTestConstants::GLYPH_X});
+    EXPECT_NO_THROW( calculator::expression::SymbolExpression<int> result(
+            SymbolExpressionTestConstants::GLYPH_X, true); );
 }
 
 /**
@@ -44,7 +47,7 @@ TEST(SymbolExpressionIntTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAreTh
 TEST(SymbolExpressionIntTestSuite, WhenCalculateExpressionIsCalled_ThenNoneIsReturned)
 {
     calculator::expression::SymbolExpression<int> objectToTest{
-            SymbolExpressionTestConstants::GLYPH_X};
+            SymbolExpressionTestConstants::GLYPH_X, true};
     auto result = objectToTest.calculateExpression();
     ASSERT_EQ(result, boost::none);
 }
@@ -57,7 +60,7 @@ TEST(SymbolExpressionIntTestSuite, WhenCalculateExpressionIsCalled_ThenNoneIsRet
 TEST(SymbolExpressionIntTestSuite, WhenBindValueToSymbolIsCalled_ThenAnExpressionIsReturnedThatYieldsTheCorrectValue)
 {
     calculator::expression::SymbolExpression<int> objectToTest{
-            SymbolExpressionTestConstants::GLYPH_X};
+            SymbolExpressionTestConstants::GLYPH_X, true};
     auto result = objectToTest.bindValueToSymbol(
             SymbolExpressionTestConstants::GLYPH_X,
             SymbolExpressionTestConstants::INT_VALUE_TO_BIND);
@@ -68,6 +71,24 @@ TEST(SymbolExpressionIntTestSuite, WhenBindValueToSymbolIsCalled_ThenAnExpressio
 }
 
 /**
+ * @brief tests binding a value to a symbol that matches the symbol of a
+ * negative SymbolExpression<int>, which should return a new IExpression<int>
+ * with the correct bound value
+ */
+TEST(SymbolExpressionIntTestSuite, WhenBindValueToSymbolIsCalledOnANegativeSymbolWithTheMatchingGlyph_ThenAnExpressionIsReturnedThatYieldsTheCorrectValue)
+{
+    calculator::expression::SymbolExpression<int> objectToTest{
+            SymbolExpressionTestConstants::GLYPH_X, false};
+    auto result = objectToTest.bindValueToSymbol(
+            SymbolExpressionTestConstants::GLYPH_X,
+            SymbolExpressionTestConstants::INT_VALUE_TO_BIND);
+    ASSERT_NE(result, nullptr);
+    auto value = result->calculateExpression();
+    ASSERT_NE(value, boost::none);
+    ASSERT_EQ(*value, -SymbolExpressionTestConstants::INT_VALUE_TO_BIND);
+}
+
+/**
  * @brief tests binding a value to a symbol that does not match the symbol of a
  * SymbolExpression<int>, which should return a nullptr, indicating that
  * there were no changes to this expression
@@ -75,7 +96,7 @@ TEST(SymbolExpressionIntTestSuite, WhenBindValueToSymbolIsCalled_ThenAnExpressio
 TEST(SymbolExpressionIntTestSuite, WhenBindValueToSymbolIsCalledWithoutTheMatchingGlyph_ThenNullptrIsReturned)
 {
     calculator::expression::SymbolExpression<int> objectToTest{
-            SymbolExpressionTestConstants::GLYPH_X};
+            SymbolExpressionTestConstants::GLYPH_X, true};
     auto result = objectToTest.bindValueToSymbol(
             SymbolExpressionTestConstants::GLYPH_Y,
             SymbolExpressionTestConstants::INT_VALUE_TO_BIND);
@@ -89,9 +110,21 @@ TEST(SymbolExpressionIntTestSuite, WhenBindValueToSymbolIsCalledWithoutTheMatchi
 TEST(SymbolExpressionIntTestSuite, WhenToStringIsCalled_ThenCorrectStringRepresentationIsReturned)
 {
     calculator::expression::SymbolExpression<int> objectToTest{
-            SymbolExpressionTestConstants::GLYPH_X};
+            SymbolExpressionTestConstants::GLYPH_X, true};
     auto result = objectToTest.toString();
     ASSERT_EQ(result, std::string(1, SymbolExpressionTestConstants::GLYPH_X));
+}
+
+/**
+ * @brief tests converting a negative SymbolExpression<int> to a string, which should yield a negative sign, then the
+ * glyph used to construct it with no space in between
+ */
+TEST(SymbolExpressionIntTestSuite, WhenToStringIsCalledOnANegativeSymbol_ThenCorrectStringRepresentationIsReturned)
+{
+    calculator::expression::SymbolExpression<int> objectToTest{
+            SymbolExpressionTestConstants::GLYPH_X, false};
+    auto result = objectToTest.toString();
+    ASSERT_EQ(result, std::string(SymbolExpressionTestConstants::NEGATIVE_GLYPH_X));
 }
 
 /**
@@ -100,8 +133,8 @@ TEST(SymbolExpressionIntTestSuite, WhenToStringIsCalled_ThenCorrectStringReprese
  */
 TEST(SymbolExpressionDoubleTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAreThrown)
 {
-    EXPECT_NO_THROW(calculator::expression::SymbolExpression<double> result{
-            SymbolExpressionTestConstants::GLYPH_X});
+    EXPECT_NO_THROW( calculator::expression::SymbolExpression<double> result(
+            SymbolExpressionTestConstants::GLYPH_X, true); );
 }
 
 /**
@@ -111,7 +144,7 @@ TEST(SymbolExpressionDoubleTestSuite, WhenConstructorIsCalled_ThenNoExceptionsAr
 TEST(SymbolExpressionDoubleTestSuite, WhenCalculateExpressionIsCalled_ThenNoneIsReturned)
 {
     calculator::expression::SymbolExpression<double> objectToTest{
-            SymbolExpressionTestConstants::GLYPH_X};
+            SymbolExpressionTestConstants::GLYPH_X, true};
     auto result = objectToTest.calculateExpression();
     ASSERT_EQ(result, boost::none);
 }
@@ -124,7 +157,7 @@ TEST(SymbolExpressionDoubleTestSuite, WhenCalculateExpressionIsCalled_ThenNoneIs
 TEST(SymbolExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithTheMatchingGlyph_ThenAnExpressionIsReturnedThatYieldsTheCorrectValue)
 {
     calculator::expression::SymbolExpression<double> objectToTest{
-            SymbolExpressionTestConstants::GLYPH_X};
+            SymbolExpressionTestConstants::GLYPH_X, true};
     auto result = objectToTest.bindValueToSymbol(
             SymbolExpressionTestConstants::GLYPH_X,
             SymbolExpressionTestConstants::DOUBLE_VALUE_TO_BIND);
@@ -135,6 +168,24 @@ TEST(SymbolExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithTheMatchi
 }
 
 /**
+ * @brief tests binding a value to a symbol that matches the symbol of a
+ * negative SymbolExpression<double>, which should return a new 
+ * IExpression<double> with the correct bound value 
+ */
+TEST(SymbolExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledOnANegativeSymbolWithTheMatchingGlyph_ThenAnExpressionIsReturnedThatYieldsTheCorrectValue)
+{
+    calculator::expression::SymbolExpression<double> objectToTest{
+            SymbolExpressionTestConstants::GLYPH_X, false};
+    auto result = objectToTest.bindValueToSymbol(
+            SymbolExpressionTestConstants::GLYPH_X,
+            SymbolExpressionTestConstants::DOUBLE_VALUE_TO_BIND);
+    ASSERT_NE(result, nullptr);
+    auto value = result->calculateExpression();
+    ASSERT_NE(value, boost::none);
+    ASSERT_EQ(*value, -SymbolExpressionTestConstants::DOUBLE_VALUE_TO_BIND);
+}
+
+/**
  * @brief tests binding a value to a symbol that does not match the symbol of a
  * SymbolExpression<double>, which should return a nullptr, indicating that
  * there were no changes to this expression
@@ -142,7 +193,7 @@ TEST(SymbolExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithTheMatchi
 TEST(SymbolExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithoutTheMatchingGlyph_ThenNullptrIsReturned)
 {
     calculator::expression::SymbolExpression<double> objectToTest{
-            SymbolExpressionTestConstants::GLYPH_X};
+            SymbolExpressionTestConstants::GLYPH_X, true};
     auto result = objectToTest.bindValueToSymbol(
             SymbolExpressionTestConstants::GLYPH_Y,
             SymbolExpressionTestConstants::DOUBLE_VALUE_TO_BIND);
@@ -156,7 +207,19 @@ TEST(SymbolExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithoutTheMat
 TEST(SymbolExpressionDoubleTestSuite, WhenToStringIsCalled_ThenCorrectStringRepresentationIsReturned)
 {
     calculator::expression::SymbolExpression<double> objectToTest{
-            SymbolExpressionTestConstants::GLYPH_X};
+            SymbolExpressionTestConstants::GLYPH_X, true};
     auto result = objectToTest.toString();
     ASSERT_EQ(result, std::string(1, SymbolExpressionTestConstants::GLYPH_X));
+}
+
+/**
+ * @brief tests converting a negative SymbolExpression<double> to a string, which should yield a negative sign, then the
+ * glyph used to construct it with no space in between
+ */
+TEST(SymbolExpressionDoubleTestSuite, WhenToStringIsCalledOnANegativeSymbol_ThenCorrectStringRepresentationIsReturned)
+{
+    calculator::expression::SymbolExpression<double> objectToTest{
+            SymbolExpressionTestConstants::GLYPH_X, false};
+    auto result = objectToTest.toString();
+    ASSERT_EQ(result, std::string(SymbolExpressionTestConstants::NEGATIVE_GLYPH_X));
 }

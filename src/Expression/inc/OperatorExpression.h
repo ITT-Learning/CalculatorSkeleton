@@ -10,6 +10,7 @@
 #define OPERATOREXPRESSION_H
 
 #include <memory>
+#include <set>
 
 #include "IExpression.h"
 
@@ -57,6 +58,7 @@ class OperatorExpression : public IExpression<T>
         boost::optional<T> calculateExpression() const override;
         std::unique_ptr<IExpression<T>> bindValueToSymbol(char glyph,
                 T value) override;
+        void collectUnboundSymbols(std::set<char> &unboundSymbols) const override;
         std::string toString() const override;
     private:
         using SafeOperatorFunction = boost::optional<T>(*)(T, T);
@@ -65,6 +67,7 @@ class OperatorExpression : public IExpression<T>
         std::unique_ptr<IExpression<T>> right_;
         OperatorType operatorType_;
         SafeOperatorFunction safeOperatorFunction_;
+        mutable boost::optional<T> cachedValue_;
         
         /**
          * @brief computes the modulo for the type for which this template was specialized

@@ -41,6 +41,12 @@ std::unique_ptr<IExpression<T>> ValueExpression<T>::bindValueToSymbol(
     return nullptr;
 }
 
+template<typename T>
+void ValueExpression<T>::collectUnboundSymbols(std::set<char> &unboundSymbols) const
+{
+    return;
+}
+
 template<>
 std::string ValueExpression<int>::toString() const
 {

@@ -11,6 +11,7 @@
 
 #include <exception>
 #include <cmath>
+#include <thread>
 
 namespace calculator { namespace expression
 {
@@ -84,19 +85,34 @@ OperatorExpression<T>::~OperatorExpression() = default;
 template<typename T>
 boost::optional<T> OperatorExpression<T>::calculateExpression() const
 {
-    boost::optional<T> result{boost::none};
-    auto leftValue = left_->calculateExpression();
-    if(leftValue)
+    if(boost::none == cachedValue_)
     {
-        // Do some short circuiting to avoid additional computation
-        auto rightValue = right_->calculateExpression();
-        if(rightValue)
+        // since expressions are immutable, just checking whether a cached value
+        // exists is a good enough check - the cached value will never be stale
+
+        // the following threading is safe despite any synchronization
+        // primitives because the main thread will block here on the root node
+        // until the sub-trees compute their values, and, in addition, the only
+        // method that accesses expression trees for writing after their
+        // creation is bindValueToSymbol(), which is not called in
+        // calculateExpression() or any of the functions that it calls.
+        boost::optional<T> leftValue{boost::none};
+        boost::optional<T> rightValue{boost::none};
+        std::thread leftThread{[&](){
+            leftValue = left_->calculateExpression();
+        }};
+        std::thread rightThread{[&](){
+            rightValue = right_->calculateExpression();
+        }};
+        leftThread.join();
+        rightThread.join();
+        if(boost::none != leftValue && boost::none != rightValue)
         {
-            result = safeOperatorFunction_(*leftValue, *rightValue);
+            cachedValue_ = safeOperatorFunction_(*leftValue, *rightValue);
         }
     }
 
-    return result;
+    return cachedValue_;
 }
 
 template<typename T>
@@ -120,9 +136,16 @@ std::unique_ptr<IExpression<T>> OperatorExpression<T>::
 }
 
 template<typename T>
+void OperatorExpression<T>::collectUnboundSymbols(std::set<char> &unboundSymbols) const
+{
+    left_->collectUnboundSymbols(unboundSymbols);
+    right_->collectUnboundSymbols(unboundSymbols);
+}
+
+template<typename T>
 std::string OperatorExpression<T>::toString() const
 {
-    return "(" + left_->toString() + " " + char(operatorType_) + " " + 
+    return "(" + left_->toString() + " " + static_cast<char>(operatorType_) + " " + 
             right_->toString() + ")";
 }
 

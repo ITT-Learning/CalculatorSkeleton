@@ -9,6 +9,8 @@
 #ifndef SYMBOLEXPRESSION_H
 #define SYMBOLEXPRESSION_H
 
+#include <set>
+
 #include <boost/optional.hpp>
 
 #include "IExpression.h"
@@ -28,17 +30,20 @@ class SymbolExpression : public IExpression<T>
          * @brief Construct a new SymbolExpression object with the given glyph
          * @param [in] glyph the glyph (written character) to represent this
          * symbol
+         * @param [in] isPositive whether the glyph is positive or negative
          */
-        SymbolExpression(char glyph);
+        SymbolExpression(char glyph, bool isPositive);
 
         virtual ~SymbolExpression();
 
         boost::optional<T> calculateExpression() const override;
         std::unique_ptr<IExpression<T>> bindValueToSymbol(char glyph,
                 T value) override;
+        void collectUnboundSymbols(std::set<char> &unboundSymbols) const override;
         std::string toString() const override;
     private:
         char glyph_;
+        bool isPositive_;
 };
 }}
 

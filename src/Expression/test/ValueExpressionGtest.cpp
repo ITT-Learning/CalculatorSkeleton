@@ -9,10 +9,11 @@
 
 #include <string>
 
+#include <boost/optional/optional_io.hpp>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../inc/ValueExpression.h"
+#include "ValueExpression.h"
 
 /**
  * @brief a collection of constants used by the ValueExpression test suites

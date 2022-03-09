@@ -21,7 +21,7 @@ namespace calculator { namespace expression
 // //
 // ---------------------------------------------------------------------------//
 template<typename T>
-SymbolExpression<T>::SymbolExpression(char glyph): glyph_{glyph}
+SymbolExpression<T>::SymbolExpression(char glyph, bool isPositive): glyph_{glyph}, isPositive_{isPositive}
 {
 }
 
@@ -46,16 +46,34 @@ std::unique_ptr<IExpression<T>> SymbolExpression<T>::bindValueToSymbol(
     std::unique_ptr<IExpression<T>> result{nullptr};
     if(glyph == glyph_)
     {
-        result = std::make_unique<ValueExpression<T>>(value);
+        if(isPositive_)
+        {
+            result = std::make_unique<ValueExpression<T>>(value);
+        }
+        else
+        {
+            result = std::make_unique<ValueExpression<T>>(-value);
+        }
     }
     
     return result;
 }
 
 template<typename T>
+void SymbolExpression<T>::collectUnboundSymbols(std::set<char> &unboundSymbols) const
+{
+    unboundSymbols.insert(glyph_);
+}
+
+template<typename T>
 std::string SymbolExpression<T>::toString() const
 {
-    return std::string{glyph_};
+    std::string result{glyph_};
+    if(!isPositive_)
+    {
+        result = '-' + result;
+    }
+    return result;
 }
 
 template class SymbolExpression<int>;
