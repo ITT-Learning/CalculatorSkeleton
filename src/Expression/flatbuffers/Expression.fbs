@@ -1,0 +1,51 @@
+namespace calculator.expression.flatbuffer;
+
+union Expression
+{
+    OperatorExpression,
+    SymbolExpression,
+    IntValueExpression,
+    DoubleValueExpression
+}
+
+enum Operator: byte
+{
+    MODULO = 37,
+    MULTIPLICATION = 42,
+    ADDITION = 43,
+    SUBTRACTION = 45,
+    DIVISION = 47,
+}
+
+enum NumberType: byte
+{
+    INTEGER,
+    DOUBLE
+}
+
+// encapsulates the tree and provides information about the tree's type
+table ExpressionTree {
+    numberType: NumberType = DOUBLE;
+    expression: Expression (required);
+}
+
+table OperatorExpression {
+    left: Expression (required);
+    right: Expression (required);
+    operator: Operator = ADDITION;
+}
+
+table SymbolExpression {
+    symbol: byte = 120;
+    isPositive: bool = true;
+}
+
+table IntValueExpression {
+    value: int32;
+}
+
+table DoubleValueExpression {
+    value: float64;
+}
+
+root_type ExpressionTree;

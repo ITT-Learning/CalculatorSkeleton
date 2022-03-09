@@ -15,6 +15,9 @@
 #include <string>
 
 #include <boost/optional.hpp>
+#include <flatbuffers/flatbuffers.h>
+
+#include "Expression_generated.h"
 
 namespace calculator { namespace expression
 {
@@ -63,6 +66,13 @@ class IExpression
          * @return std::string the string representation for the expression tree 
          */
         virtual std::string toString() const = 0;
+
+        /**
+         * @brief prepares for serialization by writing this node's data and the data of all child nodes to the given
+         * builder
+         * @return flatbuffer::ExpressionUnion the flat buffer object representing this expression
+         */
+        virtual flatbuffer::ExpressionUnion toFlatBufferObject() const = 0;
 };
 }}
 

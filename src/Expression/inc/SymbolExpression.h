@@ -41,6 +41,7 @@ class SymbolExpression : public IExpression<T>
                 T value) override;
         void collectUnboundSymbols(std::set<char> &unboundSymbols) const override;
         std::string toString() const override;
+        flatbuffer::ExpressionUnion toFlatBufferObject() const override;
     private:
         char glyph_;
         bool isPositive_;

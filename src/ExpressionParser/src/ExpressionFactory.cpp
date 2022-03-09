@@ -316,7 +316,7 @@ boost::optional<std::pair<std::size_t, OperatorType>> ExpressionFactory<T>::find
     boost::optional<std::pair<std::size_t, OperatorType>> firstAddSubtract = boost::none;
     boost::optional<std::pair<std::size_t, OperatorType>> firstMultiplyDivide = boost::none;
     int parenthesisDepth = 0;
-    // I don't like the guard here because it essentially checks for overflow. Maybe make i signed. TODO
+    // I don't love the guard here because it essentially checks for overflow, but it works fine.
     for(std::size_t i = stringSlice.length() - 1; i < stringSlice.length(); i--)
     {
         // basically we have to go backwards as we're building up the tree. addition/subtraction get parsed first
@@ -379,8 +379,8 @@ template<typename T>
 std::unique_ptr<IExpression<T>> ExpressionFactory<T>::parseSimpleExpression(const boost::string_ref &stringSlice)
 {
     std::unique_ptr<IExpression<T>> result{nullptr};
-    // TODO this string conversion is kinda costly. Maybe we should refactor these methods to take string_refs instead
-    // of stringstreams
+    // string_ref is kind of unwieldy, as there's no way to point a stringstream to it, so it's necessary to copy it
+    // into another string here
     const std::string stringToScan = stringSlice.to_string();
     std::stringstream streamFromWhichToConsume{stringToScan};
     auto possibleValue = consumeValueFromStream(streamFromWhichToConsume);

@@ -63,6 +63,26 @@ std::string ValueExpression<double>::toString() const
     return std::to_string(value_);
 }
 
+template<>
+flatbuffer::ExpressionUnion ValueExpression<int>::toFlatBufferObject() const
+{
+    flatbuffer::ExpressionUnion result;
+    flatbuffer::IntValueExpressionT resultData;
+    resultData.value = value_;
+    result.Set<flatbuffer::IntValueExpressionT>(std::move(resultData));
+    return result;
+}
+
+template<>
+flatbuffer::ExpressionUnion ValueExpression<double>::toFlatBufferObject() const
+{
+    flatbuffer::ExpressionUnion result;
+    flatbuffer::DoubleValueExpressionT resultData;
+    resultData.value = value_;
+    result.Set<flatbuffer::DoubleValueExpressionT>(std::move(resultData));
+    return result;
+}
+
 template class ValueExpression<int>;
 template class ValueExpression<double>;
 }}
