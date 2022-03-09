@@ -7,30 +7,23 @@
 * C++ TestMate
 * Remote - WSL
 
+# Setting up WSL
+WSL gives you a Linux environment and allows you to run Linux commands from a Windows computer. It will be needed for this project. To install it, follow the instructions at https://docs.microsoft.com/en-us/windows/wsl/install. I would recommend the default "Ubuntu" installation unless you are confident enough to pick a different version. From here on out, all commands in these instructions will be through the WSL terminal, *not* the Windows terminal.
+
 # Install required packages on WSL to compile C++ code
 ```
 sudo apt-get -y update
-sudo apt-get install -y build-essential gdb cmake
+sudo apt-get install -y build-essential gdb cmake libgtest-dev libgmock-dev
 ```
 
-If you get an error on version of CMake use the following to update the CMake version. Reference https://apt.kitware.com/
-
-# Version 18.04 Ubuntu WSL run the following commands...
+# Clone the repository
 ```
-sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
-wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
-sudo apt remove --purge --auto-remove cmake
-sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
-sudo apt-get update
-sudo apt-get install kitware-archive-keyring
-sudo rm /etc/apt/trusted.gpg.d/kitware.gpg
-sudo apt-get install -y cmake
+git clone 'https://github.com/ITT-Learning/CalculatorSkeleton.git'
 ```
 ----
 
 # Command Line build
-run at root directory run...
+at the repository's root directory run...
 ```
 cmake .
 make

@@ -58,3 +58,9 @@ bin/
 
 # ignore googletest items
 test/googletest-*/
+
+# ignore the test executable
+test/calculator_test
+
+# vscode settings
+.vscode
