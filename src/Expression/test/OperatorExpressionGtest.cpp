@@ -343,9 +343,6 @@ TEST(OperatorExpressionIntTestSuite, WhenCalculateExpressionIsCalledWithCompound
  */
 TEST(OperatorExpressionIntTestSuite, WhenBindValueToSymbolIsCalledWithCompoundExpression_ThenThatSymbolIsReplacedByThatValueInAllSubExpressionsAndTheEntireExpressionWillOnlyHaveAValueWhenAllSymbolsAreBound)
 {
-    // TODO this test might be too long and complicated. How can we check that 
-    // an expression will ONLY yield the correct result after all symbols are
-    // bound in a way that also binds multiple symbols?
     // nodes at depth = 2
     std::unique_ptr<calculator::expression::IExpression<int>> 
             leftLeftSubExpression = std::make_unique<
@@ -684,9 +681,6 @@ TEST(OperatorExpressionDoubleTestSuite, WhenCalculateExpressionIsCalledWithCompo
  */
 TEST(OperatorExpressionDoubleTestSuite, WhenBindValueToSymbolIsCalledWithCompoundExpression_ThenThatSymbolIsReplacedByThatValueInAllSubExpressionsAndTheEntireExpressionWillOnlyHaveAValueWhenAllSymbolsAreBound)
 {
-    // TODO this test might be too long and complicated. How can we check that 
-    // an expression will ONLY yield the correct result after all symbols are
-    // bound in a way that also binds multiple symbols?
     // nodes at depth = 2
     std::unique_ptr<calculator::expression::IExpression<double>> 
             leftLeftSubExpression = std::make_unique<

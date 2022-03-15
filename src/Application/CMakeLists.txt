@@ -2,7 +2,7 @@ cmake_path(GET CMAKE_CURRENT_BINARY_DIR FILENAME lib_path)
 
 set(LIBRARY_NAME ${PROJECT_NAME}${lib_path})
 
-file(GLOB LIBRARY_SOURCES "src/*.cpp")
+file(GLOB LIBRARY_SOURCES "src/*.cpp" "inc/*.h")
 
 
 # Set the output folder where your program will be created

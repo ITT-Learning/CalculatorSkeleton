@@ -12,6 +12,9 @@
 #include <exception>
 #include <cmath>
 #include <thread>
+#include <flatbuffers/flatbuffers.h>
+
+#include "Expression_generated.h"
 
 namespace calculator { namespace expression
 {
@@ -147,6 +150,18 @@ std::string OperatorExpression<T>::toString() const
 {
     return "(" + left_->toString() + " " + static_cast<char>(operatorType_) + " " + 
             right_->toString() + ")";
+}
+
+template<typename T>
+flatbuffer::ExpressionUnion OperatorExpression<T>::toFlatBufferObject() const
+{
+    flatbuffer::ExpressionUnion result;
+    flatbuffer::OperatorExpressionT resultData;
+    resultData.operator_ = static_cast<flatbuffer::Operator>(operatorType_);
+    resultData.left = left_->toFlatBufferObject();
+    resultData.right = right_->toFlatBufferObject();
+    result.Set<flatbuffer::OperatorExpressionT>(std::move(resultData));
+    return result;
 }
 
 // ---------------------------------------------------------------------------//

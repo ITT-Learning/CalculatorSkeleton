@@ -12,6 +12,8 @@
 #include <memory>
 #include <set>
 
+#include <flatbuffers/flatbuffers.h>
+
 #include "IExpression.h"
 
 namespace calculator { namespace expression
@@ -60,6 +62,7 @@ class OperatorExpression : public IExpression<T>
                 T value) override;
         void collectUnboundSymbols(std::set<char> &unboundSymbols) const override;
         std::string toString() const override;
+        flatbuffer::ExpressionUnion toFlatBufferObject() const override;
     private:
         using SafeOperatorFunction = boost::optional<T>(*)(T, T);
 

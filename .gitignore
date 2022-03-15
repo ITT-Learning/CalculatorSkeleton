@@ -67,3 +67,12 @@ test/calculator_test
 
 # ignore cmake's internal files
 .cmake
+
+# ignore the fetched flatbuffer library
+fetched-libraries/flatbuffers/flatbuffers-*/
+
+# generated cmake files
+test/calculator_test\[1\]_*.cmake
+
+# generated compiled flatbuffers
+src/Expression/inc/*_generated.h

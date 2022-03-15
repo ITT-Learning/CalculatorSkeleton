@@ -76,6 +76,17 @@ std::string SymbolExpression<T>::toString() const
     return result;
 }
 
+template<typename T>
+flatbuffer::ExpressionUnion SymbolExpression<T>::toFlatBufferObject() const
+{
+    flatbuffer::ExpressionUnion result;
+    flatbuffer::SymbolExpressionT resultData;
+    resultData.symbol = glyph_;
+    resultData.isPositive = isPositive_;
+    result.Set<flatbuffer::SymbolExpressionT>(std::move(resultData));
+    return result;
+}
+
 template class SymbolExpression<int>;
 template class SymbolExpression<double>;
 }}
