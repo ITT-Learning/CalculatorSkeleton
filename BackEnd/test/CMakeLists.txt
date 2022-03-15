@@ -37,8 +37,8 @@ include_directories(
 # Some recommendations on NOT using file globbing to grab all cpp files.  So far, it seems
 # ok, so rolling with it until we get more experience.
 file(GLOB UNIT_TEST_SOURCES
-    ${CMAKE_SOURCE_DIR}/test/*.cpp
-    ${CMAKE_SOURCE_DIR}/src/*/test/*.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/*.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/../src/*/test/*.cpp
 )
 
 add_executable(${This} ${UNIT_TEST_SOURCES})

@@ -19,7 +19,7 @@ link_libraries(
     CalculatorExpressionParser
 )
 add_library(${LIBRARY_NAME} ${LIBRARY_SOURCES})
-add_executable(${PROJECT_NAME} ${LIBRARY_SOURCES})
+add_executable(${PROJECT_NAME}Console ${LIBRARY_SOURCES})
 
 
 target_include_directories(
@@ -30,7 +30,7 @@ target_include_directories(
     $<TARGET_PROPERTY:CalculatorExpressionParser,INCLUDE_DIRECTORIES>
 )
 target_include_directories(
-    ${PROJECT_NAME}
+    ${PROJECT_NAME}Console
     PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}/inc
     $<TARGET_PROPERTY:CalculatorExpression,INCLUDE_DIRECTORIES>
