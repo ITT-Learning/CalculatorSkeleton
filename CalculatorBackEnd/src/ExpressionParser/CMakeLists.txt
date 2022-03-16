@@ -1,5 +1,6 @@
 cmake_path(GET CMAKE_CURRENT_BINARY_DIR FILENAME lib_path)
 
+message("${PROJECT_NAME}")
 set(LIBRARY_NAME ${PROJECT_NAME}${lib_path})
 
 file(GLOB LIBRARY_SOURCES "src/*.cpp" "inc/*.h")
