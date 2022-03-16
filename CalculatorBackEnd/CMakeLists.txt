@@ -1,4 +1,4 @@
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
@@ -9,6 +9,7 @@ add_subdirectory(fetched-libraries/pistache)
 add_subdirectory(src/Expression)
 add_subdirectory(src/ExpressionParser)
 add_subdirectory(src/Application)
+add_subdirectory(src/HttpServer)
 add_subdirectory(test)
 
 enable_testing()

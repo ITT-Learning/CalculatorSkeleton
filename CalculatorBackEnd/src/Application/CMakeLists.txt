@@ -10,6 +10,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIBRARY_NAME}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIBRARY_NAME}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIBRARY_NAME}/bin)
 
+add_custom_target(genexdebug3 COMMAND ${CMAKE_COMMAND} -E echo "CalculatorExpression include directories: $<TARGET_PROPERTY:CalculatorExpression,INCLUDE_DIRECTORES>")
+add_custom_target(genexdebug4 COMMAND ${CMAKE_COMMAND} -E echo "CalculatorExpressionParser include directories: $<TARGET_PROPERTY:CalculatorExpressionParser,INCLUDE_DIRECTORES>")
 include_directories(inc
     $<TARGET_PROPERTY:CalculatorExpression,INCLUDE_DIRECTORIES>
     $<TARGET_PROPERTY:CalculatorExpressionParser,INCLUDE_DIRECTORIES>
