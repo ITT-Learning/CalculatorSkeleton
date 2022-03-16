@@ -11,7 +11,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIBRARY_NAME}/bin)
 include_directories(inc
 )
 
-add_library(${LIBRARY_NAME} ${LIBRARY_SOURCES})
+add_library(${LIBRARY_NAME} STATIC ${LIBRARY_SOURCES})
 add_executable(${PROJECT_NAME}Server ${LIBRARY_SOURCES})
 
 target_include_directories(
@@ -25,5 +25,5 @@ target_include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/inc
 )
 
-target_link_libraries(${LIBRARY_NAME} pistache)
-target_link_libraries(${PROJECT_NAME}Server pistache)
+target_link_libraries(${LIBRARY_NAME} pistache_static)
+target_link_libraries(${PROJECT_NAME}Server pistache_static)

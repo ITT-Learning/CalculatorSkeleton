@@ -1,6 +1,5 @@
 cmake_path(GET CMAKE_CURRENT_BINARY_DIR FILENAME lib_path)
 
-message("${PROJECT_NAME}")
 set(LIBRARY_NAME ${PROJECT_NAME}${lib_path})
 
 file(GLOB LIBRARY_SOURCES "src/*.cpp" "inc/*.h")
@@ -14,7 +13,7 @@ include_directories(inc
     $<TARGET_PROPERTY:CalculatorExpression,INCLUDE_DIRECTORIES>
 )
 
-add_library(${LIBRARY_NAME} ${LIBRARY_SOURCES})
+add_library(${LIBRARY_NAME} STATIC ${LIBRARY_SOURCES})
 
 target_include_directories(
     ${LIBRARY_NAME}

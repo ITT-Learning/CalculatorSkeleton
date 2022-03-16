@@ -2,7 +2,7 @@ cmake_path(GET CMAKE_CURRENT_BINARY_DIR FILENAME lib_path)
 
 set(LIBRARY_NAME ${PROJECT_NAME}${lib_path})
 
-file(GLOB LIBRARY_SOURCES "src/*.cpp" "inc/*.h")
+set(LIBRARY_SOURCES "src/ConsoleIo.cpp" "inc/ConsoleIo.h")
 
 
 # Set the output folder where your program will be created
@@ -18,8 +18,8 @@ link_libraries(
     CalculatorExpression
     CalculatorExpressionParser
 )
-add_library(${LIBRARY_NAME} ${LIBRARY_SOURCES})
-add_executable(${PROJECT_NAME}Console ${LIBRARY_SOURCES})
+add_library(${LIBRARY_NAME} STATIC ${LIBRARY_SOURCES})
+add_executable(${PROJECT_NAME}Console ${LIBRARY_SOURCES} "src/main.cpp")
 
 
 target_include_directories(
