@@ -7,3 +7,4 @@ CMakeCache.txt
 cmake_install.cmake
 lib
 CalculatorApplication/bin/CalculatorConsole
+.vscode

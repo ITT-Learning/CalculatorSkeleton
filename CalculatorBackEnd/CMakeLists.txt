@@ -3,6 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 find_package(Boost 1.66)
+find_package(nlohmann_json)
 
 add_subdirectory(fetched-libraries/flatbuffers)
 add_subdirectory(fetched-libraries/pistache)
