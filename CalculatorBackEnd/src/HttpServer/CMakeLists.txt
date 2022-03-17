@@ -10,8 +10,6 @@ target_include_directories(
     ${PROJECT_NAME}Server
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/inc
-    $<TARGET_PROPERTY:pistache,INTERFACE_INCLUDE_DIRECTORIES>
-    $<TARGET_PROPERTY:CalculatorExpression,INTERFACE_INCLUDE_DIRECTORIES>
 )
 target_link_libraries(${PROJECT_NAME}Server CalculatorExpression pistache_static)
 
@@ -20,7 +18,5 @@ target_include_directories(
     ${LIBRARY_NAME}
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/inc
-    $<TARGET_PROPERTY:pistache,INTERFACE_INCLUDE_DIRECTORIES>
-    $<TARGET_PROPERTY:CalculatorExpression,INTERFACE_INCLUDE_DIRECTORIES>
 )
 target_link_libraries(${LIBRARY_NAME} CalculatorExpression pistache_static)
