@@ -23,9 +23,9 @@ add_executable(${This} ${UNIT_TEST_SOURCES})
 target_include_directories(
     ${This}
     PUBLIC
-    $<TARGET_PROPERTY:CalculatorExpression,INCLUDE_DIRECTORIES>
-    $<TARGET_PROPERTY:CalculatorExpressionParser,INCLUDE_DIRECTORIES>
-    $<TARGET_PROPERTY:CalculatorApplication,INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:CalculatorExpression,INTERFACE_INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:CalculatorExpressionParser,INTERFACE_INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:CalculatorApplication,INTERFACE_INCLUDE_DIRECTORIES>
 )
 target_link_libraries(
     ${This}
