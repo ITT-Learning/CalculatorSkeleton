@@ -5,11 +5,12 @@
  * @brief header for a class that handles the HTTP requests for the server
  */
 ////////////////////////////////////////////////////////////////////////////////
+#ifndef HTTPREQUESTHANDLER_H
+#define HTTPREQUESTHANDLER_H
 
 #include <pistache/http.h>
 
-//#include "ExpressionSerializer.h"
-
+#include "ExpressionSerializer.h"
 
 namespace calculator { namespace httpserver
 {
@@ -36,3 +37,5 @@ constexpr const char *HttpRequestHandler::API_CALCULATE_PREFIX;
 constexpr const char *HttpRequestHandler::FILE_ROOT_DIRECTORY;
 
 }}
+
+#endif // #ifndef HTTPREQUESTHANDLER_H

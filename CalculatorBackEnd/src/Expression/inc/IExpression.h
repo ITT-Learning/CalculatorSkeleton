@@ -7,8 +7,8 @@
  */
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef EXPRESSIONINTERFACE_H
-#define EXPRESSIONINTERFACE_H
+#ifndef IEXPRESSION_H
+#define IEXPRESSION_H
 
 #include <memory>
 #include <set>
@@ -76,4 +76,4 @@ class IExpression
 };
 }}
 
-#endif // #ifndef EXPRESSION_H
+#endif // #ifndef IEXPRESSION_H

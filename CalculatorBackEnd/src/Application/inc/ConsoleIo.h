@@ -1,3 +1,10 @@
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * @file ConsoleIo.h
+ * @date Thu March 17 2022
+ * @brief header for some static methods for handling calculator console I/O
+ */
+////////////////////////////////////////////////////////////////////////////////
 #ifndef CONSOLEIO_H
 #define CONSOLEIO_H
 
@@ -9,6 +16,10 @@
 
 namespace calculator {
 
+/**
+ * @brief class with some static methods for handling calculator console I/O
+ * @tparam T number type (int, double)
+ */
 template<typename T>
 class ConsoleIo
 {
