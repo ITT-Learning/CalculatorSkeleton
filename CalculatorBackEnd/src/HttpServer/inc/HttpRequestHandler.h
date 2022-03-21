@@ -11,6 +11,7 @@
 #include <mutex>
 
 #include <flatbuffers/idl.h>
+#include <nlohmann/json.hpp>
 #include <pistache/endpoint.h>
 #include <pistache/http.h>
 
@@ -26,7 +27,7 @@ class CalculatorEndPoint
         CalculatorEndPoint(Pistache::Address address, size_t threads = 4);
         void start();
     private:
-        using VariableAssignments = std::map<char, T>;
+        using VariableAssignments = std::map<char, nlohmann::json>;
 
         struct RoutingConstants
         {
@@ -70,8 +71,6 @@ class CalculatorEndPoint
         };
         static constexpr const char FILE_ROOT_DIRECTORY[] = "./dist";
 
-        nlohmann::json expressionToJson(std::size_t id, boost::optional<const VariableAssignments &> variableAssignments);
-
         // Not exactly sure why this endpoint is shared. It was shared in the Pistache example rest_server.cc, but it
         // didn't seem to actually have a handle anywhere outside of the enclosing endpoint class.
         std::shared_ptr<Pistache::Http::Endpoint> internalEndPoint_;
@@ -86,6 +85,13 @@ class CalculatorEndPoint
         Pistache::Rest::Route::Result handleApiList(const Pistache::Rest::Request &request, Pistache::Http::ResponseWriter response);
         Pistache::Rest::Route::Result handleApiCalculate(const Pistache::Rest::Request &request, Pistache::Http::ResponseWriter response);
         static Pistache::Rest::Route::Result handleFileResource(const Pistache::Rest::Request &request, Pistache::Http::ResponseWriter response);
+        
+        nlohmann::json expressionToJson(std::size_t id, boost::optional<const VariableAssignments &> variableAssignments = boost::none);
+        static boost::optional<std::string> validateStoreRequest(const std::string &request);
+        static bool validateListRequest(const std::string &request);
+        static boost::optional<std::pair<std::size_t, VariableAssignments>> validateCalculateRequest(const std::string &request);
+        static bool validateCommon(const nlohmann::json &request);
+        static bool jsonIsT(const nlohmann::json &jsonValue);
 };
 template<typename T>
 constexpr const char CalculatorEndPoint<T>::RoutingConstants::ROUTE_LIST[];
