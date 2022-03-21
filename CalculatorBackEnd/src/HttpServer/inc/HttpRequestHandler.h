@@ -10,6 +10,7 @@
 
 #include <mutex>
 
+#include <flatbuffers/idl.h>
 #include <pistache/endpoint.h>
 #include <pistache/http.h>
 
@@ -25,6 +26,8 @@ class CalculatorEndPoint
         CalculatorEndPoint(Pistache::Address address, size_t threads = 4);
         void start();
     private:
+        using VariableAssignments = std::map<char, T>;
+
         struct RoutingConstants
         {
             static constexpr const char ROUTE_LIST[] = "/calculator/list";
@@ -48,13 +51,16 @@ class CalculatorEndPoint
             };
             struct DataKeys
             {
-                static constexpr const char STRING[] = "string";
-                static constexpr const char ID[] = "id";
-                static constexpr const char VALUE[] = "value";
-                static constexpr const char VALUES[] = "values";
-                static constexpr const char EXPRESSIONSTRING[] = "expressionString";
+                struct ExpressionKeys
+                {
+                    static constexpr const char ID[] = "id";
+                    static constexpr const char STRING[] = "string";
+                    static constexpr const char VALUE[] = "value";
+                    static constexpr const char VARIABLES[] = "variables";
+                };
+                static constexpr const char EXPRESSION[] = "expression";
+                static constexpr const char EXPRESSIONS[] = "expressions";
                 static constexpr const char SUCCESSFUL[] = "successful";
-                static constexpr const char STOREDEXPRESSIONS[] = "storedExpressions";
             };
             static constexpr const char REQUESTTYPE_KEY[] = "requestType";
             static constexpr const char REQUESTDATA_KEY[] = "requestData";
@@ -63,6 +69,8 @@ class CalculatorEndPoint
             static constexpr const char RESPONSEDATA_KEY[] = "responseData";
         };
         static constexpr const char FILE_ROOT_DIRECTORY[] = "./dist";
+
+        nlohmann::json expressionToJson(std::size_t id, boost::optional<const VariableAssignments &> variableAssignments);
 
         // Not exactly sure why this endpoint is shared. It was shared in the Pistache example rest_server.cc, but it
         // didn't seem to actually have a handle anywhere outside of the enclosing endpoint class.
@@ -98,19 +106,19 @@ constexpr const char CalculatorEndPoint<T>::JsonConstants::ResponseTypes::LIST[]
 template<typename T>
 constexpr const char CalculatorEndPoint<T>::JsonConstants::ResponseTypes::CALCULATE[];
 template<typename T>
-constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::STRING[];
+constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::ExpressionKeys::ID[];
 template<typename T>
-constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::ID[];
+constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::ExpressionKeys::STRING[];
 template<typename T>
-constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::VALUE[];
+constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::ExpressionKeys::VALUE[];
 template<typename T>
-constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::VALUES[];
+constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::ExpressionKeys::VARIABLES[];
 template<typename T>
-constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::EXPRESSIONSTRING[];
+constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::EXPRESSION[];
+template<typename T>
+constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::EXPRESSIONS[];
 template<typename T>
 constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::SUCCESSFUL[];
-template<typename T>
-constexpr const char CalculatorEndPoint<T>::JsonConstants::DataKeys::STOREDEXPRESSIONS[];
 template<typename T>
 constexpr const char CalculatorEndPoint<T>::JsonConstants::REQUESTTYPE_KEY[];
 template<typename T>

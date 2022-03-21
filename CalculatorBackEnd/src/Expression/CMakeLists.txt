@@ -17,23 +17,42 @@ set(LIBRARY_INCLUDES
     "inc/ValueExpression.h"
 )
 
+add_library(${LIBRARY_NAME} STATIC)
+
+set(FLATBUFFER_OUTPUT_SCHEMA_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/flatbuffers")
+file(MAKE_DIRECTORY "${FLATBUFFER_OUTPUT_SCHEMA_DIRECTORY}")
 file(GLOB FLATBUFFER_SCHEMAS "flatbuffers/*.fbs")
 foreach(FLATBUFFER_SCHEMA ${FLATBUFFER_SCHEMAS})
-    set(FLATBUFFER_NAME ${FLATBUFFER_SCHEMA})
+    cmake_path(GET FLATBUFFER_SCHEMA FILENAME FLATBUFFER_SCHEMA_FILENAME)
+    set(FLATBUFFER_NAME ${FLATBUFFER_SCHEMA_FILENAME})
     cmake_path(REMOVE_EXTENSION FLATBUFFER_NAME)
     set(FLATBUFFER_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/inc/${FLATBUFFER_NAME}_generated.h")
+    set(FLATBUFFER_OUTPUT_SCHEMA "${FLATBUFFER_OUTPUT_SCHEMA_DIRECTORY}/${FLATBUFFER_SCHEMA_FILENAME}")
     # even though we're just generating a header file, in order for CMake to know that it should generate these files,
-    # the files need to be used as a dependency for a target, so they're added to LIBRARY_SOURCES here.
-    list(APPEND LIBRARY_FLATBUFFERS ${FLATBUFFER_HEADER})
+    # the files need to be used as a dependency for a target, so they're added to LIBRARY_FLATBUFFERS here.
+    list(APPEND LIBRARY_FLATBUFFER_HEADERS ${FLATBUFFER_HEADER})
     add_custom_command(OUTPUT ${FLATBUFFER_HEADER}
         COMMAND ${FlatBuffers_BINARY_DIR}/flatc
         ARGS --cpp --gen-object-api -o "${CMAKE_CURRENT_SOURCE_DIR}/inc/" "${FLATBUFFER_SCHEMA}"
-        DEPENDS ${FLATBUFFER_SCHEMA} flatc
+        DEPENDS "${FLATBUFFER_SCHEMA}" flatc
         COMMENT "Compiling flatbuffer schema: ${FLATBUFFER_SCHEMA}"
     )
+    add_custom_command(OUTPUT ${FLATBUFFER_OUTPUT_SCHEMA}
+        COMMAND /usr/bin/cp
+        ARGS "${FLATBUFFER_SCHEMA}" "${FLATBUFFER_OUTPUT_SCHEMA}"
+        DEPENDS ${FLATBUFFER_SCHEMA}
+        COMMENT "Copying flatbuffer schema: ${FLATBUFFER_SCHEMA}"
+    )
+    add_custom_target(${FLATBUFFER_SCHEMA_FILENAME} DEPENDS ${FLATBUFFER_OUTPUT_SCHEMA})
+    add_dependencies(${LIBRARY_NAME} ${FLATBUFFER_SCHEMA_FILENAME})
 endforeach()
 
-add_library(${LIBRARY_NAME} STATIC ${LIBRARY_SOURCES} ${LIBRARY_INCLUDES} ${LIBRARY_FLATBUFFERS})
+target_sources(${LIBRARY_NAME}
+    PRIVATE
+    ${LIBRARY_SOURCES}
+    ${LIBRARY_INCLUDES}
+    ${LIBRARY_FLATBUFFERS}
+)
 target_include_directories(
     ${LIBRARY_NAME}
     PUBLIC

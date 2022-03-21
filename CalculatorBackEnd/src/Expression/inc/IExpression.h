@@ -73,6 +73,14 @@ class IExpression
          * @return flatbuffer::ExpressionUnion the flat buffer object representing this expression
          */
         virtual flatbuffer::ExpressionUnion toFlatBufferObject() const = 0;
+
+        /**
+         * @brief helper to convert expressions to strings that will also remove opening and closing parentheses in the
+         * case of the root expression being an operator
+         * @param [in] expression expression from which to convert
+         * @return std::string string conversion
+         */
+        static std::string toString(const IExpression<T> &expression);
 };
 }}
 

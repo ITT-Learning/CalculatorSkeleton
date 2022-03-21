@@ -74,7 +74,7 @@ void ConsoleIo<T>::handleEvaluateExpressionInput(const std::vector<typename expr
         auto currentExpression = expression::ExpressionSerializer<T>::deserialize(savedExpressions[i]);
         if(nullptr != currentExpression)
         {
-            std::cout << std::to_string(i + 1) << ". " << currentExpression->toString() << std::endl;
+            std::cout << std::to_string(i + 1) << ". " << calculator::expression::IExpression<T>::toString(*currentExpression) << std::endl;
         }
     }
     std::cout << "Pick an expression above to evaluate:" << std::endl;

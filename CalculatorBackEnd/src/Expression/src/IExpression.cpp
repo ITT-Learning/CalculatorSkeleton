@@ -19,6 +19,17 @@ namespace calculator { namespace expression
 template<typename T>
 IExpression<T>::~IExpression() = default;
 
+template<typename T>
+std::string IExpression<T>::toString(const IExpression<T> &expression)
+{
+    std::string result = expression.toString();
+    if(result[0] == '(' && result[result.length() - 1] == ')')
+    {
+        result = result.substr(1, result.length() - 2);
+    }
+    return result;
+}
+
 template class IExpression<int>;
 template class IExpression<double>;
 }}
