@@ -250,18 +250,6 @@ boost::optional<std::string> CalculatorEndPoint<T>::validateStoreRequest(const s
 {
     boost::optional<std::string> result{boost::none};
     nlohmann::json requestJson = nlohmann::json::parse(request, nullptr, false);
-    /*
-        {
-            "requestType": "storeRequest",
-            "requestData": 
-            {
-                "expression":
-                {
-                    "string": "12 * (x + 4)"
-                }
-            }
-        }
-    */
     if(validateCommon(requestJson) &&
             requestJson[JsonConstants::REQUESTTYPE_KEY] == JsonConstants::RequestTypes::STORE &&
             requestJson[JsonConstants::REQUESTDATA_KEY].contains(JsonConstants::DataKeys::EXPRESSION) &&
