@@ -3,10 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SaveExpressionComponent } from './save-expression/save-expression.component';
+import { ExpressionListComponent } from './expression-list/expression-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SaveExpressionComponent,
+    ExpressionListComponent
   ],
   imports: [
     BrowserModule,

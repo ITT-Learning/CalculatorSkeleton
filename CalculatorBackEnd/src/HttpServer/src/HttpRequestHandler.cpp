@@ -101,7 +101,7 @@ Pistache::Rest::Route::Result CalculatorEndPoint<T>::handleApiList(const Pistach
         {JsonConstants::RESPONSETYPE_KEY, JsonConstants::ResponseTypes::LIST},
         {JsonConstants::RESPONSEDATA_KEY,
         {
-            {JsonConstants::DataKeys::EXPRESSION, nullptr}
+            {JsonConstants::DataKeys::EXPRESSIONS, []}
         }}
     };
     bool validatedListRequest = validateListRequest(request.body());
