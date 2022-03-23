@@ -1,1 +1,13 @@
-<p>expression-list works!</p>
+<div class="expression-list-div" *ngIf="0 < expressions.length">
+    <div *ngFor="let expression of expressions">
+        <div>
+
+        </div>
+        <div>
+
+        </div>
+        <div>
+            <button type="button" class="calculate" (click)="calculate(expression)">Calculate</button>
+        </div>
+    </div>
+</div>
