@@ -1,1 +1,6 @@
-<p>save-expression works!</p>
+<div id="save-expression-div">
+    <h1>Save a new equation</h1>
+    <label for="newEquationString">New Equation: </label>
+    <input type="text" id="newEquationString" [(ngModel)]="newEquationInput" />
+    <button type="button" id="saveNewEquationButton" (click)="onClickSaveNewEquation()">Save</button>
+</div>

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { Equation, Reference } from '../equation';
+import { EquationService } from '../equation.service';
 
 @Component({
   selector: 'app-save-expression',
@@ -7,9 +10,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SaveExpressionComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  equations: Reference<Equation[]>;
+
+  newEquationInput: string;
+
+  constructor(private equationService: EquationService) {
+    this.equations = { value: [] };
+    this.newEquationInput = '';
+  }
 
   ngOnInit(): void {
   }
 
+  onClickSaveNewEquation(): void {
+    this.equationService.storeEquation(this.newEquationInput).subscribe(
+      newEquation => {
+        if(null != newEquation) {
+          this.equations.value.push(newEquation);
+        }
+      }
+    );
+  }
 }

@@ -1,7 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
 import { Equation } from '../equation';
 import { EquationService } from '../equation.service';
+import { Reference } from '../reference';
 
 @Component({
   selector: 'app-expression-list',
@@ -10,16 +12,24 @@ import { EquationService } from '../equation.service';
 })
 export class ExpressionListComponent implements OnInit {
 
-  expressions: Equation[];
+  @Input()
+  equations: Reference<Equation[]>;
+
+  @Input()
+  lastCalculation: Reference<Equation | null>;
 
   constructor(private equationService: EquationService) {
-    this.expressions = [];
+    this.equations = { value: [] };
+    this.lastCalculation = { value: null };
   }
 
   ngOnInit(): void {
-    this.equationService.getEquations().subscribe(
-      equations => { this.expressions = equations; }
-    )
   }
 
+  onClickCalculate(equation: Equation): void {
+    if(null != equation.id && null != equation.variables)
+    {
+      this.equationService.calculateEquation(equation.id, equation.variables);
+    }
+  }
 }

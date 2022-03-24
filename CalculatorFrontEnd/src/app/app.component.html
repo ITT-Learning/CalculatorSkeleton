@@ -1,5 +1,5 @@
 <div class="app-div">
-  <save-expression></save-expression>
-  <expression-list></expression-list>
-  <last-calculation></last-calculation>
+  <save-expression [equations]="equations"></save-expression>
+  <expression-list [equations]="equations" [lastCalculation]="lastCalculation"></expression-list>
+  <last-calculation [lastCalculation]="lastCalculation"></last-calculation>
 </div>

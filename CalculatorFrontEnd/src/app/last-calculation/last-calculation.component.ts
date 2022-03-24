@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Equation } from '../equation';
+import { Reference } from '../reference';
 
 @Component({
   selector: 'app-last-calculation',
@@ -9,10 +10,11 @@ import { Equation } from '../equation';
 })
 export class LastCalculationComponent implements OnInit {
 
-  lastCalculation: Equation | null;
+  @Input()
+  lastCalculation: Reference<Equation | null>;
 
   constructor() {
-    this.lastCalculation = null;
+    this.lastCalculation = { value: null };
   }
 
   ngOnInit(): void {

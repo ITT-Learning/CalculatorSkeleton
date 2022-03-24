@@ -1,13 +1,14 @@
-<div class="expression-list-div" *ngIf="0 < expressions.length">
-    <div *ngFor="let expression of expressions">
+<div class="expression-list-div" *ngIf="0 < equations.value.length">
+    <div *ngFor="let equation of equations.value">
         <div>
-
+            <p>{{equation.asString}}</p>
+        </div>
+        <div *ngFor="let equationVariable of equation.variables">
+            <p>{{equationVariable.variable}} = </p>
+            <input [(ngModel)]="equationVariable.value" />
         </div>
         <div>
-
-        </div>
-        <div>
-            <button type="button" class="calculate" (click)="calculate(expression)">Calculate</button>
+            <button type="button" class="calculate" (click)="onClickCalculate(equation)">Calculate</button>
         </div>
     </div>
 </div>

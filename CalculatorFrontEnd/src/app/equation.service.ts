@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { Equation } from './equation';
+import { Equation, EquationVariable } from './equation';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class EquationService {
     return this.http.post<Equation>(this.storeUrl, toPost);
   }
 
-  calculateEquation(id: number, variables: Map<string, number>): Observable<Equation> {
+  calculateEquation(id: number, variables: EquationVariable[]): Observable<Equation> {
     var toPost = { id: id, asString: null, value: null, variables: variables };
     return this.http.post<Equation>(this.calculateUrl, toPost);
   }
