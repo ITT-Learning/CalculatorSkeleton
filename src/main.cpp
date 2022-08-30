@@ -8,8 +8,9 @@
 
 #include "Calculator.h"
 
-int main() 
+int main(int argc, char* argv[]) 
 {
-    // Fill in or change code here as necessary.  See also Calculator.cpp
-    std::cout << "Welcome to the Calculator C++ learning project." << std::endl;
-}
+    
+
+    return 0;
+};
