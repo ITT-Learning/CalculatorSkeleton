@@ -3,7 +3,7 @@
 
 #include "IMathOperation.h"
 
-class Constant : IMathOperation
+class Constant : public IMathOperation
 {
     private:
         double m_value;

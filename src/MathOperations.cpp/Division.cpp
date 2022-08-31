@@ -6,6 +6,12 @@ Division::Division(IMathOperation* p_lhs, IMathOperation* p_rhs)
     rhs = p_rhs;
 };
 
+Division::~Division()
+{
+    delete lhs;
+    delete rhs;
+}
+
 double Division::calculate()
 {
     double rhsResult = rhs->calculate();

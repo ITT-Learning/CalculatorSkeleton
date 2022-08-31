@@ -3,7 +3,7 @@
 
 #include "IMathOperation.h"
 
-class Division : IMathOperation
+class Division : public IMathOperation
 {
     private:
         IMathOperation* lhs;
@@ -11,6 +11,7 @@ class Division : IMathOperation
 
     public:
         Division(IMathOperation* p_lhs, IMathOperation* p_rhs);
+        ~Division();
 
         virtual double calculate();
 };

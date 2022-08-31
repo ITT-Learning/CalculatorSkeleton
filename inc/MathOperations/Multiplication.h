@@ -3,7 +3,7 @@
 
 #include "IMathOperation.h"
 
-class Multiplication : IMathOperation
+class Multiplication : public IMathOperation
 {
     private:
         IMathOperation* lhs;
@@ -11,6 +11,7 @@ class Multiplication : IMathOperation
 
     public:
         Multiplication(IMathOperation* p_lhs, IMathOperation* p_rhs);
+        ~Multiplication();
 
         virtual double calculate();
 };
