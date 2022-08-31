@@ -8,4 +8,8 @@
 
 #include "Calculator.h"
 
-// Add Function definitions here.
+// Add method, returns sum of two numbers as double
+double Add(double a, double b)
+{
+	return a + b;
+}
