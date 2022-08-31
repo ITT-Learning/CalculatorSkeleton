@@ -42,7 +42,7 @@ file(GLOB UNIT_TEST_SOURCES
     "*.cpp"
 )
 
-add_executable(${This} ${UNIT_TEST_SOURCES})
+add_executable(${This} ${UNIT_TEST_SOURCES} "CalculatorFunctions_UnitTest.cpp")
 
 target_link_libraries(${This} PUBLIC	
     gtest_main
