@@ -19,3 +19,9 @@ double Subtract(double a, double b)
 {
 	return a - b;
 }
+
+// Multiply method, returns product of two numbers as double
+double Multiply(double a, double b)
+{
+	return a * b;
+}
