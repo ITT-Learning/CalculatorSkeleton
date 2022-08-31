@@ -13,3 +13,9 @@ double Add(double a, double b)
 {
 	return a + b;
 }
+
+// Subtract method, returns difference of two numbers as double
+double Subtract(double a, double b)
+{
+	return a - b;
+}
