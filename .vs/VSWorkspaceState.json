@@ -1,0 +1,16 @@
+{
+  "ActiveTargetSystem": "WSL: Ubuntu",
+  "MRUPresetsPerTargetSystem": {
+    "Local Machine": {
+      "configure": "x64-debug"
+    }
+  },
+  "ExpandedNodes": [
+    "",
+    "\\inc",
+    "\\src",
+    "\\test"
+  ],
+  "SelectedNode": "\\test\\mainGtest.cpp",
+  "PreviewInSolutionExplorer": false
+}
