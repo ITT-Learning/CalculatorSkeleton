@@ -72,7 +72,7 @@ namespace
 	}
 	
 	// Test Calculator class Divide function with zero as numerator
-	TEST(CalculatorTest, ZeroDivide)
+	TEST(CalculatorTest, DivideZero)
 	{
 		EXPECT_EQ(0, Divide(0, 2));
 	}
