@@ -37,25 +37,33 @@ IMathOperation* Calculator::extractOperation(std::stack<std::string> &postfixSta
     {
         case '+':
             postfixStack.pop();
+            if(postfixStack.empty()) throw "Missing operands";
             rhs = extractOperation(postfixStack);
+            if(postfixStack.empty()) throw "Missing operands";
             lhs = extractOperation(postfixStack);
             return new Addition(lhs, rhs);
 
         case '-':
             postfixStack.pop();
+            if(postfixStack.empty()) throw "Missing operands";
             rhs = extractOperation(postfixStack);
+            if(postfixStack.empty()) throw "Missing operands";
             lhs = extractOperation(postfixStack);
             return new Subtraction(lhs, rhs);
 
         case '*':
             postfixStack.pop();
+            if(postfixStack.empty()) throw "Missing operands";
             rhs = extractOperation(postfixStack);
+            if(postfixStack.empty()) throw "Missing operands";
             lhs = extractOperation(postfixStack);
             return new Multiplication(lhs, rhs);
 
         case '/':
             postfixStack.pop();
+            if(postfixStack.empty()) throw "Missing operands";
             rhs = extractOperation(postfixStack);
+            if(postfixStack.empty()) throw "Missing operands";
             lhs = extractOperation(postfixStack);
             return new Division(lhs, rhs);
         
@@ -75,7 +83,7 @@ IMathOperation* Calculator::extractOperation(std::stack<std::string> &postfixSta
             return new Constant(value);
         
         default:
-            return new Constant(0);
+            throw "Invalid equation format";
     }
 };
 
@@ -138,8 +146,12 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
                     {
                         outputStack.push(std::string(1, operatorStack.top()));
                         operatorStack.pop();
+                        if(operatorStack.empty())
+                            throw "Too many closing parentheses";
                     }
                 }
+                if(operatorStack.empty())
+                    throw "Too many closing parentheses";
                 operatorStack.pop();
                 break;
         }
@@ -147,6 +159,8 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
 
     while(!operatorStack.empty())
     {
+        if(operatorStack.top() == '(')
+            throw "Missing closing paretheses";
         outputStack.push(std::string(1, operatorStack.top()));
         operatorStack.pop();
     }

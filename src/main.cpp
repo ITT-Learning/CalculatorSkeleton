@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <math.h>
+#include <ncurses.h>
 
 int findPrecisionFor(int number, int decimalDigits = 4)
 {
@@ -43,7 +44,7 @@ void repl()
         std::string equation;
         std::cout << "> ";
         getline(std::cin, equation);
-        if(equation.substr(0, 4) == "quit")
+        if(equation.substr(0, 4) == "quit" || equation.substr(0,4) == "exit")
             break;
         if(equation.substr(0,4) == "help")
             showHelpText();
@@ -58,16 +59,37 @@ void repl()
             std::cout << "\nNo valid command or equation found.\n\n";
             continue;
         }
-        double result = Calculator::calculate(equation);
-        std::cout.precision(findPrecisionFor(result));
-        std::cout << "= " << result << "\n\n";
-        history.addEntry(equation, result);
+        try
+        {
+            double result = Calculator::calculate(equation);
+            std::cout.precision(findPrecisionFor(result));
+            std::cout << "= " << result << "\n\n";
+            history.addEntry(equation, result);
+        }
+        catch(const char* message)
+        {
+            std::cout << "\nError: " << message << "\n\n";
+        }
     }
+};
+
+void initNcurses()
+{
+    initscr();
+    noecho();
+    keypad(stdscr, true);
+};
+
+void endNcurses()
+{
+    endwin();
 };
 
 int main(int argc, char* argv[]) 
 {
+    initNcurses();
     showHelpText();
-    repl();
+    try { repl(); } catch(...) { /* intentionally empty */ }
+    endNcurses();
     return 0;
 };

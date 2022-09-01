@@ -39,7 +39,7 @@ std::ostream& operator << (std::ostream& sout, CalcHistory& calcHistory)
 {
     for(std::vector<CalcHistoryPair>::iterator it = calcHistory.entries.begin(); it != calcHistory.entries.end(); it++)
     {
-        sout << *it;
+        sout << "  " << *it;
         if(it != calcHistory.entries.end())
             sout << "\n";
     }
