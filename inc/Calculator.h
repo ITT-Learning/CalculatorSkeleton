@@ -23,10 +23,10 @@ class Calculator
         static double parseNumber(std::string);
         static IMathOperation* extractOperation(std::stack<std::string>&);
         static std::stack<std::string> infixToPostfix(std::string);
-        static std::string compactString(std::string);
 
     public:
         static double calculate(std::string);
+        static std::string sanitizeString(std::string);
 };
 
 #endif

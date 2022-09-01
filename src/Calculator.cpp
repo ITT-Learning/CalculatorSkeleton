@@ -19,7 +19,6 @@ IMathOperation* extractOperation(std::stack<std::string>);
 
 double Calculator::calculate(std::string operationString)
 {
-    operationString = compactString(operationString);
     if(operationString.empty())
         return 0;
     std::stack<std::string> postfixStack = infixToPostfix(operationString);
@@ -191,7 +190,7 @@ double Calculator::parseNumber(std::string str)
     return result;
 };
 
-std::string Calculator::compactString(std::string str)
+std::string Calculator::sanitizeString(std::string str)
 {
     std::string compactString = "";
     for(int i = 0; i < str.length(); i++)
