@@ -15,9 +15,13 @@
 #include <cctype>
 #include <stack>
 
+IMathOperation* extractOperation(std::stack<std::string>);
+
 double Calculator::calculate(std::string operationString)
 {
     operationString = compactString(operationString);
+    if(operationString.empty())
+        return 0;
     std::stack<std::string> postfixStack = infixToPostfix(operationString);
     IMathOperation* topLevelOperation = extractOperation(postfixStack);
     double result = topLevelOperation->calculate();
@@ -25,32 +29,35 @@ double Calculator::calculate(std::string operationString)
     return result;
 };
 
-IMathOperation* extractOperation(std::stack<std::string> postfixStack)
+IMathOperation* Calculator::extractOperation(std::stack<std::string> &postfixStack)
 {
+    IMathOperation* lhs;
+    IMathOperation* rhs;
+    double value;
     switch(postfixStack.top()[0])
     {
         case '+':
             postfixStack.pop();
-            IMathOperation* rhs = extractOperation(postfixStack);
-            IMathOperation* lhs = extractOperation(postfixStack);
+            rhs = extractOperation(postfixStack);
+            lhs = extractOperation(postfixStack);
             return new Addition(lhs, rhs);
 
         case '-':
             postfixStack.pop();
-            IMathOperation* rhs = extractOperation(postfixStack);
-            IMathOperation* lhs = extractOperation(postfixStack);
+            rhs = extractOperation(postfixStack);
+            lhs = extractOperation(postfixStack);
             return new Subtraction(lhs, rhs);
 
         case '*':
             postfixStack.pop();
-            IMathOperation* rhs = extractOperation(postfixStack);
-            IMathOperation* lhs = extractOperation(postfixStack);
+            rhs = extractOperation(postfixStack);
+            lhs = extractOperation(postfixStack);
             return new Multiplication(lhs, rhs);
 
         case '/':
             postfixStack.pop();
-            IMathOperation* rhs = extractOperation(postfixStack);
-            IMathOperation* lhs = extractOperation(postfixStack);
+            rhs = extractOperation(postfixStack);
+            lhs = extractOperation(postfixStack);
             return new Division(lhs, rhs);
         
         case '0':
@@ -64,8 +71,12 @@ IMathOperation* extractOperation(std::stack<std::string> postfixStack)
         case '8':
         case '9':
         case '.':
-            double constValue = stod(postfixStack.top());
-            return new Constant(constValue);
+            value = stod(postfixStack.top());
+            postfixStack.pop();
+            return new Constant(value);
+        
+        default:
+            return new Constant(0);
     }
 };
 
@@ -91,14 +102,15 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
             case '9':
             case '.':
                 readNumber = "";
-                while(isdigit(infixString[i]) || infixString[i] == '.')
+                while(i < infixString.length() && (isdigit(infixString[i]) || infixString[i] == '.'))
                     readNumber += infixString[i++];
+                i--;
                 outputStack.push(readNumber);
                 break;
 
             case '+':
             case '-':
-                while(operatorStack.top() != '(')
+                while(!operatorStack.empty() && operatorStack.top() != '(')
                 {
                     outputStack.push(std::string(1, operatorStack.top()));
                     operatorStack.pop();
@@ -108,7 +120,7 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
 
             case '*':
             case '/':
-                while(operatorStack.top() == '*' || operatorStack.top() == '/')
+                while(!operatorStack.empty() && (operatorStack.top() == '*' || operatorStack.top() == '/'))
                 {
                     outputStack.push(std::string(1, operatorStack.top()));
                     operatorStack.pop();
@@ -121,10 +133,13 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
                 break;
             
             case ')':
-                while(operatorStack.top() != '(')
+                if(!operatorStack.empty())
                 {
-                    outputStack.push(std::string(1, operatorStack.top()));
-                    operatorStack.pop();
+                    while(operatorStack.top() != '(')
+                    {
+                        outputStack.push(std::string(1, operatorStack.top()));
+                        operatorStack.pop();
+                    }
                 }
                 operatorStack.pop();
                 break;
@@ -136,6 +151,7 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
         outputStack.push(std::string(1, operatorStack.top()));
         operatorStack.pop();
     }
+    return outputStack;
 };
 
 double Calculator::parseNumber(std::string str)
@@ -175,46 +191,12 @@ double Calculator::parseNumber(std::string str)
     return result;
 };
 
-std::string stringStart(std::string str, int bound)
-{
-    return str.substr(0, bound);
-};
-
-std::string stringEnd(std::string str, int bound)
-{
-    return str.substr(bound, str.length() - bound);
-};
-
-double Calculator::extractLhs(std::string lhsString)
-{
-    int lhsStart;
-    for(lhsStart = lhsString.length();
-        lhsStart > 0 && (std::isdigit(lhsString[lhsStart]) || lhsString[lhsStart] == '.');
-        --lhsStart);
-    
-    std::string lhsString = stringEnd(lhsString, lhsStart);
-    return parseNumber(lhsString);
-};
-
-double Calculator::extractRhs(std::string rhsString)
-{
-    int rhsEnd;
-    for(rhsEnd = 0;
-        rhsEnd < rhsString.length() && (std::isdigit(rhsString[rhsEnd]) || rhsString[rhsEnd] == '.');
-        ++rhsEnd);
-    
-    std::string lhsString = stringStart(rhsString, rhsEnd);
-    return parseNumber(lhsString);
-};
-
 std::string Calculator::compactString(std::string str)
 {
     std::string compactString = "";
     for(int i = 0; i < str.length(); i++)
-        if(isgraph(str[i]))
+        if(isdigit(str[i]) || str[i] == '(' || str[i] == ')' || str[i] == '.' || str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/')
             compactString += str[i];
 
     return compactString;
 };
-
-// Add Function definitions here.

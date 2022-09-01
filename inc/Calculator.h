@@ -21,15 +21,8 @@ class Calculator
 
         static IMathOperation* parseString(std::string);
         static double parseNumber(std::string);
-
+        static IMathOperation* extractOperation(std::stack<std::string>&);
         static std::stack<std::string> infixToPostfix(std::string);
-
-        static std::string stringStart(std::string, int);
-        static std::string stringEnd(std::string, int);
-
-        static double extractLhs(std::string);
-        static double extractRhs(std::string);
-
         static std::string compactString(std::string);
 
     public:
