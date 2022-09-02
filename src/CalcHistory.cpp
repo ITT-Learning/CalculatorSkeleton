@@ -53,3 +53,13 @@ std::ostream& operator << (std::ostream& sout, const CalcHistory& calcHistory)
     }
     return sout;
 };
+
+std::vector<CalcHistoryPair>::iterator CalcHistory::newest()
+{
+    return entries.end();
+};
+
+std::vector<CalcHistoryPair>::iterator CalcHistory::oldest()
+{
+    return entries.begin();
+};

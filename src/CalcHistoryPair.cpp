@@ -11,3 +11,13 @@ std::ostream& operator << (std::ostream& sout, const CalcHistoryPair& chp)
     sout << chp.result << " = " << chp.equation;
     return sout;
 };
+
+std::string CalcHistoryPair::getEquation()
+{
+    return equation;
+};
+
+double CalcHistoryPair::getResult()
+{
+    return result;
+};

@@ -15,6 +15,8 @@ class CalcHistoryPair
     
     public:
         CalcHistoryPair(std::string, double);
+        std::string getEquation();
+        double getResult();
 };
 
 std::ostream& operator << (std::ostream&, const CalcHistoryPair&);

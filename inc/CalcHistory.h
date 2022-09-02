@@ -24,6 +24,9 @@ class CalcHistory
 
         void addEntry(std::string, double);
 
+        std::vector<CalcHistoryPair>::iterator oldest();
+        std::vector<CalcHistoryPair>::iterator newest();
+
 };
 
 std::ostream& operator << (std::ostream&, const CalcHistory&);
