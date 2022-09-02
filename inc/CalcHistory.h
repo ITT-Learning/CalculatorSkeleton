@@ -14,16 +14,18 @@ class CalcHistory
         static const std::string filePath;
         std::vector<CalcHistoryPair> entries;
 
-        friend std::ostream& operator << (std::ostream&, CalcHistory&);
+        friend std::ostream& operator << (std::ostream&, const CalcHistory&);
 
     public:
         CalcHistory();
         ~CalcHistory();
 
+        static std::string toString(const CalcHistory&);
+
         void addEntry(std::string, double);
 
 };
 
-std::ostream& operator << (std::ostream&, CalcHistory&);
+std::ostream& operator << (std::ostream&, const CalcHistory&);
 
 #endif

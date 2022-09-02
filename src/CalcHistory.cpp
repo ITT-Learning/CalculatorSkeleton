@@ -1,5 +1,6 @@
 #include "CalcHistory.h"
 #include <fstream>
+#include <sstream>
 
 const std::string CalcHistory::filePath = std::string(getenv("HOME")) + "/calc/history.txt";
 
@@ -35,12 +36,19 @@ void CalcHistory::addEntry(std::string equation, double result)
     entries.push_back(CalcHistoryPair(equation, result));
 };
 
-std::ostream& operator << (std::ostream& sout, CalcHistory& calcHistory)
+std::string CalcHistory::toString(const CalcHistory& history)
 {
-    for(std::vector<CalcHistoryPair>::iterator it = calcHistory.entries.begin(); it != calcHistory.entries.end(); it++)
+    std::ostringstream strStream;
+    strStream << history;
+    return strStream.str();
+};
+
+std::ostream& operator << (std::ostream& sout, const CalcHistory& calcHistory)
+{
+    for(std::vector<CalcHistoryPair>::const_iterator it = calcHistory.entries.cbegin(); it != calcHistory.entries.cend(); it++)
     {
-        sout << "  " << *it;
-        if(it != calcHistory.entries.end())
+        sout << *it;
+        if(it != calcHistory.entries.cend())
             sout << "\n";
     }
     return sout;

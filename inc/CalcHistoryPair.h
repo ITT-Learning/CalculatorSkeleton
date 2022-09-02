@@ -10,13 +10,13 @@ class CalcHistoryPair
         std::string equation;
         double result;
 
-        friend std::ostream& operator << (std::ostream&, CalcHistoryPair&);
+        friend std::ostream& operator << (std::ostream&, const CalcHistoryPair&);
 
     
     public:
         CalcHistoryPair(std::string, double);
 };
 
-std::ostream& operator << (std::ostream&, CalcHistoryPair&);
+std::ostream& operator << (std::ostream&, const CalcHistoryPair&);
 
 #endif

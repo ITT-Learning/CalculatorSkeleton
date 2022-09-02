@@ -6,7 +6,7 @@ CalcHistoryPair::CalcHistoryPair(std::string p_equation, double p_result)
     result = p_result;
 };
 
-std::ostream& operator << (std::ostream& sout, CalcHistoryPair& chp)
+std::ostream& operator << (std::ostream& sout, const CalcHistoryPair& chp)
 {
     sout << chp.result << " = " << chp.equation;
     return sout;
