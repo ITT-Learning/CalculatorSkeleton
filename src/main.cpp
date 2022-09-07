@@ -15,6 +15,8 @@
 #include <ncurses.h>
 #include <cctype>
 
+const int HISTORY_WINDOW_WIDTH = 25;
+
 int findPrecisionFor(int number, int decimalDigits = 4)
 {
     int baseLog = (int)log10(std::abs(number));
@@ -22,10 +24,33 @@ int findPrecisionFor(int number, int decimalDigits = 4)
     return effectiveLog;
 };
 
-void printHistory(const CalcHistory history, WINDOW* writeTo)
+void printHistory(CalcHistory& history, WINDOW* writeTo)
 {
-    wprintw(writeTo, "\n\n");
-    wprintw(writeTo, CalcHistory::toString(history).c_str());
+    int maxX = getmaxx(writeTo);
+    int maxY = getmaxy(writeTo);
+    CalcHistoryTraverser historyTraverser(&history);
+    int input = 0;
+    do
+    {
+
+        if(input == KEY_UP)
+            historyTraverser.previous();
+        if(input == KEY_DOWN)
+            historyTraverser.next();
+        wclear(writeTo);
+        std::vector<std::string> historyEntries = historyTraverser.getHistoryStringWithBounds(maxY - 2, 0, maxX, true);
+        for(std::vector<std::string>::iterator it = historyEntries.begin(); it != historyEntries.end(); it++)
+        {
+            wprintw(writeTo, it->c_str());
+            if(it->length() < maxX)
+                wprintw(writeTo, "\n");
+        }
+        wprintw(writeTo, "<Press enter to return>");
+        wrefresh(writeTo);
+        input = getch();
+    } while(input != '\n');
+    // wprintw(writeTo, "\n\n");
+    // wprintw(writeTo, CalcHistory::toString(history).c_str());
 };
 
 const char* helpText()
@@ -67,13 +92,13 @@ void drawInputLineTo(WINDOW* inputWin, std::string str)
 void drawHistoryWindow(CalcHistoryTraverser &historyTraverser, WINDOW* historyWin, int height)
 {
     wclear(historyWin);
-    std::vector<std::string> historyEntries = historyTraverser.getHistoryStringWithBounds((height - 1) / 2, (height - 1) / 2);
+    std::vector<std::string> historyEntries = historyTraverser.getHistoryStringWithBounds((height - 1) / 2, (height - 1) / 2, HISTORY_WINDOW_WIDTH, false);
     for(std::vector<std::string>::iterator it = historyEntries.begin(); it != historyEntries.end(); it++)
     {
         if(it == historyEntries.begin() + ((height - 1) / 2))
             wattron(historyWin, A_BOLD);
         wprintw(historyWin, it->c_str());
-        if(it->length() < 25)
+        if(it->length() < HISTORY_WINDOW_WIDTH)
             wprintw(historyWin, "\n");
         if(it == historyEntries.begin() + ((height - 1) / 2))
             wattroff(historyWin, A_BOLD);
@@ -92,10 +117,10 @@ void repl()
     WINDOW* historyWin;
     int maxX, maxY;
     getmaxyx(stdscr, maxY, maxX);
-    outputWin = newwin(maxY - 1, maxX - 25, 0, 0);
+    outputWin = newwin(maxY - 1, maxX - HISTORY_WINDOW_WIDTH, 0, 0);
     scrollok(outputWin, true);
-    inputWin = newwin(1, maxX - 25, maxY - 1, 0);
-    historyWin = newwin(maxY, 25, 0, maxX - 25);
+    inputWin = newwin(1, maxX - HISTORY_WINDOW_WIDTH, maxY - 1, 0);
+    historyWin = newwin(maxY, HISTORY_WINDOW_WIDTH, 0, maxX - HISTORY_WINDOW_WIDTH);
 
     wmove(outputWin, maxY - 8, 0);
     wprintw(outputWin, helpText());
@@ -145,7 +170,9 @@ void repl()
         }
         if(equation.substr(0, 7) == "history")
         {
-            printHistory(history, outputWin);
+            printHistory(history, stdscr);
+            wclear(stdscr);
+            // printHistory(history, outputWin);
             historyTraverser.reset();
             equation = "";
             continue;

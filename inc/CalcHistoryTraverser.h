@@ -21,7 +21,7 @@ class CalcHistoryTraverser
         void reset();
 
         void setCurrentInput(std::string);
-        std::vector<std::string> getHistoryStringWithBounds(int prevSize, int nextSize);
+        std::vector<std::string> getHistoryStringWithBounds(int prevSize, int nextSize, int width, bool withResult);
 };
 
 #endif
