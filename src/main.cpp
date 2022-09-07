@@ -139,12 +139,14 @@ void repl()
         if(equation.substr(0,4) == "help")
         {
             equation = "";
+            historyTraverser.reset();
             wprintw(outputWin, helpText());
             continue;
         }
         if(equation.substr(0, 7) == "history")
         {
             printHistory(history, outputWin);
+            historyTraverser.reset();
             equation = "";
             continue;
         }
