@@ -38,14 +38,10 @@ std::string addProcessedInputTo(char input, const std::string &baseString = "")
     std::string workingString = baseString;
     if(isdigit(input) || input == '.' || input == '+' || input == '-' || input == '*' || input == '/' || input == '(' || input ==')' || isalpha(input))
     {
-        // wprintw(writeTo, std::string(1, input).c_str());
-        // wrefresh(writeTo);
         workingString += input;
     }
     if(input == 7 && workingString.length() > 0)
     {
-        // wprintw(writeTo, "\b \b");
-        // wrefresh(writeTo);
         workingString = workingString.substr(0, workingString.length() - 1);
     }
     return workingString;
@@ -68,27 +64,50 @@ void drawInputLineTo(WINDOW* inputWin, std::string str)
     wrefresh(inputWin);
 };
 
+void drawHistoryWindow(CalcHistoryTraverser &historyTraverser, WINDOW* historyWin, int height)
+{
+    wclear(historyWin);
+    std::vector<std::string> historyEntries = historyTraverser.getHistoryStringWithBounds((height - 1) / 2, (height - 1) / 2);
+    for(std::vector<std::string>::iterator it = historyEntries.begin(); it != historyEntries.end(); it++)
+    {
+        if(it == historyEntries.begin() + ((height - 1) / 2))
+            wattron(historyWin, A_BOLD);
+        wprintw(historyWin, it->c_str());
+        if(it->length() < 25)
+            wprintw(historyWin, "\n");
+        if(it == historyEntries.begin() + ((height - 1) / 2))
+            wattroff(historyWin, A_BOLD);
+    }
+    wrefresh(historyWin);
+}
+
 void repl()
 {
     CalcHistory history;
     CalcHistoryTraverser historyTraverser(&history);
     std::string equation = "";
+
     WINDOW* outputWin;
     WINDOW* inputWin;
+    WINDOW* historyWin;
     int maxX, maxY;
     getmaxyx(stdscr, maxY, maxX);
-    outputWin = newwin(maxY - 1, maxX, 0, 0);
-    inputWin = newwin(1, maxX, maxY - 1, 0);
+    outputWin = newwin(maxY - 1, maxX - 25, 0, 0);
     scrollok(outputWin, true);
+    inputWin = newwin(1, maxX - 25, maxY - 1, 0);
+    historyWin = newwin(maxY, 25, 0, maxX - 25);
+
     wmove(outputWin, maxY - 8, 0);
     wprintw(outputWin, helpText());
     wscrl(outputWin, 1);
+
     while(true)
     {
         move(maxY, maxX + 2 + equation.length());
         wrefresh(stdscr);
 
         wrefresh(outputWin);
+        drawHistoryWindow(historyTraverser, historyWin, maxY);
         drawInputLineTo(inputWin, equation);
 
         char input;
@@ -96,6 +115,11 @@ void repl()
         {
             input = getch();
             equation = addProcessedInputTo(input, equation);
+            if(input != 3 && input != 2 && input != '\n')
+            {
+                historyTraverser.setCurrentInput(equation);
+                drawHistoryWindow(historyTraverser, historyWin, maxY);
+            }
             drawInputLineTo(inputWin, equation);
         } while (input != 3 && input != 2 && input != '\n');
 
@@ -109,10 +133,7 @@ void repl()
             equation = historyTraverser.next();
             continue;
         }
-        
-        // drawInputLineTo(inputWin, equation);
 
-        // equation = getSanitizedLine(equation, inputWin);
         if(equation.substr(0, 4) == "quit" || equation.substr(0,4) == "exit")
             break;
         if(equation.substr(0,4) == "help")
@@ -127,6 +148,7 @@ void repl()
             equation = "";
             continue;
         }
+
         equation = Calculator::sanitizeString(equation);
         if(equation.empty())
         {
