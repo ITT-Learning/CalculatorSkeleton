@@ -97,12 +97,12 @@ void drawHistoryWindow(CalcHistoryTraverser &historyTraverser, WINDOW* historyWi
     for(std::vector<std::string>::iterator it = historyEntries.begin(); it != historyEntries.end(); it++)
     {
         if(it == historyEntries.begin() + ((height - 1) / 2))
-            wattron(historyWin, A_BOLD);
+            wattron(historyWin, A_STANDOUT);
         wprintw(historyWin, it->c_str());
         if(it->length() < HISTORY_WINDOW_WIDTH)
             wprintw(historyWin, "\n");
         if(it == historyEntries.begin() + ((height - 1) / 2))
-            wattroff(historyWin, A_BOLD);
+            wattroff(historyWin, A_STANDOUT);
     }
     wrefresh(historyWin);
 }
@@ -200,9 +200,11 @@ void repl()
         }
         catch(const char* message)
         {
-            wprintw(outputWin, "\nError: ");
+            wattron(outputWin, A_BOLD);
+            wprintw(outputWin, "Error: ");
             wprintw(outputWin, message);
             wprintw(outputWin, "\n");
+            wattroff(outputWin, A_BOLD);
         }
     }
 };

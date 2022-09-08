@@ -30,6 +30,8 @@ double Calculator::calculate(std::string operationString)
 
 IMathOperation* Calculator::extractOperation(std::stack<std::string> &postfixStack)
 {
+    if(postfixStack.empty())
+        throw "Empty equation";
     IMathOperation* lhs;
     IMathOperation* rhs;
     double value;
@@ -108,6 +110,8 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
             case '8':
             case '9':
             case '.':
+                if(i > 0 && infixString[i - 1] == ')')
+                    throw "Missing operator after parenthesis";
                 readNumber = "";
                 while(i < infixString.length() && (isdigit(infixString[i]) || infixString[i] == '.'))
                     readNumber += infixString[i++];
@@ -136,6 +140,8 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
                 break;
 
             case '(':
+                if(i > 0 && (isdigit(infixString[i - 1]) || infixString[i - 1] == '.'))
+                    throw "Missing operator before parenthesis";
                 operatorStack.push('(');
                 break;
             
