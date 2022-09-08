@@ -27,6 +27,8 @@ class CalcHistory
         std::vector<CalcHistoryPair>::iterator oldest();
         std::vector<CalcHistoryPair>::iterator newest();
 
+        bool isEmpty();
+
 };
 
 std::ostream& operator << (std::ostream&, const CalcHistory&);

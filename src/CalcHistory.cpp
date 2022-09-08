@@ -63,3 +63,8 @@ std::vector<CalcHistoryPair>::iterator CalcHistory::oldest()
 {
     return entries.begin();
 };
+
+bool CalcHistory::isEmpty()
+{
+    return entries.empty();
+};

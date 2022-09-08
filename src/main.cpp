@@ -39,7 +39,7 @@ void printHistory(CalcHistory& history, WINDOW* writeTo)
         if(input == KEY_DOWN)
             historyTraverser.next();
         wclear(writeTo);
-        std::vector<std::string> historyEntries = historyTraverser.getHistoryStringWithBounds(maxY - 2, 0, maxX, true);
+        std::vector<std::string> historyEntries = historyTraverser.getHistoryStringWithBoundsAndResults(maxY - 2, 0, maxX);
         for(std::vector<std::string>::iterator it = historyEntries.begin(); it != historyEntries.end(); it++)
         {
             wprintw(writeTo, it->c_str());
@@ -72,14 +72,15 @@ std::string addProcessedInputTo(char input, const std::string &baseString = "")
     return workingString;
 };
 
-WINDOW* createBoxedWin(int height, int width, int starty, int startx)
-{
-    WINDOW* localWin;
-	localWin = newwin(height, width, starty, startx);
-	box(localWin, 0, 0);
-	wrefresh(localWin);
-	return localWin;
-};
+// REVIEW remove this?
+// WINDOW* createBoxedWin(int height, int width, int starty, int startx)
+// {
+//     WINDOW* localWin;
+// 	localWin = newwin(height, width, starty, startx);
+// 	box(localWin, 0, 0);
+// 	wrefresh(localWin);
+// 	return localWin;
+// };
 
 void drawInputLineTo(WINDOW* inputWin, std::string str)
 {
@@ -92,7 +93,7 @@ void drawInputLineTo(WINDOW* inputWin, std::string str)
 void drawHistoryWindow(CalcHistoryTraverser &historyTraverser, WINDOW* historyWin, int height)
 {
     wclear(historyWin);
-    std::vector<std::string> historyEntries = historyTraverser.getHistoryStringWithBounds((height - 1) / 2, (height - 1) / 2, HISTORY_WINDOW_WIDTH, false);
+    std::vector<std::string> historyEntries = historyTraverser.getHistoryStringWithBounds((height - 1) / 2, (height - 1) / 2, HISTORY_WINDOW_WIDTH);
     for(std::vector<std::string>::iterator it = historyEntries.begin(); it != historyEntries.end(); it++)
     {
         if(it == historyEntries.begin() + ((height - 1) / 2))
@@ -181,6 +182,7 @@ void repl()
         if(equation.empty())
         {
             wprintw(outputWin, "No valid command or equation found.\n");
+
             continue;
         }
         try
