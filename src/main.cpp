@@ -11,20 +11,28 @@
 #include "CalcHistoryTraverser.h"
 #include <iostream>
 #include <string>
-#include <math.h>
+// #include <math.h>
 #include <ncurses.h>
+#include <sstream>
 #include <cctype>
 
 const int HISTORY_WINDOW_WIDTH = 25;
 
-int findPrecisionFor(int number, int decimalDigits = 4)
-{
-    int baseLog = (int)log10(std::abs(number));
-    int effectiveLog = std::max(baseLog + 1 + decimalDigits, baseLog * - 1);
-    return effectiveLog;
-};
+// int findPrecisionFor(int number, int decimalDigits = 4)
+// {
+//     int baseLog = (int)log10(std::abs(number));
+//     int effectiveLog = std::max(baseLog + 1 + decimalDigits, baseLog * - 1);
+//     return effectiveLog;
+// };
 
-//TODO save history before this
+// std::string doubleToString(double number)
+// {
+//     std::stringstream ss;
+//     ss.precision(findPrecisionFor(number));
+//     ss << number;
+//     return ss.str();
+// };
+
 void printHistory(CalcHistory& history, WINDOW* writeTo)
 {
     int maxX = getmaxx(writeTo);
@@ -72,16 +80,6 @@ std::string addProcessedInputTo(char input, const std::string &baseString = "")
     return workingString;
 };
 
-// REVIEW remove this?
-// WINDOW* createBoxedWin(int height, int width, int starty, int startx)
-// {
-//     WINDOW* localWin;
-// 	localWin = newwin(height, width, starty, startx);
-// 	box(localWin, 0, 0);
-// 	wrefresh(localWin);
-// 	return localWin;
-// };
-
 void drawInputLineTo(WINDOW* inputWin, std::string str)
 {
     wclear(inputWin);
@@ -98,9 +96,10 @@ void drawHistoryWindow(CalcHistoryTraverser &historyTraverser, WINDOW* historyWi
     {
         if(it == historyEntries.begin() + ((height - 1) / 2))
             wattron(historyWin, A_STANDOUT);
-        wprintw(historyWin, it->c_str());
-        if(it->length() < HISTORY_WINDOW_WIDTH)
-            wprintw(historyWin, "\n");
+        std::string lineOutput = *it;
+        if(lineOutput.length() < HISTORY_WINDOW_WIDTH)
+            lineOutput += std::string(HISTORY_WINDOW_WIDTH - lineOutput.length(), ' ');
+        wprintw(historyWin, lineOutput.c_str());
         if(it == historyEntries.begin() + ((height - 1) / 2))
             wattroff(historyWin, A_STANDOUT);
     }
@@ -183,14 +182,13 @@ void repl()
         if(equation.empty())
         {
             wprintw(outputWin, "No valid command or equation found.\n");
-
             continue;
         }
         try
         {
             double result = Calculator::calculate(equation);
             // std::cout.precision(findPrecisionFor(result)); TODO fix this for ncurses
-            wprintw(outputWin, std::to_string(result).c_str());
+            wprintw(outputWin, CalcHistoryPair::doubleToString(result).c_str());
             wprintw(outputWin, " = ");
             wprintw(outputWin, equation.c_str());
             wprintw(outputWin, "\n");

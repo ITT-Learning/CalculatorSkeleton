@@ -12,11 +12,13 @@ class CalcHistoryPair
 
         friend std::ostream& operator << (std::ostream&, const CalcHistoryPair&);
 
-    
     public:
         CalcHistoryPair(std::string, double);
         std::string getEquation();
         double getResult();
+        std::string getResultString();
+
+        static std::string doubleToString(double);
 };
 
 std::ostream& operator << (std::ostream&, const CalcHistoryPair&);
