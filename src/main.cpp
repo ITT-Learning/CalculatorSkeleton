@@ -169,6 +169,7 @@ void repl()
             wprintw(outputWin, helpText());
             continue;
         }
+        // TODO make the output redraw after exiting
         if(equation.substr(0, 7) == "history")
         {
             printHistory(history, stdscr);

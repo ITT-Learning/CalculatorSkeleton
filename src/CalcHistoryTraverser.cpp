@@ -77,22 +77,28 @@ std::vector<std::string> CalcHistoryTraverser::getHistoryStringWithBounds(int pr
 std::vector<std::string> CalcHistoryTraverser::getHistoryStringWithBoundsAndResults(int prevSize, int nextSize, int width)
 {
     std::vector<std::string> reversePrev;
-    for(std::vector<CalcHistoryPair>::iterator it = curr - 1; it >= history->oldest() && (curr - it) < prevSize; it--)
+    if(!history->isEmpty())
     {
-        std::string entry = "";
-        entry += std::to_string(it->getResult()) + " = ";
-        entry += it->getEquation();
-        reversePrev.push_back(entry);
+        for(std::vector<CalcHistoryPair>::iterator it = curr - 1; it >= history->oldest() && (curr - it) < prevSize; it--)
+        {
+            std::string entry = "";
+            entry += std::to_string(it->getResult()) + " = ";
+            entry += it->getEquation();
+            reversePrev.push_back(entry);
+        }
     }
     while(reversePrev.size() < prevSize)
         reversePrev.push_back("");
     std::vector<std::string> forwardNext;
-    for(std::vector<CalcHistoryPair>::iterator it = curr + 1; it < history->newest() && (it - curr) < nextSize; it++)
+    if(!history->isEmpty())
     {
-        std::string entry = "";
-        entry += std::to_string(it->getResult()) + " = ";
-        entry += it->getEquation();
-        forwardNext.push_back(entry);
+        for(std::vector<CalcHistoryPair>::iterator it = curr + 1; it < history->newest() && (it - curr) < nextSize; it++)
+        {
+            std::string entry = "";
+            entry += std::to_string(it->getResult()) + " = ";
+            entry += it->getEquation();
+            forwardNext.push_back(entry);
+        }
     }
     if(forwardNext.size() < nextSize && curr != history->newest())
     {
