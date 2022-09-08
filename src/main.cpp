@@ -187,7 +187,6 @@ void repl()
         try
         {
             double result = Calculator::calculate(equation);
-            // std::cout.precision(findPrecisionFor(result)); TODO fix this for ncurses
             wprintw(outputWin, CalcHistoryPair::doubleToString(result).c_str());
             wprintw(outputWin, " = ");
             wprintw(outputWin, equation.c_str());
