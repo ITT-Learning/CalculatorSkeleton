@@ -44,6 +44,7 @@ void CalcHistoryTraverser::setCurrentInput(std::string newInput)
     currentInput = newInput;
 };
 
+// TODO probably this function seg faults on no history
 std::vector<std::string> CalcHistoryTraverser::getHistoryStringWithBounds(int prevSize, int nextSize, int width, bool withResult = false)
 {
     std::vector<std::string> reversePrev;

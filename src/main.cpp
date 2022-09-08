@@ -24,6 +24,7 @@ int findPrecisionFor(int number, int decimalDigits = 4)
     return effectiveLog;
 };
 
+//TODO save history before this
 void printHistory(CalcHistory& history, WINDOW* writeTo)
 {
     int maxX = getmaxx(writeTo);
@@ -49,8 +50,6 @@ void printHistory(CalcHistory& history, WINDOW* writeTo)
         wrefresh(writeTo);
         input = getch();
     } while(input != '\n');
-    // wprintw(writeTo, "\n\n");
-    // wprintw(writeTo, CalcHistory::toString(history).c_str());
 };
 
 const char* helpText()
@@ -58,6 +57,7 @@ const char* helpText()
     return "\n\n           Calculator\n\n      supports + - * / ( )\n    enter history for history\n       enter quit to quit\n  enter help for this dialogue\n\n";
 };
 
+//TODO add cursor positioning support
 std::string addProcessedInputTo(char input, const std::string &baseString = "")
 {
     std::string workingString = baseString;
@@ -172,7 +172,6 @@ void repl()
         {
             printHistory(history, stdscr);
             wclear(stdscr);
-            // printHistory(history, outputWin);
             historyTraverser.reset();
             equation = "";
             continue;
@@ -220,7 +219,6 @@ void endNcurses()
 int main(int argc, char* argv[]) 
 {
     initNcurses();
-    // showHelpText();
     try { repl(); } catch(...) { /* intentionally empty */ }
     endNcurses();
     return 0;
