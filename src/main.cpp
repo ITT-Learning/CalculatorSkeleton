@@ -66,16 +66,25 @@ const char* helpText()
 };
 
 //TODO add cursor positioning support
-std::string addProcessedInputTo(char input, const std::string &baseString = "")
+std::string addProcessedInputToAt(char input, int& cursorPos, const std::string &baseString = "")
 {
     std::string workingString = baseString;
     if(isdigit(input) || input == '.' || input == '+' || input == '-' || input == '*' || input == '/' || input == '(' || input ==')' || isalpha(input))
     {
-        workingString += input;
+        if(cursorPos == workingString.length())
+            workingString += input;
+        else
+            workingString.replace(cursorPos, 1, std::string(1, input));
+        cursorPos += 1;
     }
     if(input == 7 && workingString.length() > 0)
     {
-        workingString = workingString.substr(0, workingString.length() - 1);
+        if(cursorPos > 0)
+            workingString.replace(cursorPos - 1, 1, "");
+        cursorPos -= 1;
+        if(cursorPos < 0)
+            cursorPos = 0;
+        // workingString = workingString.substr(0, workingString.length() - 1);
     }
     return workingString;
 };
@@ -125,45 +134,67 @@ void repl()
     wmove(outputWin, maxY - 8, 0);
     wprintw(outputWin, helpText());
     wscrl(outputWin, 1);
+    int cursorPos = 0;
 
     while(true)
     {
-        move(maxY, maxX + 2 + equation.length());
+        // wmove(maxY, maxX + 2 + cursorPos); //REVIEW make sure this is needed
         wrefresh(stdscr);
 
         wrefresh(outputWin);
         drawHistoryWindow(historyTraverser, historyWin, maxY);
+        // wmove(inputWin, 0, 2 + cursorPos);
         drawInputLineTo(inputWin, equation);
 
-        char input;
+        int input;
         do
         {
+            wmove(inputWin, 0, 2 + cursorPos);
+            wrefresh(inputWin);
             input = getch();
-            equation = addProcessedInputTo(input, equation);
-            if(input != 3 && input != 2 && input != '\n')
+            equation = addProcessedInputToAt(input, cursorPos, equation);
+            if (input != KEY_UP && input != KEY_DOWN && input != KEY_LEFT && input != KEY_RIGHT && input != '\n')
             {
                 historyTraverser.setCurrentInput(equation);
                 drawHistoryWindow(historyTraverser, historyWin, maxY);
             }
-            drawInputLineTo(inputWin, equation);
-        } while (input != 3 && input != 2 && input != '\n');
+            if(input == KEY_LEFT)
+            {
+                cursorPos -= 1;
+                if(cursorPos < 0)
+                    cursorPos = 0;
+                continue;
+            }
+            if(input == KEY_RIGHT)
+            {
+                cursorPos += 1;
+                if(cursorPos > equation.length())
+                    cursorPos = equation.length();
+                continue;
+            }
 
-        if(input == 3)
+            drawInputLineTo(inputWin, equation);
+        } while (input != KEY_UP && input != KEY_DOWN && input != '\n');
+
+        if(input == KEY_UP)
         {
             equation = historyTraverser.previous();
+            cursorPos = equation.length();
             continue;
         }
-        if(input == 2)
+        if(input == KEY_DOWN)
         {
             equation = historyTraverser.next();
+            cursorPos = equation.length();
             continue;
         }
-
+      
         if(equation.substr(0, 4) == "quit" || equation.substr(0,4) == "exit")
             break;
         if(equation.substr(0,4) == "help")
         {
             equation = "";
+            cursorPos = 0;
             historyTraverser.reset();
             wprintw(outputWin, helpText());
             continue;
@@ -175,25 +206,27 @@ void repl()
             wclear(stdscr);
             historyTraverser.reset();
             equation = "";
+            cursorPos = 0;
             continue;
         }
 
-        equation = Calculator::sanitizeString(equation);
-        if(equation.empty())
+        std::string sanitizedEquation = Calculator::sanitizeString(equation);
+        if(sanitizedEquation.empty())
         {
             wprintw(outputWin, "No valid command or equation found.\n");
             continue;
         }
         try
         {
-            double result = Calculator::calculate(equation);
+            double result = Calculator::calculate(sanitizedEquation);
             wprintw(outputWin, CalcHistoryPair::doubleToString(result).c_str());
             wprintw(outputWin, " = ");
-            wprintw(outputWin, equation.c_str());
+            wprintw(outputWin, sanitizedEquation.c_str());
             wprintw(outputWin, "\n");
-            history.addEntry(equation, result);
+            history.addEntry(sanitizedEquation, result);
             historyTraverser.reset();
             equation = "";
+            cursorPos = 0;
         }
         catch(const char* message)
         {

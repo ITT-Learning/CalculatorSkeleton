@@ -27,7 +27,7 @@ std::string CalcHistoryTraverser::previous()
 {
     if(history->isEmpty())
         return currentInput;
-    if(curr <= history->oldest())
+    if(curr == history->oldest())
         return curr->getEquation();
     
     return (--curr)->getEquation();
