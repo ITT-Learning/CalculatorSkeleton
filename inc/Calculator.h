@@ -10,7 +10,23 @@
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
-#include <iostream>
-// Add your function declarations here.
+#include <string>
+#include <stack>
 
-#endif  // CALCULATOR_H
+#include "IMathOperation.h"
+
+class Calculator
+{
+    public:
+        static double calculate(std::string equationString);
+        static std::string sanitizeString(std::string unsanitizedString);
+
+    private:
+        Calculator(){};
+
+        static IMathOperation* parseString(std::string equationString);
+        static IMathOperation* extractOperation(std::stack<std::string>& postfixStack);
+        static std::stack<std::string> infixToPostfix(std::string infixString);
+};
+
+#endif

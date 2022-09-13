@@ -3,7 +3,7 @@ project(Calculator VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(src inc)
+include_directories(src inc inc/MathOperations)
 
 add_subdirectory(src)
 add_subdirectory(test)
