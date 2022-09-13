@@ -10,23 +10,23 @@
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
-#include "IMathOperation.h"
 #include <string>
 #include <stack>
 
+#include "IMathOperation.h"
+
 class Calculator
 {
+    public:
+        static double calculate(std::string equationString);
+        static std::string sanitizeString(std::string unsanitizedString);
+
     private:
         Calculator(){};
 
-        static IMathOperation* parseString(std::string);
-        static double parseNumber(std::string);
-        static IMathOperation* extractOperation(std::stack<std::string>&);
-        static std::stack<std::string> infixToPostfix(std::string);
-
-    public:
-        static double calculate(std::string);
-        static std::string sanitizeString(std::string);
+        static IMathOperation* parseString(std::string equationString);
+        static IMathOperation* extractOperation(std::stack<std::string>& postfixStack);
+        static std::stack<std::string> infixToPostfix(std::string infixString);
 };
 
 #endif

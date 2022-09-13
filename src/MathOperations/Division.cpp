@@ -1,23 +1,27 @@
 #include "Division.h"
 
-Division::Division(IMathOperation* p_lhs, IMathOperation* p_rhs)
+Division::Division(IMathOperation* lhs, IMathOperation* rhs)
 {
-    lhs = p_lhs;
-    rhs = p_rhs;
+    lhs_ = lhs;
+    rhs_ = rhs;
 };
+
+
 
 Division::~Division()
 {
-    delete lhs;
-    delete rhs;
-}
+    delete lhs_;
+    delete rhs_;
+};
+
+
 
 double Division::calculate()
 {
-    double rhsResult = rhs->calculate();
-    if(rhsResult != 0)
+    double rhsResult = rhs_->calculate();
+    if (rhsResult != 0)
     {
-        return lhs->calculate() / rhsResult;
+        return lhs_->calculate() / rhsResult;
     }
     else
     {

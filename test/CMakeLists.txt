@@ -11,10 +11,10 @@ FetchContent_Declare(
 )
 
 FetchContent_GetProperties(googletest)
-if(NOT googletest_POPULATED)
+if (NOT googletest_POPULATED)
   FetchContent_Populate(googletest)
   add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
-endif()
+endif ()
 
 set(This calculator_test)
 project(${This} C CXX)

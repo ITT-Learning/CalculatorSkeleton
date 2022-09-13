@@ -6,32 +6,20 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
+#include <iostream>
+#include <cctype>
+#include <string>
+#include <sstream>
+
+#include <ncurses.h>
+
 #include "Calculator.h"
 #include "CalcHistory.h"
 #include "CalcHistoryTraverser.h"
-#include <iostream>
-#include <string>
-// #include <math.h>
-#include <ncurses.h>
-#include <sstream>
-#include <cctype>
 
 const int HISTORY_WINDOW_WIDTH = 25;
 
-// int findPrecisionFor(int number, int decimalDigits = 4)
-// {
-//     int baseLog = (int)log10(std::abs(number));
-//     int effectiveLog = std::max(baseLog + 1 + decimalDigits, baseLog * - 1);
-//     return effectiveLog;
-// };
 
-// std::string doubleToString(double number)
-// {
-//     std::stringstream ss;
-//     ss.precision(findPrecisionFor(number));
-//     ss << number;
-//     return ss.str();
-// };
 
 void printHistory(CalcHistory& history, WINDOW* writeTo)
 {
@@ -42,52 +30,70 @@ void printHistory(CalcHistory& history, WINDOW* writeTo)
     do
     {
 
-        if(input == KEY_UP)
+        if (input == KEY_UP)
+        {
             historyTraverser.previous();
-        if(input == KEY_DOWN)
+        }
+        if (input == KEY_DOWN)
+        {
             historyTraverser.next();
+        }
         wclear(writeTo);
         std::vector<std::string> historyEntries = historyTraverser.getHistoryStringWithBoundsAndResults(maxY - 2, 0, maxX);
-        for(std::vector<std::string>::iterator it = historyEntries.begin(); it != historyEntries.end(); it++)
+        for (std::vector<std::string>::iterator it = historyEntries.begin(); it != historyEntries.end(); it++)
         {
             wprintw(writeTo, it->c_str());
-            if(it->length() < maxX)
+            if (it->length() < maxX)
+            {
                 wprintw(writeTo, "\n");
+            }
         }
         wprintw(writeTo, "<Press enter to return>");
         wrefresh(writeTo);
         input = getch();
-    } while(input != '\n');
+    } while (input != '\n');
 };
+
+
 
 const char* helpText()
 {
     return "\n\n           Calculator\n\n      supports + - * / ( )\n    enter history for history\n       enter quit to quit\n  enter help for this dialogue\n\n";
 };
 
-//TODO add cursor positioning support
+
+
 std::string addProcessedInputToAt(char input, int& cursorPos, const std::string &baseString = "")
 {
     std::string workingString = baseString;
-    if(isdigit(input) || input == '.' || input == '+' || input == '-' || input == '*' || input == '/' || input == '(' || input ==')' || isalpha(input))
+    if (isdigit(input) || input == '.' || input == '+' || input == '-' || input == '*' || input == '/' || input == '(' || input ==')' || isalpha(input))
     {
-        if(cursorPos == workingString.length())
+        if (cursorPos == workingString.length())
+        {
             workingString += input;
+        }
         else
+        {
             workingString.replace(cursorPos, 1, std::string(1, input));
+        }
         cursorPos += 1;
     }
-    if(input == 7 && workingString.length() > 0)
+    if (input == 7 && workingString.length() > 0)
     {
-        if(cursorPos > 0)
+        if (cursorPos > 0)
+        {
             workingString.replace(cursorPos - 1, 1, "");
+        }
         cursorPos -= 1;
-        if(cursorPos < 0)
+        if (cursorPos < 0)
+        {
             cursorPos = 0;
-        // workingString = workingString.substr(0, workingString.length() - 1);
+        }
     }
     return workingString;
 };
+
+
 
 void drawInputLineTo(WINDOW* inputWin, std::string str)
 {
@@ -97,23 +103,33 @@ void drawInputLineTo(WINDOW* inputWin, std::string str)
     wrefresh(inputWin);
 };
 
+
+
 void drawHistoryWindow(CalcHistoryTraverser &historyTraverser, WINDOW* historyWin, int height)
 {
     wclear(historyWin);
     std::vector<std::string> historyEntries = historyTraverser.getHistoryStringWithBounds((height - 1) / 2, (height - 1) / 2, HISTORY_WINDOW_WIDTH);
-    for(std::vector<std::string>::iterator it = historyEntries.begin(); it != historyEntries.end(); it++)
+    for (std::vector<std::string>::iterator it = historyEntries.begin(); it != historyEntries.end(); it++)
     {
-        if(it == historyEntries.begin() + ((height - 1) / 2))
+        if (it == historyEntries.begin() + ((height - 1) / 2))
+        {
             wattron(historyWin, A_STANDOUT);
+        }
         std::string lineOutput = *it;
-        if(lineOutput.length() < HISTORY_WINDOW_WIDTH)
+        if (lineOutput.length() < HISTORY_WINDOW_WIDTH)
+        {
             lineOutput += std::string(HISTORY_WINDOW_WIDTH - lineOutput.length(), ' ');
+        }
         wprintw(historyWin, lineOutput.c_str());
-        if(it == historyEntries.begin() + ((height - 1) / 2))
+        if (it == historyEntries.begin() + ((height - 1) / 2))
+        {
             wattroff(historyWin, A_STANDOUT);
+        }
     }
     wrefresh(historyWin);
-}
+};
+
+
 
 void repl()
 {
@@ -136,14 +152,12 @@ void repl()
     wscrl(outputWin, 1);
     int cursorPos = 0;
 
-    while(true)
+    while (true)
     {
-        // wmove(maxY, maxX + 2 + cursorPos); //REVIEW make sure this is needed
         wrefresh(stdscr);
 
         wrefresh(outputWin);
         drawHistoryWindow(historyTraverser, historyWin, maxY);
-        // wmove(inputWin, 0, 2 + cursorPos);
         drawInputLineTo(inputWin, equation);
 
         int input;
@@ -158,40 +172,46 @@ void repl()
                 historyTraverser.setCurrentInput(equation);
                 drawHistoryWindow(historyTraverser, historyWin, maxY);
             }
-            if(input == KEY_LEFT)
+            if (input == KEY_LEFT)
             {
                 cursorPos -= 1;
-                if(cursorPos < 0)
+                if (cursorPos < 0)
+                {
                     cursorPos = 0;
+                }
                 continue;
             }
-            if(input == KEY_RIGHT)
+            if (input == KEY_RIGHT)
             {
                 cursorPos += 1;
-                if(cursorPos > equation.length())
+                if (cursorPos > equation.length())
+                {
                     cursorPos = equation.length();
+                }
                 continue;
             }
 
             drawInputLineTo(inputWin, equation);
         } while (input != KEY_UP && input != KEY_DOWN && input != '\n');
 
-        if(input == KEY_UP)
+        if (input == KEY_UP)
         {
             equation = historyTraverser.previous();
             cursorPos = equation.length();
             continue;
         }
-        if(input == KEY_DOWN)
+        if (input == KEY_DOWN)
         {
             equation = historyTraverser.next();
             cursorPos = equation.length();
             continue;
         }
       
-        if(equation.substr(0, 4) == "quit" || equation.substr(0,4) == "exit")
+        if (equation.substr(0, 4) == "quit" || equation.substr(0,4) == "exit")
+        {
             break;
-        if(equation.substr(0,4) == "help")
+        }
+        if (equation.substr(0,4) == "help")
         {
             equation = "";
             cursorPos = 0;
@@ -200,7 +220,7 @@ void repl()
             continue;
         }
         // TODO make the output redraw after exiting
-        if(equation.substr(0, 7) == "history")
+        if (equation.substr(0, 7) == "history")
         {
             printHistory(history, stdscr);
             wclear(stdscr);
@@ -211,7 +231,7 @@ void repl()
         }
 
         std::string sanitizedEquation = Calculator::sanitizeString(equation);
-        if(sanitizedEquation.empty())
+        if (sanitizedEquation.empty())
         {
             wprintw(outputWin, "No valid command or equation found.\n");
             continue;
@@ -239,6 +259,8 @@ void repl()
     }
 };
 
+
+
 void initNcurses()
 {
     initscr();
@@ -246,10 +268,14 @@ void initNcurses()
     keypad(stdscr, true);
 };
 
+
+
 void endNcurses()
 {
     endwin();
 };
+
+
 
 int main(int argc, char* argv[]) 
 {

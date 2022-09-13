@@ -5,15 +5,15 @@
 
 class Subtraction : public IMathOperation
 {
-    private:
-        IMathOperation* lhs;
-        IMathOperation* rhs;
-
     public:
-        Subtraction(IMathOperation* p_lhs, IMathOperation* p_rhs);
+        Subtraction(IMathOperation* lhs, IMathOperation* rhs);
         ~Subtraction();
 
-        virtual double calculate();
+        double calculate() override;
+
+    private:
+        IMathOperation* lhs_;
+        IMathOperation* rhs_;
 };
 
 #endif

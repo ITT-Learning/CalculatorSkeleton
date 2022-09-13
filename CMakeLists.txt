@@ -7,4 +7,3 @@ include_directories(src inc inc/MathOperations)
 
 add_subdirectory(src)
 add_subdirectory(test)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lncurses")

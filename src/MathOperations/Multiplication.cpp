@@ -1,18 +1,22 @@
 #include "Multiplication.h"
 
-Multiplication::Multiplication(IMathOperation* p_lhs, IMathOperation* p_rhs)
+Multiplication::Multiplication(IMathOperation* lhs, IMathOperation* rhs)
 {
-    lhs = p_lhs;
-    rhs = p_rhs;
+    lhs_ = lhs;
+    rhs_ = rhs;
 };
+
+
 
 Multiplication::~Multiplication()
 {
-    delete lhs;
-    delete rhs;
-}
+    delete lhs_;
+    delete rhs_;
+};
+
+
 
 double Multiplication::calculate()
 {
-    return lhs->calculate() * rhs->calculate();
+    return lhs_->calculate() * rhs_->calculate();
 };

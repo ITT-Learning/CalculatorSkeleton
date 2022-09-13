@@ -5,15 +5,15 @@
 
 class Multiplication : public IMathOperation
 {
-    private:
-        IMathOperation* lhs;
-        IMathOperation* rhs;
-
     public:
-        Multiplication(IMathOperation* p_lhs, IMathOperation* p_rhs);
+        Multiplication(IMathOperation* lhs, IMathOperation* rhs);
         ~Multiplication();
 
-        virtual double calculate();
+        double calculate() override;
+
+    private:
+        IMathOperation* lhs_;
+        IMathOperation* rhs_;
 };
 
 #endif

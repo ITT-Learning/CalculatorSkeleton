@@ -1,85 +1,132 @@
 #include "CalcHistoryTraverser.h"
 
-CalcHistoryTraverser::CalcHistoryTraverser(CalcHistory* p_history)
+CalcHistoryTraverser::CalcHistoryTraverser(CalcHistory* calcHistory)
 {
-    history = p_history;
+    calcHistory_ = calcHistory;
     reset();
 };
 
+
+
 std::string CalcHistoryTraverser::next()
 {
-    if(curr >= history->newest() || history->isEmpty())
-        return currentInput;
-    if(++curr == history->newest())
-        return currentInput;
-    return curr->getEquation();
+    if (currentPosition_ >= calcHistory_->newest() || calcHistory_->isEmpty())
+    {
+        return currentInput_;
+    }
+    if (++currentPosition_ == calcHistory_->newest())
+    {
+        return currentInput_;
+    }
+
+    return currentPosition_->getEquation();
 };
+
+
 
 std::string CalcHistoryTraverser::current()
 {
-    if(curr >= history->newest() || history->isEmpty())
-        return currentInput;
+    if (currentPosition_ >= calcHistory_->newest() || calcHistory_->isEmpty())
+    {
+        return currentInput_;
+    }
     
-    return curr->getEquation();
+    return currentPosition_->getEquation();
 };
+
+
 
 std::string CalcHistoryTraverser::previous()
 {
-    if(history->isEmpty())
-        return currentInput;
-    if(curr == history->oldest())
-        return curr->getEquation();
+    if (calcHistory_->isEmpty())
+    {
+        return currentInput_;
+    }
+    if (currentPosition_ == calcHistory_->oldest())
+    {
+        return currentPosition_->getEquation();
+    }
     
-    return (--curr)->getEquation();
+    return (--currentPosition_)->getEquation();
 };
+
+
 
 void CalcHistoryTraverser::reset()
 {
-    curr = history->newest();
-    currentInput = "";
+    currentPosition_ = calcHistory_->newest();
+    currentInput_ = "";
 };
+
+
 
 void CalcHistoryTraverser::setCurrentInput(std::string newInput)
 {
-    curr = history->newest();
-    currentInput = newInput;
+    currentPosition_ = calcHistory_->newest();
+    currentInput_ = newInput;
 };
+
+
 
 std::vector<std::string> CalcHistoryTraverser::getHistoryStringWithBounds(int prevSize, int nextSize, int width)
 {
     std::vector<std::string> reversePrev;
-    if(!history->isEmpty())
-        for(std::vector<CalcHistoryPair>::iterator it = curr - 1; it >= history->oldest() && (curr - it) < prevSize; it--)
-            reversePrev.push_back(it->getEquation());
-    while(reversePrev.size() < prevSize)
+    if (!calcHistory_->isEmpty())
+    {
+        for(std::vector<CalcHistoryPair>::iterator it = currentPosition_ - 1; it >= calcHistory_->oldest() && (currentPosition_ - it) < prevSize; it--)
+        {
+            reversePrev.push_back(it->getEquation().substr(0, width));
+        }
+    }
+    while (reversePrev.size() < prevSize)
+    {
         reversePrev.push_back("");
+    }
     std::vector<std::string> forwardNext;
-    if(!history->isEmpty())
-        for(std::vector<CalcHistoryPair>::iterator it = curr + 1; it < history->newest() && (it - curr) < nextSize; it++)
+    if (!calcHistory_->isEmpty())
+    {
+        for(std::vector<CalcHistoryPair>::iterator it = currentPosition_ + 1; it < calcHistory_->newest() && (it - currentPosition_) < nextSize; it++)
+        {
             forwardNext.push_back(it->getEquation().substr(0, width));
-    if(forwardNext.size() < nextSize && curr != history->newest())
-        forwardNext.push_back(currentInput.substr(0, width));
+        }
+    }
+    if (forwardNext.size() < nextSize && currentPosition_ != calcHistory_->newest())
+    {
+        forwardNext.push_back(currentInput_.substr(0, width));
+    }
 
     std::vector<std::string> compositeHistory;
 
     for(std::vector<std::string>::reverse_iterator it = reversePrev.rbegin(); it != reversePrev.rend(); it++)
-        compositeHistory.push_back(it->substr(0, width));
-    if(curr == history->newest())
-        compositeHistory.push_back(currentInput.substr(0, width));
-    else if(curr != history->newest())
-        compositeHistory.push_back(curr->getEquation().substr(0, width));
+    {
+        compositeHistory.push_back(*it);
+    }
+
+    if (currentPosition_ == calcHistory_->newest())
+    {
+        compositeHistory.push_back(currentInput_.substr(0, width));
+    }
+    else if (currentPosition_ != calcHistory_->newest())
+    {
+        compositeHistory.push_back(currentPosition_->getEquation().substr(0, width));
+    }
+
     for(std::vector<std::string>::iterator it = forwardNext.begin(); it != forwardNext.end(); it++)
-        compositeHistory.push_back(it->substr(0, width));
+    {
+        compositeHistory.push_back(*it);
+    }
 
     return compositeHistory;
 };
 
+
+
 std::vector<std::string> CalcHistoryTraverser::getHistoryStringWithBoundsAndResults(int prevSize, int nextSize, int width)
 {
     std::vector<std::string> reversePrev;
-    if(!history->isEmpty())
+    if (!calcHistory_->isEmpty())
     {
-        for(std::vector<CalcHistoryPair>::iterator it = curr - 1; it >= history->oldest() && (curr - it) < prevSize; it--)
+        for(std::vector<CalcHistoryPair>::iterator it = currentPosition_ - 1; it >= calcHistory_->oldest() && (currentPosition_ - it) < prevSize; it--)
         {
             std::string entry = "";
             entry += it->getResultString() + " = ";
@@ -87,43 +134,53 @@ std::vector<std::string> CalcHistoryTraverser::getHistoryStringWithBoundsAndResu
             reversePrev.push_back(entry);
         }
     }
-    while(reversePrev.size() < prevSize)
-        reversePrev.push_back("");
-    std::vector<std::string> forwardNext;
-    if(!history->isEmpty())
+    while (reversePrev.size() < prevSize)
     {
-        for(std::vector<CalcHistoryPair>::iterator it = curr + 1; it < history->newest() && (it - curr) < nextSize; it++)
+        reversePrev.push_back("");
+    }
+    std::vector<std::string> forwardNext;
+    if (!calcHistory_->isEmpty())
+    {
+        for(std::vector<CalcHistoryPair>::iterator it = currentPosition_ + 1; it < calcHistory_->newest() && (it - currentPosition_) < nextSize; it++)
         {
             std::string entry = "";
             entry += it->getResultString() + " = ";
             entry += it->getEquation();
-            forwardNext.push_back(entry);
+            forwardNext.push_back(entry.substr(0, width));
         }
     }
-    if(forwardNext.size() < nextSize && curr != history->newest())
+    if (forwardNext.size() < nextSize && currentPosition_ != calcHistory_->newest())
     {
         std::string entry = "";
         entry += "? = ";
-        entry += currentInput;
-        forwardNext.push_back(entry);
+        entry += currentInput_;
+        forwardNext.push_back(entry.substr(0, width));
     }
 
     std::vector<std::string> compositeHistory;
 
     for(std::vector<std::string>::reverse_iterator it = reversePrev.rbegin(); it != reversePrev.rend(); it++)
-        compositeHistory.push_back(it->substr(0, width));
-    if(curr == history->newest())
-        compositeHistory.push_back(currentInput);
-    else if(curr != history->newest())
+    {
+        compositeHistory.push_back(*it);
+    }
+    if (currentPosition_ == calcHistory_->newest())
+    {
+        compositeHistory.push_back(currentInput_.substr(0, width));
+    }
+    else if (currentPosition_ != calcHistory_->newest())
     {
         std::string entry = "";
-        if(curr != history->newest())
-            entry += curr->getResultString() + " = ";
-        entry += curr->getEquation();
+        if (currentPosition_ != calcHistory_->newest())
+        {
+            entry += currentPosition_->getResultString() + " = ";
+        }
+        entry += currentPosition_->getEquation();
         compositeHistory.push_back(entry.substr(0, width));
     }
     for(std::vector<std::string>::iterator it = forwardNext.begin(); it != forwardNext.end(); it++)
-        compositeHistory.push_back(it->substr(0, width));
+    {
+        compositeHistory.push_back(*it);
+    }
 
     return compositeHistory;
 };

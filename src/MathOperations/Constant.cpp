@@ -1,11 +1,13 @@
 #include "Constant.h"
 
-Constant::Constant(double p_value)
+Constant::Constant(double value)
 {
-    m_value = p_value;
+    value_ = value;
 };
+
+
 
 double Constant::calculate()
 {
-    return m_value;
+    return value_;
 };

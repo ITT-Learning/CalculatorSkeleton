@@ -8,21 +8,23 @@
 
 class CalcHistoryTraverser
 {
-    private:
-        CalcHistory* history;
-        std::vector<CalcHistoryPair>::iterator curr;
-        std::string currentInput;
-
     public:
-        CalcHistoryTraverser(CalcHistory*);
+        CalcHistoryTraverser(CalcHistory* calcHistory);
+
         std::string next();
         std::string current();
         std::string previous();
+        
         void reset();
-
         void setCurrentInput(std::string);
+
         std::vector<std::string> getHistoryStringWithBounds(int prevSize, int nextSize, int width);
         std::vector<std::string> getHistoryStringWithBoundsAndResults(int prevSize, int nextSize, int width);
+
+    private:
+        CalcHistory* calcHistory_;
+        std::vector<CalcHistoryPair>::iterator currentPosition_;
+        std::string currentInput_;
 };
 
 #endif

@@ -1,18 +1,22 @@
 #include "Addition.h"
 
-Addition::Addition(IMathOperation* p_lhs, IMathOperation* p_rhs)
+Addition::Addition(IMathOperation* lhs, IMathOperation* rhs)
 {
-    lhs = p_lhs;
-    rhs = p_rhs;
+    lhs_ = lhs;
+    rhs_ = rhs;
 };
+
+
 
 Addition::~Addition()
 {
-    delete lhs;
-    delete rhs;
-}
+    delete lhs_;
+    delete rhs_;
+};
+
+
 
 double Addition::calculate()
 {
-    return lhs->calculate() + rhs->calculate();
+    return lhs_->calculate() + rhs_->calculate();
 };

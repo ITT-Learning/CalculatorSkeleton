@@ -5,15 +5,15 @@
 
 class Division : public IMathOperation
 {
-    private:
-        IMathOperation* lhs;
-        IMathOperation* rhs;
-
     public:
-        Division(IMathOperation* p_lhs, IMathOperation* p_rhs);
+        Division(IMathOperation* lhs, IMathOperation* rhs);
         ~Division();
 
-        virtual double calculate();
+        double calculate() override;
+
+    private:
+        IMathOperation* lhs_;
+        IMathOperation* rhs_;
 };
 
 #endif

@@ -5,15 +5,15 @@
 
 class Addition : public IMathOperation
 {
-    private:
-        IMathOperation* lhs;
-        IMathOperation* rhs;
-    
     public:
-        Addition(IMathOperation* p_lhs, IMathOperation* p_rhs);
+        Addition(IMathOperation* lhs, IMathOperation* rhs);
         ~Addition();
 
-        virtual double calculate();
+        double calculate() override;
+
+    private:
+        IMathOperation* lhs_;
+        IMathOperation* rhs_;
 };
 
 #endif

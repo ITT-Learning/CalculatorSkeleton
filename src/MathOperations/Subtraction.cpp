@@ -1,18 +1,22 @@
 #include "Subtraction.h"
 
-Subtraction::Subtraction(IMathOperation* p_lhs, IMathOperation* p_rhs)
+Subtraction::Subtraction(IMathOperation* lhs, IMathOperation* rhs)
 {
-    lhs = p_lhs;
-    rhs = p_rhs;
+    lhs_ = lhs;
+    rhs_ = rhs;
 };
+
+
 
 Subtraction::~Subtraction()
 {
-    delete lhs;
-    delete rhs;
-}
+    delete lhs_;
+    delete rhs_;
+};
+
+
 
 double Subtraction::calculate()
 {
-    return lhs->calculate() - rhs->calculate();
+    return lhs_->calculate() - rhs_->calculate();
 };

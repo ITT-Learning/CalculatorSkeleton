@@ -6,21 +6,21 @@
 
 class CalcHistoryPair
 {
-    private:
-        std::string equation;
-        double result;
-
-        friend std::ostream& operator << (std::ostream&, const CalcHistoryPair&);
-
     public:
-        CalcHistoryPair(std::string, double);
+        CalcHistoryPair(std::string equation, double result);
         std::string getEquation();
         double getResult();
         std::string getResultString();
 
-        static std::string doubleToString(double);
+        static std::string doubleToString(double number);
+        
+    private:
+        std::string equation_;
+        double result_;
+
+        friend std::ostream& operator << (std::ostream& sout, const CalcHistoryPair& calcHistoryPair);
 };
 
-std::ostream& operator << (std::ostream&, const CalcHistoryPair&);
+std::ostream& operator << (std::ostream& sout, const CalcHistoryPair& calcHistoryPair);
 
 #endif

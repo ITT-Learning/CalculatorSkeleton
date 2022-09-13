@@ -5,13 +5,13 @@
 
 class Constant : public IMathOperation
 {
-    private:
-        double m_value;
-    
     public:
-        Constant(double p_value);
+        Constant(double value);
         
-        virtual double calculate();
+        double calculate() override;
+
+    private:
+        double value_;
 };
 
 #endif
