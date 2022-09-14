@@ -13,10 +13,7 @@ int findPrecisionFor(int number, int decimalDigits = 4)
 
 
 CalcHistoryPair::CalcHistoryPair(std::string equation, double result)
-{
-    equation_ = equation;
-    result_ = result;
-};
+: equation_{equation}, result_{result} {};
 
 
 
@@ -29,21 +26,21 @@ std::ostream& operator << (std::ostream& sout, const CalcHistoryPair& calcHistor
 
 
 
-std::string CalcHistoryPair::getEquation()
+std::string CalcHistoryPair::getEquation() const
 {
     return equation_;
 };
 
 
 
-double CalcHistoryPair::getResult()
+double CalcHistoryPair::getResult() const
 {
     return result_;
 };
 
 
 
-std::string CalcHistoryPair::getResultString()
+std::string CalcHistoryPair::getResultString() const
 {
     std::stringstream ss;
     ss << result_;
