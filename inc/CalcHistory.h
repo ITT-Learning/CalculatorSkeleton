@@ -11,20 +11,19 @@
 class CalcHistory
 {
     public:
-        CalcHistory();
-        ~CalcHistory();
+        void initialzeFromFilePath(std::string filePath);
+        void saveToFilePath(std::string filePath) const;
 
         static std::string toString(const CalcHistory& calcHistory);
 
         void addEntry(std::string equation, double result);
 
-        std::vector<CalcHistoryPair>::iterator oldest();
-        std::vector<CalcHistoryPair>::iterator newest();
+        std::vector<CalcHistoryPair>::const_iterator oldest() const;
+        std::vector<CalcHistoryPair>::const_iterator newest() const;
 
-        bool isEmpty();
+        bool isEmpty() const;
 
     private:
-        static const std::string filePath_;
         std::vector<CalcHistoryPair> entries_;
 
         friend std::ostream& operator << (std::ostream& sout, const CalcHistory& calcHistory);
