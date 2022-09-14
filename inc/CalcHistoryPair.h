@@ -8,9 +8,9 @@ class CalcHistoryPair
 {
     public:
         CalcHistoryPair(std::string equation, double result);
-        std::string getEquation();
-        double getResult();
-        std::string getResultString();
+        std::string getEquation() const;
+        double getResult() const;
+        std::string getResultString() const;
 
         static std::string doubleToString(double number);
         
