@@ -2,16 +2,8 @@
 
 Subtraction::Subtraction(IMathOperation* lhs, IMathOperation* rhs)
 {
-    lhs_ = lhs;
-    rhs_ = rhs;
-};
-
-
-
-Subtraction::~Subtraction()
-{
-    delete lhs_;
-    delete rhs_;
+    lhs_ = std::unique_ptr<IMathOperation>(lhs);
+    rhs_ = std::unique_ptr<IMathOperation>(rhs);
 };
 
 

@@ -1,19 +1,20 @@
 #ifndef SUBTRACTION_H
 #define SUBTRACTION_H
 
+#include <memory>
+
 #include "IMathOperation.h"
 
 class Subtraction : public IMathOperation
 {
     public:
         Subtraction(IMathOperation* lhs, IMathOperation* rhs);
-        ~Subtraction();
 
         double calculate() override;
 
     private:
-        IMathOperation* lhs_;
-        IMathOperation* rhs_;
+        std::unique_ptr<IMathOperation> lhs_;
+        std::unique_ptr<IMathOperation> rhs_;
 };
 
 #endif
