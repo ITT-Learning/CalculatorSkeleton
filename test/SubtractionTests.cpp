@@ -7,14 +7,46 @@
 
 using namespace testing;
 
-class SubtractionTests : public ::testing::Test{};
+class SubtractionTests : public ::testing::Test {};
 
-TEST_F(SubtractionTests, SubtractsNumbersAssociatively)
+
+
+TEST_F(SubtractionTests, SubtractsPositiveNumbers)
 {
-    IMathOperation* constant14p4 = new Constant(14.4);
-    IMathOperation* constantN21p1 = new Constant(-21.1);
-    Subtraction diffOf14p4AndN21p1(constant14p4, constantN21p1);
-    Subtraction diffOfN21p1And14p4(constantN21p1, constant14p4);
-    EXPECT_DOUBLE_EQ(diffOf14p4AndN21p1.calculate(), 35.5);
-    EXPECT_DOUBLE_EQ(diffOfN21p1And14p4.calculate(), -35.5);
+    Subtraction diffOf10And15(new Constant(15), new Constant(10));
+    EXPECT_DOUBLE_EQ(diffOf10And15.calculate(), 5);
+};
+
+
+
+TEST_F(SubtractionTests, SubtractsPositiveAndNegativeNumbers)
+{
+    Subtraction diffOfN10And15(new Constant(15), new Constant(-10));
+    EXPECT_DOUBLE_EQ(diffOfN10And15.calculate(), 25);
+};
+
+
+
+TEST_F(SubtractionTests, SubtractsNegativeNumbers)
+{
+    Subtraction diffOfN10AndN15(new Constant(-10), new Constant(-15));
+    EXPECT_DOUBLE_EQ(diffOfN10AndN15.calculate(), 5);
+};
+
+
+
+TEST_F(SubtractionTests, SubtractsFractionalNumbers)
+{
+    Subtraction diffOf1p5And1p3(new Constant(1.5), new Constant(1.3));
+    EXPECT_DOUBLE_EQ(diffOf1p5And1p3.calculate(), 0.2);
+};
+
+
+
+TEST_F(SubtractionTests, SubtractsAssociativelyCorrectly)
+{
+    Subtraction diffOfN10And15(new Constant(-10), new Constant(15));
+    Subtraction diffOf15AndN10(new Constant(15), new Constant(-10));
+    EXPECT_DOUBLE_EQ(diffOf15AndN10.calculate(), 25);
+    EXPECT_DOUBLE_EQ(diffOfN10And15.calculate(), -25);
 };
