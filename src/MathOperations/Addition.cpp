@@ -1,17 +1,11 @@
 #include "Addition.h"
 
+#include <memory>
+
 Addition::Addition(IMathOperation* lhs, IMathOperation* rhs)
 {
-    lhs_ = lhs;
-    rhs_ = rhs;
-};
-
-
-
-Addition::~Addition()
-{
-    delete lhs_;
-    delete rhs_;
+    lhs_ = std::unique_ptr<IMathOperation>(lhs);
+    rhs_ = std::unique_ptr<IMathOperation>(rhs);
 };
 
 

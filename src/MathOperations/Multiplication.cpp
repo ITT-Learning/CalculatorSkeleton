@@ -1,17 +1,11 @@
 #include "Multiplication.h"
 
+#include <memory>
+
 Multiplication::Multiplication(IMathOperation* lhs, IMathOperation* rhs)
 {
-    lhs_ = lhs;
-    rhs_ = rhs;
-};
-
-
-
-Multiplication::~Multiplication()
-{
-    delete lhs_;
-    delete rhs_;
+    lhs_ = std::unique_ptr<IMathOperation>(lhs);
+    rhs_ = std::unique_ptr<IMathOperation>(rhs);
 };
 
 
