@@ -9,11 +9,9 @@
 
 using namespace testing;
 
-class MultiplicationTests : public ::testing::Test {};
 
 
-
-TEST_F(MultiplicationTests, MultipliesPositiveNumbers)
+TEST(MultiplicationTests, MultipliesPositiveNumbers)
 {
     std::unique_ptr<Constant> constant_5 = std::make_unique<Constant>(5);
     std::unique_ptr<Constant> constant_4 = std::make_unique<Constant>(4);
@@ -23,7 +21,7 @@ TEST_F(MultiplicationTests, MultipliesPositiveNumbers)
 
 
 
-TEST_F(MultiplicationTests, MultipliesPositiveAndNegativeNumbers)
+TEST(MultiplicationTests, MultipliesPositiveAndNegativeNumbers)
 {
     std::unique_ptr<Constant> constant_5 = std::make_unique<Constant>(5);
     std::unique_ptr<Constant> constant_N4 = std::make_unique<Constant>(-4);
@@ -33,7 +31,7 @@ TEST_F(MultiplicationTests, MultipliesPositiveAndNegativeNumbers)
 
 
 
-TEST_F(MultiplicationTests, MultipliesNegativeNumbers)
+TEST(MultiplicationTests, MultipliesNegativeNumbers)
 {
     std::unique_ptr<Constant> constant_N5 = std::make_unique<Constant>(-5);
     std::unique_ptr<Constant> constant_N4 = std::make_unique<Constant>(-4);
@@ -43,7 +41,7 @@ TEST_F(MultiplicationTests, MultipliesNegativeNumbers)
 
 
 
-TEST_F(MultiplicationTests, MultipliesFractionalNumbers)
+TEST(MultiplicationTests, MultipliesFractionalNumbers)
 {
     std::unique_ptr<Constant> constant_2p5 = std::make_unique<Constant>(2.5);
     std::unique_ptr<Constant> constant_2 = std::make_unique<Constant>(2);
@@ -53,7 +51,7 @@ TEST_F(MultiplicationTests, MultipliesFractionalNumbers)
 
 
 
-TEST_F(MultiplicationTests, MultipliesAssociativelyCorrectly)
+TEST(MultiplicationTests, MultipliesAssociativelyCorrectly)
 {
     std::unique_ptr<Constant> constant1_N4 = std::make_unique<Constant>(-4);
     std::unique_ptr<Constant> constant2_N4 = std::make_unique<Constant>(-4);
