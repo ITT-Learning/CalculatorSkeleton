@@ -9,85 +9,92 @@
 #include "Calculator.h"
 
 #include <cctype>
+#include <cmath>
 #include <stack>
+#include <memory>
 
+#include "IOperationFactory.h"
 #include "Constant.h"
 #include "Addition.h"
 #include "Subtraction.h"
 #include "Multiplication.h"
 #include "Division.h"
+#include "NotANumber.h"
+
+
+
+Calculator::Calculator(std::unique_ptr<IOperationFactory>&& factory)
+: factory_(std::move(factory)) {};
+
+
 
 double Calculator::calculate(std::string equationString)
 {
     if (equationString.empty())
-        return 0;
+    {
+        return nan("");
+    }
     std::stack<std::string> postfixStack = infixToPostfix(equationString);
-    IMathOperation* topLevelOperation = extractOperation(postfixStack);
+    std::unique_ptr<IMathOperation> topLevelOperation = extractOperation(postfixStack);
     double result = topLevelOperation->calculate();
-    delete topLevelOperation;
     return result;
 };
 
 
 
-IMathOperation* Calculator::extractOperation(std::stack<std::string> &postfixStack)
+std::unique_ptr<IMathOperation> Calculator::extractOperation(std::stack<std::string> &postfixStack)
 {
     if (postfixStack.empty())
+    {
         throw "Empty equation";
-    IMathOperation* lhs;
-    IMathOperation* rhs;
+    }
+    std::unique_ptr<IMathOperation> lhs;
+    std::unique_ptr<IMathOperation> rhs;
     double value;
+    std::string topValue;
     switch(postfixStack.top()[0])
     {
         case '+' :
-            postfixStack.pop();
-            if (postfixStack.empty()) throw "Missing operands";
-            rhs = extractOperation(postfixStack);
-            if (postfixStack.empty()) throw "Missing operands";
-            lhs = extractOperation(postfixStack);
-            return new Addition(lhs, rhs);
-
+            //Fallthrough
+        // FIXME make '-' also apply to negative numbers
         case '-' :
-            postfixStack.pop();
-            if (postfixStack.empty()) throw "Missing operands";
-            rhs = extractOperation(postfixStack);
-            if (postfixStack.empty()) throw "Missing operands";
-            lhs = extractOperation(postfixStack);
-            return new Subtraction(lhs, rhs);
-
+            //Fallthrough
         case '*' :
-            postfixStack.pop();
-            if (postfixStack.empty()) throw "Missing operands";
-            rhs = extractOperation(postfixStack);
-            if (postfixStack.empty()) throw "Missing operands";
-            lhs = extractOperation(postfixStack);
-            return new Multiplication(lhs, rhs);
-
+            //Fallthrough
         case '/' :
+            topValue = postfixStack.top();
             postfixStack.pop();
-            if (postfixStack.empty()) throw "Missing operands";
             rhs = extractOperation(postfixStack);
-            if (postfixStack.empty()) throw "Missing operands";
             lhs = extractOperation(postfixStack);
-            return new Division(lhs, rhs);
+            return factory_->getOperationFor(topValue, std::move(lhs), std::move(rhs));
         
         case '0' :
+            //Fallthrough
         case '1' :
+            //Fallthrough
         case '2' :
+            //Fallthrough
         case '3' :
+            //Fallthrough
         case '4' :
+            //Fallthrough
         case '5' :
+            //Fallthrough
         case '6' :
+            //Fallthrough
         case '7' :
+            //Fallthrough
         case '8' :
+            //Fallthrough
         case '9' :
+            //Fallthrough
         case '.' :
             value = stod(postfixStack.top());
             postfixStack.pop();
-            return new Constant(value);
+            return factory_->getOperationFor(value);
         
         default :
-            throw "Invalid equation format";
+            return std::make_unique<NotANumber>();
     }
 };
 
@@ -104,26 +111,42 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
         switch(infixString[i])
         {
             case '0' :
+                //Fallthrough
             case '1' :
+                //Fallthrough
             case '2' :
+                //Fallthrough
             case '3' :
+                //Fallthrough
             case '4' :
+                //Fallthrough
             case '5' :
+                //Fallthrough
             case '6' :
+                //Fallthrough
             case '7' :
+                //Fallthrough
             case '8' :
+                //Fallthrough
             case '9' :
+                //Fallthrough
             case '.' :
                 if (i > 0 && infixString[i - 1] == ')')
+                {
                     throw "Missing operator after parenthesis";
+                }
                 readNumber = "";
                 while (i < infixString.length() && (isdigit(infixString[i]) || infixString[i] == '.'))
+                {
                     readNumber += infixString[i++];
+                }
                 i--;
                 outputStack.push(readNumber);
                 break;
 
             case '+' :
+                //Fallthrough
+            // FIXME allow '-' to be used to denote negative numbers
             case '-' :
                 while (!operatorStack.empty() && operatorStack.top() != '(')
                 {
@@ -134,6 +157,7 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
                 break;
 
             case '*' :
+                //Fallthrough
             case '/' :
                 while (!operatorStack.empty() && (operatorStack.top() == '*' || operatorStack.top() == '/'))
                 {
@@ -145,7 +169,10 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
 
             case '(' :
                 if (i > 0 && (isdigit(infixString[i - 1]) || infixString[i - 1] == '.'))
+                {
+
                     throw "Missing operator before parenthesis";
+                }
                 operatorStack.push('(');
                 break;
             
@@ -157,11 +184,15 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
                         outputStack.push(std::string(1, operatorStack.top()));
                         operatorStack.pop();
                         if (operatorStack.empty())
+                        {
                             throw "Too many closing parentheses";
+                        }
                     }
                 }
                 if (operatorStack.empty())
+                {
                     throw "Too many closing parentheses";
+                }
                 operatorStack.pop();
                 break;
         }
@@ -170,7 +201,9 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
     while (!operatorStack.empty())
     {
         if (operatorStack.top() == '(')
+        {
             throw "Missing closing paretheses";
+        }
         outputStack.push(std::string(1, operatorStack.top()));
         operatorStack.pop();
     }
@@ -183,8 +216,12 @@ std::string Calculator::sanitizeString(std::string unsanitizedString)
 {
     std::string compactString = "";
     for(int i = 0; i < unsanitizedString.length(); i++)
+    {
         if (isdigit(unsanitizedString[i]) || unsanitizedString[i] == '(' || unsanitizedString[i] == ')' || unsanitizedString[i] == '.' || unsanitizedString[i] == '+' || unsanitizedString[i] == '-' || unsanitizedString[i] == '*' || unsanitizedString[i] == '/')
+        {
             compactString += unsanitizedString[i];
+        }
+    }
 
     return compactString;
 };

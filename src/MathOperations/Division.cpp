@@ -1,11 +1,12 @@
 #include "Division.h"
 
+#include <cmath>
 #include <memory>
 
-Division::Division(IMathOperation* lhs, IMathOperation* rhs)
+Division::Division(std::unique_ptr<IMathOperation>&& lhs, std::unique_ptr<IMathOperation>&& rhs)
 {
-    lhs_ = std::unique_ptr<IMathOperation>(lhs);
-    rhs_ = std::unique_ptr<IMathOperation>(rhs);
+    lhs_ = std::move(lhs);
+    rhs_ = std::move(rhs);
 };
 
 
@@ -19,6 +20,6 @@ double Division::calculate()
     }
     else
     {
-        return 0;
+        return nan("");
     }
 };

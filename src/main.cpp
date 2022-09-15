@@ -7,10 +7,13 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include <string>
+#include <memory>
 
 #include <ncurses.h>
 
 #include "Calculator.h"
+#include "IOperationFactory.h"
+#include "FourOperationFactory.h"
 #include "CalcHistory.h"
 #include "CalcHistoryTraverser.h"
 #include "CalculatorIO.h"
@@ -19,6 +22,8 @@
 
 void runMainLoop()
 {
+    std::unique_ptr<IOperationFactory> operationFactory = std::make_unique<FourOperationFactory>();
+    Calculator calculator(std::move(operationFactory));
     std::string historyFilePath = std::string(getenv("HOME")) + "/calc/history.txt";
     CalcHistory history;
     history.initialzeFromFilePath(historyFilePath);
@@ -127,7 +132,7 @@ void runMainLoop()
         }
         try
         {
-            double result = Calculator::calculate(sanitizedEquation);
+            double result = calculator.calculate(sanitizedEquation);
             wprintw(outputWin, CalcHistoryPair::doubleToString(result).c_str());
             wprintw(outputWin, " = ");
             wprintw(outputWin, sanitizedEquation.c_str());
