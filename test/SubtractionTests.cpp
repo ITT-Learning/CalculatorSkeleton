@@ -9,11 +9,9 @@
 
 using namespace testing;
 
-class SubtractionTests : public ::testing::Test {};
 
 
-
-TEST_F(SubtractionTests, SubtractsPositiveNumbers)
+TEST(SubtractionTests, SubtractsPositiveNumbers)
 {
     std::unique_ptr<Constant> constant_15 = std::make_unique<Constant>(15);
     std::unique_ptr<Constant> constant_10 = std::make_unique<Constant>(10);
@@ -23,7 +21,7 @@ TEST_F(SubtractionTests, SubtractsPositiveNumbers)
 
 
 
-TEST_F(SubtractionTests, SubtractsPositiveAndNegativeNumbers)
+TEST(SubtractionTests, SubtractsPositiveAndNegativeNumbers)
 {
     std::unique_ptr<Constant> constant_15 = std::make_unique<Constant>(15);
     std::unique_ptr<Constant> constant_N10 = std::make_unique<Constant>(-10);
@@ -33,7 +31,7 @@ TEST_F(SubtractionTests, SubtractsPositiveAndNegativeNumbers)
 
 
 
-TEST_F(SubtractionTests, SubtractsNegativeNumbers)
+TEST(SubtractionTests, SubtractsNegativeNumbers)
 {
     std::unique_ptr<Constant> constant_N10 = std::make_unique<Constant>(-10);
     std::unique_ptr<Constant> constant_N15 = std::make_unique<Constant>(-15);
@@ -43,7 +41,7 @@ TEST_F(SubtractionTests, SubtractsNegativeNumbers)
 
 
 
-TEST_F(SubtractionTests, SubtractsFractionalNumbers)
+TEST(SubtractionTests, SubtractsFractionalNumbers)
 {
     std::unique_ptr<Constant> constant_1p5 = std::make_unique<Constant>(1.5);
     std::unique_ptr<Constant> constant_1p3 = std::make_unique<Constant>(1.3);
@@ -53,7 +51,7 @@ TEST_F(SubtractionTests, SubtractsFractionalNumbers)
 
 
 
-TEST_F(SubtractionTests, SubtractsAssociativelyCorrectly)
+TEST(SubtractionTests, SubtractsAssociativelyCorrectly)
 {
     std::unique_ptr<Constant> constant1_N10 = std::make_unique<Constant>(-10);
     std::unique_ptr<Constant> constant2_N10 = std::make_unique<Constant>(-10);

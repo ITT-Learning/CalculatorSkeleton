@@ -9,8 +9,6 @@
 
 using namespace testing;
 
-// class AdditionTests : public ::testing::Test {};
-
 
 
 TEST(AdditionTests, AddsPositiveNumbers)

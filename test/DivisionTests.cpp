@@ -10,9 +10,9 @@
 
 using namespace testing;
 
-class DivisionTests : public ::testing::Test {};
 
-TEST_F(DivisionTests, DividesPositiveNumbers)
+
+TEST(DivisionTests, DividesPositiveNumbers)
 {
     std::unique_ptr<Constant> constant_20 = std::make_unique<Constant>(20);
     std::unique_ptr<Constant> constant_4 = std::make_unique<Constant>(4);
@@ -22,7 +22,7 @@ TEST_F(DivisionTests, DividesPositiveNumbers)
 
 
 
-TEST_F(DivisionTests, DividesPositiveAndNegativeNumbers)
+TEST(DivisionTests, DividesPositiveAndNegativeNumbers)
 {
     std::unique_ptr<Constant> constant_N20 = std::make_unique<Constant>(-20);
     std::unique_ptr<Constant> constant_4 = std::make_unique<Constant>(4);
@@ -32,7 +32,7 @@ TEST_F(DivisionTests, DividesPositiveAndNegativeNumbers)
 
 
 
-TEST_F(DivisionTests, DividesNegativeNumbers)
+TEST(DivisionTests, DividesNegativeNumbers)
 {
     std::unique_ptr<Constant> constant_N20 = std::make_unique<Constant>(-20);
     std::unique_ptr<Constant> constant_N4 = std::make_unique<Constant>(-4);
@@ -42,7 +42,7 @@ TEST_F(DivisionTests, DividesNegativeNumbers)
 
 
 
-TEST_F(DivisionTests, DividesDecimals)
+TEST(DivisionTests, DividesDecimals)
 {
     std::unique_ptr<Constant> constant_1p5 = std::make_unique<Constant>(1.5);
     std::unique_ptr<Constant> constant_0p5 = std::make_unique<Constant>(0.5);
@@ -52,7 +52,7 @@ TEST_F(DivisionTests, DividesDecimals)
 
 
 
-TEST_F(DivisionTests, DividesAssociativelyCorrectly)
+TEST(DivisionTests, DividesAssociativelyCorrectly)
 {
     std::unique_ptr<Constant> constant1_20 = std::make_unique<Constant>(20);
     std::unique_ptr<Constant> constant2_20 = std::make_unique<Constant>(20);
@@ -66,7 +66,7 @@ TEST_F(DivisionTests, DividesAssociativelyCorrectly)
 
 
 
-TEST_F(DivisionTests, ReturnsNanOnDivideByZero)
+TEST(DivisionTests, ReturnsNanOnDivideByZero)
 {
     std::unique_ptr<Constant> constant1 = std::make_unique<Constant>(1);
     std::unique_ptr<Constant> constant0 = std::make_unique<Constant>(0);

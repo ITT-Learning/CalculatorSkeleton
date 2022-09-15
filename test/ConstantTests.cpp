@@ -5,11 +5,9 @@ using namespace testing;
 
 #include "Constant.h"
 
-class ConstantTests : public ::testing::Test {};
 
 
-
-TEST_F(ConstantTests, HoldsItsValue)
+TEST(ConstantTests, HoldsItsValue)
 {
     double value = 10.5;
     Constant constValue(value);
@@ -18,7 +16,7 @@ TEST_F(ConstantTests, HoldsItsValue)
 
 
 
-TEST_F(ConstantTests, TwoConstantsWithSameValueAreEqual)
+TEST(ConstantTests, TwoConstantsWithSameValueAreEqual)
 {
     double value = 1;
     Constant constant1(value);
