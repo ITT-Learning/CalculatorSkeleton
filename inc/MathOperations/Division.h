@@ -8,7 +8,7 @@
 class Division : public IMathOperation
 {
     public:
-        Division(IMathOperation* lhs, IMathOperation* rhs);
+        Division(std::unique_ptr<IMathOperation>&& lhs, std::unique_ptr<IMathOperation>&& rhs);
 
         double calculate() override;
 

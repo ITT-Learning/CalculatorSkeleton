@@ -1,51 +1,65 @@
 #include<gtest/gtest.h>
 #include<gmock/gmock.h>
 
+#include <memory>
+
 #include "IMathOperation.h"
 #include "Addition.h"
 #include "Constant.h"
 
 using namespace testing;
 
-class AdditionTests : public ::testing::Test {};
+// class AdditionTests : public ::testing::Test {};
 
 
 
-TEST_F(AdditionTests, AddsPositiveNumbers)
+TEST(AdditionTests, AddsPositiveNumbers)
 {
-    Addition sumOf10And15(new Constant(10), new Constant(15));
+    std::unique_ptr<Constant> constant_10 = std::make_unique<Constant>(10);
+    std::unique_ptr<Constant> constant_15 = std::make_unique<Constant>(15);
+    Addition sumOf10And15(std::move(constant_10), std::move(constant_15));
     EXPECT_DOUBLE_EQ(sumOf10And15.calculate(), 25);
 };
 
 
 
-TEST_F(AdditionTests, AddsPositiveAndNegativeNumbers)
+TEST(AdditionTests, AddsPositiveAndNegativeNumbers)
 {
-    Addition sumOfN10And15(new Constant(-10), new Constant(15));
+    std::unique_ptr<Constant> constant_N10 = std::make_unique<Constant>(-10);
+    std::unique_ptr<Constant> constant_15 = std::make_unique<Constant>(15);
+    Addition sumOfN10And15(std::move(constant_N10), std::move(constant_15));
     EXPECT_DOUBLE_EQ(sumOfN10And15.calculate(), 5);
 };
 
 
 
-TEST_F(AdditionTests, AddsNegativeNumbers)
+TEST(AdditionTests, AddsNegativeNumbers)
 {
-    Addition sumOfN10AndN15(new Constant(-10), new Constant(-15));
+    std::unique_ptr<Constant> constant_N10 = std::make_unique<Constant>(-10);
+    std::unique_ptr<Constant> constant_N15 = std::make_unique<Constant>(-15);
+    Addition sumOfN10AndN15(std::move(constant_N10), std::move(constant_N15));
     EXPECT_DOUBLE_EQ(sumOfN10AndN15.calculate(), -25);
 };
 
 
 
-TEST_F(AdditionTests, AddsFractionalNumbers)
+TEST(AdditionTests, AddsFractionalNumbers)
 {
-    Addition sumOf1p5And1p3(new Constant(1.5), new Constant(1.3));
+    std::unique_ptr<Constant> constant_1p5 = std::make_unique<Constant>(1.5);
+    std::unique_ptr<Constant> constant_1p3 = std::make_unique<Constant>(1.3);
+    Addition sumOf1p5And1p3(std::move(constant_1p5), std::move(constant_1p3));
     EXPECT_DOUBLE_EQ(sumOf1p5And1p3.calculate(), 2.8);
 };
 
 
 
-TEST_F(AdditionTests, AddsAssociativelyCorrectly)
+TEST(AdditionTests, AddsAssociativelyCorrectly)
 {
-    Addition sumOfN10And15(new Constant(-10), new Constant(15));
-    Addition sumOf15AndN10(new Constant(15), new Constant(-10));
+    std::unique_ptr<Constant> constant1_N10 = std::make_unique<Constant>(-10);
+    std::unique_ptr<Constant> constant2_N10 = std::make_unique<Constant>(-10);
+    std::unique_ptr<Constant> constant1_15 = std::make_unique<Constant>(15);
+    std::unique_ptr<Constant> constant2_15 = std::make_unique<Constant>(15);
+    Addition sumOfN10And15(std::move(constant1_N10), std::move(constant1_15));
+    Addition sumOf15AndN10(std::move(constant2_15), std::move(constant2_N10));
     EXPECT_DOUBLE_EQ(sumOf15AndN10.calculate(), sumOfN10And15.calculate());
 };

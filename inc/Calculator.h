@@ -12,21 +12,24 @@
 
 #include <string>
 #include <stack>
+#include <memory>
 
 #include "IMathOperation.h"
+#include "IOperationFactory.h"
 
 class Calculator
 {
     public:
-        static double calculate(std::string equationString);
-        static std::string sanitizeString(std::string unsanitizedString);
+        Calculator(std::unique_ptr<IOperationFactory>&& factory);
+
+        double                calculate(std::string equationString);
+        static std::string    sanitizeString(std::string unsanitizedString);
 
     private:
-        Calculator(){};
+        std::unique_ptr<IOperationFactory> factory_;
 
-        static IMathOperation* parseString(std::string equationString);
-        static IMathOperation* extractOperation(std::stack<std::string>& postfixStack);
-        static std::stack<std::string> infixToPostfix(std::string infixString);
+        std::unique_ptr<IMathOperation>     extractOperation(std::stack<std::string>& postfixStack);
+        static std::stack<std::string>      infixToPostfix(std::string infixString);
 };
 
 #endif

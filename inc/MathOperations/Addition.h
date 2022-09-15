@@ -8,7 +8,7 @@
 class Addition : public IMathOperation
 {
     public:
-        Addition(IMathOperation* lhs, IMathOperation* rhs);
+        Addition(std::unique_ptr<IMathOperation>&& lhs, std::unique_ptr<IMathOperation>&& rhs);
 
         double calculate() override;
 
