@@ -16,20 +16,22 @@
 
 #include "IMathOperation.h"
 #include "IOperationFactory.h"
+#include "Result.h"
+#include "PostfixResult.h"
 
 class Calculator
 {
     public:
         Calculator(std::unique_ptr<IOperationFactory>&& factory);
 
-        double                calculate(std::string equationString);
+        Result<double>        calculateResult(std::string equationString)   const;
         static std::string    sanitizeString(std::string unsanitizedString);
 
     private:
         std::unique_ptr<IOperationFactory> factory_;
 
-        std::unique_ptr<IMathOperation>     extractOperation(std::stack<std::string>& postfixStack);
-        static std::stack<std::string>      infixToPostfix(std::string infixString);
+        Result<std::unique_ptr<IMathOperation>>  extractOperation(std::stack<std::string>& postfixStack) const;
+        static Result<std::stack<std::string>>   infixToPostfix(std::string infixString);
 };
 
 #endif

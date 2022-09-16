@@ -16,9 +16,9 @@ void CalcHistory::initialzeFromFilePath(std::string filePath)
     {
         std::string equation;
         std::string resultString;
-        double result;
+        std::string result;
 
-        getline(fin, resultString, '=');
+        getline(fin, result, '=');
 
         fin.ignore(1); // ignore the space after the equals
         if (fin.eof())
@@ -27,7 +27,7 @@ void CalcHistory::initialzeFromFilePath(std::string filePath)
         }
 
         getline(fin, equation);
-        result = stod(resultString);
+        // result = stod(resultString);
 
         entries_.push_back(CalcHistoryPair(equation, result));
     }
@@ -48,7 +48,7 @@ void CalcHistory::saveToFilePath(std::string filePath) const
 
 
 
-void CalcHistory::addEntry(std::string equation, double result)
+void CalcHistory::addEntry(std::string equation, std::string result)
 {
     entries_.push_back(CalcHistoryPair(equation, result));
 };
