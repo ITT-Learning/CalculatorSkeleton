@@ -13,6 +13,8 @@
 #include <stack>
 #include <memory>
 
+#include "Result.h"
+#include "PostfixResult.h"
 #include "IOperationFactory.h"
 #include "Constant.h"
 #include "Addition.h"
@@ -28,21 +30,27 @@ Calculator::Calculator(std::unique_ptr<IOperationFactory>&& factory)
 
 
 
-double Calculator::calculate(std::string equationString)
+Result<double> Calculator::calculateResult(std::string equationString) const
 {
     if (equationString.empty())
     {
-        return nan("");
+        return Result<double>(nan(""), false, "No valid equation");
     }
-    std::stack<std::string> postfixStack = infixToPostfix(equationString);
-    std::unique_ptr<IMathOperation> topLevelOperation = extractOperation(postfixStack);
+    Result<std::stack<std::string>> postfixResult = infixToPostfix(equationString);
+    if (!postfixResult.isValid())
+    {
+        return Result<double>(nan(""), false, postfixResult.getErrorMessage());
+    }
+    // std::stack<std::string> postfixStack = postfixResult.resultStack_;
+    // TODO return a MathResult object continaing a double of the result, error/nan flags
+    std::unique_ptr<IMathOperation> topLevelOperation = extractOperation(postfixResult.getResult());
     double result = topLevelOperation->calculate();
-    return result;
+    return Result<double>(result);
 };
 
 
 
-std::unique_ptr<IMathOperation> Calculator::extractOperation(std::stack<std::string> &postfixStack)
+Result<std::unique_ptr<IMathOperation>> Calculator::extractOperation(std::stack<std::string> &postfixStack) const
 {
     if (postfixStack.empty())
     {
@@ -100,7 +108,7 @@ std::unique_ptr<IMathOperation> Calculator::extractOperation(std::stack<std::str
 
 
 
-std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
+Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixString)
 {
     std::stack<std::string> outputStack;
     std::stack<char> operatorStack;    
@@ -133,7 +141,7 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
             case '.' :
                 if (i > 0 && infixString[i - 1] == ')')
                 {
-                    throw "Missing operator after parenthesis";
+                    return Result<std::stack<std::string>>(outputStack, false, "Missing operator after parenthesis");
                 }
                 readNumber = "";
                 while (i < infixString.length() && (isdigit(infixString[i]) || infixString[i] == '.'))
@@ -171,7 +179,7 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
                 if (i > 0 && (isdigit(infixString[i - 1]) || infixString[i - 1] == '.'))
                 {
 
-                    throw "Missing operator before parenthesis";
+                    return Result<std::stack<std::string>>(outputStack, false, "Missing operator before parenthesis");
                 }
                 operatorStack.push('(');
                 break;
@@ -185,13 +193,13 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
                         operatorStack.pop();
                         if (operatorStack.empty())
                         {
-                            throw "Too many closing parentheses";
+                            return Result<std::stack<std::string>>(outputStack, false, "Too many closing parentheses");
                         }
                     }
                 }
                 if (operatorStack.empty())
                 {
-                    throw "Too many closing parentheses";
+                    return Result<std::stack<std::string>>(outputStack, false, "Too many closing parentheses");
                 }
                 operatorStack.pop();
                 break;
@@ -202,12 +210,12 @@ std::stack<std::string> Calculator::infixToPostfix(std::string infixString)
     {
         if (operatorStack.top() == '(')
         {
-            throw "Missing closing paretheses";
+            return Result<std::stack<std::string>>(outputStack, false, "Missing closing paretheses");
         }
         outputStack.push(std::string(1, operatorStack.top()));
         operatorStack.pop();
     }
-    return outputStack;
+    return Result<std::stack<std::string>>(outputStack);
 };
 
 

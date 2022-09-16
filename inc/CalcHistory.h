@@ -12,11 +12,11 @@ class CalcHistory
 {
     public:
         void initialzeFromFilePath(std::string filePath);
-        void saveToFilePath(std::string filePath) const;
+        void saveToFilePath(std::string filePath)         const;
 
         static std::string toString(const CalcHistory& calcHistory);
 
-        void addEntry(std::string equation, double result);
+        void addEntry(std::string equation, std::string result);
 
         std::vector<CalcHistoryPair>::const_iterator oldest() const;
         std::vector<CalcHistoryPair>::const_iterator newest() const;

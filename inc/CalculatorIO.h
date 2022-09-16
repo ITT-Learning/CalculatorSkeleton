@@ -2,6 +2,7 @@
 #define CALCULATOR_IO_H
 
 #include <cctype>
+#include <math.h>
 #include <string>
 
 #include <ncurses.h>
@@ -129,5 +130,7 @@ void saveHistory(const CalcHistory& history)
     std::string historyFilePath = std::string(getenv("HOME")) + "/calc/history.txt";
     history.saveToFilePath(historyFilePath);
 };
+
+
 
 #endif
