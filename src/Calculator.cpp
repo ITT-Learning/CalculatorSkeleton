@@ -14,7 +14,6 @@
 #include <memory>
 
 #include "Result.h"
-#include "PostfixResult.h"
 #include "IOperationFactory.h"
 #include "Constant.h"
 #include "Addition.h"
@@ -34,31 +33,39 @@ Result<double> Calculator::calculateResult(std::string equationString) const
 {
     if (equationString.empty())
     {
-        return Result<double>(nan(""), false, "No valid equation");
+        return Result<double>(std::make_unique<double>(nan("")), false, "No valid equation");
     }
+
     Result<std::stack<std::string>> postfixResult = infixToPostfix(equationString);
     if (!postfixResult.isValid())
     {
-        return Result<double>(nan(""), false, postfixResult.getErrorMessage());
+        return Result<double>(std::make_unique<double>(nan("")), false, postfixResult.getError());
     }
-    // std::stack<std::string> postfixStack = postfixResult.resultStack_;
-    // TODO return a MathResult object continaing a double of the result, error/nan flags
-    std::unique_ptr<IMathOperation> topLevelOperation = extractOperation(postfixResult.getResult());
-    double result = topLevelOperation->calculate();
-    return Result<double>(result);
+
+    std::stack<std::string> resultStack = *(postfixResult.consumeResult());
+    Result<IMathOperation> operationResult = extractOperation(resultStack);
+    if(!operationResult.isValid())
+    {
+        return Result<double>(std::make_unique<double>(nan("")), false, operationResult.getError());
+    }
+    
+    double result = operationResult.consumeResult()->calculate();
+    return Result<double>(std::make_unique<double>(result));
 };
 
 
 
-Result<std::unique_ptr<IMathOperation>> Calculator::extractOperation(std::stack<std::string> &postfixStack) const
+Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &postfixStack) const
 {
     if (postfixStack.empty())
     {
         throw "Empty equation";
     }
-    std::unique_ptr<IMathOperation> lhs;
-    std::unique_ptr<IMathOperation> rhs;
+    Result<IMathOperation> lhs;
+    Result<IMathOperation> rhs;
+    std::unique_ptr<IMathOperation> operationUPtr;
     double value;
+
     std::string topValue;
     switch(postfixStack.top()[0])
     {
@@ -72,9 +79,32 @@ Result<std::unique_ptr<IMathOperation>> Calculator::extractOperation(std::stack<
         case '/' :
             topValue = postfixStack.top();
             postfixStack.pop();
+            if(postfixStack.empty())
+            {
+                return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Missing operands");
+            }
             rhs = extractOperation(postfixStack);
+            if(!rhs.isValid())
+            {
+                return Result<IMathOperation>(std::make_unique<NotANumber>(), false, rhs.getError());
+            }
+            
+            if(postfixStack.empty())
+            {
+                return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Missing operands");
+            }
             lhs = extractOperation(postfixStack);
-            return factory_->getOperationFor(topValue, std::move(lhs), std::move(rhs));
+            if(!lhs.isValid())
+            {
+                return Result<IMathOperation>(std::make_unique<NotANumber>(), false, lhs.getError());
+            }
+
+            operationUPtr = factory_->getOperationFor(
+                             topValue, 
+                             lhs.consumeResult(),
+                             rhs.consumeResult()
+                         );
+            return Result<IMathOperation>(std::move(operationUPtr));
         
         case '0' :
             //Fallthrough
@@ -99,10 +129,11 @@ Result<std::unique_ptr<IMathOperation>> Calculator::extractOperation(std::stack<
         case '.' :
             value = stod(postfixStack.top());
             postfixStack.pop();
-            return factory_->getOperationFor(value);
+            operationUPtr = factory_->getOperationFor(value);
+            return Result<IMathOperation>(std::move(operationUPtr));
         
         default :
-            return std::make_unique<NotANumber>();
+            return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Invalid equation format");
     }
 };
 
@@ -141,7 +172,10 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
             case '.' :
                 if (i > 0 && infixString[i - 1] == ')')
                 {
-                    return Result<std::stack<std::string>>(outputStack, false, "Missing operator after parenthesis");
+                    return Result<std::stack<std::string>>(
+                               std::make_unique<std::stack<std::string>>(outputStack),
+                               false,
+                               "Missing operator after parenthesis");
                 }
                 readNumber = "";
                 while (i < infixString.length() && (isdigit(infixString[i]) || infixString[i] == '.'))
@@ -179,7 +213,10 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
                 if (i > 0 && (isdigit(infixString[i - 1]) || infixString[i - 1] == '.'))
                 {
 
-                    return Result<std::stack<std::string>>(outputStack, false, "Missing operator before parenthesis");
+                    return Result<std::stack<std::string>>(
+                               std::make_unique<std::stack<std::string>>(outputStack),
+                               false,
+                               "Missing operator before parenthesis");
                 }
                 operatorStack.push('(');
                 break;
@@ -193,13 +230,19 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
                         operatorStack.pop();
                         if (operatorStack.empty())
                         {
-                            return Result<std::stack<std::string>>(outputStack, false, "Too many closing parentheses");
+                            return Result<std::stack<std::string>>(
+                               std::make_unique<std::stack<std::string>>(outputStack),
+                               false,
+                               "Too many closing parentheses");
                         }
                     }
                 }
                 if (operatorStack.empty())
                 {
-                    return Result<std::stack<std::string>>(outputStack, false, "Too many closing parentheses");
+                    return Result<std::stack<std::string>>(
+                               std::make_unique<std::stack<std::string>>(outputStack),
+                               false,
+                               "Too many closing parentheses");
                 }
                 operatorStack.pop();
                 break;
@@ -210,12 +253,15 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
     {
         if (operatorStack.top() == '(')
         {
-            return Result<std::stack<std::string>>(outputStack, false, "Missing closing paretheses");
+            return Result<std::stack<std::string>>(
+                               std::make_unique<std::stack<std::string>>(outputStack),
+                               false,
+                               "Missing closing paretheses");
         }
         outputStack.push(std::string(1, operatorStack.top()));
         operatorStack.pop();
     }
-    return Result<std::stack<std::string>>(outputStack);
+    return Result<std::stack<std::string>>(std::make_unique<std::stack<std::string>>(outputStack));
 };
 
 

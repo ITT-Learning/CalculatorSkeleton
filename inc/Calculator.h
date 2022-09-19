@@ -17,7 +17,6 @@
 #include "IMathOperation.h"
 #include "IOperationFactory.h"
 #include "Result.h"
-#include "PostfixResult.h"
 
 class Calculator
 {
@@ -30,8 +29,8 @@ class Calculator
     private:
         std::unique_ptr<IOperationFactory> factory_;
 
-        Result<std::unique_ptr<IMathOperation>>  extractOperation(std::stack<std::string>& postfixStack) const;
-        static Result<std::stack<std::string>>   infixToPostfix(std::string infixString);
+        Result<IMathOperation>                  extractOperation(std::stack<std::string>& postfixStack) const;
+        static Result<std::stack<std::string>>  infixToPostfix(std::string infixString);
 };
 
 #endif

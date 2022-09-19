@@ -4,10 +4,12 @@
 #include <cctype>
 #include <math.h>
 #include <string>
+#include <sstream>
 
 #include <ncurses.h>
 #include "CalcHistory.h"
 #include "CalcHistoryTraverser.h"
+
 
 
 const int HISTORY_WINDOW_WIDTH = 25;
@@ -132,5 +134,22 @@ void saveHistory(const CalcHistory& history)
 };
 
 
+
+int findPrecisionFor(double number, int decimalDigits = 4)
+{
+    int baseLog = (int)log10(std::abs(number));
+    int effectiveLog = std::max(baseLog + 1 + decimalDigits, baseLog * - 1);
+    return effectiveLog;
+};
+
+
+
+std::string doubleToString(double number)
+{
+    std::stringstream ss;
+    ss.precision(findPrecisionFor(number));
+    ss << number;
+    return ss.str();
+};
 
 #endif
