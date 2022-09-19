@@ -14,7 +14,7 @@
 #include "Calculator.h"
 #include "IOperationFactory.h"
 #include "FourOperationFactory.h"
-#include "MathResult.h"
+#include "Result.h"
 #include "CalcHistory.h"
 #include "CalcHistoryTraverser.h"
 #include "CalculatorIO.h"
@@ -131,40 +131,27 @@ void runMainLoop()
             wprintw(outputWin, "No valid command or equation found.\n");
             continue;
         }
-        // try
-        // {
-            MathResult result = calculator.calculateResult(sanitizedEquation);
-            if(!result.isValid())
-            {
-                wattron(outputWin, A_BOLD);
-                wprintw(outputWin, "Error: ");
-            }
-            wprintw(outputWin, result.getResultString().c_str());
-            if(!result.isValid())
-            {
-                wprintw(outputWin, "\n");
-                wattroff(outputWin, A_BOLD);
-            }
-            else
-            {
 
-                wprintw(outputWin, " = ");
-                wprintw(outputWin, sanitizedEquation.c_str());
-                wprintw(outputWin, "\n");
-                history.addEntry(sanitizedEquation, result.getResultString());
-                historyTraverser.reset();
-                equation = "";
-                cursorPos = 0;
-            }
-        // }
-        // catch(const char* message)
-        // {
-            // wattron(outputWin, A_BOLD);
-            // wprintw(outputWin, "Error: ");
-            // wprintw(outputWin, message);
-            // wprintw(outputWin, "\n");
-            // wattroff(outputWin, A_BOLD);
-        // }
+        Result<double> result = calculator.calculateResult(sanitizedEquation);
+        if(!result.isValid())
+        {
+            wattron(outputWin, A_BOLD);
+            wprintw(outputWin, "Error: ");
+            wprintw(outputWin, result.getError().c_str());
+            wprintw(outputWin, "\n");
+            wattroff(outputWin, A_BOLD);
+            continue;
+        }
+
+        std::string resultString = doubleToString(*(result.consumeResult()));
+        wprintw(outputWin, resultString.c_str());
+        wprintw(outputWin, " = ");
+        wprintw(outputWin, sanitizedEquation.c_str());
+        wprintw(outputWin, "\n");
+        history.addEntry(sanitizedEquation, resultString);
+        historyTraverser.reset();
+        equation = "";
+        cursorPos = 0;
     }
 };
 
