@@ -14,6 +14,8 @@ class IMathOperation
 {
     public:
         virtual double calculate() = 0;
+
+        virtual ~IMathOperation() {};
 };
 
 #endif

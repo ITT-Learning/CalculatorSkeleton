@@ -4,9 +4,48 @@
 using namespace testing;
 
 #include "Calculator.h"
+
+#include <string>
+#include <vector>
+#include <memory>
+
 #include "IOperationFactory.h"
 #include "FourOperationFactory.h"
 #include "Result.h"
+#include "Addition.h"
+#include "Constant.h"
+
+
+
+class MockOperationFactory : public IOperationFactory
+{
+    public:
+        MOCK_METHOD(
+            std::unique_ptr<IMathOperation>, 
+            getOperationFor,
+            (
+                std::string operatorName,
+                std::unique_ptr<IMathOperation>&& lhs,
+                std::unique_ptr<IMathOperation>&& rhs
+            ),
+            (const, override)
+        );
+
+        MOCK_METHOD(
+            std::unique_ptr<IMathOperation>,
+            getConstantFor,
+            (double constantValue),
+            (const, override)
+        );
+};
+
+
+
+class MockMathOperation : public IMathOperation
+{
+    public:
+        MOCK_METHOD(double, calculate, (), (override));
+};
 
 
 
@@ -18,9 +57,274 @@ class GivenACalculatorWithAFourOperationFactory : public ::testing::Test
         : calculator_(std::make_unique<FourOperationFactory>()) {};
 };
 
-TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAnEmptyString_ThenReturnsAnInvalidResult)
+
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAnEmptyString_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
     auto result = calculator_.calculateResult("");
-    EXPECT_FALSE(result.isValid());
-    EXPECT_EQ(result.getError(), "No valid equation");
+    std::string expectedErrorMessage = "No valid equation";
+
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedErrorMessage, result.getError()) << "Error message should be \"" << expectedErrorMessage << "\" (was \"" << result.getError() << "\")";
+};
+
+
+
+TEST(GivenACalculator, WhenCalculatingOnAStringWithInvalidCharacters_ThenReturnsAValidResultWhileIgnoringInvaildCharacters)
+{
+
+    std::string potentiallyBadString = "1+abc1";
+    double expectedResult = 2;
+
+    std::vector<double>       infixConstants { 1, 1 };
+    std::vector<std::string>  infixOperators { "+" };
+
+    int constantCallCount = infixConstants.size();
+    int operatorCallCount = infixOperators.size();
+
+
+    std::unique_ptr<MockOperationFactory> mockOperationFactory = std::make_unique<MockOperationFactory>();
+    EXPECT_CALL(*mockOperationFactory, getConstantFor)
+        .Times(Exactly(constantCallCount))
+        .WillRepeatedly(Invoke(
+            [&infixConstants, &constantCallCount]
+            (double constantValue) -> std::unique_ptr<IMathOperation>
+            {
+                EXPECT_EQ(infixConstants[--constantCallCount], constantValue);
+                return std::make_unique<MockMathOperation>();
+            }
+        ));
+
+    EXPECT_CALL(*mockOperationFactory, getOperationFor)
+        .Times(Exactly(operatorCallCount))
+        .WillRepeatedly(Invoke(
+            [&infixOperators, &operatorCallCount, expectedResult]
+            (std::string operatorName,
+            std::unique_ptr<IMathOperation>&& lhs,
+            std::unique_ptr<IMathOperation>&& rhs)
+            {
+                EXPECT_EQ(infixOperators[--operatorCallCount], operatorName);
+                MockMathOperation* newOperation = new MockMathOperation();
+                EXPECT_CALL(*newOperation, calculate)
+                    .WillRepeatedly(Invoke(
+                        [expectedResult]
+                        () -> double
+                        {
+                            return expectedResult;
+                        }
+                    ));
+                return std::unique_ptr<MockMathOperation>(newOperation);
+            }
+        ));
+
+    Calculator calculator(std::move(mockOperationFactory));
+
+    auto result = calculator.calculateResult(potentiallyBadString);
+
+    EXPECT_TRUE(result.isValid()) << "Result should be valid";
+    EXPECT_DOUBLE_EQ(expectedResult, *result.consumeResult()) << "Should evaluate \"" << potentiallyBadString << "\" to " << expectedResult;
+};
+
+
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithBothMissingOperands_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
+{
+    auto result = calculator_.calculateResult("+");
+    std::string expectedErrorMessage = "Missing operands";
+
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedErrorMessage, result.getError()) << "Error message should be \"" << expectedErrorMessage << "\" (was \"" << result.getError() << "\")";
+};
+
+
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingSecondOperand_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
+{
+    auto result = calculator_.calculateResult("1+");
+    std::string expectedErrorMessage = "Missing operands";
+
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedErrorMessage, result.getError()) << "Error message should be \"" << expectedErrorMessage << "\" (was \"" << result.getError() << "\")";
+};
+
+
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingFirstOperand_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
+{
+    auto result = calculator_.calculateResult("+1");
+    std::string expectedErrorMessage = "Missing operands";
+
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedErrorMessage, result.getError()) << "Error message should be \"" << expectedErrorMessage << "\" (was \"" << result.getError() << "\")";
+};
+
+
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingClosingParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
+{
+    auto result = calculator_.calculateResult("(1+1");
+    std::string expectedErrorMessage = "Missing closing parenthesis";
+
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedErrorMessage, result.getError()) << "Error message should be \"" << expectedErrorMessage << "\" (was \"" << result.getError() << "\")";
+};
+
+
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingMultipleClosingParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
+{
+    auto result = calculator_.calculateResult("(((1+1)");
+    std::string expectedErrorMessage = "Missing closing parenthesis";
+
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedErrorMessage, result.getError()) << "Error message should be \"" << expectedErrorMessage << "\" (was \"" << result.getError() << "\")";
+};
+
+
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingOpeningParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
+{
+    auto result = calculator_.calculateResult("1+1)");
+    std::string expectedErrorMessage = "Too many closing parenthesis";
+
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedErrorMessage, result.getError()) << "Error message should be \"" << expectedErrorMessage << "\" (was \"" << result.getError() << "\")";
+};
+
+
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingMultipleOpeningParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
+{
+    auto result = calculator_.calculateResult("(1+1)))");
+    std::string expectedErrorMessage = "Too many closing parenthesis";
+
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedErrorMessage, result.getError()) << "Error message should be \"" << expectedErrorMessage << "\" (was \"" << result.getError() << "\")";
+};
+
+
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingOperatorBeforeParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
+{
+    auto result = calculator_.calculateResult("1(1+1)");
+    std::string expectedErrorMessage = "Missing operator before parenthesis";
+
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedErrorMessage, result.getError()) << "Error message should be \"" << expectedErrorMessage << "\" (was \"" << result.getError() << "\")";
+};
+
+
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingOperatorAfterParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
+{
+    auto result = calculator_.calculateResult("(1+1)1");
+    std::string expectedErrorMessage = "Missing operator after parenthesis";
+
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedErrorMessage, result.getError()) << "Error message should be \"" << expectedErrorMessage << "\" (was \"" << result.getError() << "\")";
+};
+
+
+
+TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOperations)
+{
+
+    std::string               infixEquation1 = "10+10*10+(10*(10+10))";
+    std::vector<double>       infixConstants1 { 10, 10, 10, 10, 10, 10 };
+    std::vector<std::string>  infixOperators1 { "+", "*", "*", "+", "+" };
+    double                    expectedResult1 = 310;
+
+    int constantCallCount1 = 0;
+    int operatorCallCount1 = 0;
+    
+    std::string               infixEquation2 = "10+10*10+10*10+10";
+    std::vector<double>       infixConstants2 { 10, 10, 10, 10, 10, 10 };
+    std::vector<std::string>  infixOperators2 { "*", "*", "+", "+", "+" };
+    double                    expectedResult2 = 220;
+
+    int constantCallCount2 = 0;
+    int operatorCallCount2 = 0;
+
+    std::unique_ptr<MockOperationFactory> mockOperationFactory1 = std::make_unique<MockOperationFactory>();
+    EXPECT_CALL(*mockOperationFactory1, getConstantFor)
+        .Times(Exactly(infixConstants1.size()))
+        .WillRepeatedly(Invoke(
+            [&infixConstants1, &constantCallCount1]
+            (double constantValue) -> std::unique_ptr<IMathOperation>
+            {
+                EXPECT_EQ(infixConstants1[constantCallCount1], constantValue) << "failed on constantCallCount1 = " << constantCallCount1;
+                constantCallCount1++;
+                return std::make_unique<MockMathOperation>();
+            }
+        ));
+
+    EXPECT_CALL(*mockOperationFactory1, getOperationFor)
+        .Times(Exactly(infixOperators1.size()))
+        .WillRepeatedly(Invoke(
+            [&infixOperators1, &operatorCallCount1, expectedResult1]
+            (std::string operatorName,
+            std::unique_ptr<IMathOperation>&& lhs,
+            std::unique_ptr<IMathOperation>&& rhs) -> std::unique_ptr<IMathOperation>
+            {
+                EXPECT_EQ(infixOperators1[operatorCallCount1], operatorName) << "failed on operatorCallCount1 = " << operatorCallCount1;
+                operatorCallCount1++;
+                MockMathOperation* newOperation = new MockMathOperation();
+                EXPECT_CALL(*newOperation, calculate)
+                    .WillRepeatedly(Invoke(
+                        [expectedResult1]
+                        () -> double
+                        {
+                            return expectedResult1;
+                        }
+                    ));
+                return std::unique_ptr<MockMathOperation>(newOperation);
+            }
+        ));
+
+    std::unique_ptr<MockOperationFactory> mockOperationFactory2 = std::make_unique<MockOperationFactory>();
+    EXPECT_CALL(*mockOperationFactory2, getConstantFor)
+        .Times(Exactly(infixConstants2.size()))
+        .WillRepeatedly(Invoke(
+            [&infixConstants2, &constantCallCount2]
+            (double constantValue) -> std::unique_ptr<IMathOperation>
+            {
+                EXPECT_EQ(infixConstants2[constantCallCount2], constantValue) << "failed on constantCallCount2 = " << constantCallCount2;
+                constantCallCount2++;
+                return std::make_unique<MockMathOperation>();
+            }
+        ));
+
+    EXPECT_CALL(*mockOperationFactory2, getOperationFor)
+        .Times(Exactly(infixOperators2.size()))
+        .WillRepeatedly(Invoke(
+            [&infixOperators2, &operatorCallCount2, expectedResult2]
+            (std::string operatorName,
+            std::unique_ptr<IMathOperation>&& lhs,
+            std::unique_ptr<IMathOperation>&& rhs) -> std::unique_ptr<IMathOperation>
+            {
+                EXPECT_EQ(infixOperators2[operatorCallCount2], operatorName)  << "failed on operatorCallCount2 = " << operatorCallCount2;
+                operatorCallCount2++;
+                MockMathOperation* newOperation = new MockMathOperation();
+                EXPECT_CALL(*newOperation, calculate)
+                    .WillRepeatedly(Invoke(
+                        [expectedResult2]
+                        () -> double
+                        {
+                            return expectedResult2;
+                        }
+                    ));
+                return std::unique_ptr<MockMathOperation>(newOperation);
+            }
+        ));
+
+    Calculator calculator1(std::move(mockOperationFactory1));
+    Calculator calculator2(std::move(mockOperationFactory2));
+
+    auto result1 = calculator1.calculateResult(infixEquation1);
+    auto result2 = calculator2.calculateResult(infixEquation2);
+
+    ASSERT_TRUE(result1.isValid()) << "Result 1 should be valid - error: " << result1.getError();
+    ASSERT_TRUE(result2.isValid()) << "Result 2 should be valid - error: " << result2.getError();
+    EXPECT_EQ(expectedResult1, *result1.consumeResult());
+    EXPECT_EQ(expectedResult2, *result2.consumeResult());
 };
