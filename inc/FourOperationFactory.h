@@ -13,9 +13,9 @@ class FourOperationFactory : public IOperationFactory
             std::string operatorName,
             std::unique_ptr<IMathOperation>&& lhs,
             std::unique_ptr<IMathOperation>&& rhs
-        ) override;
+        ) const override;
 
-        std::unique_ptr<IMathOperation> getOperationFor(double constantValue) override;
+        std::unique_ptr<IMathOperation> getConstantFor(double constantValue) const override;
 };
 
 #endif

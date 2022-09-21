@@ -15,9 +15,9 @@
 std::unique_ptr<IMathOperation> FourOperationFactory::getOperationFor(
     std::string operatorName,
     std::unique_ptr<IMathOperation>&& lhs,
-    std::unique_ptr<IMathOperation>&& rhs)
+    std::unique_ptr<IMathOperation>&& rhs) const
 {
-    if(!lhs || !rhs)
+    if(!lhs || !rhs || operatorName.empty())
     {
         return std::make_unique<NotANumber>();
     }
@@ -44,7 +44,7 @@ std::unique_ptr<IMathOperation> FourOperationFactory::getOperationFor(
 
 
 
-std::unique_ptr<IMathOperation> FourOperationFactory::getOperationFor(double constantValue)
+std::unique_ptr<IMathOperation> FourOperationFactory::getConstantFor(double constantValue) const
 {
     return std::make_unique<Constant>(constantValue);
 };

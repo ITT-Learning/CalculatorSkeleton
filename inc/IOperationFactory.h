@@ -9,13 +9,15 @@
 class IOperationFactory
 {
     public:
+        virtual ~IOperationFactory() {};
+
         virtual std::unique_ptr<IMathOperation> getOperationFor(
             std::string operatorName,
             std::unique_ptr<IMathOperation>&& lhs,
             std::unique_ptr<IMathOperation>&& rhs
-        ) = 0;
+        ) const = 0;
 
-        virtual std::unique_ptr<IMathOperation> getOperationFor(double constantValue) = 0;
+        virtual std::unique_ptr<IMathOperation> getConstantFor(double constantValue) const = 0;
 };
 
 #endif

@@ -59,14 +59,15 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
 {
     if (postfixStack.empty())
     {
-        throw "Empty equation";
+        return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Empty equation");
     }
+    
     Result<IMathOperation> lhs;
     Result<IMathOperation> rhs;
     std::unique_ptr<IMathOperation> operationUPtr;
     double value;
+    std::string operatorName;
 
-    std::string topValue;
     switch(postfixStack.top()[0])
     {
         case '+' :
@@ -77,7 +78,7 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
         case '*' :
             //Fallthrough
         case '/' :
-            topValue = postfixStack.top();
+            operatorName = postfixStack.top();
             postfixStack.pop();
             if(postfixStack.empty())
             {
@@ -100,10 +101,10 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
             }
 
             operationUPtr = factory_->getOperationFor(
-                             topValue, 
-                             lhs.consumeResult(),
-                             rhs.consumeResult()
-                         );
+                                operatorName, 
+                                lhs.consumeResult(),
+                                rhs.consumeResult()
+                            );
             return Result<IMathOperation>(std::move(operationUPtr));
         
         case '0' :
@@ -129,11 +130,11 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
         case '.' :
             value = stod(postfixStack.top());
             postfixStack.pop();
-            operationUPtr = factory_->getOperationFor(value);
+            operationUPtr = factory_->getConstantFor(value);
             return Result<IMathOperation>(std::move(operationUPtr));
         
         default :
-            return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Invalid equation format");
+            return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Invalid character in equation");
     }
 };
 
@@ -233,7 +234,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
                             return Result<std::stack<std::string>>(
                                std::make_unique<std::stack<std::string>>(outputStack),
                                false,
-                               "Too many closing parentheses");
+                               "Too many closing parenthesis");
                         }
                     }
                 }
@@ -242,7 +243,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
                     return Result<std::stack<std::string>>(
                                std::make_unique<std::stack<std::string>>(outputStack),
                                false,
-                               "Too many closing parentheses");
+                               "Too many closing parenthesis");
                 }
                 operatorStack.pop();
                 break;
@@ -256,7 +257,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
             return Result<std::stack<std::string>>(
                                std::make_unique<std::stack<std::string>>(outputStack),
                                false,
-                               "Missing closing paretheses");
+                               "Missing closing parenthesis");
         }
         outputStack.push(std::string(1, operatorStack.top()));
         operatorStack.pop();
