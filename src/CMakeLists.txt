@@ -1,4 +1,4 @@
-list(APPEND _sources ../inc/Calculator.h Calculator.cpp ./CalcHistory.cpp ../inc/CalcHistory.h ./CalcHistoryPair.cpp ../inc/CalcHistoryPair.h ./CalcHistoryTraverser.cpp ../inc/CalcHistoryTraverser.h ./MathOperations/Addition.cpp ../inc/MathOperations/Addition.h ./MathOperations/Constant.cpp ../inc/MathOperations/Constant.h ./MathOperations/Division.cpp ../inc/MathOperations/Division.h ../inc/MathOperations/IMathOperation.h ./MathOperations/Multiplication.cpp ../inc/MathOperations/Multiplication.h ./MathOperations/Subtraction.cpp ../inc/MathOperations/Subtraction.h ./FourOperationFactory.cpp ../inc/IOperationFactory.h ../inc/FourOperationFactory.h ../inc/Result.h)
+list(APPEND _sources Calculator.cpp ./CalcHistory.cpp ./CalcHistoryPair.cpp ./CalcHistoryTraverser.cpp ./MathOperations/Addition.cpp ./MathOperations/Constant.cpp ./MathOperations/Division.cpp ./MathOperations/Multiplication.cpp ./MathOperations/Subtraction.cpp ./FourOperationFactory.cpp)
 
 # Set the output folder where your program will be created
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
