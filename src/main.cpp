@@ -25,7 +25,7 @@ void runMainLoop()
 {
     std::unique_ptr<IOperationFactory> operationFactory = std::make_unique<FourOperationFactory>();
     Calculator calculator(std::move(operationFactory));
-    std::string historyFilePath = std::string(getenv("HOME")) + "/calc/history.txt";
+    std::string historyFilePath = std::string(getenv("HOME")) + "/calc/history";
     CalcHistory history;
     history.initialzeFromFilePath(historyFilePath);
     CalcHistoryTraverser historyTraverser(&history);
@@ -103,7 +103,7 @@ void runMainLoop()
       
         if (equation.substr(0, 4) == "quit" || equation.substr(0,4) == "exit")
         {
-            saveHistory(history);
+            saveHistory(history, historyFilePath);
             break;
         }
         if (equation.substr(0,4) == "help")

@@ -11,8 +11,8 @@
 class CalcHistory
 {
     public:
-        void initialzeFromFilePath(std::string filePath);
-        void saveToFilePath(std::string filePath)         const;
+        void initialzeFromFilePath (std::string filePath)      ;
+        void saveToFilePath        (std::string filePath) const;
 
         static std::string toString(const CalcHistory& calcHistory);
 

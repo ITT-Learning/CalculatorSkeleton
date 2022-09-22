@@ -127,10 +127,9 @@ void drawHistoryWindow(CalcHistoryTraverser &historyTraverser, WINDOW* historyWi
 
 
 
-void saveHistory(const CalcHistory& history)
+void saveHistory(const CalcHistory& history, std::string filePath)
 {
-    std::string historyFilePath = std::string(getenv("HOME")) + "/calc/history.txt";
-    history.saveToFilePath(historyFilePath);
+    history.saveToFilePath(filePath);
 };
 
 

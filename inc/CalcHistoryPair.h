@@ -10,8 +10,6 @@ class CalcHistoryPair
         CalcHistoryPair(std::string equation, std::string result);
         std::string getEquation() const;
         std::string getResult() const;
-        // std::string getResultString() const;
-
         
     private:
         std::string equation_;

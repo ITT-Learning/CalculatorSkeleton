@@ -1,0 +1,12 @@
+table CalcHistoryPairBuffer
+{
+    equation:string;
+    result:string;
+}
+
+table CalcHistoryBuffer
+{
+    history:[CalcHistoryPairBuffer];
+}
+
+root_type CalcHistoryBuffer;
