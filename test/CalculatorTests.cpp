@@ -76,21 +76,21 @@ TEST(GivenACalculator, WhenCalculatingOnAStringWithInvalidCharacters_ThenReturns
     std::string potentiallyBadString = "1+abc1";
     double expectedResult = 2;
 
-    std::vector<double>       infixConstants { 1, 1 };
-    std::vector<std::string>  infixOperators { "+" };
+    std::vector<double>       postfixConstants { 1, 1 };
+    std::vector<std::string>  postfixOperators { "+" };
 
-    int constantCallCount = infixConstants.size();
-    int operatorCallCount = infixOperators.size();
+    int constantCallCount = postfixConstants.size();
+    int operatorCallCount = postfixOperators.size();
 
 
     std::unique_ptr<MockOperationFactory> mockOperationFactory = std::make_unique<MockOperationFactory>();
     EXPECT_CALL(*mockOperationFactory, getConstantFor)
         .Times(Exactly(constantCallCount))
         .WillRepeatedly(Invoke(
-            [&infixConstants, &constantCallCount]
+            [&postfixConstants, &constantCallCount]
             (double constantValue) -> std::unique_ptr<IMathOperation>
             {
-                EXPECT_EQ(infixConstants[--constantCallCount], constantValue);
+                EXPECT_EQ(postfixConstants[--constantCallCount], constantValue);
                 return std::make_unique<MockMathOperation>();
             }
         ));
@@ -98,12 +98,12 @@ TEST(GivenACalculator, WhenCalculatingOnAStringWithInvalidCharacters_ThenReturns
     EXPECT_CALL(*mockOperationFactory, getOperationFor)
         .Times(Exactly(operatorCallCount))
         .WillRepeatedly(Invoke(
-            [&infixOperators, &operatorCallCount, expectedResult]
+            [&postfixOperators, &operatorCallCount, expectedResult]
             (std::string operatorName,
             std::unique_ptr<IMathOperation>&& lhs,
             std::unique_ptr<IMathOperation>&& rhs)
             {
-                EXPECT_EQ(infixOperators[--operatorCallCount], operatorName);
+                EXPECT_EQ(postfixOperators[--operatorCallCount], operatorName);
                 MockMathOperation* newOperation = new MockMathOperation();
                 EXPECT_CALL(*newOperation, calculate)
                     .WillRepeatedly(Invoke(
@@ -230,16 +230,16 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
 {
 
     std::string               infixEquation1 = "10+10*10+(10*(10+10))";
-    std::vector<double>       infixConstants1 { 10, 10, 10, 10, 10, 10 };
-    std::vector<std::string>  infixOperators1 { "+", "*", "*", "+", "+" };
+    std::vector<double>       postfixConstants1 { 10, 10, 10, 10, 10, 10 };
+    std::vector<std::string>  postfixOperators1 { "+", "*", "*", "+", "+" };
     double                    expectedResult1 = 310;
 
     int constantCallCount1 = 0;
     int operatorCallCount1 = 0;
     
     std::string               infixEquation2 = "10+10*10+10*10+10";
-    std::vector<double>       infixConstants2 { 10, 10, 10, 10, 10, 10 };
-    std::vector<std::string>  infixOperators2 { "*", "*", "+", "+", "+" };
+    std::vector<double>       postfixConstants2 { 10, 10, 10, 10, 10, 10 };
+    std::vector<std::string>  postfixOperators2 { "*", "*", "+", "+", "+" };
     double                    expectedResult2 = 220;
 
     int constantCallCount2 = 0;
@@ -247,26 +247,26 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
 
     std::unique_ptr<MockOperationFactory> mockOperationFactory1 = std::make_unique<MockOperationFactory>();
     EXPECT_CALL(*mockOperationFactory1, getConstantFor)
-        .Times(Exactly(infixConstants1.size()))
+        .Times(Exactly(postfixConstants1.size()))
         .WillRepeatedly(Invoke(
-            [&infixConstants1, &constantCallCount1]
+            [&postfixConstants1, &constantCallCount1]
             (double constantValue) -> std::unique_ptr<IMathOperation>
             {
-                EXPECT_EQ(infixConstants1[constantCallCount1], constantValue) << "failed on constantCallCount1 = " << constantCallCount1;
+                EXPECT_EQ(postfixConstants1[constantCallCount1], constantValue) << "failed on constantCallCount1 = " << constantCallCount1;
                 constantCallCount1++;
                 return std::make_unique<MockMathOperation>();
             }
         ));
 
     EXPECT_CALL(*mockOperationFactory1, getOperationFor)
-        .Times(Exactly(infixOperators1.size()))
+        .Times(Exactly(postfixOperators1.size()))
         .WillRepeatedly(Invoke(
-            [&infixOperators1, &operatorCallCount1, expectedResult1]
+            [&postfixOperators1, &operatorCallCount1, expectedResult1]
             (std::string operatorName,
             std::unique_ptr<IMathOperation>&& lhs,
             std::unique_ptr<IMathOperation>&& rhs) -> std::unique_ptr<IMathOperation>
             {
-                EXPECT_EQ(infixOperators1[operatorCallCount1], operatorName) << "failed on operatorCallCount1 = " << operatorCallCount1;
+                EXPECT_EQ(postfixOperators1[operatorCallCount1], operatorName) << "failed on operatorCallCount1 = " << operatorCallCount1;
                 operatorCallCount1++;
                 MockMathOperation* newOperation = new MockMathOperation();
                 EXPECT_CALL(*newOperation, calculate)
@@ -283,26 +283,26 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
 
     std::unique_ptr<MockOperationFactory> mockOperationFactory2 = std::make_unique<MockOperationFactory>();
     EXPECT_CALL(*mockOperationFactory2, getConstantFor)
-        .Times(Exactly(infixConstants2.size()))
+        .Times(Exactly(postfixConstants2.size()))
         .WillRepeatedly(Invoke(
-            [&infixConstants2, &constantCallCount2]
+            [&postfixConstants2, &constantCallCount2]
             (double constantValue) -> std::unique_ptr<IMathOperation>
             {
-                EXPECT_EQ(infixConstants2[constantCallCount2], constantValue) << "failed on constantCallCount2 = " << constantCallCount2;
+                EXPECT_EQ(postfixConstants2[constantCallCount2], constantValue) << "failed on constantCallCount2 = " << constantCallCount2;
                 constantCallCount2++;
                 return std::make_unique<MockMathOperation>();
             }
         ));
 
     EXPECT_CALL(*mockOperationFactory2, getOperationFor)
-        .Times(Exactly(infixOperators2.size()))
+        .Times(Exactly(postfixOperators2.size()))
         .WillRepeatedly(Invoke(
-            [&infixOperators2, &operatorCallCount2, expectedResult2]
+            [&postfixOperators2, &operatorCallCount2, expectedResult2]
             (std::string operatorName,
             std::unique_ptr<IMathOperation>&& lhs,
             std::unique_ptr<IMathOperation>&& rhs) -> std::unique_ptr<IMathOperation>
             {
-                EXPECT_EQ(infixOperators2[operatorCallCount2], operatorName)  << "failed on operatorCallCount2 = " << operatorCallCount2;
+                EXPECT_EQ(postfixOperators2[operatorCallCount2], operatorName)  << "failed on operatorCallCount2 = " << operatorCallCount2;
                 operatorCallCount2++;
                 MockMathOperation* newOperation = new MockMathOperation();
                 EXPECT_CALL(*newOperation, calculate)
@@ -327,4 +327,70 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
     ASSERT_TRUE(result2.isValid()) << "Result 2 should be valid - error: " << result2.getError();
     EXPECT_EQ(expectedResult1, *result1.consumeResult());
     EXPECT_EQ(expectedResult2, *result2.consumeResult());
+};
+
+
+
+TEST(GivenACalculator, WhenParsingAnEquationWithANegativeNumber_ThenDoesntTreatItAsSubtraction)
+{
+    std::string               infixEquation = "10+-2";
+    std::vector<double>       postfixConstants { -2, 10 };
+    std::vector<std::string>  postfixOperators { "+" };
+    double                    expectedResult = 8;
+
+    int constantCallCount = 0;
+    int operatorCallCount = 0;
+
+    std::unique_ptr<MockOperationFactory> mockOperationFactory = std::make_unique<MockOperationFactory>();
+    EXPECT_CALL(*mockOperationFactory, getConstantFor)
+        .Times(Exactly(postfixConstants.size()))
+        .WillRepeatedly(Invoke(
+            [&postfixConstants, &constantCallCount]
+            (double constantValue) -> std::unique_ptr<IMathOperation>
+            {
+                EXPECT_EQ(postfixConstants[constantCallCount], constantValue) << "failed on constantCallCount = " << constantCallCount;
+                constantCallCount++;
+                return std::make_unique<MockMathOperation>();
+            }
+        ));
+
+    EXPECT_CALL(*mockOperationFactory, getOperationFor)
+        .Times(Exactly(postfixOperators.size()))
+        .WillRepeatedly(Invoke(
+            [&postfixOperators, &operatorCallCount, expectedResult]
+            (std::string operatorName,
+            std::unique_ptr<IMathOperation>&& lhs,
+            std::unique_ptr<IMathOperation>&& rhs) -> std::unique_ptr<IMathOperation>
+            {
+                EXPECT_EQ(postfixOperators[operatorCallCount], operatorName) << "failed on operatorCallCount = " << operatorCallCount;
+                operatorCallCount++;
+                MockMathOperation* newOperation = new MockMathOperation();
+                EXPECT_CALL(*newOperation, calculate)
+                    .WillRepeatedly(Invoke(
+                        [expectedResult]
+                        () -> double
+                        {
+                            return expectedResult;
+                        }
+                    ));
+                return std::unique_ptr<MockMathOperation>(newOperation);
+            }
+        ));
+
+    Calculator calculator(std::move(mockOperationFactory));
+    auto result = calculator.calculateResult(infixEquation);
+
+    EXPECT_TRUE(result.isValid()) << "Result falied with message: \"" << result.getError() << "\"";
+    EXPECT_DOUBLE_EQ(expectedResult, *result.consumeResult());
+};
+
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenParsingAnEquationSubtractingANegativeNumber_ThenActsLikeAddition)
+{
+    std::string  infixEquation  = "10--2";
+    double       expectedResult = 12;
+
+    auto result = calculator_.calculateResult(infixEquation);
+
+    EXPECT_TRUE(result.isValid()) << "Result falied with message: \"" << result.getError() << "\"";
+    EXPECT_DOUBLE_EQ(expectedResult, *result.consumeResult());
 };
