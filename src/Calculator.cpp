@@ -70,10 +70,17 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
 
     switch(postfixStack.top()[0])
     {
-        case '+' :
-            //Fallthrough
-        // FIXME make '-' also apply to negative numbers
         case '-' :
+            if(postfixStack.top().length() > 0 && (isdigit(postfixStack.top()[1]) || postfixStack.top()[1] == '.'))
+            {
+                value = stod(postfixStack.top());
+                postfixStack.pop();
+                operationUPtr = factory_->getConstantFor(value);
+                return Result<IMathOperation>(std::move(operationUPtr));
+                break;
+            }
+            //Fallthrough
+        case '+' :
             //Fallthrough
         case '*' :
             //Fallthrough
@@ -188,15 +195,44 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
                 break;
 
             case '+' :
-                //Fallthrough
-            // FIXME allow '-' to be used to denote negative numbers
-            case '-' :
                 while (!operatorStack.empty() && operatorStack.top() != '(')
                 {
                     outputStack.push(std::string(1, operatorStack.top()));
                     operatorStack.pop();
                 }
                 operatorStack.push(infixString[i]);
+                break;
+            case '-' :
+                // If the previous symbol isn't part of a number or a right parenthesis
+                if (i == 0 || !(isdigit(infixString[i - 1]) || infixString[i - 1] == '.' || infixString[i - 1] == ')'))
+                {
+                    // Then treat the '-' as a negative rather than subtraction
+                    if (i > 0 && infixString[i - 1] == ')')
+                    {
+                        return Result<std::stack<std::string>>(
+                                std::make_unique<std::stack<std::string>>(outputStack),
+                                false,
+                                "Missing operator after parenthesis");
+                    }
+                    readNumber = "-";
+                    i++;
+                    while (i < infixString.length() && (isdigit(infixString[i]) || infixString[i] == '.'))
+                    {
+                        readNumber += infixString[i++];
+                    }
+                    i--;
+                    outputStack.push(readNumber);
+                }
+                else
+                {
+                    while (!operatorStack.empty() && operatorStack.top() != '(')
+                    {
+                        outputStack.push(std::string(1, operatorStack.top()));
+                        operatorStack.pop();
+                    }
+                    operatorStack.push(infixString[i]);
+                }
+
                 break;
 
             case '*' :

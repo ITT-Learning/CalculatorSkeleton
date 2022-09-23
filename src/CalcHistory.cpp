@@ -21,7 +21,6 @@ void CalcHistory::initialzeFromFilePath(std::string filePath)
     fin.read((char*)bufferPointer, bufferSize);
     fin.close();
 
-
     auto historyBuffer = GetCalcHistoryBuffer(bufferPointer);
     auto historyVector = historyBuffer->history();
     for(int i = 0; i < historyVector->size(); i++)
