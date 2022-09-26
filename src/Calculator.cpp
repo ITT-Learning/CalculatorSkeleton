@@ -44,7 +44,7 @@ Result<double> Calculator::calculateResult(std::string equationString) const
 
     std::stack<std::string> resultStack = *(postfixResult.consumeResult());
     Result<IMathOperation> operationResult = extractOperation(resultStack);
-    if(!operationResult.isValid())
+    if (!operationResult.isValid())
     {
         return Result<double>(std::make_unique<double>(nan("")), false, operationResult.getError());
     }
@@ -71,7 +71,7 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
     switch(postfixStack.top()[0])
     {
         case '-' :
-            if(postfixStack.top().length() > 0 && (isdigit(postfixStack.top()[1]) || postfixStack.top()[1] == '.'))
+            if (postfixStack.top().length() > 0 && (isdigit(postfixStack.top()[1]) || postfixStack.top()[1] == '.'))
             {
                 value = stod(postfixStack.top());
                 postfixStack.pop();
@@ -87,22 +87,22 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
         case '/' :
             operatorName = postfixStack.top();
             postfixStack.pop();
-            if(postfixStack.empty())
+            if (postfixStack.empty())
             {
                 return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Missing operands");
             }
             rhs = extractOperation(postfixStack);
-            if(!rhs.isValid())
+            if (!rhs.isValid())
             {
                 return Result<IMathOperation>(std::make_unique<NotANumber>(), false, rhs.getError());
             }
             
-            if(postfixStack.empty())
+            if (postfixStack.empty())
             {
                 return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Missing operands");
             }
             lhs = extractOperation(postfixStack);
-            if(!lhs.isValid())
+            if (!lhs.isValid())
             {
                 return Result<IMathOperation>(std::make_unique<NotANumber>(), false, lhs.getError());
             }
@@ -152,7 +152,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
     std::stack<std::string> outputStack;
     std::stack<char> operatorStack;    
 
-    for(int i = 0; i < infixString.length(); i++)
+    for (int i = 0; i < infixString.length(); i++)
     {
         std::string readNumber = "";
         switch(infixString[i])
@@ -185,23 +185,11 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
                                false,
                                "Missing operator after parenthesis");
                 }
-                readNumber = "";
-                while (i < infixString.length() && (isdigit(infixString[i]) || infixString[i] == '.'))
-                {
-                    readNumber += infixString[i++];
-                }
-                i--;
+                readNumber = extractNextNumberFromString(infixString.substr(i));
+                i += readNumber.length() - 1;
                 outputStack.push(readNumber);
                 break;
 
-            case '+' :
-                while (!operatorStack.empty() && operatorStack.top() != '(')
-                {
-                    outputStack.push(std::string(1, operatorStack.top()));
-                    operatorStack.pop();
-                }
-                operatorStack.push(infixString[i]);
-                break;
             case '-' :
                 // If the previous symbol isn't part of a number or a right parenthesis
                 if (i == 0 || !(isdigit(infixString[i - 1]) || infixString[i - 1] == '.' || infixString[i - 1] == ')'))
@@ -214,25 +202,19 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
                                 false,
                                 "Missing operator after parenthesis");
                     }
-                    readNumber = "-";
-                    i++;
-                    while (i < infixString.length() && (isdigit(infixString[i]) || infixString[i] == '.'))
-                    {
-                        readNumber += infixString[i++];
-                    }
-                    i--;
+                    readNumber = extractNextNumberFromString(infixString.substr(i));
+                    i += readNumber.length() - 1;
                     outputStack.push(readNumber);
+                    break;
                 }
-                else
+                //Fallthrough
+            case '+' :
+                while (!operatorStack.empty() && operatorStack.top() != '(')
                 {
-                    while (!operatorStack.empty() && operatorStack.top() != '(')
-                    {
-                        outputStack.push(std::string(1, operatorStack.top()));
-                        operatorStack.pop();
-                    }
-                    operatorStack.push(infixString[i]);
+                    outputStack.push(std::string(1, operatorStack.top()));
+                    operatorStack.pop();
                 }
-
+                operatorStack.push(infixString[i]);
                 break;
 
             case '*' :
@@ -306,13 +288,33 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
 std::string Calculator::sanitizeString(std::string unsanitizedString)
 {
     std::string compactString = "";
-    for(int i = 0; i < unsanitizedString.length(); i++)
+    for (int i = 0; i < unsanitizedString.length(); i++)
     {
-        if (isdigit(unsanitizedString[i]) || unsanitizedString[i] == '(' || unsanitizedString[i] == ')' || unsanitizedString[i] == '.' || unsanitizedString[i] == '+' || unsanitizedString[i] == '-' || unsanitizedString[i] == '*' || unsanitizedString[i] == '/')
+        bool isAlphaNumeric = isalnum(unsanitizedString[i]);
+        bool isMathOperator = unsanitizedString[i] == '(' || 
+                              unsanitizedString[i] == ')' ||
+                              unsanitizedString[i] == '+' ||
+                              unsanitizedString[i] == '-' ||
+                              unsanitizedString[i] == '*' ||
+                              unsanitizedString[i] == '/';
+        bool isDecimalPoint = unsanitizedString[i] == '.';
+        if (isAlphaNumeric || isMathOperator || isDecimalPoint)
         {
-            compactString += unsanitizedString[i];
+            compactString += tolower(unsanitizedString[i]);
         }
     }
 
     return compactString;
+};
+
+
+
+std::string Calculator::extractNextNumberFromString(std::string str)
+{
+    std::string readNumber = "";
+    for (int i = 0; i < str.length() && (isdigit(str[i]) || str[i] == '.' || str[i] == '-'); i++)
+    {
+        readNumber += str[i];
+    }
+    return readNumber;
 };
