@@ -17,24 +17,24 @@ std::unique_ptr<IMathOperation> FourOperationFactory::getOperationFor(
     std::unique_ptr<IMathOperation>&& lhs,
     std::unique_ptr<IMathOperation>&& rhs) const
 {
-    if(!lhs || !rhs || operatorName.empty())
+    if (!lhs || !rhs || operatorName.empty())
     {
         return std::make_unique<NotANumber>();
     }
 
-    if(operatorName == "+")
+    if (operatorName == "+")
     {
         return std::make_unique<Addition>(std::move(lhs), std::move(rhs));
     }
-    if(operatorName == "-")
+    if (operatorName == "-")
     {
         return std::make_unique<Subtraction>(std::move(lhs), std::move(rhs));
     }
-    if(operatorName == "*")
+    if (operatorName == "*")
     {
         return std::make_unique<Multiplication>(std::move(lhs), std::move(rhs));
     }
-    if(operatorName == "/")
+    if (operatorName == "/")
     {
         return std::make_unique<Division>(std::move(lhs), std::move(rhs));
     }

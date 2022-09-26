@@ -23,7 +23,7 @@ void CalcHistory::initialzeFromFilePath(std::string filePath)
 
     auto historyBuffer = GetCalcHistoryBuffer(bufferPointer);
     auto historyVector = historyBuffer->history();
-    for(int i = 0; i < historyVector->size(); i++)
+    for (int i = 0; i < historyVector->size(); i++)
     {
         auto currentHistoryPair = historyVector->Get(i);
         std::string equationString = currentHistoryPair->equation()->str();
@@ -39,7 +39,7 @@ void CalcHistory::saveToFilePath(std::string filePath) const
     flatbuffers::FlatBufferBuilder builder;
     std::vector<flatbuffers::Offset<CalcHistoryPairBuffer>> historyVector;
 
-    for(auto it = entries_.cbegin(); it != entries_.cend(); it++)
+    for (auto it = entries_.cbegin(); it != entries_.cend(); it++)
     {
         auto historyEquation = builder.CreateString(it->getEquation());
         auto historyResult = builder.CreateString(it->getResult());
@@ -58,7 +58,7 @@ void CalcHistory::saveToFilePath(std::string filePath) const
     std::ofstream fout(filePath, std::ios_base::binary);
     if (!fout.fail())
     {
-        for(int i = 0; i < bufferSize; i++)
+        for (int i = 0; i < bufferSize; i++)
         {
             fout << buffer[i];
         }
@@ -86,7 +86,7 @@ std::string CalcHistory::toString(const CalcHistory& calcHistory)
 
 std::ostream& operator << (std::ostream& sout, const CalcHistory& calcHistory)
 {
-    for(std::vector<CalcHistoryPair>::const_iterator it = calcHistory.entries_.cbegin(); it != calcHistory.entries_.cend(); it++)
+    for (std::vector<CalcHistoryPair>::const_iterator it = calcHistory.entries_.cbegin(); it != calcHistory.entries_.cend(); it++)
     {
         sout << *it;
         if (it != calcHistory.entries_.cend())
