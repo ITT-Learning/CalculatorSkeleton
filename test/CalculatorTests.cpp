@@ -104,7 +104,7 @@ TEST(GivenACalculator, WhenCalculatingOnAStringWithInvalidCharacters_ThenReturns
             std::unique_ptr<IMathOperation>&& rhs)
             {
                 EXPECT_EQ(postfixOperators[--operatorCallCount], operatorName);
-                MockMathOperation* newOperation = new MockMathOperation();
+                std::unique_ptr<MockMathOperation> newOperation = std::make_unique<MockMathOperation>();
                 EXPECT_CALL(*newOperation, calculate)
                     .WillRepeatedly(Invoke(
                         [expectedResult]
@@ -113,7 +113,7 @@ TEST(GivenACalculator, WhenCalculatingOnAStringWithInvalidCharacters_ThenReturns
                             return expectedResult;
                         }
                     ));
-                return std::unique_ptr<MockMathOperation>(newOperation);
+                return std::unique_ptr<MockMathOperation>(std::move(newOperation));
             }
         ));
 
@@ -268,7 +268,7 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
             {
                 EXPECT_EQ(postfixOperators1[operatorCallCount1], operatorName) << "failed on operatorCallCount1 = " << operatorCallCount1;
                 operatorCallCount1++;
-                MockMathOperation* newOperation = new MockMathOperation();
+                std::unique_ptr<MockMathOperation> newOperation = std::make_unique<MockMathOperation>();
                 EXPECT_CALL(*newOperation, calculate)
                     .WillRepeatedly(Invoke(
                         [expectedResult1]
@@ -277,7 +277,7 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
                             return expectedResult1;
                         }
                     ));
-                return std::unique_ptr<MockMathOperation>(newOperation);
+                return std::unique_ptr<MockMathOperation>(std::move(newOperation));
             }
         ));
 
@@ -304,7 +304,7 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
             {
                 EXPECT_EQ(postfixOperators2[operatorCallCount2], operatorName)  << "failed on operatorCallCount2 = " << operatorCallCount2;
                 operatorCallCount2++;
-                MockMathOperation* newOperation = new MockMathOperation();
+                std::unique_ptr<MockMathOperation> newOperation = std::make_unique<MockMathOperation>();
                 EXPECT_CALL(*newOperation, calculate)
                     .WillRepeatedly(Invoke(
                         [expectedResult2]
@@ -313,7 +313,7 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
                             return expectedResult2;
                         }
                     ));
-                return std::unique_ptr<MockMathOperation>(newOperation);
+                return std::unique_ptr<MockMathOperation>(std::move(newOperation));
             }
         ));
 
@@ -364,7 +364,7 @@ TEST(GivenACalculator, WhenParsingAnEquationWithANegativeNumber_ThenDoesntTreatI
             {
                 EXPECT_EQ(postfixOperators[operatorCallCount], operatorName) << "failed on operatorCallCount = " << operatorCallCount;
                 operatorCallCount++;
-                MockMathOperation* newOperation = new MockMathOperation();
+                std::unique_ptr<MockMathOperation> newOperation = std::make_unique<MockMathOperation>();
                 EXPECT_CALL(*newOperation, calculate)
                     .WillRepeatedly(Invoke(
                         [expectedResult]
@@ -373,7 +373,7 @@ TEST(GivenACalculator, WhenParsingAnEquationWithANegativeNumber_ThenDoesntTreatI
                             return expectedResult;
                         }
                     ));
-                return std::unique_ptr<MockMathOperation>(newOperation);
+                return std::unique_ptr<MockMathOperation>(std::move(newOperation));
             }
         ));
 
