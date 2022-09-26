@@ -6,6 +6,7 @@
  */
 ////////////////////////////////////////////////////////////////////////////
 
+#include <cstring>
 #include <string>
 #include <memory>
 
@@ -101,12 +102,12 @@ void runMainLoop()
             continue;
         }
       
-        if (equation.substr(0, 4) == "quit" || equation.substr(0,4) == "exit")
+        if (strcmp(equation.c_str(), "quit") == 0 || strcmp(equation.c_str(), "exit") == 0)
         {
             saveHistory(history, historyFilePath);
             break;
         }
-        if (equation.substr(0,4) == "help")
+        if (strcmp(equation.c_str(), "help") == 0)
         {
             equation = "";
             cursorPos = 0;
@@ -115,7 +116,7 @@ void runMainLoop()
             continue;
         }
         // TODO make the output redraw after exiting
-        if (equation.substr(0, 7) == "history")
+        if (strcmp(equation.c_str(),"history") == 0)
         {
             printFullHistory(history, stdscr);
             wclear(stdscr);
@@ -133,7 +134,7 @@ void runMainLoop()
         }
 
         Result<double> result = calculator.calculateResult(sanitizedEquation);
-        if(!result.isValid())
+        if (!result.isValid())
         {
             wattron(outputWin, A_BOLD);
             wprintw(outputWin, "Error: ");
