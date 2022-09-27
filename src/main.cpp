@@ -9,10 +9,12 @@
 #include <cstring>
 #include <string>
 #include <memory>
+#include <set>
 
 #include <ncurses.h>
 
 #include "Calculator.h"
+#include "MathExpression.h"
 #include "IOperationFactory.h"
 #include "FourOperationFactory.h"
 #include "Result.h"
@@ -53,7 +55,7 @@ void runMainLoop()
 
         wrefresh(outputWin);
         drawHistoryWindow(historyTraverser, historyWin, maxY);
-        drawInputLineTo(inputWin, equation);
+        drawInputLineTo(inputWin, "> " + equation);
 
         int input;
         do
@@ -86,7 +88,7 @@ void runMainLoop()
                 continue;
             }
 
-            drawInputLineTo(inputWin, equation);
+            drawInputLineTo(inputWin, "> " + equation);
         } while (input != KEY_UP && input != KEY_DOWN && input != '\n');
 
         if (input == KEY_UP)
@@ -126,14 +128,68 @@ void runMainLoop()
             continue;
         }
 
-        std::string sanitizedEquation = Calculator::sanitizeString(equation);
-        if (sanitizedEquation.empty())
+        MathExpression expression(equation);
+        if (expression.getRawEquation().empty())
         {
             wprintw(outputWin, "No valid command or equation found.\n");
             continue;
         }
 
-        Result<double> result = calculator.calculateResult(sanitizedEquation);
+        std::set<std::string> emptyVariablesList = expression.needsVariableValues();
+        if (!emptyVariablesList.empty())
+        {
+            for (auto it = emptyVariablesList.cbegin(); it != emptyVariablesList.cend(); it++)
+            {
+                std::string variablePrompt = "? " + *it + " = ";
+                std::string variableString = "";
+                int variableCursorPos = 0;
+                // print "<variable name> ?= "
+                wclear(inputWin);
+                wprintw(inputWin, variablePrompt.c_str());
+
+                // read in a number for the value
+                do
+                {
+                    wmove(inputWin, 0, variablePrompt.length() + variableCursorPos);
+                    wrefresh(inputWin);
+                    input = getch();
+                    
+                    if (input == KEY_LEFT)
+                    {
+                        variableCursorPos -= 1;
+                        if (variableCursorPos < 0)
+                        {
+                            variableCursorPos = 0;
+                        }
+                        continue;
+                    }
+                    if (input == KEY_RIGHT)
+                    {
+                        variableCursorPos += 1;
+                        if (variableCursorPos > variableString.length())
+                        {
+                            variableCursorPos = variableString.length();
+                        }
+                        continue;
+                    }
+
+                    if (input != '.' && !isdigit(input) && input != '-')
+                    {
+                        continue;
+                    }
+
+                    variableString = addProcessedInputToAt(input, variableCursorPos, variableString);
+
+                    drawInputLineTo(inputWin, variablePrompt + variableString);
+                }
+                while (input != '\n' || variableString.empty());
+
+                // assign that value to expression
+                expression.setVariableValue(*it, std::stod(variableString));
+            }
+        }
+
+        Result<double> result = calculator.calculateResult(expression);
         if (!result.isValid())
         {
             wattron(outputWin, A_BOLD);
@@ -147,9 +203,9 @@ void runMainLoop()
         std::string resultString = doubleToString(*(result.consumeResult()));
         wprintw(outputWin, resultString.c_str());
         wprintw(outputWin, " = ");
-        wprintw(outputWin, sanitizedEquation.c_str());
+        wprintw(outputWin, expression.getRawEquation().c_str());
         wprintw(outputWin, "\n");
-        history.addEntry(sanitizedEquation, resultString);
+        history.addEntry(expression.getRawEquation(), resultString);
         historyTraverser.reset();
         equation = "";
         cursorPos = 0;

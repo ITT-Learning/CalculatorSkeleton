@@ -94,7 +94,6 @@ std::string addProcessedInputToAt(char input, int& cursorPos, const std::string 
 void drawInputLineTo(WINDOW* inputWin, std::string str)
 {
     wclear(inputWin);
-    wprintw(inputWin, "> ");
     wprintw(inputWin, str.c_str());
     wrefresh(inputWin);
 };

@@ -11,6 +11,7 @@ class Result
         Result()
         : isValid_(false), errorMessage_("No value given") {};
         
+        // REVIEW could this just be a rvr: T&&
         Result(std::unique_ptr<T>&& result, bool isValid = true, std::string errorMessage = "")
         : result_(std::move(result)), isValid_{isValid}, errorMessage_{errorMessage} {};
 
