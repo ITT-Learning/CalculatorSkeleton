@@ -13,6 +13,7 @@
 #include <stack>
 #include <memory>
 
+#include "MathExpression.h"
 #include "Result.h"
 #include "IOperationFactory.h"
 #include "Constant.h"
@@ -28,6 +29,19 @@ Calculator::Calculator(std::unique_ptr<IOperationFactory>&& factory)
 : factory_(std::move(factory)) {};
 
 
+Result<double> Calculator::calculateResult(const MathExpression &expression) const
+{
+    // if (expression.needsVariableValues().size() > 0)
+    // {
+    //     return Result<double>(std::make_unique<double>(nan("")), false, "Variable is missing value");
+    // }
+    auto result = expression.getPopulatedEquation();
+    if (!result.isValid())
+    {
+        return Result<double>(std::make_unique<double>(nan("")), false, result.getError());
+    }
+    return calculateResult(*result.consumeResult());
+}
 
 Result<double> Calculator::calculateResult(std::string equationString) const
 {
@@ -202,8 +216,9 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
                                 false,
                                 "Missing operator after parenthesis");
                     }
-                    readNumber = extractNextNumberFromString(infixString.substr(i));
-                    i += readNumber.length() - 1;
+                    readNumber = extractNextNumberFromString(infixString.substr(i + 1));
+                    i += readNumber.length();
+                    readNumber = "-" + readNumber;
                     outputStack.push(readNumber);
                     break;
                 }
@@ -285,34 +300,10 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
 
 
 
-std::string Calculator::sanitizeString(std::string unsanitizedString)
-{
-    std::string compactString = "";
-    for (int i = 0; i < unsanitizedString.length(); i++)
-    {
-        bool isAlphaNumeric = isalnum(unsanitizedString[i]);
-        bool isMathOperator = unsanitizedString[i] == '(' || 
-                              unsanitizedString[i] == ')' ||
-                              unsanitizedString[i] == '+' ||
-                              unsanitizedString[i] == '-' ||
-                              unsanitizedString[i] == '*' ||
-                              unsanitizedString[i] == '/';
-        bool isDecimalPoint = unsanitizedString[i] == '.';
-        if (isAlphaNumeric || isMathOperator || isDecimalPoint)
-        {
-            compactString += tolower(unsanitizedString[i]);
-        }
-    }
-
-    return compactString;
-};
-
-
-
 std::string Calculator::extractNextNumberFromString(std::string str)
 {
     std::string readNumber = "";
-    for (int i = 0; i < str.length() && (isdigit(str[i]) || str[i] == '.' || str[i] == '-'); i++)
+    for (int i = 0; i < str.length() && (isdigit(str[i]) || str[i] == '.'); i++)
     {
         readNumber += str[i];
     }

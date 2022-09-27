@@ -9,6 +9,7 @@ using namespace testing;
 #include <vector>
 #include <memory>
 
+#include "MathExpression.h"
 #include "IOperationFactory.h"
 #include "FourOperationFactory.h"
 #include "Result.h"
