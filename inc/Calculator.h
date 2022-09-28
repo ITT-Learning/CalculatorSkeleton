@@ -25,7 +25,7 @@ class Calculator
     public:
         Calculator(std::unique_ptr<IOperationFactory>&& factory);
 
-        Result<double> calculateResult(const MathExpression &expression) const;
+        Result<double> calculateResult(std::vector<std::string> infixVector) const;
 
     private:
         std::unique_ptr<IOperationFactory> factory_;

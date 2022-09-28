@@ -30,25 +30,15 @@ Calculator::Calculator(std::unique_ptr<IOperationFactory>&& factory)
 : factory_(std::move(factory)) {};
 
 
-Result<double> Calculator::calculateResult(const MathExpression &expression) const
-{
-    auto equationResult = expression.getPopulatedEquation();
-    if (!equationResult.isValid())
-    {
-        return Result<double>(std::make_unique<double>(nan("")), false, equationResult.getError());
-    }
-    // return calculateResult(*result.consumeResult());
-// }
 
-// Result<double> Calculator::calculateResult(std::queue<std::string> equationString) const
-// {
-    std::vector<std::string> equationVector = *equationResult.consumeResult();
-    if (equationVector.empty())
+Result<double> Calculator::calculateResult(std::vector<std::string> infixVector) const
+{
+    if (infixVector.empty())
     {
         return Result<double>(std::make_unique<double>(nan("")), false, "No valid equation");
     }
 
-    Result<std::stack<std::string>> postfixResult = infixToPostfix(equationVector);
+    Result<std::stack<std::string>> postfixResult = infixToPostfix(infixVector);
     if (!postfixResult.isValid())
     {
         return Result<double>(std::make_unique<double>(nan("")), false, postfixResult.getError());
@@ -274,6 +264,9 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
                 }
                 operatorStack.pop();
                 break;
+            
+            default:
+                return Result<std::stack<std::string>>(std::make_unique<std::stack<std::string>>(outputStack), false, "Invalid character in equation");
         }
     }
 

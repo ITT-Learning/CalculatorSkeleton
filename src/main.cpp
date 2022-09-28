@@ -10,6 +10,7 @@
 #include <string>
 #include <memory>
 #include <set>
+#include <vector>
 
 #include <ncurses.h>
 
@@ -189,18 +190,30 @@ void runMainLoop()
             }
         }
 
-        Result<double> result = calculator.calculateResult(expression);
-        if (!result.isValid())
+        Result<std::vector<std::string>> infixVectorResult = expression.getPopulatedEquation();
+        if (!infixVectorResult.isValid())
         {
             wattron(outputWin, A_BOLD);
             wprintw(outputWin, "Error: ");
-            wprintw(outputWin, result.getError().c_str());
+            wprintw(outputWin, infixVectorResult.getError().c_str());
             wprintw(outputWin, "\n");
             wattroff(outputWin, A_BOLD);
             continue;
         }
 
-        std::string resultString = doubleToString(*(result.consumeResult()));
+        Result<double> calculationResult = calculator.calculateResult(*infixVectorResult.consumeResult());
+        if (!calculationResult.isValid())
+        {
+            wattron(outputWin, A_BOLD);
+            wprintw(outputWin, "Error: ");
+            wprintw(outputWin, calculationResult.getError().c_str());
+            wprintw(outputWin, "\n");
+            wattroff(outputWin, A_BOLD);
+            continue;
+        }
+
+
+        std::string resultString = doubleToString(*(calculationResult.consumeResult()));
         wprintw(outputWin, resultString.c_str());
         wprintw(outputWin, " = ");
         wprintw(outputWin, expression.getRawEquation().c_str());

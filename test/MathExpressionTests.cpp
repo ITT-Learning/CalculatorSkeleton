@@ -64,8 +64,8 @@ TEST(MathExpressionTests, WhenPassedAnEquationWithTwoVariablesAndOneGetsAValue_T
 TEST(MathExpressionTests, WhenPopulatingATwoVariableString_ThenThePopulatedStringHasReplacedValues)
 {
     std::string equation = "foo+bar";
-    std::string expected1 = "5+10";
-    std::string expected2 = "3.5+6.5";
+    std::vector<std::string> expected1 = { "5", "+", "10" };
+    std::vector<std::string> expected2 = { "3.5", "+", "6.5" };
 
     MathExpression mathExpression1(equation);
     MathExpression mathExpression2(equation);
