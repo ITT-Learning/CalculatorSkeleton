@@ -3,6 +3,7 @@
 #include <cctype>
 #include <sstream>
 #include <set>
+#include <vector>
 
 #include "Result.h"
 
@@ -69,33 +70,67 @@ std::string MathExpression::getRawEquation() const
 
 
 // FIXME make negative sign before variables work properly
-Result<std::string> MathExpression::getPopulatedEquation() const
+Result<std::vector<std::string>> MathExpression::getPopulatedEquation() const
 {
-    std::string populatedEquation = "";
+    std::vector<std::string> populatedEquation;
     for (int i = 0; i < equation_.length(); i++)
     {
-        std::string variableName = "";
-        if (isalpha(equation_[i]))
+        if (equation_[i] == '-')
         {
-            while (isalpha(equation_[i]) && i < equation_.length())
+            if(i + 1 >= equation_.length() ||                                                                   // end of string
+               (i > 0 && (isalnum(equation_[i - 1]) || equation_[i - 1] == '.' || equation_[i - 1] == ')')) ||  // previous value supports a subtraction after it
+               (!isalnum(equation_[i + 1]) && equation_[i + 1] != '.'))                                         // next value doesn't support negation
             {
-                variableName += equation_[i++];
+                populatedEquation.push_back(std::string(1, equation_[i]));
             }
-            i--;
+            else if(isalpha(equation_[i + 1]))
+            {
+                std::string variableName = extractNextVariableFromString(equation_.substr(i + 1));
+                if (variables_.count(variableName) == 0)
+                {
+                    return Result<std::vector<std::string>>(
+                        std::make_unique<std::vector<std::string>>(),
+                        false, "Variable value missing");
+                }
+                i += variableName.length();
+                double negativeValue = variables_.at(variableName) * -1;
+                std::stringstream sout;
+                sout << negativeValue;
+                populatedEquation.push_back(sout.str());
+            }
+            else if(isdigit(equation_[i + 1]) || equation_[i + 1] == '.')
+            {
+                std::string readNumber = extractNextNumberFromString(equation_.substr(i + 1));
+                i += readNumber.length();
+                populatedEquation.push_back("-" + readNumber);
+            }
+        }
+        else if (isalpha(equation_[i]))
+        {
+            std::string variableName = extractNextVariableFromString(equation_.substr(i));
             if (variables_.count(variableName) == 0)
             {
-                return Result<std::string>(std::make_unique<std::string>(""), false, "Variable value missing");
+                return Result<std::vector<std::string>>(
+                    std::make_unique<std::vector<std::string>>(),
+                    false, "Variable value missing");
             }
+            i += variableName.length() - 1;
             std::stringstream sout;
             sout << variables_.at(variableName);
-            populatedEquation += sout.str();
+            populatedEquation.push_back(sout.str());
+        }
+        else if (isdigit(equation_[i]) || equation_[i] == '.')
+        {
+            std::string readNumber = extractNextNumberFromString(equation_.substr(i));
+            i += readNumber.length() - 1;
+            populatedEquation.push_back(readNumber);
         }
         else
         {
-            populatedEquation += equation_[i];
+            populatedEquation.push_back(std::string(1, equation_[i]));
         }
     }
-    return Result<std::string>(std::make_unique<std::string>(populatedEquation));
+    return Result<std::vector<std::string>>(std::make_unique<std::vector<std::string>>(populatedEquation));
 };
 
 
@@ -120,4 +155,28 @@ std::string MathExpression::sanitizeEquation(std::string equation)
     }
 
     return sanitizedEquation;
+};
+
+
+
+std::string MathExpression::extractNextNumberFromString(std::string str)
+{
+    std::string readNumber = "";
+    for (int i = 0; i < str.length() && (isdigit(str[i]) || str[i] == '.'); i++)
+    {
+        readNumber += str[i];
+    }
+    return readNumber;
+};
+
+
+
+std::string MathExpression::extractNextVariableFromString(std::string str)
+{
+    std::string readVariable = "";
+    for (int i = 0; i < str.length() && isalpha(str[i]); i++)
+    {
+        readVariable += str[i];
+    }
+    return readVariable;
 };

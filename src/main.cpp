@@ -153,7 +153,7 @@ void runMainLoop()
                     wmove(inputWin, 0, variablePrompt.length() + variableCursorPos);
                     wrefresh(inputWin);
                     input = getch();
-                    
+
                     if (input == KEY_LEFT)
                     {
                         variableCursorPos -= 1;
@@ -173,7 +173,7 @@ void runMainLoop()
                         continue;
                     }
 
-                    if (input != '.' && !isdigit(input) && input != '-')
+                    if (input != '.' && !isdigit(input) && input != '-' && input != KEY_BACKSPACE)
                     {
                         continue;
                     }
