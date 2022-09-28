@@ -5,6 +5,8 @@
 #include <sstream>
 #include <vector>
 
+#include "flatbuffers/flatbuffers.h"
+
 #include "CalcHistory_generated.h"
 #include "CalcHistoryPair.h"
 
@@ -16,6 +18,11 @@ void CalcHistory::initialzeFromFilePath(std::string filePath)
     std::ifstream fin(filePath, std::ios_base::binary);
     fin.seekg(0, std::ios::end);
     int bufferSize = fin.tellg();
+    if (bufferSize <= 0)
+    {
+        fin.close();
+        return;
+    }
     fin.seekg(0, std::ios::beg);    
     char *bufferPointer[bufferSize];
     fin.read((char*)bufferPointer, bufferSize);
