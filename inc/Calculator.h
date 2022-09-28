@@ -32,8 +32,6 @@ class Calculator
 
         Result<IMathOperation>                 extractOperation(std::stack<std::string>& postfixStack) const;
         static Result<std::stack<std::string>> infixToPostfix(std::vector<std::string> infixString);
-
-        static std::string extractNextNumberFromString(std::string str);
 };
 
 #endif
