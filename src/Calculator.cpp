@@ -154,7 +154,6 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
     std::stack<std::string> outputStack;
     std::stack<char> operatorStack;    
 
-    // TODO convert this to using a queue
     for (auto it = infixVector.cbegin(); it != infixVector.cend(); it++)
     {
         std::string readNumber = "";
