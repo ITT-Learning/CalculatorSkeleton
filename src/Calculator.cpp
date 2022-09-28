@@ -283,15 +283,3 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
     }
     return Result<std::stack<std::string>>(std::make_unique<std::stack<std::string>>(outputStack));
 };
-
-
-
-std::string Calculator::extractNextNumberFromString(std::string str)
-{
-    std::string readNumber = "";
-    for (int i = 0; i < str.length() && (isdigit(str[i]) || str[i] == '.'); i++)
-    {
-        readNumber += str[i];
-    }
-    return readNumber;
-};
