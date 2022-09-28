@@ -62,7 +62,8 @@ class GivenACalculatorWithAFourOperationFactory : public ::testing::Test
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAnEmptyString_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-    auto result = calculator_.calculateResult("");
+    std::vector<std::string> infixVector {};
+    auto result = calculator_.calculateResult(infixVector);
     std::string expectedErrorMessage = "No valid equation";
 
     EXPECT_FALSE(result.isValid()) << "Result should be invalid";
@@ -71,11 +72,9 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAnEmptyString
 
 
 
-TEST(GivenACalculator, WhenCalculatingOnAStringWithInvalidCharacters_ThenReturnsAValidResultWhileIgnoringInvaildCharacters)
+TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAnEquationWithInvalidCharacters_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-
-    std::string potentiallyBadString = "1+abc1";
-    double expectedResult = 2;
+    std::vector<std::string> infixVector { "1", "+", "abc" };
 
     std::vector<double>       postfixConstants { 1, 1 };
     std::vector<std::string>  postfixOperators { "+" };
@@ -83,54 +82,21 @@ TEST(GivenACalculator, WhenCalculatingOnAStringWithInvalidCharacters_ThenReturns
     int constantCallCount = postfixConstants.size();
     int operatorCallCount = postfixOperators.size();
 
+    std::string expectedError = "Invalid character in equation";
 
-    std::unique_ptr<MockOperationFactory> mockOperationFactory = std::make_unique<MockOperationFactory>();
-    EXPECT_CALL(*mockOperationFactory, getConstantFor)
-        .Times(Exactly(constantCallCount))
-        .WillRepeatedly(Invoke(
-            [&postfixConstants, &constantCallCount]
-            (double constantValue) -> std::unique_ptr<IMathOperation>
-            {
-                EXPECT_EQ(postfixConstants[--constantCallCount], constantValue);
-                return std::make_unique<MockMathOperation>();
-            }
-        ));
+    auto result = calculator_.calculateResult(infixVector);
 
-    EXPECT_CALL(*mockOperationFactory, getOperationFor)
-        .Times(Exactly(operatorCallCount))
-        .WillRepeatedly(Invoke(
-            [&postfixOperators, &operatorCallCount, expectedResult]
-            (std::string operatorName,
-            std::unique_ptr<IMathOperation>&& lhs,
-            std::unique_ptr<IMathOperation>&& rhs)
-            {
-                EXPECT_EQ(postfixOperators[--operatorCallCount], operatorName);
-                std::unique_ptr<MockMathOperation> newOperation = std::make_unique<MockMathOperation>();
-                EXPECT_CALL(*newOperation, calculate)
-                    .WillRepeatedly(Invoke(
-                        [expectedResult]
-                        () -> double
-                        {
-                            return expectedResult;
-                        }
-                    ));
-                return std::unique_ptr<MockMathOperation>(std::move(newOperation));
-            }
-        ));
-
-    Calculator calculator(std::move(mockOperationFactory));
-
-    auto result = calculator.calculateResult(potentiallyBadString);
-
-    EXPECT_TRUE(result.isValid()) << "Result should be valid";
-    EXPECT_DOUBLE_EQ(expectedResult, *result.consumeResult()) << "Should evaluate \"" << potentiallyBadString << "\" to " << expectedResult;
+    EXPECT_FALSE(result.isValid()) << "Result should be invalid";
+    EXPECT_EQ(expectedError, result.getError());
 };
 
 
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithBothMissingOperands_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-    auto result = calculator_.calculateResult("+");
+    std::vector<std::string> infixVector { "+" };
+
+    auto result = calculator_.calculateResult(infixVector);
     std::string expectedErrorMessage = "Missing operands";
 
     EXPECT_FALSE(result.isValid()) << "Result should be invalid";
@@ -141,7 +107,9 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithBo
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingSecondOperand_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-    auto result = calculator_.calculateResult("1+");
+    std::vector<std::string> infixVector { "1", "+" };
+
+    auto result = calculator_.calculateResult(infixVector);
     std::string expectedErrorMessage = "Missing operands";
 
     EXPECT_FALSE(result.isValid()) << "Result should be invalid";
@@ -152,7 +120,9 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMi
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingFirstOperand_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-    auto result = calculator_.calculateResult("+1");
+    std::vector<std::string> infixVector { "+", "1" };
+
+    auto result = calculator_.calculateResult(infixVector);
     std::string expectedErrorMessage = "Missing operands";
 
     EXPECT_FALSE(result.isValid()) << "Result should be invalid";
@@ -163,7 +133,9 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMi
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingClosingParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-    auto result = calculator_.calculateResult("(1+1");
+    std::vector<std::string> infixVector { "(", "1", "+", "1" };
+
+    auto result = calculator_.calculateResult(infixVector);
     std::string expectedErrorMessage = "Missing closing parenthesis";
 
     EXPECT_FALSE(result.isValid()) << "Result should be invalid";
@@ -174,7 +146,9 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMi
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingMultipleClosingParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-    auto result = calculator_.calculateResult("(((1+1)");
+    std::vector<std::string> infixVector { "(", "(", "(", "1", "+", "1", ")" };
+
+    auto result = calculator_.calculateResult(infixVector);
     std::string expectedErrorMessage = "Missing closing parenthesis";
 
     EXPECT_FALSE(result.isValid()) << "Result should be invalid";
@@ -185,7 +159,9 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMi
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingOpeningParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-    auto result = calculator_.calculateResult("1+1)");
+    std::vector<std::string> infixVector { "1", "+", "1", ")" };
+
+    auto result = calculator_.calculateResult(infixVector);
     std::string expectedErrorMessage = "Too many closing parenthesis";
 
     EXPECT_FALSE(result.isValid()) << "Result should be invalid";
@@ -196,7 +172,9 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMi
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingMultipleOpeningParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-    auto result = calculator_.calculateResult("(1+1)))");
+    std::vector<std::string> infixVector { "(", "1", "+", "1", ")", ")", ")" };
+
+    auto result = calculator_.calculateResult(infixVector);
     std::string expectedErrorMessage = "Too many closing parenthesis";
 
     EXPECT_FALSE(result.isValid()) << "Result should be invalid";
@@ -207,7 +185,9 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMi
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingOperatorBeforeParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-    auto result = calculator_.calculateResult("1(1+1)");
+    std::vector<std::string> infixVector { "1", "(", "1", "+", "1", ")" };
+
+    auto result = calculator_.calculateResult(infixVector);
     std::string expectedErrorMessage = "Missing operator before parenthesis";
 
     EXPECT_FALSE(result.isValid()) << "Result should be invalid";
@@ -218,7 +198,9 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMi
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMissingOperatorAfterParenthesis_ThenReturnsAnInvalidResultWithCorrectErrorMessage)
 {
-    auto result = calculator_.calculateResult("(1+1)1");
+    std::vector<std::string> infixVector { "(", "1", "+", "1", ")", "1" };
+
+    auto result = calculator_.calculateResult(infixVector);
     std::string expectedErrorMessage = "Missing operator after parenthesis";
 
     EXPECT_FALSE(result.isValid()) << "Result should be invalid";
@@ -230,7 +212,8 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenCalculatingOnAStringWithMi
 TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOperations)
 {
 
-    std::string               infixEquation1 = "10+10*10+(10*(10+10))";
+
+    std::vector<std::string>  infixVector1 { "10", "+", "10", "*", "10", "+", "(", "10", "*", "(", "10", "+", "10", ")", ")" };
     std::vector<double>       postfixConstants1 { 10, 10, 10, 10, 10, 10 };
     std::vector<std::string>  postfixOperators1 { "+", "*", "*", "+", "+" };
     double                    expectedResult1 = 310;
@@ -238,6 +221,7 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
     int constantCallCount1 = 0;
     int operatorCallCount1 = 0;
     
+    std::vector<std::string>  infixVector2 { "10", "+", "10", "*", "10", "+", "10", "*", "10", "+", "10" };
     std::string               infixEquation2 = "10+10*10+10*10+10";
     std::vector<double>       postfixConstants2 { 10, 10, 10, 10, 10, 10 };
     std::vector<std::string>  postfixOperators2 { "*", "*", "+", "+", "+" };
@@ -321,8 +305,8 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
     Calculator calculator1(std::move(mockOperationFactory1));
     Calculator calculator2(std::move(mockOperationFactory2));
 
-    auto result1 = calculator1.calculateResult(infixEquation1);
-    auto result2 = calculator2.calculateResult(infixEquation2);
+    auto result1 = calculator1.calculateResult(infixVector1);
+    auto result2 = calculator2.calculateResult(infixVector2);
 
     ASSERT_TRUE(result1.isValid()) << "Result 1 should be valid - error: " << result1.getError();
     ASSERT_TRUE(result2.isValid()) << "Result 2 should be valid - error: " << result2.getError();
@@ -334,7 +318,7 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
 
 TEST(GivenACalculator, WhenParsingAnEquationWithANegativeNumber_ThenDoesntTreatItAsSubtraction)
 {
-    std::string               infixEquation = "10+-2";
+    std::vector<std::string>  infixVector { "10", "+", "-2" };
     std::vector<double>       postfixConstants { -2, 10 };
     std::vector<std::string>  postfixOperators { "+" };
     double                    expectedResult = 8;
@@ -379,7 +363,7 @@ TEST(GivenACalculator, WhenParsingAnEquationWithANegativeNumber_ThenDoesntTreatI
         ));
 
     Calculator calculator(std::move(mockOperationFactory));
-    auto result = calculator.calculateResult(infixEquation);
+    auto result = calculator.calculateResult(infixVector);
 
     EXPECT_TRUE(result.isValid()) << "Result falied with message: \"" << result.getError() << "\"";
     EXPECT_DOUBLE_EQ(expectedResult, *result.consumeResult());
@@ -387,10 +371,10 @@ TEST(GivenACalculator, WhenParsingAnEquationWithANegativeNumber_ThenDoesntTreatI
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenParsingAnEquationSubtractingANegativeNumber_ThenActsLikeAddition)
 {
-    std::string  infixEquation  = "10--2";
+    std::vector<std::string> infixVector { "10", "-", "-2" };
     double       expectedResult = 12;
 
-    auto result = calculator_.calculateResult(infixEquation);
+    auto result = calculator_.calculateResult(infixVector);
 
     EXPECT_TRUE(result.isValid()) << "Result falied with message: \"" << result.getError() << "\"";
     EXPECT_DOUBLE_EQ(expectedResult, *result.consumeResult());
