@@ -69,7 +69,6 @@ std::string MathExpression::getRawEquation() const
 };
 
 
-// FIXME make negative sign before variables work properly
 Result<std::vector<std::string>> MathExpression::getPopulatedEquation() const
 {
     std::vector<std::string> populatedEquation;
