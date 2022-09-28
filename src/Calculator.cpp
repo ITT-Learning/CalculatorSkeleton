@@ -11,6 +11,7 @@
 #include <cctype>
 #include <cmath>
 #include <stack>
+#include <vector>
 #include <memory>
 
 #include "MathExpression.h"
@@ -31,26 +32,23 @@ Calculator::Calculator(std::unique_ptr<IOperationFactory>&& factory)
 
 Result<double> Calculator::calculateResult(const MathExpression &expression) const
 {
-    // if (expression.needsVariableValues().size() > 0)
-    // {
-    //     return Result<double>(std::make_unique<double>(nan("")), false, "Variable is missing value");
-    // }
-    auto result = expression.getPopulatedEquation();
-    if (!result.isValid())
+    auto equationResult = expression.getPopulatedEquation();
+    if (!equationResult.isValid())
     {
-        return Result<double>(std::make_unique<double>(nan("")), false, result.getError());
+        return Result<double>(std::make_unique<double>(nan("")), false, equationResult.getError());
     }
-    return calculateResult(*result.consumeResult());
-}
+    // return calculateResult(*result.consumeResult());
+// }
 
-Result<double> Calculator::calculateResult(std::string equationString) const
-{
-    if (equationString.empty())
+// Result<double> Calculator::calculateResult(std::queue<std::string> equationString) const
+// {
+    std::vector<std::string> equationVector = *equationResult.consumeResult();
+    if (equationVector.empty())
     {
         return Result<double>(std::make_unique<double>(nan("")), false, "No valid equation");
     }
 
-    Result<std::stack<std::string>> postfixResult = infixToPostfix(equationString);
+    Result<std::stack<std::string>> postfixResult = infixToPostfix(equationVector);
     if (!postfixResult.isValid())
     {
         return Result<double>(std::make_unique<double>(nan("")), false, postfixResult.getError());
@@ -161,15 +159,16 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
 
 
 
-Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixString)
+Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::string> infixVector)
 {
     std::stack<std::string> outputStack;
     std::stack<char> operatorStack;    
 
-    for (int i = 0; i < infixString.length(); i++)
+    // TODO convert this to using a queue
+    for (auto it = infixVector.cbegin(); it != infixVector.cend(); it++)
     {
         std::string readNumber = "";
-        switch(infixString[i])
+        switch ((*it)[0])
         {
             case '0' :
                 //Fallthrough
@@ -192,34 +191,29 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
             case '9' :
                 //Fallthrough
             case '.' :
-                if (i > 0 && infixString[i - 1] == ')')
+                if (it > infixVector.cbegin() && (*(it - 1))[0] == ')')
                 {
                     return Result<std::stack<std::string>>(
                                std::make_unique<std::stack<std::string>>(outputStack),
                                false,
                                "Missing operator after parenthesis");
                 }
-                readNumber = extractNextNumberFromString(infixString.substr(i));
-                i += readNumber.length() - 1;
-                outputStack.push(readNumber);
+                outputStack.push(*it);
                 break;
 
             case '-' :
-                // If the previous symbol isn't part of a number or a right parenthesis
-                if (i == 0 || !(isdigit(infixString[i - 1]) || infixString[i - 1] == '.' || infixString[i - 1] == ')'))
+                // If symbol contains more than just '-'
+                if (it->length() > 1)
                 {
                     // Then treat the '-' as a negative rather than subtraction
-                    if (i > 0 && infixString[i - 1] == ')')
+                    if (it > infixVector.cbegin() && (*(it - 1))[0] == ')')
                     {
                         return Result<std::stack<std::string>>(
                                 std::make_unique<std::stack<std::string>>(outputStack),
                                 false,
                                 "Missing operator after parenthesis");
                     }
-                    readNumber = extractNextNumberFromString(infixString.substr(i + 1));
-                    i += readNumber.length();
-                    readNumber = "-" + readNumber;
-                    outputStack.push(readNumber);
+                    outputStack.push(*it);
                     break;
                 }
                 //Fallthrough
@@ -229,7 +223,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
                     outputStack.push(std::string(1, operatorStack.top()));
                     operatorStack.pop();
                 }
-                operatorStack.push(infixString[i]);
+                operatorStack.push((*it)[0]);
                 break;
 
             case '*' :
@@ -240,11 +234,11 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::string infixStri
                     outputStack.push(std::string(1, operatorStack.top()));
                     operatorStack.pop();
                 }
-                operatorStack.push(infixString[i]);
+                operatorStack.push((*it)[0]);
                 break;
 
             case '(' :
-                if (i > 0 && (isdigit(infixString[i - 1]) || infixString[i - 1] == '.'))
+                if (it > infixVector.cbegin() && (isdigit((*(it - 1))[(*(it - 1)).length() - 1]) || (*(it - 1))[(*(it - 1)).length() - 1] == '.'))
                 {
 
                     return Result<std::stack<std::string>>(

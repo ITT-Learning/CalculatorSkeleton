@@ -62,7 +62,7 @@ std::string addProcessedInputToAt(char input, int& cursorPos, const std::string 
 {
     std::string workingString = baseString;
     input = towlower(input);
-    if (isdigit(input) || input == '.' || input == '+' || input == '-' || input == '*' || input == '/' || input == '(' || input ==')' || isalpha(input))
+    if (isalnum(input) || input == '.' || input == '+' || input == '-' || input == '*' || input == '/' || input == '(' || input ==')')
     {
         if (cursorPos == workingString.length())
         {

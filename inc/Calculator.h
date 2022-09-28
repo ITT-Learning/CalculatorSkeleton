@@ -12,6 +12,7 @@
 
 #include <string>
 #include <stack>
+#include <vector>
 #include <memory>
 
 #include "MathExpression.h"
@@ -25,13 +26,12 @@ class Calculator
         Calculator(std::unique_ptr<IOperationFactory>&& factory);
 
         Result<double> calculateResult(const MathExpression &expression) const;
-        Result<double> calculateResult(std::string equationString)       const;
 
     private:
         std::unique_ptr<IOperationFactory> factory_;
 
         Result<IMathOperation>                 extractOperation(std::stack<std::string>& postfixStack) const;
-        static Result<std::stack<std::string>> infixToPostfix(std::string infixString);
+        static Result<std::stack<std::string>> infixToPostfix(std::vector<std::string> infixString);
 
         static std::string extractNextNumberFromString(std::string str);
 };
