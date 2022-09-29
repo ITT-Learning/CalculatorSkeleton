@@ -8,9 +8,11 @@
 
 #include <cstring>
 #include <string>
+#include <iostream>
 #include <memory>
 #include <set>
 #include <vector>
+#include <chrono>
 
 #include <ncurses.h>
 
@@ -132,7 +134,7 @@ void runMainLoop()
         MathExpression expression(equation);
         if (expression.getRawEquation().empty())
         {
-            wprintw(outputWin, "No valid command or equation found.\n");
+            drawErrorTo(outputWin, "No valid command or equation found.");
             continue;
         }
 
@@ -193,27 +195,24 @@ void runMainLoop()
         Result<std::vector<std::string>> infixVectorResult = expression.getPopulatedEquation();
         if (!infixVectorResult.isValid())
         {
-            wattron(outputWin, A_BOLD);
-            wprintw(outputWin, "Error: ");
-            wprintw(outputWin, infixVectorResult.getError().c_str());
-            wprintw(outputWin, "\n");
-            wattroff(outputWin, A_BOLD);
+            drawErrorTo(outputWin, infixVectorResult.getError());
             continue;
         }
-
+        auto start = std::chrono::high_resolution_clock::now();
         Result<double> calculationResult = calculator.calculateResult(*infixVectorResult.consumeResult());
+        auto end = std::chrono::high_resolution_clock::now();
+        auto difference = end - start;
         if (!calculationResult.isValid())
         {
-            wattron(outputWin, A_BOLD);
-            wprintw(outputWin, "Error: ");
-            wprintw(outputWin, calculationResult.getError().c_str());
-            wprintw(outputWin, "\n");
-            wattroff(outputWin, A_BOLD);
+            drawErrorTo(outputWin, calculationResult.getError());
             continue;
         }
 
 
         std::string resultString = doubleToString(*(calculationResult.consumeResult()));
+        wprintw(outputWin, "\n(");
+        wprintw(outputWin, std::to_string(difference.count() / 1000000.0).c_str());
+        wprintw(outputWin, "us)\n");
         wprintw(outputWin, resultString.c_str());
         wprintw(outputWin, " = ");
         wprintw(outputWin, expression.getRawEquation().c_str());
@@ -245,6 +244,29 @@ void endNcurses()
 
 int main(int argc, char* argv[]) 
 {
+    if (argc > 1)
+    {
+        MathExpression expression(argv[1]);
+        auto infixResult = expression.getPopulatedEquation();
+        if (!infixResult.isValid())
+        {
+            std::cout << infixResult.getError() << std::endl;
+            return 1;
+        }
+        Calculator calculator(std::make_unique<FourOperationFactory>());
+        auto start = std::chrono::high_resolution_clock::now();
+        auto result = calculator.calculateResult(*infixResult.consumeResult());
+        auto end = std::chrono::high_resolution_clock::now();
+        if (!result.isValid())
+        {
+            std::cout << result.getError() << std::endl;
+            return 1;
+        }
+        auto timing = end - start;
+        std::cout << timing.count() / 1000 << "us\n";
+        return 0;
+    }
+
     initNcurses();
     try { runMainLoop(); } catch(...) { /* intentionally empty */ }
     endNcurses();

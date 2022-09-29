@@ -100,6 +100,28 @@ void drawInputLineTo(WINDOW* inputWin, std::string str)
 
 
 
+void drawErrorTo(WINDOW* window, const char* error)
+{
+    wattron (window, A_BOLD);
+    wprintw (window, "Error: ");
+    wprintw (window, error);
+    wprintw (window, "\n");
+    wattroff(window, A_BOLD);
+};
+
+
+
+void drawErrorTo(WINDOW* window, std::string error)
+{
+    wattron (window, A_BOLD);
+    wprintw (window, "Error: ");
+    wprintw (window, error.c_str());
+    wprintw (window, "\n");
+    wattroff(window, A_BOLD);
+};
+
+
+
 void drawHistoryWindow(CalcHistoryTraverser &historyTraverser, WINDOW* historyWin, int height)
 {
     wclear(historyWin);

@@ -14,8 +14,12 @@ class IMathOperation
 {
     public:
         virtual double calculate() = 0;
+        virtual int    getDepth()  = 0;
 
         virtual ~IMathOperation() {};
+
+    protected:
+        static const int THREADING_THRESHOLD = 50;
 };
 
 #endif

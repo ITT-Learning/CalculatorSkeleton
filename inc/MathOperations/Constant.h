@@ -9,6 +9,7 @@ class Constant : public IMathOperation
         Constant(double value);
         
         double calculate() override;
+        int    getDepth()  override;
 
     private:
         double value_;

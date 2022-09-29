@@ -8,7 +8,8 @@
 class NotANumber : public IMathOperation
 {
     public:
-        inline double calculate() { return nan(""); };
+        inline double calculate() override { return nan(""); };
+        inline int    getDepth()  override { return 0; };
 };
 
 #endif
