@@ -157,6 +157,8 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
     for (auto it = infixVector.cbegin(); it != infixVector.cend(); it++)
     {
         std::string readNumber = "";
+        bool previousValueIsAParenthesis = it > infixVector.cbegin() && (*(it - 1))[0] == ')';
+        bool previousValueIsANumber      = it > infixVector.cbegin() && (isdigit((*(it - 1))[(*(it - 1)).length() - 1]) || (*(it - 1))[(*(it - 1)).length() - 1] == '.');
         switch ((*it)[0])
         {
             case '0' :
@@ -180,7 +182,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
             case '9' :
                 //Fallthrough
             case '.' :
-                if (it > infixVector.cbegin() && (*(it - 1))[0] == ')')
+                if (previousValueIsAParenthesis)
                 {
                     return Result<std::stack<std::string>>(
                                std::make_unique<std::stack<std::string>>(outputStack),
@@ -195,7 +197,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
                 if (it->length() > 1)
                 {
                     // Then treat the '-' as a negative rather than subtraction
-                    if (it > infixVector.cbegin() && (*(it - 1))[0] == ')')
+                    if (previousValueIsAParenthesis)
                     {
                         return Result<std::stack<std::string>>(
                                 std::make_unique<std::stack<std::string>>(outputStack),
@@ -227,7 +229,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
                 break;
 
             case '(' :
-                if (it > infixVector.cbegin() && (isdigit((*(it - 1))[(*(it - 1)).length() - 1]) || (*(it - 1))[(*(it - 1)).length() - 1] == '.'))
+                if (previousValueIsANumber)
                 {
 
                     return Result<std::stack<std::string>>(

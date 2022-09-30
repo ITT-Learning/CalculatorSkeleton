@@ -105,12 +105,12 @@ void runMainLoop()
             continue;
         }
       
-        if (strcmp(equation.c_str(), "quit") == 0 || strcmp(equation.c_str(), "exit") == 0)
+        if (equation == "quit" || equation == "exit")
         {
             saveHistory(history, historyFilePath);
             break;
         }
-        if (strcmp(equation.c_str(), "help") == 0)
+        if (equation == "help")
         {
             equation = "";
             cursorPos = 0;
@@ -119,7 +119,7 @@ void runMainLoop()
             continue;
         }
         // TODO make the output redraw after exiting
-        if (strcmp(equation.c_str(),"history") == 0)
+        if (equation == "history")
         {
             printFullHistory(history, stdscr);
             wclear(stdscr);
