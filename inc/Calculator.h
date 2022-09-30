@@ -32,6 +32,13 @@ class Calculator
 
         Result<std::unique_ptr<IMathOperation>> extractOperation(std::stack<std::string>& postfixStack) const;
         static Result<std::stack<std::string>>  infixToPostfix(std::vector<std::string> infixString);
+
+        static Result<bool> plusMinusInfixCase(
+            std::vector<std::string>::const_iterator &it,
+            std::stack<std::string>                  &outputStack,
+            std::stack<char>                         &operatorStack,
+            bool                                     previousValueIsAParenthesis
+        );
 };
 
 #endif
