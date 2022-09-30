@@ -159,6 +159,8 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
         std::string readNumber = "";
         bool previousValueIsAParenthesis = it > infixVector.cbegin() && (*(it - 1))[0] == ')';
         bool previousValueIsANumber      = it > infixVector.cbegin() && (isdigit((*(it - 1))[(*(it - 1)).length() - 1]) || (*(it - 1))[(*(it - 1)).length() - 1] == '.');
+        Result<bool> plusMinusResult;
+
         switch ((*it)[0])
         {
             case '0' :
@@ -192,29 +194,14 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
                 outputStack.push(*it);
                 break;
 
-            case '-' :
-                // If symbol contains more than just '-'
-                if (it->length() > 1)
-                {
-                    // Then treat the '-' as a negative rather than subtraction
-                    if (previousValueIsAParenthesis)
-                    {
-                        return Result<std::stack<std::string>>(
-                                std::move(outputStack),
-                                false,
-                                "Missing operator after parenthesis");
-                    }
-                    outputStack.push(*it);
-                    break;
-                }
-                //Fallthrough
             case '+' :
-                while (!operatorStack.empty() && operatorStack.top() != '(')
+                //Fallthrough
+            case '-' :
+                plusMinusResult = plusMinusInfixCase(it, outputStack, operatorStack, previousValueIsAParenthesis);
+                if(!plusMinusResult.isValid())
                 {
-                    outputStack.push(std::string(1, operatorStack.top()));
-                    operatorStack.pop();
+                    return Result<std::stack<std::string>>(std::move(outputStack), false, plusMinusResult.getError());
                 }
-                operatorStack.push((*it)[0]);
                 break;
 
             case '*' :
@@ -285,3 +272,35 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
     }
     return Result<std::stack<std::string>>(std::move(outputStack));
 };
+
+
+Result<bool> Calculator::plusMinusInfixCase(
+    std::vector<std::string>::const_iterator &it,
+    std::stack<std::string>                  &outputStack,
+    std::stack<char>                         &operatorStack,
+    bool                                     previousValueIsAParenthesis)
+{
+    // If symbol contains more than just '-'
+    if (it->length() > 1)
+    {
+        // Then treat the '-' as a negative rather than subtraction
+        if (previousValueIsAParenthesis)
+        {
+            return Result<bool>(
+                    false,
+                    false,
+                    "Missing operator after parenthesis");
+        }
+        outputStack.push(*it);
+    }
+    else
+    {
+        while (!operatorStack.empty() && operatorStack.top() != '(')
+        {
+            outputStack.push(std::string(1, operatorStack.top()));
+            operatorStack.pop();
+        }
+        operatorStack.push((*it)[0]);
+    }
+    return Result<bool>(true);
+}
