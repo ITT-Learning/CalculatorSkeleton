@@ -11,7 +11,7 @@ Division::Division(std::unique_ptr<IMathOperation>&& lhs, std::unique_ptr<IMathO
 
 
 
-double Division::calculate()
+double Division::calculate() const
 {
     double rhsResult = rhs_->calculate();
     if (rhsResult != 0)

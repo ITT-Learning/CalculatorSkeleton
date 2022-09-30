@@ -86,6 +86,6 @@ TEST(MathExpressionTests, WhenPopulatingATwoVariableString_ThenThePopulatedStrin
     EXPECT_TRUE(result1.isValid()) << "Error message: " << result1.getError();
     EXPECT_TRUE(result2.isValid()) << "Error message: " << result2.getError();
 
-    EXPECT_EQ(expected1, *result1.consumeResult());
-    EXPECT_EQ(expected2, *result2.consumeResult());
+    EXPECT_EQ(expected1, result1.getResult());
+    EXPECT_EQ(expected2, result2.getResult());
 };

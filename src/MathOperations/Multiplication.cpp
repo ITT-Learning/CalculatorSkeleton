@@ -10,7 +10,7 @@ Multiplication::Multiplication(std::unique_ptr<IMathOperation>&& lhs, std::uniqu
 
 
 
-double Multiplication::calculate()
+double Multiplication::calculate() const
 {
     return lhs_->calculate() * rhs_->calculate();
 };

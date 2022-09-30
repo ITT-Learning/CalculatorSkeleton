@@ -201,7 +201,7 @@ void runMainLoop()
             continue;
         }
 
-        Result<double> calculationResult = calculator.calculateResult(*infixVectorResult.consumeResult());
+        Result<double> calculationResult = calculator.calculateResult(infixVectorResult.getResult());
         if (!calculationResult.isValid())
         {
             wattron(outputWin, A_BOLD);
@@ -213,7 +213,7 @@ void runMainLoop()
         }
 
 
-        std::string resultString = doubleToString(*(calculationResult.consumeResult()));
+        std::string resultString = doubleToString(calculationResult.getResult());
         wprintw(outputWin, resultString.c_str());
         wprintw(outputWin, " = ");
         wprintw(outputWin, expression.getRawEquation().c_str());

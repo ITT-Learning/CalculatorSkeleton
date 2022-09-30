@@ -10,7 +10,7 @@ Addition::Addition(std::unique_ptr<IMathOperation>&& lhs, std::unique_ptr<IMathO
 
 
 
-double Addition::calculate()
+double Addition::calculate() const
 {
     return lhs_->calculate() + rhs_->calculate();
 };

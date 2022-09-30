@@ -8,7 +8,7 @@ class Constant : public IMathOperation
     public:
         Constant(double value);
         
-        double calculate() override;
+        double calculate() const override;
 
     private:
         double value_;

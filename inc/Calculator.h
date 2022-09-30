@@ -30,8 +30,8 @@ class Calculator
     private:
         std::unique_ptr<IOperationFactory> factory_;
 
-        Result<IMathOperation>                 extractOperation(std::stack<std::string>& postfixStack) const;
-        static Result<std::stack<std::string>> infixToPostfix(std::vector<std::string> infixString);
+        Result<std::unique_ptr<IMathOperation>> extractOperation(std::stack<std::string>& postfixStack) const;
+        static Result<std::stack<std::string>>  infixToPostfix(std::vector<std::string> infixString);
 };
 
 #endif

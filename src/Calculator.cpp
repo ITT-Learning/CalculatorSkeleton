@@ -35,37 +35,37 @@ Result<double> Calculator::calculateResult(std::vector<std::string> infixVector)
 {
     if (infixVector.empty())
     {
-        return Result<double>(std::make_unique<double>(nan("")), false, "No valid equation");
+        return Result<double>(nan(""), false, "No valid equation");
     }
 
     Result<std::stack<std::string>> postfixResult = infixToPostfix(infixVector);
     if (!postfixResult.isValid())
     {
-        return Result<double>(std::make_unique<double>(nan("")), false, postfixResult.getError());
+        return Result<double>(nan(""), false, postfixResult.getError());
     }
 
-    std::stack<std::string> resultStack = *(postfixResult.consumeResult());
-    Result<IMathOperation> operationResult = extractOperation(resultStack);
+    std::stack<std::string> resultStack = postfixResult.getResult();
+    Result<std::unique_ptr<IMathOperation>> operationResult = extractOperation(resultStack);
     if (!operationResult.isValid())
     {
-        return Result<double>(std::make_unique<double>(nan("")), false, operationResult.getError());
+        return Result<double>(nan(""), false, operationResult.getError());
     }
     
-    double result = operationResult.consumeResult()->calculate();
-    return Result<double>(std::make_unique<double>(result));
+    double result = operationResult.getResult()->calculate();
+    return Result<double>(std::move(result));
 };
 
 
 
-Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &postfixStack) const
+Result<std::unique_ptr<IMathOperation>> Calculator::extractOperation(std::stack<std::string> &postfixStack) const
 {
     if (postfixStack.empty())
     {
-        return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Empty equation");
+        return Result<std::unique_ptr<IMathOperation>>(std::move(std::make_unique<NotANumber>()), false, "Empty equation");
     }
     
-    Result<IMathOperation> lhs;
-    Result<IMathOperation> rhs;
+    Result<std::unique_ptr<IMathOperation>> lhs;
+    Result<std::unique_ptr<IMathOperation>> rhs;
     std::unique_ptr<IMathOperation> operationUPtr;
     double value;
     std::string operatorName;
@@ -78,7 +78,7 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
                 value = stod(postfixStack.top());
                 postfixStack.pop();
                 operationUPtr = factory_->getConstantFor(value);
-                return Result<IMathOperation>(std::move(operationUPtr));
+                return Result<std::unique_ptr<IMathOperation>>(std::move(operationUPtr));
                 break;
             }
             //Fallthrough
@@ -91,30 +91,30 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
             postfixStack.pop();
             if (postfixStack.empty())
             {
-                return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Missing operands");
+                return Result<std::unique_ptr<IMathOperation>>(std::make_unique<NotANumber>(), false, "Missing operands");
             }
             rhs = extractOperation(postfixStack);
             if (!rhs.isValid())
             {
-                return Result<IMathOperation>(std::make_unique<NotANumber>(), false, rhs.getError());
+                return Result<std::unique_ptr<IMathOperation>>(std::make_unique<NotANumber>(), false, rhs.getError());
             }
             
             if (postfixStack.empty())
             {
-                return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Missing operands");
+                return Result<std::unique_ptr<IMathOperation>>(std::make_unique<NotANumber>(), false, "Missing operands");
             }
             lhs = extractOperation(postfixStack);
             if (!lhs.isValid())
             {
-                return Result<IMathOperation>(std::make_unique<NotANumber>(), false, lhs.getError());
+                return Result<std::unique_ptr<IMathOperation>>(std::make_unique<NotANumber>(), false, lhs.getError());
             }
 
             operationUPtr = factory_->getOperationFor(
                                 operatorName, 
-                                lhs.consumeResult(),
-                                rhs.consumeResult()
+                                std::move(lhs.getResult()),
+                                std::move(rhs.getResult())
                             );
-            return Result<IMathOperation>(std::move(operationUPtr));
+            return Result<std::unique_ptr<IMathOperation>>(std::move(operationUPtr));
         
         case '0' :
             //Fallthrough
@@ -140,10 +140,10 @@ Result<IMathOperation> Calculator::extractOperation(std::stack<std::string> &pos
             value = stod(postfixStack.top());
             postfixStack.pop();
             operationUPtr = factory_->getConstantFor(value);
-            return Result<IMathOperation>(std::move(operationUPtr));
+            return Result<std::unique_ptr<IMathOperation>>(std::move(operationUPtr));
         
         default :
-            return Result<IMathOperation>(std::make_unique<NotANumber>(), false, "Invalid character in equation");
+            return Result<std::unique_ptr<IMathOperation>>(std::make_unique<NotANumber>(), false, "Invalid character in equation");
     }
 };
 
@@ -185,7 +185,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
                 if (previousValueIsAParenthesis)
                 {
                     return Result<std::stack<std::string>>(
-                               std::make_unique<std::stack<std::string>>(outputStack),
+                               std::move(outputStack),
                                false,
                                "Missing operator after parenthesis");
                 }
@@ -200,7 +200,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
                     if (previousValueIsAParenthesis)
                     {
                         return Result<std::stack<std::string>>(
-                                std::make_unique<std::stack<std::string>>(outputStack),
+                                std::move(outputStack),
                                 false,
                                 "Missing operator after parenthesis");
                     }
@@ -233,7 +233,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
                 {
 
                     return Result<std::stack<std::string>>(
-                               std::make_unique<std::stack<std::string>>(outputStack),
+                               std::move(outputStack),
                                false,
                                "Missing operator before parenthesis");
                 }
@@ -250,7 +250,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
                         if (operatorStack.empty())
                         {
                             return Result<std::stack<std::string>>(
-                               std::make_unique<std::stack<std::string>>(outputStack),
+                               std::move(outputStack),
                                false,
                                "Too many closing parenthesis");
                         }
@@ -259,7 +259,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
                 if (operatorStack.empty())
                 {
                     return Result<std::stack<std::string>>(
-                               std::make_unique<std::stack<std::string>>(outputStack),
+                               std::move(outputStack),
                                false,
                                "Too many closing parenthesis");
                 }
@@ -267,7 +267,7 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
                 break;
             
             default:
-                return Result<std::stack<std::string>>(std::make_unique<std::stack<std::string>>(outputStack), false, "Invalid character in equation");
+                return Result<std::stack<std::string>>(std::move(outputStack), false, "Invalid character in equation");
         }
     }
 
@@ -276,12 +276,12 @@ Result<std::stack<std::string>> Calculator::infixToPostfix(std::vector<std::stri
         if (operatorStack.top() == '(')
         {
             return Result<std::stack<std::string>>(
-                               std::make_unique<std::stack<std::string>>(outputStack),
+                               std::move(outputStack),
                                false,
                                "Missing closing parenthesis");
         }
         outputStack.push(std::string(1, operatorStack.top()));
         operatorStack.pop();
     }
-    return Result<std::stack<std::string>>(std::make_unique<std::stack<std::string>>(outputStack));
+    return Result<std::stack<std::string>>(std::move(outputStack));
 };

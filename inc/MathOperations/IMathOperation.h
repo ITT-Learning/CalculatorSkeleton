@@ -13,7 +13,7 @@
 class IMathOperation
 {
     public:
-        virtual double calculate() = 0;
+        virtual double calculate() const = 0;
 
         virtual ~IMathOperation() {};
 };

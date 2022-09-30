@@ -72,6 +72,7 @@ std::string MathExpression::getRawEquation() const
 Result<std::vector<std::string>> MathExpression::getPopulatedEquation() const
 {
     std::vector<std::string> populatedEquation;
+    std::vector<std::string> emptyVector;
     for (int i = 0; i < equation_.length(); i++)
     {
         if (equation_[i] == '-')
@@ -88,7 +89,7 @@ Result<std::vector<std::string>> MathExpression::getPopulatedEquation() const
                 if (variables_.count(variableName) == 0)
                 {
                     return Result<std::vector<std::string>>(
-                        std::make_unique<std::vector<std::string>>(),
+                        std::move(emptyVector),
                         false, "Variable value missing");
                 }
                 i += variableName.length();
@@ -110,7 +111,7 @@ Result<std::vector<std::string>> MathExpression::getPopulatedEquation() const
             if (variables_.count(variableName) == 0)
             {
                 return Result<std::vector<std::string>>(
-                    std::make_unique<std::vector<std::string>>(),
+                    std::move(emptyVector),
                     false, "Variable value missing");
             }
             i += variableName.length() - 1;
@@ -129,7 +130,7 @@ Result<std::vector<std::string>> MathExpression::getPopulatedEquation() const
             populatedEquation.push_back(std::string(1, equation_[i]));
         }
     }
-    return Result<std::vector<std::string>>(std::make_unique<std::vector<std::string>>(populatedEquation));
+    return Result<std::vector<std::string>>(std::move(populatedEquation));
 };
 
 
