@@ -8,7 +8,7 @@
 class NotANumber : public IMathOperation
 {
     public:
-        inline double calculate() { return nan(""); };
+        inline double calculate() const override { return nan(""); };
 };
 
 #endif

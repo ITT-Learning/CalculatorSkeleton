@@ -8,7 +8,7 @@ Subtraction::Subtraction(std::unique_ptr<IMathOperation>&& lhs, std::unique_ptr<
 
 
 
-double Subtraction::calculate()
+double Subtraction::calculate() const
 {
     return lhs_->calculate() - rhs_->calculate();
 };

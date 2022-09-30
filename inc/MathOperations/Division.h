@@ -10,7 +10,7 @@ class Division : public IMathOperation
     public:
         Division(std::unique_ptr<IMathOperation>&& lhs, std::unique_ptr<IMathOperation>&& rhs);
 
-        double calculate() override;
+        double calculate() const override;
 
     private:
         std::unique_ptr<IMathOperation> lhs_;

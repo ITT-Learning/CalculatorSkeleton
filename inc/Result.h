@@ -11,29 +11,28 @@ class Result
         Result()
         : isValid_(false), errorMessage_("No value given") {};
         
-        // REVIEW could this just be a rvr: T&&
-        Result(std::unique_ptr<T>&& result, bool isValid = true, std::string errorMessage = "")
+        Result(T&& result, bool isValid = true, std::string errorMessage = "")
         : result_(std::move(result)), isValid_{isValid}, errorMessage_{errorMessage} {};
 
-        std::unique_ptr<T> consumeResult();
+        inline T& getResult() { return result_; };
 
         inline  bool         isValid()   const  { return isValid_; };
         inline  std::string  getError()  const  { return errorMessage_; };
 
     private:
-        std::unique_ptr<T>  result_;
-        bool                isValid_;
-        std::string         errorMessage_;
+        T           result_;
+        bool        isValid_;
+        std::string errorMessage_;
 };
 
 
 
-template <typename T>
-std::unique_ptr<T> Result<T>::consumeResult()
-{
-    isValid_ = false;
-    errorMessage_ = "Result has been consumed";
-    return std::unique_ptr<T>(std::move(result_));
-};
+// template <typename T>
+// const T& Result<T>::getResult()
+// {
+//     isValid_ = false;
+//     errorMessage_ = "Result has been consumed";
+//     return result_;
+// };
 
 #endif

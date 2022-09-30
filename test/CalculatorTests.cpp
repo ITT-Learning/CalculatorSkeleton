@@ -45,7 +45,7 @@ class MockOperationFactory : public IOperationFactory
 class MockMathOperation : public IMathOperation
 {
     public:
-        MOCK_METHOD(double, calculate, (), (override));
+        MOCK_METHOD(double, calculate, (), (const, override));
 };
 
 
@@ -310,8 +310,8 @@ TEST(GivenACalculator, WhenCalculatingOnALargeExpression_ThenRespectsOrderOfOper
 
     ASSERT_TRUE(result1.isValid()) << "Result 1 should be valid - error: " << result1.getError();
     ASSERT_TRUE(result2.isValid()) << "Result 2 should be valid - error: " << result2.getError();
-    EXPECT_EQ(expectedResult1, *result1.consumeResult());
-    EXPECT_EQ(expectedResult2, *result2.consumeResult());
+    EXPECT_EQ(expectedResult1, result1.getResult());
+    EXPECT_EQ(expectedResult2, result2.getResult());
 };
 
 
@@ -366,7 +366,7 @@ TEST(GivenACalculator, WhenParsingAnEquationWithANegativeNumber_ThenDoesntTreatI
     auto result = calculator.calculateResult(infixVector);
 
     EXPECT_TRUE(result.isValid()) << "Result falied with message: \"" << result.getError() << "\"";
-    EXPECT_DOUBLE_EQ(expectedResult, *result.consumeResult());
+    EXPECT_DOUBLE_EQ(expectedResult, result.getResult());
 };
 
 TEST_F(GivenACalculatorWithAFourOperationFactory, WhenParsingAnEquationSubtractingANegativeNumber_ThenActsLikeAddition)
@@ -377,5 +377,5 @@ TEST_F(GivenACalculatorWithAFourOperationFactory, WhenParsingAnEquationSubtracti
     auto result = calculator_.calculateResult(infixVector);
 
     EXPECT_TRUE(result.isValid()) << "Result falied with message: \"" << result.getError() << "\"";
-    EXPECT_DOUBLE_EQ(expectedResult, *result.consumeResult());
+    EXPECT_DOUBLE_EQ(expectedResult, result.getResult());
 };

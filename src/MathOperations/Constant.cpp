@@ -7,7 +7,7 @@ Constant::Constant(double value)
 
 
 
-double Constant::calculate()
+double Constant::calculate() const
 {
     return value_;
 };
