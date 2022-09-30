@@ -28,7 +28,6 @@ class MathExpression
 
         static std::string extractNextNumberFromString(std::string str);
         static std::string extractNextVariableFromString(std::string str);
-
 };
 
 #endif
