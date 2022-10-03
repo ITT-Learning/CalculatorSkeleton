@@ -46,6 +46,7 @@ class MockMathOperation : public IMathOperation
 {
     public:
         MOCK_METHOD(double, calculate, (), (override));
+        MOCK_METHOD(int,    getDepth,  (), (override));
 };
 
 
