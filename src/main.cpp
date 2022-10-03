@@ -12,6 +12,7 @@
 #include <set>
 #include <vector>
 
+#include <pistache/router.h>
 #include <ncurses.h>
 
 #include "Calculator.h"
@@ -22,6 +23,7 @@
 #include "CalcHistory.h"
 #include "CalcHistoryTraverser.h"
 #include "CalculatorIO.h"
+#include "CalculatorApi.h"
 
 
 
@@ -245,6 +247,14 @@ void endNcurses()
 
 int main(int argc, char* argv[]) 
 {
+    if (argc > 1)
+    {
+        if (strcmp(argv[1], "--api") == 0)
+        {
+            runInApiMode();
+        }
+        return 0;
+    }
     initNcurses();
     try { runMainLoop(); } catch(...) { /* intentionally empty */ }
     endNcurses();
