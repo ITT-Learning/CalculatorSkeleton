@@ -12,6 +12,11 @@ list(APPEND _sources
     ./MathOperations/Division.cpp
     ./MathOperations/Multiplication.cpp
     ./MathOperations/Subtraction.cpp
+
+    ./Controllers/CalculatorController.cpp
+    ./Controllers/HistoryController.cpp
+
+    ./Services/CalculatorService.cpp
 )
 
 # Set the output folder where your program will be created

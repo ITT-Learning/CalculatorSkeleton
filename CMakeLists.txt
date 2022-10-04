@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_custom_target(fbsh ALL flatc --cpp -o ./inc/flatbuffers/ ./flatbuffers/CalcHistory.fbs)
 
-include_directories(src inc inc/MathOperations inc/flatbuffers)
+include_directories(src inc inc/MathOperations inc/flatbuffers inc/Controllers inc/Services)
 
 add_subdirectory(src)
 add_subdirectory(test)

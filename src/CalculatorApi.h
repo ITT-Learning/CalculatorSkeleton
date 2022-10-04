@@ -1,21 +1,24 @@
 #include <iostream>
 
+#include <pistache/router.h>
 #include <pistache/endpoint.h>
+
+#include "CalculatorController.h"
+#include "HistoryController.h"
 
 using namespace Pistache;
 
 
 
-class TestHandler : public Http::Handler
+Rest::Router getRouter()
 {
-    public:
+    Rest::Router router;
 
-        HTTP_PROTOTYPE(TestHandler)
+    Rest::Routes::Get(router, "/api/calculate", Rest::Routes::bind(&CalculatorController::calculate));
 
-        void onRequest(const Http::Request &req, Http::ResponseWriter res) override
-        {
-            res.send(Http::Code::Ok, "hi");
-        };
+    Rest::Routes::Get(router, "/api/history", Rest::Routes::bind(&HistoryController::getAllHistory));
+
+    return router;
 };
 
 
@@ -26,6 +29,8 @@ void runInApiMode()
     auto opts = Http::Endpoint::options().threads(1);
     Http::Endpoint server(addr);
     server.init(opts);
-    server.setHandler(Http::make_handler<TestHandler>());
+    server.setHandler(getRouter().handler());
+    std::cout << "\nServer running\n\nPress <CTRL-C> to exit...\n";
+    std::cout.flush();
     server.serve();
 };
