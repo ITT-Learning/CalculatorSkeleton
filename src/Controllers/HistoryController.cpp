@@ -16,24 +16,27 @@ void HistoryController::getAllHistory(const Pistache::Rest::Request& req, Pistac
                 filePath += "/calc/history";
     history.initialzeFromFilePath(filePath);
 
-    std::string output = "[";
+    std::stringstream hout;
+    hout << "[";
     if (!history.isEmpty())
     {
         for (auto it = history.oldest(); it != history.newest(); it++)
         {
             if (it != history.oldest())
             {
-                output += ",";
+                hout << ",";
             };
-            output += "{\"equation\"=\"";
-            output += it->getEquation();
-            output += "\",\"result\"=\"";
-            output += it->getResult();
-            output += "\"}";
+            hout << "{\"equation\":\"";
+            hout << it->getEquation();
+            hout << "\",\"result\":";
+            hout << it->getResult();
+            hout << "}";
         }
     }
-    output += "]";
+    hout << "]";
 
-    res.send(Pistache::Http::Code::Ok, output, Pistache::Http::Mime::MediaType(Pistache::Http::Mime::Type::Text, Pistache::Http::Mime::Subtype::Json));
+    res.send(Pistache::Http::Code::Ok, hout.str().c_str(), Pistache::Http::Mime::MediaType(
+                                                               Pistache::Http::Mime::Type::Text, 
+                                                               Pistache::Http::Mime::Subtype::Json));
     return;
 };

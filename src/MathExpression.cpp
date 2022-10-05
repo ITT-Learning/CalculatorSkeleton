@@ -88,9 +88,17 @@ Result<std::vector<std::string>> MathExpression::getPopulatedEquation() const
                 std::string variableName = extractNextVariableFromString(equation_.substr(i + 1));
                 if (variables_.count(variableName) == 0)
                 {
+                    std::stringstream message;
+                    std::set<std::string> missingVariables = needsVariableValues();
+                    message << "Variable" << (missingVariables.size() != 1 ? "s" : "") << " lacking value: [ ";
+                    for (auto it = missingVariables.cbegin(); it != missingVariables.cend(); it++)
+                    {
+                        message << *it << " ";
+                    }
+                    message << "]";
                     return Result<std::vector<std::string>>(
                         std::move(emptyVector),
-                        false, "Variable value missing");
+                        false, message.str());
                 }
                 i += variableName.length();
                 double negativeValue = variables_.at(variableName) * -1;
@@ -110,9 +118,17 @@ Result<std::vector<std::string>> MathExpression::getPopulatedEquation() const
             std::string variableName = extractNextVariableFromString(equation_.substr(i));
             if (variables_.count(variableName) == 0)
             {
+                std::stringstream message;
+                std::set<std::string> missingVariables = needsVariableValues();
+                message << "Variable" << (missingVariables.size() != 1 ? "s" : "") << " lacking value: [ ";
+                for (auto it = missingVariables.cbegin(); it != missingVariables.cend(); it++)
+                {
+                    message << *it << " ";
+                }
+                message << "]";
                 return Result<std::vector<std::string>>(
                     std::move(emptyVector),
-                    false, "Variable value missing");
+                    false, message.str());
             }
             i += variableName.length() - 1;
             std::stringstream sout;

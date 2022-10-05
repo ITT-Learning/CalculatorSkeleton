@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+#include <unordered_map>
 
 #include "Calculator.h"
 #include "FourOperationFactory.h"
@@ -12,7 +13,7 @@
 class CalculatorService
 {
     public:
-        static Result<std::string> calculate(std::string equation);
+        static Result<std::string> calculate(std::string equation, std::unordered_map<std::string, double> variables);
 
     private:
         CalculatorService() {};

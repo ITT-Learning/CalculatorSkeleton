@@ -1,6 +1,7 @@
 #include "CalculatorService.h"
 
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "MathExpression.h"
@@ -10,12 +11,20 @@ const Calculator CalculatorService::calculator_ = Calculator(std::make_unique<Fo
 
 
 
-Result<std::string> CalculatorService::calculate(std::string equation)
+Result<std::string> CalculatorService::calculate(std::string equation, std::unordered_map<std::string, double> variables)
 {
     MathExpression expression(equation);
     if (expression.getRawEquation().empty())
     {
         return Result<std::string>("", false, "No valid equation found.\n");
+    }
+
+    if (!variables.empty())
+    {
+        for (auto it = variables.cbegin(); it != variables.cend(); it++)
+        {
+            expression.setVariableValue(it->first, it->second);
+        }
     }
 
     Result<std::vector<std::string>> infixVectorResult = expression.getPopulatedEquation();
