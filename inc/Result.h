@@ -25,14 +25,4 @@ class Result
         std::string errorMessage_;
 };
 
-
-
-// template <typename T>
-// const T& Result<T>::getResult()
-// {
-//     isValid_ = false;
-//     errorMessage_ = "Result has been consumed";
-//     return result_;
-// };
-
 #endif
