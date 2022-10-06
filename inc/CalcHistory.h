@@ -16,12 +16,17 @@ class CalcHistory
 
         static std::string toString(const CalcHistory& calcHistory);
 
-        void addEntry(std::string equation, std::string result);
+        void addEntry   (std::string equation, std::string result);
+        void addEntry   (const CalcHistoryPair&  entry);
+        void addEntry   (      CalcHistoryPair&& entry);
+
+        bool removeEntry(int index);
 
         std::vector<CalcHistoryPair>::const_iterator oldest() const;
         std::vector<CalcHistoryPair>::const_iterator newest() const;
 
         bool isEmpty() const;
+        int  size()    const;
 
     private:
         std::vector<CalcHistoryPair> entries_;

@@ -17,6 +17,7 @@ list(APPEND _sources
     ./Controllers/HistoryController.cpp
 
     ./Services/CalculatorService.cpp
+    ./Services/HistoryService.cpp
 )
 
 # Set the output folder where your program will be created

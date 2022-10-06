@@ -10,6 +10,8 @@
 
 #include "CalculatorService.h"
 #include "Result.h"
+#include "HistoryService.h"
+#include "CalcHistoryPair.h"
 
 
 
@@ -112,6 +114,9 @@ void CalculatorController::calculate(const Pistache::Rest::Request& req, Pistach
         sendError(res, result.getError());
         return;
     }
+
+    CalcHistoryPair newHistoryEntry(equationString, result.getResult());
+    HistoryService::addEntry(newHistoryEntry);
     
     res.send(Pistache::Http::Code::Ok, result.getResult(), Pistache::Http::Mime::MediaType(
                                                                Pistache::Http::Mime::Type::Text,
