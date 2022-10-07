@@ -118,11 +118,10 @@ void runMainLoop()
             wprintw(outputWin, helpText());
             continue;
         }
-        // TODO make the output redraw after exiting
         if (equation == "history")
         {
             printFullHistory(history, stdscr);
-            wclear(stdscr);
+            touchline(outputWin, 0, getmaxx(outputWin)); // this flags the entire window to be redrawn
             historyTraverser.reset();
             equation = "";
             cursorPos = 0;
