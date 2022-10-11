@@ -14,10 +14,11 @@ Rest::Router getRouter()
 {
     Rest::Router router;
 
-    Rest::Routes::Post  (router, "/api/calculate",      Rest::Routes::bind(&CalculatorController::calculate));
-    Rest::Routes::Get   (router, "/api/history",        Rest::Routes::bind(&HistoryController::getAllHistory));
-    Rest::Routes::Get   (router, "/api/history/:index", Rest::Routes::bind(&HistoryController::getByIndex));
-    Rest::Routes::Delete(router, "/api/history/:index", Rest::Routes::bind(&HistoryController::deleteByIndex));
+    Rest::Routes::Post  (router, "/api/calculate",            Rest::Routes::bind(&CalculatorController::calculateYesHistory));
+    Rest::Routes::Post  (router, "/api/calculate/no-history", Rest::Routes::bind(&CalculatorController::calculateNoHistory));
+    Rest::Routes::Get   (router, "/api/history",              Rest::Routes::bind(&HistoryController::getAllHistory));
+    Rest::Routes::Get   (router, "/api/history/:index",       Rest::Routes::bind(&HistoryController::getByIndex));
+    Rest::Routes::Delete(router, "/api/history/:index",       Rest::Routes::bind(&HistoryController::deleteByIndex));
 
     return router;
 };

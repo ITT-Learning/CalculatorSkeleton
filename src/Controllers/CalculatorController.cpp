@@ -27,27 +27,61 @@ static void sendError(Pistache::Http::ResponseWriter& res, std::string message)
 
 
 
-void CalculatorController::calculate(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res)
+void CalculatorController::calculateYesHistory(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res)
+{
+    res.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("http://localhost:3000");
+    auto result = calculate(req, true);
+    if (!result.isValid())
+    {
+        sendError(res, result.getError());
+        return;
+    }
+
+    res.send(Pistache::Http::Code::Ok, result.getResult(), Pistache::Http::Mime::MediaType(
+                                                               Pistache::Http::Mime::Type::Text,
+                                                               Pistache::Http::Mime::Subtype::Plain));
+    return;
+};
+
+
+
+void CalculatorController::calculateNoHistory(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res)
+{
+    res.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("http://localhost:3000");
+    auto result = calculate(req, false);
+    if (!result.isValid())
+    {
+        sendError(res, result.getError());
+        return;
+    }
+
+    res.send(Pistache::Http::Code::Ok, result.getResult(), Pistache::Http::Mime::MediaType(
+                                                               Pistache::Http::Mime::Type::Text,
+                                                               Pistache::Http::Mime::Subtype::Plain));
+    return;
+};
+
+
+
+Result<std::string> CalculatorController::calculate(const Pistache::Rest::Request& req, bool saveHistory)
 {
     std::string bodyString = req.body();
     rapidjson::Document bodyJson;
     bodyJson.Parse(bodyString.c_str());
     if (!bodyJson.IsObject())
     {
-        sendError(res, "Root value is not a valid object.");
-        return;
+        return Result<std::string>("", false, "Root value is not a valid object.");
     }
 
     if (!bodyJson.HasMember("equation"))
     {
-        sendError(res, "Request body should be a JSON object with an \"equation\" string.");
-        return;
+        return Result<std::string>("", false, "Request body should be a JSON object with an \"equation\" string.");
     }
     const rapidjson::Value& equationJson = bodyJson["equation"];
     if (!equationJson.IsString())
     {
-        sendError(res, "Equation should be a string.");
-        return;
+        return Result<std::string>("", false, "Equation should be a string.");
+        
     }
     std::string equationString = equationJson.GetString();
 
@@ -57,23 +91,20 @@ void CalculatorController::calculate(const Pistache::Rest::Request& req, Pistach
         const rapidjson::Value& variablesArray = bodyJson["variables"];
         if (!variablesArray.IsArray())
         {
-            sendError(res, "Variables should be an array.");
-            return;
+            return Result<std::string>("", false, "Variables should be an array.");
         }
 
         for (rapidjson::Value::ConstValueIterator it = variablesArray.Begin(); it != variablesArray.End(); it++)
         {
             if (!it->IsObject())
             {
-                sendError(res, "Items in the variables array must be objects.");
-                return;
+                return Result<std::string>("", false, "Items in the variables array must be objects.");
             }
 
             rapidjson::GenericObject variableObject = it->GetObject();
             if (!variableObject.HasMember("name"))
             {
-                sendError(res, "A variable is missing a name.");
-                return;
+                return Result<std::string>("", false, "A variable is missing a name.");
             }
             const rapidjson::Value& variableName = variableObject["name"];
             if (!variableName.IsString())
@@ -82,23 +113,20 @@ void CalculatorController::calculate(const Pistache::Rest::Request& req, Pistach
                 message += variableName.GetString();
                 message += ")";
 
-                sendError(res, message);
-                return;
+                return Result<std::string>("", false, message);
             }
             std::string name = variableName.GetString();
 
             if (!variableObject.HasMember("value"))
             {
                 std::string message = "Variable '" + name + "' does not have a value.";
-                sendError(res, message);
-                return;
+                return Result<std::string>("", false, message);
             }
             const rapidjson::Value& variableValue = variableObject["value"];
             if (!variableValue.IsNumber())
             {
                 std::string message = "Variable '" + name + "' has a non-number value. (" + variableValue.GetString() + ")";
-                sendError(res, message);
-                return;
+                return Result<std::string>("", false, message);
             }
             double value = variableValue.GetDouble();
 
@@ -111,15 +139,14 @@ void CalculatorController::calculate(const Pistache::Rest::Request& req, Pistach
 
     if (!result.isValid())
     {
-        sendError(res, result.getError());
-        return;
+        return result;
     }
 
-    CalcHistoryPair newHistoryEntry(equationString, result.getResult());
-    HistoryService::addEntry(newHistoryEntry);
-    
-    res.send(Pistache::Http::Code::Ok, result.getResult(), Pistache::Http::Mime::MediaType(
-                                                               Pistache::Http::Mime::Type::Text,
-                                                               Pistache::Http::Mime::Subtype::Plain));
-    return;
+    if (saveHistory)
+    {
+        CalcHistoryPair newHistoryEntry(equationString, result.getResult());
+        HistoryService::addEntry(newHistoryEntry);
+    }
+
+    return result;
 };

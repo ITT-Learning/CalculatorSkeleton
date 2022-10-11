@@ -67,3 +67,5 @@ test/calculator_test
 
 # vscode settings
 .vscode
+
+node_modules/

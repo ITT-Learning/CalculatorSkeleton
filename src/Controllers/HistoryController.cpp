@@ -10,6 +10,8 @@
 
 void HistoryController::getAllHistory(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res)
 {
+    res.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("http://localhost:3000");
+
     std::string history = HistoryService::getAllHistory();
 
     res.send(
@@ -26,6 +28,8 @@ void HistoryController::getAllHistory(const Pistache::Rest::Request& req, Pistac
 
 void HistoryController::getByIndex(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res)
 {
+    res.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("http://localhost:3000");
+
     int index = req.param(":index").as<int>();
 
     Result<std::string> found = HistoryService::getByIndex(index);
@@ -55,6 +59,8 @@ void HistoryController::getByIndex(const Pistache::Rest::Request& req, Pistache:
 
 void HistoryController::deleteByIndex(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res)
 {
+    res.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("http://localhost:3000");
+    
     int index = req.param(":index").as<int>();
     Result<std::string> removed = HistoryService::deleteByIndex(index);
 
