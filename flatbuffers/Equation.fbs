@@ -1,0 +1,13 @@
+table Variable
+{
+    name:string (required);
+    value:double;
+}
+
+table Equation
+{
+    equation:string (required);
+    variables:[Variable];
+}
+
+root_type Equation;
