@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.11)
 
 include(FetchContent)
-
+set(PISTACHE_LIBRARY ${FETCHCONTENT_BASE_DIR}/pistache-build/src/libpistache.so)
 set(FETCHCONTENT_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 FetchContent_Declare(
@@ -53,4 +53,5 @@ target_link_libraries(${This} PUBLIC
     gmock
     pthread
     libCalculator
+    ${PISTACHE_LIBRARY}
 )
