@@ -1,3 +1,6 @@
+#ifndef CALCULTOR_API_H
+#define CALCULTOR_API_H
+
 #include <iostream>
 
 #include <pistache/router.h>
@@ -10,7 +13,7 @@ using namespace Pistache;
 
 
 
-Rest::Router getRouter()
+inline Rest::Router getRouter()
 {
     Rest::Router router;
 
@@ -35,3 +38,5 @@ void runInApiMode()
     std::cout.flush();
     server.serve();
 };
+
+#endif
