@@ -54,4 +54,5 @@ target_link_libraries(${This} PUBLIC
     pthread
     libCalculator
     ${PISTACHE_LIBRARY}
+    ${FLATBUFFERS_LIBRARY}
 )
