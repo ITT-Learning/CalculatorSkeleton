@@ -21,7 +21,10 @@ FetchContent_MakeAvailable(flatbuffers pistache)
 set(FLATBUFFERS_LIBRARY ${FETCHCONTENT_BASE_DIR}/flatbuffers-build/libflatbuffers.a)
 set(PISTACHE_LIBRARY ${FETCHCONTENT_BASE_DIR}/pistache-build/src/libpistache.so)
 
-add_custom_target(fbsh ALL ${FETCHCONTENT_BASE_DIR}/flatbuffers-build/flatc --cpp -o ./inc/flatbuffers/ ./flatbuffers/CalcHistory.fbs)
+add_custom_target(
+    fbsh
+    ALL
+    ${FETCHCONTENT_BASE_DIR}/flatbuffers-build/flatc --cpp -o ./inc/flatbuffers/ ./flatbuffers/CalcHistory.fbs ./flatbuffers/Equation.fbs)
 
 include_directories(src inc inc/MathOperations inc/flatbuffers inc/Controllers inc/Services)
 

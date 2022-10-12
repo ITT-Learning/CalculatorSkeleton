@@ -1,7 +1,7 @@
 table Variable
 {
     name:string (required);
-    value:double;
+    value:double=null;
 }
 
 table Equation

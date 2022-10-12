@@ -13,6 +13,7 @@
 #include "Result.h"
 #include "HistoryService.h"
 #include "CalcHistoryPair.h"
+#include "Equation_generated.h"
 
 
 
@@ -36,7 +37,7 @@ void CalculatorController::calculate(const Pistache::Rest::Request& req, Pistach
     {
         res.send(
             Pistache::Http::Code::Internal_Server_Error,
-            "Unable to initialize equation parsing",
+            "Unable to initialize parsing",
             Pistache::Http::Mime::MediaType(
                 Pistache::Http::Mime::Type::Text,
                 Pistache::Http::Mime::Subtype::Plain));
@@ -49,7 +50,7 @@ void CalculatorController::calculate(const Pistache::Rest::Request& req, Pistach
     {
         res.send(
             Pistache::Http::Code::Internal_Server_Error,
-            parser.error_,
+            "Unable to initialize equation parsing",
             Pistache::Http::Mime::MediaType(
                 Pistache::Http::Mime::Type::Text,
                 Pistache::Http::Mime::Subtype::Plain));
@@ -67,24 +68,44 @@ void CalculatorController::calculate(const Pistache::Rest::Request& req, Pistach
         return;
     }
 
-    res.send(Pistache::Http::Code::Bad_Request, "// TODO finish building this out");
-    // std::string equationString = equationJson.GetString();
+    uint8_t *bufferPointer  = parser.builder_.GetBufferPointer();
+    auto     equationBuffer = GetEquation(bufferPointer);
 
-    // std::unordered_map<std::string, double> variables;
+    std::string equationString  = equationBuffer->equation()->str();
+    auto        variablesVector = equationBuffer->variables();
 
-    // Result<std::string> result = CalculatorService::calculate(equationString, variables);
+    std::unordered_map<std::string, double> variables;
+    if (variablesVector != NULL)
+    {
+        int variablesCount = variablesVector->size();
+        for (int i = 0; i < variablesCount; i++)
+        {
+            auto        variable      = variablesVector->Get(i);
+            if(!variable->value().has_value())
+            {
+                continue;
+            }
+            double      variableValue = *(variable->value());
+            std::string variableName  = variable->name()->str();
 
-    // if (!result.isValid())
-    // {
-    //     sendError(res, result.getError());
-    //     return;
-    // }
+            variables.erase  (variableName);
+            variables.emplace(variableName, variableValue);
+        }
+    }
 
-    // CalcHistoryPair newHistoryEntry(equationString, result.getResult());
-    // HistoryService::addEntry(newHistoryEntry);
+    Result<std::string> result = CalculatorService::calculate(equationString, variables);
+
+    if (!result.isValid())
+    {
+        sendError(res, result.getError());
+        return;
+    }
+
+    CalcHistoryPair newHistoryEntry(equationString, result.getResult());
+    HistoryService::addEntry(newHistoryEntry);
     
-    // res.send(Pistache::Http::Code::Ok, result.getResult(), Pistache::Http::Mime::MediaType(
-    //                                                            Pistache::Http::Mime::Type::Text,
-    //                                                            Pistache::Http::Mime::Subtype::Plain));
-    // return;
+    res.send(Pistache::Http::Code::Ok, result.getResult(), Pistache::Http::Mime::MediaType(
+                                                               Pistache::Http::Mime::Type::Text,
+                                                               Pistache::Http::Mime::Subtype::Plain));
+    return;
 };
