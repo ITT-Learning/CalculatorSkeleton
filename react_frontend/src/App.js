@@ -10,36 +10,40 @@ import './App.css';
 
 function App() 
 {
-    const [calcValue,  setCalcValue]  = useState("");
-    const [error,      setError]      = useState("");
-    const [variables,  setVariables]  = useState({});
-    const [calcResult, setCalcResult] = useState(null);
+    const [calcValue , setCalcValue ] = useState("");
+    const [isValid   , setIsValid   ] = useState(false);
+    const [variables , setVariables ] = useState({});
+    const [calcResult, setCalcResult] = useState("");
 
 
 
     const doInputChange = ({ currentTarget: target }) =>
     {
-        // regex to select only things that aren't alphanumeric (including _) or +-*/(), and then also select underscores
-        const sanitizedInput = target.value.split(/[^\w+\-*/\(\)]|_/).filter(i => i != "").join("");
+        const sanitizedInput = target.value
+            .split(/[^\w+\-*/\(\)]|_/) // regex to select only things that are neither alphanumeric (including _) nor +-*/(), and then also select underscores
+            .filter(i => i != "")
+            .map(i => i.toLowerCase())
+            .join("");
         setCalcValue(sanitizedInput);
 
         if (target.value.length <= 0)
         {
-            setError("");
+            setIsValid(false);
             setCalcResult("");
             setVariables({});
+            setTitle("Calculator")
             return;
         }
-
+        
         const variableNames = extractVariableNames(sanitizedInput);
         const uVariables    = combineVariablesUsing(variableNames);
         setVariables(uVariables);
 
         doApiCall(sanitizedInput, uVariables);
     };
-
-
-
+    
+    
+    
     const doVariableChange = ({ currentTarget: target }) =>
     {
         const uVariables = {...variables};
@@ -48,25 +52,34 @@ function App()
         setVariables(uVariables);
         doApiCall(calcValue, uVariables);
     };
-
-
-
+    
+    
+    
     const doApiCall = (equation, p_variables) =>
     {
         const variableValues = getVariableValues(p_variables);
         const req = {equation, variables: variableValues};
-
+        
         apiService.post("calculate/no-history", JSON.stringify(req))
         .then ((res) => {
             console.log("result: ", res.data);
             setCalcResult(+res.data);
-            setError("");
+            setTitle(res.data);
+            setIsValid(true);
         })
         .catch ((error) => {
             console.log(error.response.data);
-            setCalcResult(null);
-            setError(error.response.data);
+            setCalcResult(error.response.data);
+            setIsValid(false);
+            setTitle("Error");
         });
+    };
+
+
+
+    const setTitle = (title) =>
+    {
+        document.getElementsByTagName("title")[0].innerText = title;
     };
 
 
@@ -88,7 +101,11 @@ function App()
     const extractVariableNames = (equation) =>
     {
         const variableNames = {};
-        const namesList = equation.split(/[\W\d]+/).filter(n => n != "").sort();
+        const namesList = equation
+            .split(/[\W\d]+/)
+            .filter(n => n != "")
+            .map(n => n.toLowerCase())
+            .sort();
         for (let index in namesList)
         {
             variableNames[namesList[index]] = {value: null};
@@ -127,15 +144,24 @@ function App()
 
 
     return (
-        <div className="bg-dark h-100 d-flex flex-column">
-            <CalcInput value={calcValue} handleChange={doInputChange} error={error} />
-            <CalcResult value={calcResult} />
-            <div className="">
-            {
-                objToArray(variables).map((variable) =>
-                <VariableInput key={variable.key} name={variable.key} value={variable.value} handleChange={doVariableChange} />
-                )
-            }
+        <div className="bg-dark d-flex flex-column flex-grow-1">
+            <CalcResult value={calcResult} isValid={isValid} />
+            <CalcInput value={calcValue} handleChange={doInputChange} />
+            <div className="d-flex mt-3 flex-grow-1">
+                <div className="position-relative flex-grow-1 overflow-y">
+                    <div className="d-flex flex-column px-3 position-absolute h-100 w-100">
+                    {
+                        objToArray(variables).map((variable) =>
+                        <VariableInput key={variable.key} name={variable.key} value={variable.value} handleChange={doVariableChange} />
+                        )
+                    }
+                    </div>
+                </div>
+                <div className="position-relative flex-grow-1">
+                    <div className="d-flex flex-column px-3 overflow-y position-absolute h-100 w-100">
+                        {/* TODO add history here */}
+                    </div>
+                </div>
             </div>
         </div>
     );

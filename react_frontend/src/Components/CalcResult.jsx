@@ -1,7 +1,8 @@
-const CalcResult = ({ value }) => 
+const CalcResult = ({ value, isValid }) => 
 {
+    const classValue = "result-box fs-0 align-self-center " + (isValid ? "text-light fst-none" : "text-danger fst-italic")
     return (
-        <span className="text-light fs-1 ps-5 mt-5">{(value || value === 0) && "= " + value}</span>
+        <span className={classValue}>{((isValid ? "= " : "") + value)}</span>
     );
 }
  

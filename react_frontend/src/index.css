@@ -15,9 +15,26 @@ code {
 #root
 {
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 #calculator::placeholder
 {
     font-style: italic;
+}
+
+.result-box
+{
+    min-height: 8rem;
+}
+
+.fs-0
+{
+    font-size: 5rem;
+}
+
+.overflow-y
+{
+    overflow-y: auto;
 }
