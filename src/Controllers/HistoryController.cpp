@@ -85,3 +85,13 @@ void HistoryController::deleteByIndex(const Pistache::Rest::Request& req, Pistac
     );
     return;
 };
+
+
+
+void HistoryController::cors(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res)
+{
+    res.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("http://localhost:3000");
+    res.headers().add<Pistache::Http::Header::AccessControlAllowMethods>("DELETE");
+    res.send(Pistache::Http::Code::No_Content, "");
+    return;
+};

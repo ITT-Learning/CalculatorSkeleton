@@ -156,6 +156,13 @@ function App()
 
 
 
+    const doDeleteHistory = async (index) =>
+    {
+        await apiService.delete(`history/${index}`);
+        getHistory();
+    };
+
+
 
     return (
         <div className="bg-dark d-flex flex-column flex-grow-1">
@@ -173,7 +180,7 @@ function App()
                 </div>
                 <div className="position-relative flex-grow-1">
                     <div className="d-flex flex-column px-3 overflow-y position-absolute h-100 w-100">
-                        { history.map((entry, index) => <HistoryEntry data={entry} index={index} key={index} />) }
+                        { history.map((entry, index) => <HistoryEntry data={entry} handleDelete={() => { doDeleteHistory(index) }} key={index} />) }
                     </div>
                 </div>
             </div>
