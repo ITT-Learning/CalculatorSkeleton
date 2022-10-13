@@ -53,6 +53,6 @@ target_link_libraries(${This} PUBLIC
     gmock
     pthread
     libCalculator
-    ${PISTACHE_LIBRARY}
-    ${FLATBUFFERS_LIBRARY}
+    pistache_static
+    flatbuffers
 )
