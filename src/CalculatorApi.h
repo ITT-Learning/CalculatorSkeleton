@@ -27,7 +27,7 @@ inline Rest::Router getRouter()
 
 
 
-void runInApiMode()
+inline void runInApiMode()
 {
     Address addr(Ipv4::any(), Port(5000));
     auto opts = Http::Endpoint::options().threads(1);
