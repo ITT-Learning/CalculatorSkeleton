@@ -5,7 +5,7 @@
 #include <sstream>
 #include <vector>
 
-#include "flatbuffers/flatbuffers.h"
+#include <flatbuffers/flatbuffers.h>
 
 #include "CalcHistory_generated.h"
 #include "CalcHistoryPair.h"
@@ -82,6 +82,33 @@ void CalcHistory::addEntry(std::string equation, std::string result)
 
 
 
+void CalcHistory::addEntry(const CalcHistoryPair& entry)
+{
+    entries_.push_back(entry);
+};
+
+
+
+void CalcHistory::addEntry(CalcHistoryPair&& entry)
+{
+    entries_.push_back(entry);
+};
+
+
+
+bool CalcHistory::removeEntry(int index)
+{
+    if (index < 0 || index >= entries_.size())
+    {
+        return false;
+    }
+
+    entries_.erase(entries_.begin() + index);
+    return true;
+};
+
+
+
 std::string CalcHistory::toString(const CalcHistory& calcHistory)
 {
     std::ostringstream strStream;
@@ -123,4 +150,11 @@ std::vector<CalcHistoryPair>::const_iterator CalcHistory::oldest() const
 bool CalcHistory::isEmpty() const
 {
     return entries_.empty();
+};
+
+
+
+int CalcHistory::size() const
+{
+    return entries_.size();
 };

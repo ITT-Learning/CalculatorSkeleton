@@ -12,6 +12,12 @@ list(APPEND _sources
     ./MathOperations/Division.cpp
     ./MathOperations/Multiplication.cpp
     ./MathOperations/Subtraction.cpp
+
+    ./Controllers/CalculatorController.cpp
+    ./Controllers/HistoryController.cpp
+
+    ./Services/CalculatorService.cpp
+    ./Services/HistoryService.cpp
 )
 
 # Set the output folder where your program will be created
@@ -21,8 +27,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 
 find_package(Curses REQUIRED)
-include_directories(/usr/include)
+include_directories(/usr/include ${FETCHCONTENT_BASE_DIR}/flatbuffers-src/include)
 add_executable(${PROJECT_NAME} main.cpp ${_sources})
 add_dependencies(${PROJECT_NAME} fbsh)
-target_link_libraries(${PROJECT_NAME} ${CURSES_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${CURSES_LIBRARIES} pistache_static flatbuffers)
 add_library(lib${PROJECT_NAME} ${_sources})

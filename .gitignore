@@ -16,6 +16,7 @@
 *.so.0
 *.dylib
 *.dll
+*.0
 
 # Fortran module files
 *.mod
@@ -67,3 +68,5 @@ test/calculator_test
 
 # vscode settings
 .vscode
+
+node_modules/
