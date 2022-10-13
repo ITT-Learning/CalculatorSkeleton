@@ -2,6 +2,7 @@
 
 #include <string>
 #include <sstream>
+#include <vector>
 
 #include "CalcHistory.h"
 #include "CalcHistoryPair.h"
@@ -27,11 +28,7 @@ std::string HistoryService::getAllHistory()
             {
                 hout << ",";
             };
-            hout << "{\"equation\":\"";
-            hout << it->getEquation();
-            hout << "\",\"result\":";
-            hout << it->getResult();
-            hout << "}";
+            hout << sanitizeEntry(it);
         }
     }
     hout << "]";
@@ -52,10 +49,7 @@ Result<std::string> HistoryService::getByIndex(int index)
 
     auto it = history_.oldest() + index;
 
-    std::stringstream hout;
-    hout << "{\"equation\":\"" << it->getEquation() << "\",\"result\":" << it->getResult() << "}";
-
-    return Result<std::string>(hout.str());
+    return Result<std::string>(sanitizeEntry(it));
 };
 
 
@@ -93,3 +87,17 @@ void HistoryService::refreshHistory()
 {
     history_.initialzeFromFilePath(filePath_);
 };
+
+
+
+std::string HistoryService::sanitizeEntry(const std::vector<CalcHistoryPair>::const_iterator& it)
+{
+    std::stringstream sout;
+    sout << "{\"equation\":\"";
+    sout << it->getEquation();
+    sout << "\",\"result\":";
+    const std::string result = it->getResult();
+    sout << (result == "nan" ? "\"nan\"" : result) ;
+    sout << "}";
+    return sout.str();
+}

@@ -2,6 +2,7 @@
 #define SERVICES_HISTORY_SERVICE_H
 
 #include <string>
+#include <vector>
 
 #include "CalcHistory.h"
 #include "CalcHistoryPair.h"
@@ -21,6 +22,8 @@ class HistoryService
         static       CalcHistory history_;
         static const std::string filePath_;
         static       void        refreshHistory();
+
+        static std::string sanitizeEntry(const std::vector<CalcHistoryPair>::const_iterator& it);
 
         HistoryService() {};
 };
