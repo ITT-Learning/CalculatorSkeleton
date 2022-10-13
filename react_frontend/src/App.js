@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import apiService from './services/apiService.js';
 
 import CalcInput from './Components/CalcInput.jsx';
 import CalcResult from './Components/CalcResult.jsx';
 import VariableInput from './Components/VariableInput.jsx';
+import HistoryEntry from './Components/HistoryEntry.jsx';
 
 import './App.css';
 
@@ -14,6 +15,7 @@ function App()
     const [isValid   , setIsValid   ] = useState(false);
     const [variables , setVariables ] = useState({});
     const [calcResult, setCalcResult] = useState("");
+    const [history   , setHistory   ] = useState([]);
 
 
 
@@ -143,11 +145,23 @@ function App()
 
 
 
+    const getHistory = () =>
+    {
+        apiService.get("history")
+            .then( res => { setHistory(res.data) } )
+            .catch( error => { console.error("Unable to get history:", error); } )
+    };
+    // NOTE use effect here to be called after initialization of getHistory
+    useEffect(getHistory, []);
+
+
+
+
     return (
         <div className="bg-dark d-flex flex-column flex-grow-1">
             <CalcResult value={calcResult} isValid={isValid} />
             <CalcInput value={calcValue} handleChange={doInputChange} />
-            <div className="d-flex mt-3 flex-grow-1">
+            <div className="d-flex mt-3 flex-grow-1 pt-3">
                 <div className="position-relative flex-grow-1 overflow-y">
                     <div className="d-flex flex-column px-3 position-absolute h-100 w-100">
                     {
@@ -159,7 +173,7 @@ function App()
                 </div>
                 <div className="position-relative flex-grow-1">
                     <div className="d-flex flex-column px-3 overflow-y position-absolute h-100 w-100">
-                        {/* TODO add history here */}
+                        { history.map((entry, index) => <HistoryEntry data={entry} index={index} key={index} />) }
                     </div>
                 </div>
             </div>
