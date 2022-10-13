@@ -27,8 +27,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 
 find_package(Curses REQUIRED)
-include_directories(/usr/include)
+include_directories(/usr/include ${FETCHCONTENT_BASE_DIR}/flatbuffers-src/include)
 add_executable(${PROJECT_NAME} main.cpp ${_sources})
 add_dependencies(${PROJECT_NAME} fbsh)
-target_link_libraries(${PROJECT_NAME} ${CURSES_LIBRARIES} /mnt/c/Users/josh.wagstaff-leon/Documents/source/CalculatorSkeleton/libpistache.so)
+target_link_libraries(${PROJECT_NAME} ${CURSES_LIBRARIES} ${PISTACHE_LIBRARY} ${FLATBUFFERS_LIBRARY})
 add_library(lib${PROJECT_NAME} ${_sources})
