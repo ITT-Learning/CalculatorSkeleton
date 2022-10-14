@@ -41,7 +41,7 @@ function App()
         const uVariables    = combineVariablesUsing(variableNames);
         setVariables(uVariables);
 
-        doApiCall(sanitizedInput, uVariables);
+        doApiCall(sanitizedInput, uVariables, false);
     };
     
     
@@ -52,22 +52,27 @@ function App()
         const newValue = target.value.split(/\D/).join("");
         uVariables[target.name].value = newValue.length > 0 ? newValue : null;
         setVariables(uVariables);
-        doApiCall(calcValue, uVariables);
+        doApiCall(calcValue, uVariables, false);
     };
     
     
     
-    const doApiCall = (equation, p_variables) =>
+    const doApiCall = (equation, p_variables, history) =>
     {
         const variableValues = getVariableValues(p_variables);
         const req = {equation, variables: variableValues};
-        
-        apiService.post("calculate/no-history", JSON.stringify(req))
+
+        const endpoint = "calculate" + (history ? "" : "/no-history");
+        apiService.post(endpoint, JSON.stringify(req))
         .then ((res) => {
             console.log("result: ", res.data);
             setCalcResult(+res.data);
             setTitle(res.data);
             setIsValid(true);
+            if (history)
+            {
+                getHistory();
+            }
         })
         .catch ((error) => {
             console.log(error.response.data);
@@ -156,10 +161,23 @@ function App()
 
 
 
-    const doDeleteHistory = async (index) =>
+    const doSaveHistory = () =>
     {
-        await apiService.delete(`history/${index}`);
-        getHistory();
+        doApiCall(calcValue, variables, true)
+    };
+
+
+
+    const doDeleteHistory = (index) =>
+    {
+        apiService.delete(`history/${index}`).then(getHistory);
+    };
+
+
+
+    const recallHistory = (index) =>
+    {
+        doInputChange({ currentTarget: { value: history[index].equation}});
     };
 
 
@@ -167,22 +185,24 @@ function App()
     return (
         <div className="bg-dark d-flex flex-column flex-grow-1">
             <CalcResult value={calcResult} isValid={isValid} />
-            <CalcInput value={calcValue} handleChange={doInputChange} />
+            <CalcInput value={calcValue} handleChange={doInputChange} handleSaveHistory={doSaveHistory} />
             <div className="d-flex mt-3 flex-grow-1 pt-3">
-                <div className="position-relative flex-grow-1 overflow-y">
+                { Object.keys(variables).length > 0 && <div className="position-relative flex-grow-1 overflow-y">
                     <div className="d-flex flex-column px-3 position-absolute h-100 w-100">
+                        <span className="text-light text-center fs-3">Variables</span>
                     {
                         objToArray(variables).map((variable) =>
                         <VariableInput key={variable.key} name={variable.key} value={variable.value} handleChange={doVariableChange} />
                         )
                     }
-                    </div>
-                </div>
-                <div className="position-relative flex-grow-1">
+                    </div> 
+                </div> }
+                { history.length > 0 && <div className="position-relative flex-grow-1">
                     <div className="d-flex flex-column px-3 overflow-y position-absolute h-100 w-100">
-                        { history.map((entry, index) => <HistoryEntry data={entry} handleDelete={() => { doDeleteHistory(index) }} key={index} />) }
+                        <span className="text-light text-center fs-3">History</span>
+                        { history.map((entry, index) => <HistoryEntry data={entry} handleDelete={() => { doDeleteHistory(index) }} recallHistory={() => { recallHistory(index) }} key={index} />).reverse() }
                     </div>
-                </div>
+                </div> }
             </div>
         </div>
     );

@@ -38,3 +38,37 @@ code {
 {
     overflow-y: auto;
 }
+
+.no-select
+{
+    user-select: none;
+}
+
+.selectable
+{
+    position: relative;
+    transition: background-color .2s;
+}
+
+.selectable:nth-child(2)
+{
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+}
+
+.selectable:last-child
+{
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+
+.selectable:hover
+{
+    cursor: pointer;
+    background-color: rgb(var(--bs-light-rgb), .15);
+}
+
+.selectable:hover::after
+{
+    opacity: 0.1;
+}
