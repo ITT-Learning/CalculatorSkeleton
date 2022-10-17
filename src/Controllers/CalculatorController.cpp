@@ -6,12 +6,15 @@
 
 #include <pistache/router.h>
 #include <pistache/http.h>
-#include <rapidjson/document.h>
+#include <flatbuffers/flatbuffers.h>
+#include <flatbuffers/idl.h>
+#include <flatbuffers/util.h>
 
 #include "CalculatorService.h"
 #include "Result.h"
 #include "HistoryService.h"
 #include "CalcHistoryPair.h"
+#include "Equation_generated.h"
 
 
 
@@ -65,73 +68,47 @@ void CalculatorController::calculateNoHistory(const Pistache::Rest::Request& req
 
 Result<std::string> CalculatorController::calculate(const Pistache::Rest::Request& req, bool saveHistory)
 {
-    std::string bodyString = req.body();
-    rapidjson::Document bodyJson;
-    bodyJson.Parse(bodyString.c_str());
-    if (!bodyJson.IsObject())
+    std::string equationSchema;
+    bool schemaLoaded = flatbuffers::LoadFile("./flatbuffers/Equation.fbs", false, &equationSchema);
+    if (!schemaLoaded)
     {
-        return Result<std::string>("", false, "Root value is not a valid object.");
+        return Result<std::string>("", false, "Unable to initialize parsing");
     }
 
-    if (!bodyJson.HasMember("equation"))
+    flatbuffers::Parser parser;
+    bool schemaParsed = parser.Parse(equationSchema.c_str());
+    if (!schemaParsed)
     {
-        return Result<std::string>("", false, "Request body should be a JSON object with an \"equation\" string.");
+        return Result<std::string>("", false, "Unable to initialize equation parsing");
     }
-    const rapidjson::Value& equationJson = bodyJson["equation"];
-    if (!equationJson.IsString())
+    bool jsonParsed = parser.Parse(req.body().c_str());
+    if (!jsonParsed)
     {
-        return Result<std::string>("", false, "Equation should be a string.");
-        
+        return Result<std::string>("", false, parser.error_);
     }
-    std::string equationString = equationJson.GetString();
+
+    uint8_t *bufferPointer  = parser.builder_.GetBufferPointer();
+    auto     equationBuffer = GetEquation(bufferPointer);
+
+    std::string equationString  = equationBuffer->equation()->str();
+    auto        variablesVector = equationBuffer->variables();
 
     std::unordered_map<std::string, double> variables;
-    if (bodyJson.HasMember("variables"))
+    if (variablesVector != NULL)
     {
-        const rapidjson::Value& variablesArray = bodyJson["variables"];
-        if (!variablesArray.IsArray())
+        int variablesCount = variablesVector->size();
+        for (int i = 0; i < variablesCount; i++)
         {
-            return Result<std::string>("", false, "Variables should be an array.");
-        }
-
-        for (rapidjson::Value::ConstValueIterator it = variablesArray.Begin(); it != variablesArray.End(); it++)
-        {
-            if (!it->IsObject())
+            auto        variable      = variablesVector->Get(i);
+            if(!variable->value().has_value())
             {
-                return Result<std::string>("", false, "Items in the variables array must be objects.");
+                continue;
             }
+            double      variableValue = *(variable->value());
+            std::string variableName  = variable->name()->str();
 
-            rapidjson::GenericObject variableObject = it->GetObject();
-            if (!variableObject.HasMember("name"))
-            {
-                return Result<std::string>("", false, "A variable is missing a name.");
-            }
-            const rapidjson::Value& variableName = variableObject["name"];
-            if (!variableName.IsString())
-            {
-                std::string message = "A variable has a non-string name. (";
-                message += variableName.GetString();
-                message += ")";
-
-                return Result<std::string>("", false, message);
-            }
-            std::string name = variableName.GetString();
-
-            if (!variableObject.HasMember("value"))
-            {
-                std::string message = "Variable '" + name + "' does not have a value.";
-                return Result<std::string>("", false, message);
-            }
-            const rapidjson::Value& variableValue = variableObject["value"];
-            if (!variableValue.IsNumber())
-            {
-                std::string message = "Variable '" + name + "' has a non-number value. (" + variableValue.GetString() + ")";
-                return Result<std::string>("", false, message);
-            }
-            double value = variableValue.GetDouble();
-
-            variables.erase  (name);
-            variables.emplace(name, value);
+            variables.erase  (variableName);
+            variables.emplace(variableName, variableValue);
         }
     }
 
@@ -139,14 +116,15 @@ Result<std::string> CalculatorController::calculate(const Pistache::Rest::Reques
 
     if (!result.isValid())
     {
-        return result;
+        return Result<std::string>("", false, result.getError());
     }
 
     if (saveHistory)
     {
+
         CalcHistoryPair newHistoryEntry(equationString, result.getResult());
         HistoryService::addEntry(newHistoryEntry);
     }
-
+    
     return result;
 };
