@@ -12,6 +12,7 @@ class HistoryController
         static void getAllHistory(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res);
         static void getByIndex   (const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res);
         static void deleteByIndex(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res);
+        static void cors         (const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res);
 
     private:
         HistoryController() {};

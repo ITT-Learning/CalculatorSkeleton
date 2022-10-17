@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <iostream>
 
 #include <pistache/router.h>
 #include <pistache/http.h>
@@ -29,43 +30,61 @@ static void sendError(Pistache::Http::ResponseWriter& res, std::string message)
 
 
 
-void CalculatorController::calculate(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res)
+void CalculatorController::calculateYesHistory(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res)
+{
+    res.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("http://localhost:3000");
+    auto result = calculate(req, true);
+    if (!result.isValid())
+    {
+        sendError(res, result.getError());
+        return;
+    }
+
+    res.send(Pistache::Http::Code::Ok, result.getResult(), Pistache::Http::Mime::MediaType(
+                                                               Pistache::Http::Mime::Type::Text,
+                                                               Pistache::Http::Mime::Subtype::Plain));
+    return;
+};
+
+
+
+void CalculatorController::calculateNoHistory(const Pistache::Rest::Request& req, Pistache::Http::ResponseWriter res)
+{
+    res.headers().add<Pistache::Http::Header::AccessControlAllowOrigin>("http://localhost:3000");
+    auto result = calculate(req, false);
+    if (!result.isValid())
+    {
+        sendError(res, result.getError());
+        return;
+    }
+
+    res.send(Pistache::Http::Code::Ok, result.getResult(), Pistache::Http::Mime::MediaType(
+                                                               Pistache::Http::Mime::Type::Text,
+                                                               Pistache::Http::Mime::Subtype::Plain));
+    return;
+};
+
+
+
+Result<std::string> CalculatorController::calculate(const Pistache::Rest::Request& req, bool saveHistory)
 {
     std::string equationSchema;
     bool schemaLoaded = flatbuffers::LoadFile("./flatbuffers/Equation.fbs", false, &equationSchema);
     if (!schemaLoaded)
     {
-        res.send(
-            Pistache::Http::Code::Internal_Server_Error,
-            "Unable to initialize parsing",
-            Pistache::Http::Mime::MediaType(
-                Pistache::Http::Mime::Type::Text,
-                Pistache::Http::Mime::Subtype::Plain));
-        return;
+        return Result<std::string>("", false, "Unable to initialize parsing");
     }
 
     flatbuffers::Parser parser;
     bool schemaParsed = parser.Parse(equationSchema.c_str());
     if (!schemaParsed)
     {
-        res.send(
-            Pistache::Http::Code::Internal_Server_Error,
-            "Unable to initialize equation parsing",
-            Pistache::Http::Mime::MediaType(
-                Pistache::Http::Mime::Type::Text,
-                Pistache::Http::Mime::Subtype::Plain));
-        return;
+        return Result<std::string>("", false, "Unable to initialize equation parsing");
     }
     bool jsonParsed = parser.Parse(req.body().c_str());
     if (!jsonParsed)
     {
-        res.send(
-            Pistache::Http::Code::Bad_Request,
-            parser.error_,
-            Pistache::Http::Mime::MediaType(
-                Pistache::Http::Mime::Type::Text,
-                Pistache::Http::Mime::Subtype::Plain));
-        return;
+        return Result<std::string>("", false, parser.error_);
     }
 
     uint8_t *bufferPointer  = parser.builder_.GetBufferPointer();
@@ -97,15 +116,15 @@ void CalculatorController::calculate(const Pistache::Rest::Request& req, Pistach
 
     if (!result.isValid())
     {
-        sendError(res, result.getError());
-        return;
+        return Result<std::string>("", false, result.getError());
     }
 
-    CalcHistoryPair newHistoryEntry(equationString, result.getResult());
-    HistoryService::addEntry(newHistoryEntry);
+    if (saveHistory)
+    {
+
+        CalcHistoryPair newHistoryEntry(equationString, result.getResult());
+        HistoryService::addEntry(newHistoryEntry);
+    }
     
-    res.send(Pistache::Http::Code::Ok, result.getResult(), Pistache::Http::Mime::MediaType(
-                                                               Pistache::Http::Mime::Type::Text,
-                                                               Pistache::Http::Mime::Subtype::Plain));
-    return;
+    return result;
 };
